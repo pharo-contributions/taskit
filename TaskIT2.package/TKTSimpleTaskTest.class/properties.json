@@ -1,0 +1,16 @@
+{
+	"category" : "TaskIT2",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"flag",
+		"task",
+		"job" ],
+	"name" : "TKTSimpleTaskTest",
+	"pools" : [
+		 ],
+	"super" : "ParameterizedTestCase",
+	"type" : "normal" }

@@ -1,0 +1,1 @@
+A simple job relates one task execution with a future. 

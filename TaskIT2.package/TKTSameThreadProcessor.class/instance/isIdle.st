@@ -1,0 +1,3 @@
+testing
+isIdle
+	^ isProcessing not

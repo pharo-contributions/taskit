@@ -1,0 +1,10 @@
+{
+	"class" : {
+		"on:" : "SantiagoBragagnolo 3/31/2015 20:19" },
+	"instance" : {
+		"beRunnedBy:" : "SantiagoBragagnolo 4/2/2015 16:40",
+		"manageException:relatedTo:" : "SantiagoBragagnolo 4/2/2015 16:49",
+		"onErrorFor:" : "SantiagoBragagnolo 4/2/2015 16:45",
+		"onFailureFor:" : "SantiagoBragagnolo 4/2/2015 16:44",
+		"onSuccessFor:" : "SantiagoBragagnolo 4/2/2015 16:43",
+		"task:" : "SantiagoBragagnolo 3/31/2015 20:20" } }

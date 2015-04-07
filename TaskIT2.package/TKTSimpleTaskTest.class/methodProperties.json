@@ -1,0 +1,10 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"processorsAndRunners" : "SantiagoBragagnolo 4/6/2015 21:47",
+		"reduceJob" : "SantiagoBragagnolo 3/31/2015 20:21",
+		"reduceRunningIn:" : "SantiagoBragagnolo 4/6/2015 21:29",
+		"setUp" : "SantiagoBragagnolo 4/6/2015 21:29",
+		"testFlagSettedTrueOn:" : "SantiagoBragagnolo 4/6/2015 21:47",
+		"testProcessorIsIdleOn:" : "SantiagoBragagnolo 4/7/2015 09:59" } }

@@ -1,0 +1,14 @@
+{
+	"category" : "TaskIT2",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SantiagoBragagnolo 4/6/2015 21:09",
+	"instvars" : [
+		"task" ],
+	"name" : "TKTSimpleJob",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

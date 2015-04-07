@@ -1,0 +1,1 @@
+A simple runner has one processor, and runs without any kind of addition
