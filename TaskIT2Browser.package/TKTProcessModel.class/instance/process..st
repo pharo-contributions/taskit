@@ -4,7 +4,7 @@ process: aTktProcess
 	process := aTktProcess.
 	task := (aTktProcess annotation: #task)
 		ifNotNil: [ :t | 
-			messageSend := t task messageSend.
+			messageSend := t task ifNotNil: [ :relatedTask | relatedTask messageSend ] ifNil: [ nil ].
 			t ].
 	messageSend := messageSend ifNil: [ aTktProcess messageSend ].
 	messageSend
