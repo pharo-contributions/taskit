@@ -1,0 +1,8 @@
+{
+	"class" : {
+		"ruleAbstractClassRuleV1FalsePositive" : "SantiagoBragagnolo 7/27/2015 11:44",
+		"ruleClassNotReferencedRuleV1FalsePositive" : "SantiagoBragagnolo 7/27/2015 11:44",
+		"ruleInconsistentMethodClassificationRuleV1FalsePositive" : "SantiagoBragagnolo 7/27/2015 14:17",
+		"ruleTempsReadBeforeWrittenRuleV1FalsePositive" : "SantiagoBragagnolo 7/27/2015 14:17" },
+	"instance" : {
+		 } }
