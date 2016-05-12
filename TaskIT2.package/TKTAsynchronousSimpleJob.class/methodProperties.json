@@ -1,0 +1,8 @@
+{
+	"class" : {
+		"forTask:" : "SantiagoBragagnolo 7/23/2015 15:55" },
+	"instance" : {
+		"cancelTaskExecution:on:" : "SantiagoBragagnolo 7/28/2015 12:46",
+		"createExecutionFor:on:" : "SantiagoBragagnolo 7/28/2015 11:53",
+		"createTaskExecution" : "SantiagoBragagnolo 7/24/2015 14:57",
+		"isSimpleAsync" : "SantiagoBragagnolo 7/27/2015 17:08" } }

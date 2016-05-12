@@ -1,0 +1,14 @@
+{
+	"category" : "TaskIT2-Runner",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SantiagoBragagnolo 7/23/2015 11:35",
+	"instvars" : [
+		 ],
+	"name" : "TKTSameProcessRunner",
+	"pools" : [
+		 ],
+	"super" : "TKTRunner",
+	"type" : "normal" }

@@ -1,0 +1,14 @@
+{
+	"category" : "TaskIT2",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestTaskIT",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }

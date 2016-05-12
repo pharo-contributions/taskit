@@ -1,0 +1,1 @@
+A job is a one task job that returns to the caller a future as promise of result

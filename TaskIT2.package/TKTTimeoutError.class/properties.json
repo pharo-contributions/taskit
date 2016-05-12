@@ -1,0 +1,14 @@
+{
+	"category" : "TaskIT2-Job",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SantiagoBragagnolo 7/16/2015 16:48",
+	"instvars" : [
+		 ],
+	"name" : "TKTTimeoutError",
+	"pools" : [
+		 ],
+	"super" : "Error",
+	"type" : "normal" }

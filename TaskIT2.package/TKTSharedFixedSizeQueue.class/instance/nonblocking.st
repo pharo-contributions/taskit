@@ -1,0 +1,3 @@
+configuration
+nonblocking
+	blocking := false.

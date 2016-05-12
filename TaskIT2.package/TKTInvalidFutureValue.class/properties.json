@@ -1,0 +1,14 @@
+{
+	"category" : "TaskIT2-Job-Futures",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SantiagoBragagnolo 7/16/2015 16:34",
+	"instvars" : [
+		 ],
+	"name" : "TKTInvalidFutureValue",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

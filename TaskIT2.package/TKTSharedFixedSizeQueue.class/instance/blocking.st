@@ -1,0 +1,3 @@
+configuration
+blocking
+	blocking := true.

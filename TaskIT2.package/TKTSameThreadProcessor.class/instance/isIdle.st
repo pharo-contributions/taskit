@@ -1,3 +1,0 @@
-testing
-isIdle
-	^ isProcessing not

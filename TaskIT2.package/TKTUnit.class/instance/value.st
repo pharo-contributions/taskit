@@ -1,3 +1,0 @@
-accessing
-value
-	^ block value

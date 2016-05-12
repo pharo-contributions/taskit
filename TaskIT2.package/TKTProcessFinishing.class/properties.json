@@ -1,0 +1,14 @@
+{
+	"category" : "TaskIT2-Kernel-Announcements",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SantiagoBragagnolo 7/16/2015 09:14",
+	"instvars" : [
+		 ],
+	"name" : "TKTProcessFinishing",
+	"pools" : [
+		 ],
+	"super" : "TKTProcessAnnouncement",
+	"type" : "normal" }

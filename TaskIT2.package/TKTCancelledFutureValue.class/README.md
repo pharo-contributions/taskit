@@ -1,0 +1,1 @@
+An cancelled future value is a value that represents an cancelled value

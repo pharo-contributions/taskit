@@ -1,0 +1,22 @@
+{
+	"category" : "TaskIT2-Builder",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SantiagoBragagnolo 7/27/2015 16:35",
+	"instvars" : [
+		"selector",
+		"receiver",
+		"runner",
+		"job",
+		"onFailure",
+		"onSuccess",
+		"onServiceFinalization",
+		"priority",
+		"arguments" ],
+	"name" : "TKTBuilder",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

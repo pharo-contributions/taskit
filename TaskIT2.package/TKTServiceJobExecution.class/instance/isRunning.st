@@ -1,0 +1,3 @@
+abstract
+isRunning
+	^ taskExecution isRunning

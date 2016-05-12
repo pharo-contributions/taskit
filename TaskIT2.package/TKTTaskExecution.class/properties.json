@@ -1,0 +1,16 @@
+{
+	"category" : "TaskIT2-Kernel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SantiagoBragagnolo 7/16/2015 15:04",
+	"instvars" : [
+		"task",
+		"onFailure",
+		"arguments" ],
+	"name" : "TKTTaskExecution",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

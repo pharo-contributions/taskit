@@ -1,0 +1,3 @@
+accessing
+nextOrNil
+	^ queue nextOrNil.

@@ -1,0 +1,19 @@
+{
+	"class" : {
+		"exampleAsyncTaskInANewProcess" : "SantiagoBragagnolo 7/27/2015 16:56",
+		"exampleAsyncTaskInANewProcessSugar" : "SantiagoBragagnolo 7/27/2015 17:42",
+		"exampleAsyncTaskInCallingProcess" : "SantiagoBragagnolo 7/27/2015 16:48",
+		"exampleAsyncTaskInCallingProcessSugar" : "SantiagoBragagnolo 7/27/2015 17:43",
+		"exampleServiceTaskInANewProcess" : "SantiagoBragagnolo 7/27/2015 17:47",
+		"exampleServiceTaskInANewProcessSugar" : "SantiagoBragagnolo 7/27/2015 17:45",
+		"exampleSimpleTaskWithFutureInANewProcess" : "SantiagoBragagnolo 7/27/2015 17:49",
+		"exampleSimpleTaskWithFutureInANewProcessSugar" : "SantiagoBragagnolo 7/27/2015 17:49",
+		"exampleSimpleTaskWithFutureInCallingProcess" : "SantiagoBragagnolo 7/27/2015 16:42",
+		"exampleSimpleTaskWithFutureInCallingProcessSugar" : "SantiagoBragagnolo 7/27/2015 17:50",
+		"exampleSimpleTaskWithResultInANewProcess" : "SantiagoBragagnolo 7/27/2015 17:51",
+		"exampleSimpleTaskWithResultInANewProcessSugar" : "SantiagoBragagnolo 7/27/2015 17:51",
+		"exampleSimpleTaskWithResultInCallingProcess" : "SantiagoBragagnolo 7/27/2015 16:42",
+		"exampleSimpleTaskWithResultInCallingProcessSugar" : "SantiagoBragagnolo 7/27/2015 17:51",
+		"spinOnce" : "SantiagoBragagnolo 7/27/2015 16:56" },
+	"instance" : {
+		"seeClassSide" : "SantiagoBragagnolo 7/27/2015 16:36" } }

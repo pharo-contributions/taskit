@@ -1,0 +1,15 @@
+{
+	"category" : "TaskIT2-Job-Futures",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		"future",
+		"cancelled" ],
+	"name" : "TKTLazyResult",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

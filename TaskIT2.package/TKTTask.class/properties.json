@@ -1,0 +1,14 @@
+{
+	"category" : "TaskIT2-Kernel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SantiagoBragagnolo 7/16/2015 13:49",
+	"instvars" : [
+		"messageSend" ],
+	"name" : "TKTTask",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

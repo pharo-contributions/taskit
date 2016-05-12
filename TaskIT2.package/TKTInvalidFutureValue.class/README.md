@@ -1,0 +1,1 @@
+An invalid future value is a value that represents an invalid value

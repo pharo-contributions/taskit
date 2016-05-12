@@ -1,1 +1,0 @@
-A TKTSameThreadProcessor is a processor object that executes at call. More than a processor is a processing place. 

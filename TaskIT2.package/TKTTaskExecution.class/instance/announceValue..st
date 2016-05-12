@@ -1,0 +1,3 @@
+announce
+announceValue: aValue
+	self subclassResponsibility

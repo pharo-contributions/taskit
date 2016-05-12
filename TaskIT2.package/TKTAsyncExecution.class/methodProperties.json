@@ -1,0 +1,17 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"debugErrors" : "SantiagoBragagnolo 7/28/2015 11:39",
+		"initialize" : "SantiagoBragagnolo 7/28/2015 11:18",
+		"invoke:" : "SantiagoBragagnolo 7/28/2015 11:19",
+		"invokeErrors:" : "SantiagoBragagnolo 7/28/2015 11:21",
+		"isError" : "SantiagoBragagnolo 7/28/2015 10:58",
+		"isSuccess" : "SantiagoBragagnolo 7/28/2015 10:58",
+		"noteFailure:" : "SantiagoBragagnolo 5/12/2016 12:11",
+		"noteSuccess:" : "SantiagoBragagnolo 5/12/2016 12:11",
+		"onError:" : "SantiagoBragagnolo 7/28/2015 11:23",
+		"onFailure:" : "SantiagoBragagnolo 7/28/2015 11:22",
+		"onSuccess:" : "SantiagoBragagnolo 7/28/2015 11:22",
+		"onSuccess:onFailure:" : "SantiagoBragagnolo 7/28/2015 10:55",
+		"uninstallTaskCallbalks" : "SantiagoBragagnolo 7/28/2015 12:57" } }

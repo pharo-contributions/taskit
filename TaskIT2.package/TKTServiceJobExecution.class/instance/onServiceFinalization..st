@@ -1,0 +1,3 @@
+actions
+onServiceFinalization: aCallback
+	taskExecution onLoopFinalization: aCallback

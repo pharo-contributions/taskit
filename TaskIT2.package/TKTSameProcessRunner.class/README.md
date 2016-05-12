@@ -1,0 +1,1 @@
+The 'SameProcessRunner' is a runner that implements run: for executing the task in the same method. There is not process but the caller one

@@ -1,0 +1,13 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"announceValue:" : "SantiagoBragagnolo 7/27/2015 17:17",
+		"asString" : "SantiagoBragagnolo 7/24/2015 16:03",
+		"initialize" : "SantiagoBragagnolo 7/24/2015 15:06",
+		"isRunning" : "SantiagoBragagnolo 7/24/2015 15:07",
+		"onLoopFinalization" : "SantiagoBragagnolo 7/24/2015 15:14",
+		"onLoopFinalization:" : "SantiagoBragagnolo 7/24/2015 15:12",
+		"stop" : "SantiagoBragagnolo 7/28/2015 14:47",
+		"value" : "SantiagoBragagnolo 7/27/2015 17:31",
+		"valueWithArguments:" : "SantiagoBragagnolo 7/24/2015 15:07" } }

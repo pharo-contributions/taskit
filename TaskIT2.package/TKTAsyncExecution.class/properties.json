@@ -1,0 +1,20 @@
+{
+	"category" : "TaskIT2-Job",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SantiagoBragagnolo 7/28/2015 11:12",
+	"instvars" : [
+		"successCallbacks",
+		"failureCallbacks",
+		"hasBeenDeployed",
+		"isSuccess",
+		"value",
+		"errors",
+		"errorCallbacks" ],
+	"name" : "TKTAsyncExecution",
+	"pools" : [
+		 ],
+	"super" : "TKTJobExecution",
+	"type" : "normal" }

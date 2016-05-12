@@ -1,0 +1,19 @@
+{
+	"class" : {
+		"canBeRunnedOn:" : "SantiagoBragagnolo 7/27/2015 17:06" },
+	"instance" : {
+		"canBeRunnedOn:" : "SantiagoBragagnolo 7/27/2015 17:05",
+		"cancel:" : "SantiagoBragagnolo 7/24/2015 14:34",
+		"cancelTaskExecution:on:" : "SantiagoBragagnolo 7/24/2015 14:33",
+		"createExecutionFor:on:" : "SantiagoBragagnolo 7/28/2015 14:42",
+		"createTaskExecution" : "SantiagoBragagnolo 7/28/2015 14:42",
+		"finalizeExecution:" : "SantiagoBragagnolo 7/24/2015 15:20",
+		"isService" : "SantiagoBragagnolo 7/27/2015 17:07",
+		"isSimpleAsync" : "SantiagoBragagnolo 7/27/2015 17:07",
+		"isSimpleSync" : "SantiagoBragagnolo 7/27/2015 17:07",
+		"runIn:" : "SantiagoBragagnolo 7/29/2015 14:29",
+		"runIn:at:" : "SantiagoBragagnolo 7/29/2015 14:27",
+		"runIn:withArguments:" : "SantiagoBragagnolo 7/29/2015 14:39",
+		"runIn:withArguments:at:" : "SantiagoBragagnolo 7/29/2015 14:32",
+		"task" : "SantiagoBragagnolo 7/27/2015 14:13",
+		"task:" : "SantiagoBragagnolo 7/27/2015 14:13" } }

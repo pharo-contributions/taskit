@@ -1,0 +1,16 @@
+{
+	"category" : "TaskIT2-Collections",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SantiagoBragagnolo 1/18/2016 11:29",
+	"instvars" : [
+		"queue",
+		"size",
+		"blocking" ],
+	"name" : "TKTSharedFixedSizeQueue",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

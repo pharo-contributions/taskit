@@ -1,0 +1,21 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"asResult" : "SantiagoBragagnolo 7/16/2015 16:59",
+		"basicGetValue" : "SantiagoBragagnolo 7/16/2015 16:39",
+		"deployError:" : "SantiagoBragagnolo 7/16/2015 16:14",
+		"deployValue:" : "SantiagoBragagnolo 7/16/2015 17:01",
+		"finalize" : "SantiagoBragagnolo 7/16/2015 16:10",
+		"initialize" : "SantiagoBragagnolo 7/17/2015 20:29",
+		"isDeployed" : "SantiagoBragagnolo 7/16/2015 16:09",
+		"isError" : "SantiagoBragagnolo 7/16/2015 16:10",
+		"isValueAvailable" : "SantiagoBragagnolo 7/16/2015 16:10",
+		"privateHasBeenCollected:" : "SantiagoBragagnolo 7/20/2015 20:55",
+		"value" : "SantiagoBragagnolo 7/16/2015 16:40",
+		"valueTimeoutMilliseconds:" : "SantiagoBragagnolo 7/16/2015 16:37",
+		"valueTimeoutMilliseconds:ifTimeout:" : "SantiagoBragagnolo 7/16/2015 16:38",
+		"valueTimeoutOcurred:" : "SantiagoBragagnolo 7/16/2015 16:47",
+		"valueTimeoutOcurred:ifTimeOut:" : "SantiagoBragagnolo 7/16/2015 16:38",
+		"wait" : "SantiagoBragagnolo 7/16/2015 16:41",
+		"waitForValue:" : "SantiagoBragagnolo 7/16/2015 16:40" } }

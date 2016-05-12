@@ -1,0 +1,3 @@
+verification
+cancel: aTaskExecution
+	self subclassResponsibility

@@ -1,0 +1,1 @@
+The 'LocalProcessRunner' is a runner that implements run: for executing the task in a new process. 
