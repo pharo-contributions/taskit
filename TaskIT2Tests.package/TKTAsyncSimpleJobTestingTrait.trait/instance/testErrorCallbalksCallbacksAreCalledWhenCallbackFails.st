@@ -1,8 +1,8 @@
 tests
 testErrorCallbalksCallbacksAreCalledWhenCallbackFails
 	| varCB1 |
-	jobExecution := job runIn: runner withArguments: {Object}.
-	jobExecution
+	self createRunningJobExecution.
+	self jobExecution
 		onSuccess: [ 1 / 0 ];
 		onError: [ :errs | varCB1 := errs at: 1 ].
 	20 milliSeconds wait.

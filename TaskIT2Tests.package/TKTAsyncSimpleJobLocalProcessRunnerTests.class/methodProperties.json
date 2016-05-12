@@ -2,17 +2,7 @@
 	"class" : {
 		 },
 	"instance" : {
-		"setUp" : "SantiagoBragagnolo 7/28/2015 12:42",
-		"tearDown" : "SantiagoBragagnolo 7/28/2015 12:52",
-		"testAllSuccessCallbacksAreCalled" : "SantiagoBragagnolo 5/12/2016 12:27",
-		"testAllSuccessCallbacksAreCalledEvenAfterExecution" : "SantiagoBragagnolo 7/28/2015 12:55",
-		"testAllSuccessCallbacksAreCalledWhenCallbackFails" : "SantiagoBragagnolo 7/28/2015 12:59",
-		"testCreateJobExecutionForARunnerAndTaskItAlwaysCreatesANewOne" : "SantiagoBragagnolo 7/28/2015 12:43",
-		"testCreateJobExecutionForARunnerAndTaskJobIsTheGivenOne" : "SantiagoBragagnolo 7/28/2015 12:43",
-		"testCreateJobExecutionForARunnerAndTaskOnFailureIMessageSend" : "SantiagoBragagnolo 7/28/2015 12:44",
-		"testCreateJobExecutionForARunnerAndTaskOnSuccessIsMessageSend" : "SantiagoBragagnolo 7/28/2015 12:44",
-		"testCreateJobExecutionForARunnerAndTaskTaskExcutionIsTheGivenOne" : "SantiagoBragagnolo 7/28/2015 12:45",
-		"testCreateJobExecutionForARunnerAndTaskTaskExecutionRunnerIsTheGivenOne" : "SantiagoBragagnolo 7/28/2015 12:45",
-		"testErrorCallbalksCallbacksAreCalledWhenCallbackFails" : "SantiagoBragagnolo 7/28/2015 13:02",
-		"testSuccessCallbackIsCalled" : "SantiagoBragagnolo 7/28/2015 12:57",
-		"testSuccessCallbackReceivesValue" : "SantiagoBragagnolo 7/28/2015 12:54" } }
+		"createRunningJobExecution" : "SantiagoBragagnolo 5/12/2016 16:00",
+		"createTestingTask" : "SantiagoBragagnolo 5/12/2016 15:54",
+		"setUp" : "SantiagoBragagnolo 5/12/2016 15:36",
+		"tearDown" : "SantiagoBragagnolo 5/12/2016 15:14" } }

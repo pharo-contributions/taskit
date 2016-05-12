@@ -1,3 +1,0 @@
-tests
-testCreateJobExecutionForARunnerAndTaskTaskExcutionIsTheGivenOne
-	self assert: taskExecution equals: jobExecution taskExecution.

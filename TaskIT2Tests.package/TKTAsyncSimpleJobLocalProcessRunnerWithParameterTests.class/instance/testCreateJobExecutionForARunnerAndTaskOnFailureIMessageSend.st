@@ -1,3 +1,0 @@
-tests
-testCreateJobExecutionForARunnerAndTaskOnFailureIMessageSend
-	self assert: (taskExecution onFailure isKindOf: MessageSend)

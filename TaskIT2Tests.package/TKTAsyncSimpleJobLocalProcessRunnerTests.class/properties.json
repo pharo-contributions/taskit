@@ -2,16 +2,15 @@
 	"category" : "TaskIT2Tests-Job",
 	"classinstvars" : [
 		 ],
+	"classtraitcomposition" : "TKTAsyncSimpleJobTestingTrait classTrait",
 	"classvars" : [
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		"job",
-		"runner",
-		"taskExecution",
-		"jobExecution" ],
+		 ],
 	"name" : "TKTAsyncSimpleJobLocalProcessRunnerTests",
 	"pools" : [
 		 ],
-	"super" : "TestCase",
+	"super" : "TKTAsyncSimpleJobAbstractTestCase",
+	"traitcomposition" : "TKTAsyncSimpleJobTestingTrait",
 	"type" : "normal" }

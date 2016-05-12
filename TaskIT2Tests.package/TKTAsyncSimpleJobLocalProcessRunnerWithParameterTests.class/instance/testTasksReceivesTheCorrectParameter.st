@@ -1,5 +1,5 @@
 tests
 testTasksReceivesTheCorrectParameter
-	jobExecution := job runIn: runner withArguments: {Object}.
+	jobExecution := self createRunningJobExecution.
 	10 milliSeconds wait.
 	self assert: receiver parameter equals: Object

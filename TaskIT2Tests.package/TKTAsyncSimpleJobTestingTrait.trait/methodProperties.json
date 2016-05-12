@@ -1,0 +1,16 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"testAllSuccessCallbacksAreCalled" : "SantiagoBragagnolo 5/12/2016 16:24",
+		"testAllSuccessCallbacksAreCalledEvenAfterExecution" : "SantiagoBragagnolo 5/12/2016 16:24",
+		"testAllSuccessCallbacksAreCalledWhenCallbackFails" : "SantiagoBragagnolo 5/12/2016 16:24",
+		"testCreateJobExecutionForARunnerAndTaskItAlwaysCreatesANewOne" : "SantiagoBragagnolo 5/12/2016 16:24",
+		"testCreateJobExecutionForARunnerAndTaskJobIsTheGivenOne" : "SantiagoBragagnolo 5/12/2016 16:24",
+		"testCreateJobExecutionForARunnerAndTaskOnFailureIMessageSend" : "SantiagoBragagnolo 5/12/2016 16:24",
+		"testCreateJobExecutionForARunnerAndTaskOnSuccessIsMessageSend" : "SantiagoBragagnolo 5/12/2016 16:24",
+		"testCreateJobExecutionForARunnerAndTaskTaskExcutionIsTheGivenOne" : "SantiagoBragagnolo 5/12/2016 16:24",
+		"testCreateJobExecutionForARunnerAndTaskTaskExecutionRunnerIsTheGivenOne" : "SantiagoBragagnolo 5/12/2016 16:24",
+		"testErrorCallbalksCallbacksAreCalledWhenCallbackFails" : "SantiagoBragagnolo 5/12/2016 16:24",
+		"testSuccessCallbackIsCalled" : "SantiagoBragagnolo 5/12/2016 16:24",
+		"testSuccessCallbackReceivesValue" : "SantiagoBragagnolo 5/12/2016 16:24" } }

@@ -1,10 +1,11 @@
 tests
-testAllSuccessCallbacksAreCalled
+testAllSuccessCallbacksAreCalledWhenCallbackFails
 	| varCB1 varCB2 |
-	jobExecution := job runIn: runner withArguments: {Object}.
+	self createRunningJobExecution.
 	varCB1 := false.
 	varCB2 := false.
-	jobExecution
+	self jobExecution
+		onSuccess: [ 1 / 0 ];
 		onSuccess: [ varCB1 := true ];
 		onSuccess: [ varCB2 := true ].
 	20 milliSeconds wait.
