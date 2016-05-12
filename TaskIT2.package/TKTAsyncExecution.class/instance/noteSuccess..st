@@ -1,7 +1,6 @@
 notices
 noteSuccess: aValue
-	self halt.
-	self uninstallTaskCallbalks.
+	self cleanupExecution.
 	hasBeenDeployed := true.
 	isSuccess := true.
 	value := aValue.

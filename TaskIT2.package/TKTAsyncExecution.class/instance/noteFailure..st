@@ -1,7 +1,6 @@
 notices
 noteFailure: anError
-	self halt.
-	self uninstallTaskCallbalks.
+	self cleanupExecution.
 	hasBeenDeployed := true.
 	isSuccess := false.
 	value := anError.

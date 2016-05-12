@@ -1,3 +1,3 @@
 testing
 isRelatedWith: anObject
-	^ messageSend receiver = anObject
+	^ messageSend ifNotNil: [ messageSend receiver = anObject ] ifNil: [ false ]
