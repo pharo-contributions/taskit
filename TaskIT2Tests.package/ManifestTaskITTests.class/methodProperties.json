@@ -1,0 +1,7 @@
+{
+	"class" : {
+		"ruleRBBadMessageRuleV1FalsePositive" : "SantiagoBragagnolo 7/28/2015 13:03",
+		"ruleRBClassNotReferencedRuleV1FalsePositive" : "SantiagoBragagnolo 7/28/2015 13:24",
+		"ruleRBTempsReadBeforeWrittenRuleV1FalsePositive" : "SantiagoBragagnolo 7/28/2015 13:03" },
+	"instance" : {
+		 } }

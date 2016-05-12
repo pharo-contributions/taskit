@@ -1,0 +1,16 @@
+{
+	"category" : "TaskIT2Tests-Kernel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"task",
+		"runner",
+		"executionSucceed" ],
+	"name" : "TKTTaskIsReducedIntoAResultTestSameThreadRunner",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

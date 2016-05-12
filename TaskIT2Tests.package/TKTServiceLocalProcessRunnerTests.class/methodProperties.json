@@ -1,0 +1,11 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"setUp" : "SantiagoBragagnolo 7/28/2015 14:59",
+		"tearDown" : "SantiagoBragagnolo 7/24/2015 14:23",
+		"testConfigureRuntimeFailureIsTransmitedToTaskExcution" : "SantiagoBragagnolo 7/28/2015 12:29",
+		"testConfigureRuntimeSuccessIsTransmitedToTaskExcution" : "SantiagoBragagnolo 7/28/2015 12:31",
+		"testIsNotRunningAfterCancel" : "SantiagoBragagnolo 7/24/2015 14:25",
+		"testIsRunningMeanwhileRunning" : "SantiagoBragagnolo 7/24/2015 14:24",
+		"testTaskExecutionIsNeverTheSame" : "SantiagoBragagnolo 7/28/2015 12:26" } }

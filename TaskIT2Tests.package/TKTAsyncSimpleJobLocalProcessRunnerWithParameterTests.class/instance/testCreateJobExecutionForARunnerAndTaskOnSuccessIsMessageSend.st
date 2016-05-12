@@ -1,0 +1,3 @@
+tests
+testCreateJobExecutionForARunnerAndTaskOnSuccessIsMessageSend
+	self assert: (taskExecution onSuccess isKindOf: MessageSend)

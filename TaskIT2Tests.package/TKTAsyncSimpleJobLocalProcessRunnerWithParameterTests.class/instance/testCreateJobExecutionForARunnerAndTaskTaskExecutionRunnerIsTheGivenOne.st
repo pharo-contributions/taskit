@@ -1,0 +1,3 @@
+tests
+testCreateJobExecutionForARunnerAndTaskTaskExecutionRunnerIsTheGivenOne
+	self assert: runner equals: jobExecution runner.

@@ -1,0 +1,7 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"setUp" : "SantiagoBragagnolo 1/18/2016 11:53",
+		"testSizeIsNeverBiggerThan2" : "SantiagoBragagnolo 1/18/2016 11:53",
+		"testValueIsAlwaysTheNewer" : "SantiagoBragagnolo 1/18/2016 11:54" } }

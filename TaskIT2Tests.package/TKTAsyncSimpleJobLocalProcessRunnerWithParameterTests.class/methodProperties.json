@@ -1,0 +1,19 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"setUp" : "SantiagoBragagnolo 7/29/2015 14:45",
+		"tearDown" : "SantiagoBragagnolo 7/29/2015 14:43",
+		"testAllSuccessCallbacksAreCalled" : "SantiagoBragagnolo 7/29/2015 14:45",
+		"testAllSuccessCallbacksAreCalledEvenAfterExecution" : "SantiagoBragagnolo 7/29/2015 14:45",
+		"testAllSuccessCallbacksAreCalledWhenCallbackFails" : "SantiagoBragagnolo 7/29/2015 14:45",
+		"testCreateJobExecutionForARunnerAndTaskItAlwaysCreatesANewOne" : "SantiagoBragagnolo 7/29/2015 14:43",
+		"testCreateJobExecutionForARunnerAndTaskJobIsTheGivenOne" : "SantiagoBragagnolo 7/29/2015 14:43",
+		"testCreateJobExecutionForARunnerAndTaskOnFailureIMessageSend" : "SantiagoBragagnolo 7/29/2015 14:43",
+		"testCreateJobExecutionForARunnerAndTaskOnSuccessIsMessageSend" : "SantiagoBragagnolo 7/29/2015 14:43",
+		"testCreateJobExecutionForARunnerAndTaskTaskExcutionIsTheGivenOne" : "SantiagoBragagnolo 7/29/2015 14:43",
+		"testCreateJobExecutionForARunnerAndTaskTaskExecutionRunnerIsTheGivenOne" : "SantiagoBragagnolo 7/29/2015 14:43",
+		"testErrorCallbalksCallbacksAreCalledWhenCallbackFails" : "SantiagoBragagnolo 7/29/2015 14:46",
+		"testSuccessCallbackIsCalled" : "SantiagoBragagnolo 7/29/2015 14:46",
+		"testSuccessCallbackReceivesValue" : "SantiagoBragagnolo 7/29/2015 14:46",
+		"testTasksReceivesTheCorrectParameter" : "SantiagoBragagnolo 7/29/2015 14:46" } }

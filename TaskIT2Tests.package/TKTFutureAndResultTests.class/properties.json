@@ -1,0 +1,14 @@
+{
+	"category" : "TaskIT2Tests-Job",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "TKTFutureAndResultTests",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

@@ -1,0 +1,11 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"setUp" : "SantiagoBragagnolo 7/24/2015 15:23",
+		"testCreateFutureForARunnerAndTaskItAlwaysCreatesANewFuture" : "SantiagoBragagnolo 7/24/2015 15:24",
+		"testCreateFutureForARunnerAndTaskJobIsTheGivenOne" : "SantiagoBragagnolo 7/20/2015 18:11",
+		"testCreateFutureForARunnerAndTaskOnFailureIsWeakSend" : "SantiagoBragagnolo 7/20/2015 18:09",
+		"testCreateFutureForARunnerAndTaskOnSuccessIsWeakSend" : "SantiagoBragagnolo 7/20/2015 18:11",
+		"testCreateFutureForARunnerAndTaskTaskExcutionIsTheGivenOne" : "SantiagoBragagnolo 7/20/2015 18:11",
+		"testCreateFutureForARunnerAndTaskTaskExecutionRunnerIsTheGivenOne" : "SantiagoBragagnolo 7/20/2015 18:10" } }

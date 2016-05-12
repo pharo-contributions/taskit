@@ -1,0 +1,17 @@
+{
+	"category" : "TaskIT2Tests-Job",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"job",
+		"runner",
+		"taskExecution",
+		"future" ],
+	"name" : "TKTSimpleJobLocalProcessRunnerTests",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

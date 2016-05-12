@@ -1,0 +1,3 @@
+tests
+testCreateJobExecutionForARunnerAndTaskJobIsTheGivenOne
+	self assert: job equals: jobExecution job

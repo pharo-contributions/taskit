@@ -1,0 +1,14 @@
+{
+	"category" : "TaskIT2Tests-Collections",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"queue" ],
+	"name" : "TKTSharedFixedSizeQueueTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }
