@@ -146,7 +146,7 @@ We will not breakdown all this code, because is the same code as the future exam
 
 ### Details
 
-    In this case of processing, where the processing has meaning because someone will eventually use the result, the garbage collecting of the future or result is reason enough to cancel the execution of the process. If you don't care about the result, then you are more likely using the asynchronous approach. 
+  In this case of processing, where the processing has meaning because someone will eventually use the result, the garbage collecting of the future or result is reason enough to cancel the execution of the process. If you don't care about the result, then you are more likely using the asynchronous approach. 
 
 
 ## Looping service execution 
