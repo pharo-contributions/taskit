@@ -8,6 +8,7 @@
 		"cancel" : "SantiagoBragagnolo 3/22/2013 14:35",
 		"deployValue:" : "SantiagoBragagnolo 11/3/2013 12:04",
 		"doesNotUnderstand:" : "GuillermoPolito 1/30/2014 10:38",
+		"hash" : "SantiagoBragagnolo 5/30/2016 16:03",
 		"initialize" : "SantiagoBragagnolo 7/16/2015 16:51",
 		"isKindOf:" : "GuillermoPolito 1/25/2014 00:14",
 		"isResult" : "SantiagoBragagnolo 11/14/2013 22:03",
@@ -15,4 +16,5 @@
 		"perform:withArguments:" : "SantiagoBragagnolo 7/16/2015 17:03",
 		"setFuture:" : "SantiagoBragagnolo 7/16/2015 17:02",
 		"size" : "SantiagoBragagnolo 11/10/2013 23:26",
+		"thisObjectHash" : "SantiagoBragagnolo 5/31/2016 14:27",
 		"value" : "SantiagoBragagnolo 11/8/2013 22:09" } }

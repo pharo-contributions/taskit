@@ -1,3 +1,5 @@
 actions
 onServiceFinalization: aCallback
-	taskExecution onLoopFinalization: aCallback
+	taskExecution
+		onLoopFinalization: [ aCallback value.
+			semaphore signal ]

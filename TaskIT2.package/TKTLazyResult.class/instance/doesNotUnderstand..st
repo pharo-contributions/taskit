@@ -1,4 +1,4 @@
-message handling
+reflective operations
 doesNotUnderstand: aMessage
 	
 	cancelled ifTrue: [

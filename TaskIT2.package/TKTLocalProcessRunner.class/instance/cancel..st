@@ -1,4 +1,4 @@
-cancel
+editing keys
 cancel: aTKTTaskExecution
 	process ifNil: [ ^ self ].
 	process

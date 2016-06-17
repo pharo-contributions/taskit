@@ -1,3 +1,3 @@
-forwarding
+accessing
 size 	
 	^ self perform: #size.

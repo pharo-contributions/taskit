@@ -1,4 +1,4 @@
-private
+deploy
 deployValue:  aValue
 	| realValue |
 

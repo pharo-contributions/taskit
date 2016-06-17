@@ -1,3 +1,3 @@
-task building
+instance creation
 withArguments: anArgumentArray
 	arguments := anArgumentArray

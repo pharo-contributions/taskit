@@ -1,4 +1,4 @@
-value waiting
+waiting
 wait
 	self isValueAvailable
 		ifTrue: [ ^ self ].

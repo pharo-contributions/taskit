@@ -1,4 +1,4 @@
-as yet unclassified
+accessing
 cleanupExecution
 	runner := nil.
 	taskExecution ifNotNil: [ taskExecution cleanupExecution ].

@@ -1,4 +1,4 @@
-converting
+evaluating
 valueWithArguments: aSequenceOfArguments
 	keepLooping := true.
 	[ keepLooping ] whileTrue: [ super valueWithArguments: aSequenceOfArguments ].

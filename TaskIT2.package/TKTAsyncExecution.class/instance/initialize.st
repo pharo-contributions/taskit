@@ -5,4 +5,5 @@ initialize
 	failureCallbacks := OrderedCollection new.
 	errors := OrderedCollection new.
 	errorCallbacks := OrderedCollection new.
-	hasBeenDeployed := false
+	hasBeenDeployed := false.
+	semaphore := Semaphore new. 

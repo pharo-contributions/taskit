@@ -12,7 +12,8 @@
 		"isSuccess",
 		"value",
 		"errors",
-		"errorCallbacks" ],
+		"errorCallbacks",
+		"semaphore" ],
 	"name" : "TKTAsyncExecution",
 	"pools" : [
 		 ],

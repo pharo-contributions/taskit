@@ -1,3 +1,3 @@
-private - verifications
+testing
 isCompatible
 	^ job canBeRunnedOn: runner

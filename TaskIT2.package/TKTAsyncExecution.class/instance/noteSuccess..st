@@ -4,4 +4,5 @@ noteSuccess: aValue
 	hasBeenDeployed := true.
 	isSuccess := true.
 	value := aValue.
-	self invoke: successCallbacks
+	self invoke: successCallbacks.
+	semaphore signal.

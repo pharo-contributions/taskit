@@ -1,3 +1,3 @@
-task building
+accessing
 to: anObject
 	receiver := anObject.

@@ -1,6 +1,7 @@
 {
 	"class" : {
 		"ruleBadMessageRuleV1FalsePositive" : "SantiagoBragagnolo 7/28/2015 14:51",
+		"ruleClassNotReferencedRuleV1FalsePositive" : "SantiagoBragagnolo 5/31/2016 10:44",
 		"ruleCodeCruftLeftInMethodsRuleV1FalsePositive" : "SantiagoBragagnolo 7/28/2015 14:51",
 		"ruleGuardClauseRuleV1FalsePositive" : "SantiagoBragagnolo 7/27/2015 11:44",
 		"ruleImplementedNotSentRuleV1FalsePositive" : "SantiagoBragagnolo 7/28/2015 14:51",

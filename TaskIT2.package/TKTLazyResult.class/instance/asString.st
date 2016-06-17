@@ -1,3 +1,3 @@
-forwarding
+converting
 asString 	
 	^ self perform: #asString.

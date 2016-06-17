@@ -1,4 +1,4 @@
-converting
+accessing
 value
 	keepLooping := true.
 	[ keepLooping ] whileTrue: [ super value ].

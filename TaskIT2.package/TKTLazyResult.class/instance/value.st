@@ -1,3 +1,3 @@
-forwarding
+accessing
 value 	
 	^ self perform: #value.

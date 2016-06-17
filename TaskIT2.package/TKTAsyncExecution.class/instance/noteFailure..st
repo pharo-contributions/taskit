@@ -4,4 +4,5 @@ noteFailure: anError
 	hasBeenDeployed := true.
 	isSuccess := false.
 	value := anError.
-	self invoke: failureCallbacks
+	self invoke: failureCallbacks.
+	semaphore signal.

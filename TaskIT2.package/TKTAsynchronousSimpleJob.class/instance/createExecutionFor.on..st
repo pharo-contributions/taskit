@@ -1,4 +1,4 @@
-private
+evaluating
 createExecutionFor: aTaskExecution on: aRunner
 	| jobExecution |
 	jobExecution := TKTAsyncExecution new

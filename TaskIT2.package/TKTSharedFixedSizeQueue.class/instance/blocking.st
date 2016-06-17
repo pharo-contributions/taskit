@@ -1,3 +1,3 @@
-configuration
+accessing
 blocking
 	blocking := true.
