@@ -24,4 +24,5 @@ taskItProcessesTable
 						selectRowIndex: 1;
 						showFirstRowSelection;
 						beMultipleSelection;
+						beResizable;
 						yourself ] ]

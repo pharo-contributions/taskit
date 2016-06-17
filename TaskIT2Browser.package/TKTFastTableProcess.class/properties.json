@@ -10,7 +10,6 @@
 		"manager",
 		"window",
 		"systable",
-		"systemDataSoruce",
 		"systemDataSource",
 		"processDataSource" ],
 	"name" : "TKTFastTableProcess",
