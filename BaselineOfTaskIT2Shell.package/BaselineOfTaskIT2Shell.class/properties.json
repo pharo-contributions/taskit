@@ -1,0 +1,14 @@
+{
+	"category" : "BaselineOfTaskIT2Shell",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SantiagoBragagnolo 6/17/2016 13:54",
+	"instvars" : [
+		 ],
+	"name" : "BaselineOfTaskIT2Shell",
+	"pools" : [
+		 ],
+	"super" : "BaselineOf",
+	"type" : "normal" }

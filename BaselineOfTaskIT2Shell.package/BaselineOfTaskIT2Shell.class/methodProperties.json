@@ -1,0 +1,11 @@
+{
+	"class" : {
+		"DevelopmentSupport" : "SantiagoBragagnolo 6/17/2016 13:52",
+		"baseConfigurationClassIfAbsent:" : "SantiagoBragagnolo 6/17/2016 13:52",
+		"ensureMetacelloBaseConfiguration" : "SantiagoBragagnolo 6/17/2016 13:52",
+		"isMetacelloConfig" : "SantiagoBragagnolo 6/17/2016 13:52",
+		"load" : "SantiagoBragagnolo 6/17/2016 13:52",
+		"loadBleedingEdge" : "SantiagoBragagnolo 6/17/2016 13:52",
+		"loadDevelopment" : "SantiagoBragagnolo 6/17/2016 13:52" },
+	"instance" : {
+		"baseline:" : "SantiagoBragagnolo 6/17/2016 13:54" } }
