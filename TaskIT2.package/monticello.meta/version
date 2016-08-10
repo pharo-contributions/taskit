@@ -1,2 +1,2 @@
-(name 'TaskIT2-guille.7' message 'Adding exception handling in runners' id 'd9f2edb8-277c-4bb2-a502-1aa64011460f' date '10 August 2016' time '4:15:52.344196 pm' author 'GuillermoPolito' ancestors ((name 'TaskIT2-guille.6' message '- Splitted TaskIT packages between basic packages and extras- Added worker- Added worker pool- Added services
-' id '7cd49aa4-733b-5fc5-af62-5ffa76323769' date '10 August 2016' time '3:26:40 pm' author 'guille' ancestors () stepChildren ())) stepChildren ())
+(name 'TaskIT2-guille.8' message '- Fixed exception handling in runners- Added Service manager' id '88b363a2-3424-4a76-8454-c50706f221d7' date '10 August 2016' time '5:21:02.410008 pm' author 'GuillermoPolito' ancestors ((name 'TaskIT2-guille.7' message 'Adding exception handling in runners
+' id 'b8678945-93bf-53e3-afbd-a5566fee2fcb' date '10 August 2016' time '4:16:05 pm' author 'guille' ancestors () stepChildren ())) stepChildren ())

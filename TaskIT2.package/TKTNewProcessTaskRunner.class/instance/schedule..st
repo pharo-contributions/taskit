@@ -1,4 +1,4 @@
 running
 schedule: aTask
 	
-	aTask fork
+	[ self executeTask: aTask ] fork
