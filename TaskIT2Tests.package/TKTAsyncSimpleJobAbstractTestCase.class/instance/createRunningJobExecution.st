@@ -1,3 +1,0 @@
-convenience
-createRunningJobExecution
-	jobExecution := self subclassResponsibility

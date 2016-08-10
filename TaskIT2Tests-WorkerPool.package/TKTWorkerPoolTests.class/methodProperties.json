@@ -1,6 +1,0 @@
-{
-	"class" : {
-		 },
-	"instance" : {
-		"testWorkerPoolDoesNotExceedPoolSize" : "GuillermoPolito 8/10/2016 14:39",
-		"testWorkerPoolDoesNotExceedPoolSizeWhenSchedulingTasksInParallel" : "GuillermoPolito 8/10/2016 14:39" } }

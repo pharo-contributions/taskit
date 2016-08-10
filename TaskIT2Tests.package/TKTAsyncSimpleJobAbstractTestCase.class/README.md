@@ -1,1 +1,0 @@
-Testing superclass with needed accessors and basic definitions 

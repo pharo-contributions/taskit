@@ -1,1 +1,0 @@
-Trait defining a set of tests for asynchronous jobs with and without parameters.

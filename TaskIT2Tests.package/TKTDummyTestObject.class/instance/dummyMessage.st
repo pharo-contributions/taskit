@@ -1,3 +1,0 @@
-testing messages
-dummyMessage
-	^ self

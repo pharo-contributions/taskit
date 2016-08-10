@@ -1,2 +1,0 @@
-(name 'TaskIT2Tests-SantiagoBragagnolo.4' message '- Splitted TaskIT packages between basic packages and extras- Added worker- Added worker pool- Added services' id '7897c085-cb0d-481f-a54c-32d97a1910dd' date '10 August 2016' time '3:26:43.162297 pm' author 'GuillermoPolito' ancestors ((name 'TaskIT2Tests-SantiagoBragagnolo.3' message 'Removing some tests that doesnt make sense any more
-' id '20511784-cdb6-501b-be50-6b9149202833' date '17 June 2016' time '1:50:48 pm' author 'SantiagoBragagnolo' ancestors () stepChildren ())) stepChildren ())

@@ -1,3 +1,0 @@
-as yet unclassified
-createTestingTask
-	self subclassResponsibility

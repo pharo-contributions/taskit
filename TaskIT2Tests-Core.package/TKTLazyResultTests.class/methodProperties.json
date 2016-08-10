@@ -1,8 +1,0 @@
-{
-	"class" : {
-		 },
-	"instance" : {
-		"testDeployResult" : "GuillermoPolito 8/9/2016 16:09",
-		"testDeployValueIntoFuture" : "GuillermoPolito 8/9/2016 16:54",
-		"testResultBecomes" : "GuillermoPolito 8/9/2016 16:54",
-		"testStickyFutureResultLazyInstantiation" : "GuillermoPolito 8/9/2016 16:54" } }
