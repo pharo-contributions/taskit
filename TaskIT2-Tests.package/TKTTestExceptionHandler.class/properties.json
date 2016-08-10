@@ -1,0 +1,14 @@
+{
+	"category" : "TaskIT2-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"error" ],
+	"name" : "TKTTestExceptionHandler",
+	"pools" : [
+		 ],
+	"super" : "TKTExceptionHandler",
+	"type" : "normal" }

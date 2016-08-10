@@ -1,0 +1,8 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"divideBy0" : "SantiagoBragagnolo 6/17/2016 13:50:48",
+		"setUp" : "SantiagoBragagnolo 6/17/2016 13:50:48",
+		"testRunATaskFailsFromTheSameThread" : "SantiagoBragagnolo 6/17/2016 13:50:48",
+		"testRunTheTaskRunsAndInformsTheError" : "SantiagoBragagnolo 6/17/2016 13:50:48" } }

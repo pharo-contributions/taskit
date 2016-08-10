@@ -1,0 +1,16 @@
+{
+	"category" : "TaskIT2-Tests-Old",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"task",
+		"runner",
+		"executionFailed" ],
+	"name" : "TKTTaskFailsTestSameThreadRunner",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

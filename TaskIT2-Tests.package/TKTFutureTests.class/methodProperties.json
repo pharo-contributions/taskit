@@ -1,0 +1,14 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"testFutureCollectFailsOnFailure" : "GuillermoPolito 8/9/2016 17:28",
+		"testFutureCollectSuccessOnSuccess" : "GuillermoPolito 8/9/2016 17:27",
+		"testFutureFailureCallbackIsCalledAfterFailureIsDeployed" : "GuillermoPolito 8/9/2016 17:23",
+		"testFutureFailureCallbackIsCalledIfFailureWasAlreadyDeployed" : "GuillermoPolito 8/9/2016 17:20",
+		"testFutureIsFinishedIfFailureWasAlreadyDeployed" : "GuillermoPolito 8/9/2016 17:51",
+		"testFutureIsFinishedIfValueWasAlreadyDeployed" : "GuillermoPolito 8/9/2016 17:51",
+		"testFutureSuccessCallbackIsCalledAfterValueIsDeployed" : "GuillermoPolito 8/9/2016 16:58",
+		"testFutureSuccessCallbackIsCalledIfValueWasAlreadyDeployed" : "GuillermoPolito 8/9/2016 17:20",
+		"testFutureSuccessCallbackIsNotCalledIfFailureWasAlreadyDeployed" : "GuillermoPolito 8/9/2016 17:21",
+		"testNewFutureIsNotFinished" : "GuillermoPolito 8/9/2016 17:49" } }
