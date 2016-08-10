@@ -1,0 +1,14 @@
+{
+	"category" : "TaskIT2Examples",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SantiagoBragagnolo 7/27/2015 17:18",
+	"instvars" : [
+		 ],
+	"name" : "TKTExamples",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }
