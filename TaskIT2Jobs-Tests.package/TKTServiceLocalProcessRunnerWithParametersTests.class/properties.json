@@ -1,0 +1,19 @@
+{
+	"category" : "TaskIT2Jobs-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"job",
+		"runner",
+		"callbackOnFailure",
+		"jobExecution",
+		"callbackOnServiceFinalization",
+		"receiver" ],
+	"name" : "TKTServiceLocalProcessRunnerWithParametersTests",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

@@ -1,0 +1,1 @@
+Just a dummy object for sending messages. 

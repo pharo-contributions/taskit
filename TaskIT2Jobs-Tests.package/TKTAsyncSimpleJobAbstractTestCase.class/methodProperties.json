@@ -1,0 +1,12 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"createPausedJobExecution" : "SantiagoBragagnolo 6/17/2016 13:50:48",
+		"createRunningJobExecution" : "SantiagoBragagnolo 6/17/2016 13:50:48",
+		"createTestingTask" : "SantiagoBragagnolo 6/17/2016 13:50:48",
+		"job" : "SantiagoBragagnolo 6/17/2016 13:50:48",
+		"jobExecution" : "SantiagoBragagnolo 6/17/2016 13:50:48",
+		"runner" : "SantiagoBragagnolo 6/17/2016 13:50:48",
+		"setUp" : "SantiagoBragagnolo 6/17/2016 13:50:48",
+		"taskExecution" : "SantiagoBragagnolo 6/17/2016 13:50:48" } }

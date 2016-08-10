@@ -1,0 +1,3 @@
+testing messages
+dummyMessage
+	^ self

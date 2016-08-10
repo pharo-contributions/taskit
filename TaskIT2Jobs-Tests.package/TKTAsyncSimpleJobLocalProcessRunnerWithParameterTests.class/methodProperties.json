@@ -1,0 +1,21 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"createRunningJobExecution" : "SantiagoBragagnolo 6/17/2016 13:50:48",
+		"createTestingTask" : "SantiagoBragagnolo 6/17/2016 13:50:48",
+		"setUp" : "SantiagoBragagnolo 6/17/2016 13:50:48",
+		"tearDown" : "SantiagoBragagnolo 6/17/2016 13:50:48",
+		"testAllSuccessCallbacksAreCalled" : "",
+		"testAllSuccessCallbacksAreCalledEvenAfterExecution" : "",
+		"testAllSuccessCallbacksAreCalledWhenCallbackFails" : "",
+		"testCreateJobExecutionForARunnerAndTaskItAlwaysCreatesANewOne" : "",
+		"testCreateJobExecutionForARunnerAndTaskJobIsTheGivenOne" : "",
+		"testCreateJobExecutionForARunnerAndTaskOnFailureIMessageSend" : "",
+		"testCreateJobExecutionForARunnerAndTaskOnSuccessIsMessageSend" : "",
+		"testCreateJobExecutionForARunnerAndTaskTaskExcutionIsTheGivenOne" : "",
+		"testCreateJobExecutionForARunnerAndTaskTaskExecutionRunnerIsTheGivenOne" : "",
+		"testErrorCallbalksCallbacksAreCalledWhenCallbackFails" : "",
+		"testSuccessCallbackIsCalled" : "",
+		"testSuccessCallbackReceivesValue" : "",
+		"testTasksReceivesTheCorrectParameter" : "SantiagoBragagnolo 6/17/2016 13:50:48" } }

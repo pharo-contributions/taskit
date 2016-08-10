@@ -1,0 +1,17 @@
+{
+	"category" : "TaskIT2Jobs-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SantiagoBragagnolo 5/12/2016 16:26",
+	"instvars" : [
+		"job",
+		"runner",
+		"taskExecution",
+		"jobExecution" ],
+	"name" : "TKTAsyncSimpleJobAbstractTestCase",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }
