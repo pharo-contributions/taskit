@@ -1,0 +1,18 @@
+{
+	"category" : "TaskIT2-OLD",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SantiagoBragagnolo 7/16/2015 16:34",
+	"instvars" : [
+		"isDeployed",
+		"error",
+		"value",
+		"semaphore",
+		"result" ],
+	"name" : "TKTFutureOLD",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

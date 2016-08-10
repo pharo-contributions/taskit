@@ -1,8 +1,12 @@
 initialization
 initialize
+
 	super initialize.
-	isDeployed := false.
-	value := nil.
-	error := nil.
-	semaphore := Semaphore new.
-	
+	result := TKTFutureNotFinished new future: self.
+
+	valueSemaphore := Semaphore new.
+	timeoutMicroseconds := self class defaultTimeout.
+	timeoutCallback := [ TKTTimeoutException signal ].
+
+	exceptionCallbacks := OrderedCollection new.
+	resultCallbacks := OrderedCollection new.

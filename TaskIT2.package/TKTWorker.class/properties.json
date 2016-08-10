@@ -1,0 +1,14 @@
+{
+	"category" : "TaskIT2-Worker",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "GuillermoPolito 8/8/2016 14:48",
+	"instvars" : [
+		"process" ],
+	"name" : "TKTWorker",
+	"pools" : [
+		 ],
+	"super" : "TKTAbstractWorker",
+	"type" : "normal" }

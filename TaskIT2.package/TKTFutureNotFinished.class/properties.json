@@ -1,0 +1,14 @@
+{
+	"category" : "TaskIT2-Futures",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"future" ],
+	"name" : "TKTFutureNotFinished",
+	"pools" : [
+		 ],
+	"super" : "TKTFutureState",
+	"type" : "normal" }

@@ -1,0 +1,4 @@
+callbacks
+onFailureDo: aBlockClosure 
+	
+	"nothing"

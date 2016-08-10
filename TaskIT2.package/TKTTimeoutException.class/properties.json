@@ -1,0 +1,14 @@
+{
+	"category" : "TaskIT2-Futures",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "TKTTimeoutException",
+	"pools" : [
+		 ],
+	"super" : "Error",
+	"type" : "normal" }

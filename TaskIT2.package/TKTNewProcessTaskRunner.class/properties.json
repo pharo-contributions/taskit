@@ -1,0 +1,14 @@
+{
+	"category" : "TaskIT2-Kernel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "TKTNewProcessTaskRunner",
+	"pools" : [
+		 ],
+	"super" : "TKTRunner",
+	"type" : "normal" }

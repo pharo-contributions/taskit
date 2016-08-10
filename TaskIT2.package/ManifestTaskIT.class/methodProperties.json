@@ -1,14 +1,14 @@
 {
 	"class" : {
-		"ruleBadMessageRuleV1FalsePositive" : "SantiagoBragagnolo 7/28/2015 14:51",
-		"ruleClassNotReferencedRuleV1FalsePositive" : "SantiagoBragagnolo 5/31/2016 10:44",
-		"ruleCodeCruftLeftInMethodsRuleV1FalsePositive" : "SantiagoBragagnolo 7/28/2015 14:51",
-		"ruleGuardClauseRuleV1FalsePositive" : "SantiagoBragagnolo 7/27/2015 11:44",
-		"ruleImplementedNotSentRuleV1FalsePositive" : "SantiagoBragagnolo 7/28/2015 14:51",
-		"ruleInconsistentMethodClassificationRuleV1FalsePositive" : "SantiagoBragagnolo 7/27/2015 16:01",
-		"ruleRBBadMessageRuleV1FalsePositive" : "SantiagoBragagnolo 7/28/2015 14:41",
-		"ruleRBClassNotReferencedRuleV1FalsePositive" : "SantiagoBragagnolo 7/28/2015 13:24",
-		"ruleRBCodeCruftLeftInMethodsRuleV1FalsePositive" : "SantiagoBragagnolo 7/28/2015 14:41",
-		"ruleRBMissingYourselfRuleV1FalsePositive" : "SantiagoBragagnolo 7/27/2015 18:01" },
+		"ruleBadMessageRuleV1FalsePositive" : "SantiagoBragagnolo 6/17/2016 13:49:27",
+		"ruleClassNotReferencedRuleV1FalsePositive" : "SantiagoBragagnolo 6/17/2016 13:49:27",
+		"ruleCodeCruftLeftInMethodsRuleV1FalsePositive" : "SantiagoBragagnolo 6/17/2016 13:49:27",
+		"ruleGuardClauseRuleV1FalsePositive" : "SantiagoBragagnolo 6/17/2016 13:49:27",
+		"ruleImplementedNotSentRuleV1FalsePositive" : "SantiagoBragagnolo 6/17/2016 13:49:27",
+		"ruleInconsistentMethodClassificationRuleV1FalsePositive" : "GuillermoPolito 8/9/2016 16:54",
+		"ruleRBBadMessageRuleV1FalsePositive" : "SantiagoBragagnolo 6/17/2016 13:49:27",
+		"ruleRBClassNotReferencedRuleV1FalsePositive" : "SantiagoBragagnolo 6/17/2016 13:49:27",
+		"ruleRBCodeCruftLeftInMethodsRuleV1FalsePositive" : "SantiagoBragagnolo 6/17/2016 13:49:27",
+		"ruleRBMissingYourselfRuleV1FalsePositive" : "SantiagoBragagnolo 6/17/2016 13:49:27" },
 	"instance" : {
 		 } }

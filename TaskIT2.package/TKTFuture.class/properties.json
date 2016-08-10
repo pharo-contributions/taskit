@@ -1,18 +1,21 @@
 {
-	"category" : "TaskIT2-Job",
+	"category" : "TaskIT2-Futures",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "SantiagoBragagnolo 7/16/2015 16:34",
+	"commentStamp" : "",
 	"instvars" : [
-		"isDeployed",
-		"error",
-		"value",
-		"semaphore",
-		"result" ],
+		"block",
+		"result",
+		"valueSemaphore",
+		"timeoutMicroseconds",
+		"timeoutCallback",
+		"exceptionCallback",
+		"resultCallbacks",
+		"exceptionCallbacks" ],
 	"name" : "TKTFuture",
 	"pools" : [
 		 ],
-	"super" : "TKTJobExecution",
+	"super" : "Object",
 	"type" : "normal" }

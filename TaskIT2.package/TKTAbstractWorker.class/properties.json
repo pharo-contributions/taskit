@@ -1,0 +1,14 @@
+{
+	"category" : "TaskIT2-Worker",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"queue" ],
+	"name" : "TKTAbstractWorker",
+	"pools" : [
+		 ],
+	"super" : "TKTRunner",
+	"type" : "normal" }

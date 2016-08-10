@@ -1,3 +1,0 @@
-accessing
-canBeRunnedOn: aRunnerClass
-	^ true

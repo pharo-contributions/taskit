@@ -1,0 +1,14 @@
+{
+	"category" : "TaskIT2-Futures",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"value" ],
+	"name" : "TKTFutureFailure",
+	"pools" : [
+		 ],
+	"super" : "TKTFutureState",
+	"type" : "normal" }
