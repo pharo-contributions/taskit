@@ -3,8 +3,12 @@
 		 },
 	"instance" : {
 		"initialize" : "GuillermoPolito 8/10/2016 14:09",
+		"isRunning" : "GuillermoPolito 8/10/2016 17:15",
+		"kill" : "GuillermoPolito 8/10/2016 17:17",
+		"launch" : "GuillermoPolito 8/10/2016 17:12",
 		"name" : "GuillermoPolito 8/10/2016 14:41",
 		"scheduleRecursiveTask" : "GuillermoPolito 8/10/2016 14:50",
-		"start" : "GuillermoPolito 8/10/2016 14:09",
+		"start" : "GuillermoPolito 8/10/2016 17:06",
 		"stepService" : "GuillermoPolito 8/10/2016 14:41",
-		"stop" : "GuillermoPolito 8/10/2016 14:11" } }
+		"stop" : "GuillermoPolito 8/10/2016 17:16",
+		"worker" : "GuillermoPolito 8/10/2016 16:44" } }

@@ -1,5 +1,4 @@
 starting
 start
 	
-	worker start.
-	self scheduleRecursiveTask.
+	TKTServiceManager uniqueInstance startService: self.

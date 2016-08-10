@@ -1,4 +1,4 @@
 starting
 stop
 	
-	worker stop.
+	TKTServiceManager uniqueInstance stopService: self
