@@ -1,0 +1,18 @@
+{
+	"category" : "TaskIT2WorkerPool",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "GuillermoPolito 8/8/2016 14:48",
+	"instvars" : [
+		"poolMaxSize",
+		"busyWorkers",
+		"freeWorkers",
+		"size",
+		"poolWorker" ],
+	"name" : "TKTWorkerPool",
+	"pools" : [
+		 ],
+	"super" : "TKTAbstractWorker",
+	"type" : "normal" }
