@@ -1,0 +1,18 @@
+{
+	"category" : "TaskIT2Jobs",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SantiagoBragagnolo 7/24/2015 15:52",
+	"instvars" : [
+		"job",
+		"runner",
+		"taskExecution",
+		"cancelled",
+		"priority" ],
+	"name" : "TKTJobExecution",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

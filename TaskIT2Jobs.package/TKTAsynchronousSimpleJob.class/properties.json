@@ -1,0 +1,14 @@
+{
+	"category" : "TaskIT2Jobs",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SantiagoBragagnolo 7/24/2015 15:57",
+	"instvars" : [
+		 ],
+	"name" : "TKTAsynchronousSimpleJob",
+	"pools" : [
+		 ],
+	"super" : "TKTJob",
+	"type" : "normal" }

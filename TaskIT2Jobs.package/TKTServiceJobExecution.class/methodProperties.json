@@ -1,0 +1,12 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"cancel" : "SantiagoBragagnolo 6/17/2016 13:49:27",
+		"initialize" : "SantiagoBragagnolo 6/17/2016 13:49:27",
+		"isRunning" : "SantiagoBragagnolo 6/17/2016 13:49:27",
+		"onFailure:" : "SantiagoBragagnolo 6/17/2016 13:49:27",
+		"onServiceFinalization:" : "SantiagoBragagnolo 6/17/2016 13:49:27",
+		"onServiceFinalization:onFailure:" : "SantiagoBragagnolo 6/17/2016 13:49:27",
+		"stop" : "SantiagoBragagnolo 6/17/2016 13:49:27",
+		"wait" : "SantiagoBragagnolo 6/17/2016 13:49:27" } }

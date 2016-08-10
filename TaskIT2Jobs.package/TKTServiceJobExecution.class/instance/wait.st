@@ -1,0 +1,3 @@
+abstract
+wait
+	semaphore wait

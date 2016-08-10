@@ -1,0 +1,1 @@
+Service Job execution is related with an specific kind of task execution, which loops over the task message send, executing it meanwhile is not stopped. 
