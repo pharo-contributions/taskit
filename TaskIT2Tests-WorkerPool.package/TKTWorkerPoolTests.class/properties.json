@@ -1,0 +1,14 @@
+{
+	"category" : "TaskIT2Tests-WorkerPool",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "TKTWorkerPoolTests",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }
