@@ -1,4 +1,4 @@
 starting
 start
 	
-	process := [ [ self executeTask: queue next ] repeat ] fork.
+	process := TKTProcessProvider current createProcessDoing: [ [ self executeTask: queue next ] repeat ]

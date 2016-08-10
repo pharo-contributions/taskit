@@ -1,4 +1,4 @@
 running
 schedule: aTask
 	
-	[ self executeTask: aTask ] fork
+	TKTProcessProvider current createProcessDoing: [ self executeTask: aTask ]

@@ -1,0 +1,14 @@
+{
+	"category" : "TaskIT2-Kernel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "TKTPharoProcessProvider",
+	"pools" : [
+		 ],
+	"super" : "TKTProcessProvider",
+	"type" : "normal" }
