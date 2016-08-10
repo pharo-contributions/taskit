@@ -1,0 +1,6 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"testNewProcessTaskRunnerRunsInNewProcessEveryTime" : "GuillermoPolito 8/10/2016 14:39",
+		"testNewProcessTaskRunnerRunsNeverInLocalProcess" : "GuillermoPolito 8/10/2016 14:39" } }

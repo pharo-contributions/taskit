@@ -1,0 +1,7 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"testWorkerProcessDiesAfterStop" : "GuillermoPolito 8/9/2016 16:54",
+		"testWorkerRunsAlwaysInSameProcess" : "GuillermoPolito 8/10/2016 14:39",
+		"testWorkerRunsInSeparateProcess" : "GuillermoPolito 8/10/2016 14:39" } }

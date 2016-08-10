@@ -1,0 +1,16 @@
+{
+	"category" : "TaskIT2Tests-Core-Old",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"task",
+		"runner",
+		"executionSucceed" ],
+	"name" : "TKTTaskIsReducedIntoAResultTestLocalProcessRunner",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }

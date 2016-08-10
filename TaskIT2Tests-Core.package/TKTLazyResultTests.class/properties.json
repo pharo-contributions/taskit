@@ -1,0 +1,14 @@
+{
+	"category" : "TaskIT2Tests-Core-Old",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "TKTLazyResultTests",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }
