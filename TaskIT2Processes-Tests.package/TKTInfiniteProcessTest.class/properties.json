@@ -1,0 +1,20 @@
+{
+	"category" : "TaskIT2Processes-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"process",
+		"processStarted",
+		"processFinishing",
+		"processCancelled",
+		"contextCancelled",
+		"processSuspended",
+		"processResumed" ],
+	"name" : "TKTInfiniteProcessTest",
+	"pools" : [
+		 ],
+	"super" : "TestCase",
+	"type" : "normal" }
