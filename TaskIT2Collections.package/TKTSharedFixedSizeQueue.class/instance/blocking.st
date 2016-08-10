@@ -1,0 +1,3 @@
+accessing
+blocking
+	blocking := true.

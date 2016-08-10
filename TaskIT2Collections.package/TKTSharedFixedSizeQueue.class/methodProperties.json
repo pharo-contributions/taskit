@@ -1,0 +1,17 @@
+{
+	"class" : {
+		"size:" : "SantiagoBragagnolo 6/17/2016 13:49:27" },
+	"instance" : {
+		"blocking" : "SantiagoBragagnolo 6/17/2016 13:49:27",
+		"blocking:" : "SantiagoBragagnolo 6/17/2016 13:49:27",
+		"flush" : "SantiagoBragagnolo 6/17/2016 13:49:27",
+		"initialize" : "SantiagoBragagnolo 6/17/2016 13:49:27",
+		"next" : "SantiagoBragagnolo 6/17/2016 13:49:27",
+		"nextOrNil" : "SantiagoBragagnolo 6/17/2016 13:49:27",
+		"nextPut:" : "SantiagoBragagnolo 6/17/2016 13:49:27",
+		"nonblocking" : "SantiagoBragagnolo 6/17/2016 13:49:27",
+		"postCopy" : "SantiagoBragagnolo 6/17/2016 13:49:27",
+		"printOn:" : "SantiagoBragagnolo 6/17/2016 13:49:27",
+		"removeAll" : "SantiagoBragagnolo 6/17/2016 13:49:27",
+		"size" : "SantiagoBragagnolo 6/17/2016 13:49:27",
+		"size:" : "SantiagoBragagnolo 6/17/2016 13:49:27" } }
