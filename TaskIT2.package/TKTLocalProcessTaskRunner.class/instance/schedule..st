@@ -1,4 +1,4 @@
 running
 schedule: aTask
 	
-	aTask value
+	self executeTask: aTask

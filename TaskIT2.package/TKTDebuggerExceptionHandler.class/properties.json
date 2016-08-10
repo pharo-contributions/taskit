@@ -4,11 +4,11 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "SantiagoBragagnolo 7/16/2015 15:18",
+	"commentStamp" : "",
 	"instvars" : [
-		"exceptionHandler" ],
-	"name" : "TKTRunner",
+		 ],
+	"name" : "TKTDebuggerExceptionHandler",
 	"pools" : [
 		 ],
-	"super" : "Object",
+	"super" : "TKTExceptionHandler",
 	"type" : "normal" }
