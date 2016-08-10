@@ -2,10 +2,10 @@
 	"class" : {
 		 },
 	"instance" : {
-		"setUp" : "SantiagoBragagnolo 7/29/2015 14:42",
-		"tearDown" : "SantiagoBragagnolo 7/29/2015 14:37",
-		"testConfigureRuntimeFailureIsTransmitedToTaskExcution" : "SantiagoBragagnolo 7/29/2015 14:41",
-		"testIsNotRunningAfterCancel" : "SantiagoBragagnolo 7/29/2015 14:41",
-		"testIsRunningMeanwhileRunning" : "SantiagoBragagnolo 7/29/2015 14:41",
-		"testTaskExecutionIsNeverTheSame" : "SantiagoBragagnolo 7/29/2015 14:37",
-		"testTasksReceivesTheCorrectParameter" : "SantiagoBragagnolo 7/29/2015 14:42" } }
+		"setUp" : "SantiagoBragagnolo 6/17/2016 13:50:48",
+		"tearDown" : "SantiagoBragagnolo 6/17/2016 13:50:48",
+		"testConfigureRuntimeFailureIsTransmitedToTaskExcution" : "SantiagoBragagnolo 6/17/2016 13:50:48",
+		"testIsNotRunningAfterCancel" : "SantiagoBragagnolo 6/17/2016 13:50:48",
+		"testIsRunningMeanwhileRunning" : "SantiagoBragagnolo 6/17/2016 13:50:48",
+		"testTaskExecutionIsNeverTheSame" : "SantiagoBragagnolo 6/17/2016 13:50:48",
+		"testTasksReceivesTheCorrectParameter" : "SantiagoBragagnolo 6/17/2016 13:50:48" } }
