@@ -1,10 +1,11 @@
 combinators
-collect: aBlockClosure 
+andThen: aBlockClosure 
 	
 	| future |
 	future := TKTFuture new.
 	self onSuccessDo: [ :got | 
-		[ future deploySuccess: (aBlockClosure value: got) ]
-			on: Error do: [ :e | future deployFailure: e ] ].
+		[ aBlockClosure value: got ]
+			on: Error do: [ :e | "Nothing?" ].
+		future deploySuccess: got ].
 	self onFailureDo: [ :error | future deployFailure: error ].
 	^ future

@@ -1,2 +1,2 @@
-(name 'TaskIT2-guille.9' message 'Extracted process creation in TKTProcessProvider' id 'b5e6c997-0754-4014-9856-ed829d91c0e5' date '10 August 2016' time '5:45:03.98111 pm' author 'GuillermoPolito' ancestors ((name 'TaskIT2-guille.8' message '- Fixed exception handling in runners- Added Service manager
-' id 'b5a0dbc8-30c9-559e-bd9d-6a2f8a4326ab' date '10 August 2016' time '5:21:16 pm' author 'guille' ancestors () stepChildren ())) stepChildren ())
+(name 'TaskIT2-guille.10' message 'Added Future combinators' id '46d8dbd7-0b9c-4002-aaf8-fab0a749f3f7' date '11 August 2016' time '6:13:19.428967 pm' author 'GuillermoPolito' ancestors ((name 'TaskIT2-guille.9' message 'Extracted process creation in TKTProcessProvider
+' id 'f8089d0d-3223-57a1-8c31-93ae97cb221b' date '10 August 2016' time '5:45:16 pm' author 'guille' ancestors () stepChildren ())) stepChildren ())
