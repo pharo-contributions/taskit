@@ -46,35 +46,50 @@ You will find a longer answer in the section below explaining *runners*. In Task
 
 ## Retrieving a Task's Result with Futures
 
-As the execution of a task can last some time, the immediate result of the `shootIt` message is a future object. A future object, instance of `TKTFuture`, is the promise of an execution's result. A future can hold the value of the finished execution, an error produced by the task execution, or neither if the task has not yet finished.
+In TaskIT we differentiate two different kind of tasks: some tasks are just *scheduled* for execution, they produce some side-effect and no result, some other tasks will produce (generally) a side-effect free value. When the result of a task is important for us, TaskIT provides us with a *future* object. A *future* is no other thing than an object that represents the future value of the task's execution. We can schedule a task with a future by using the `future` message on a block closure, as follows.
 
 ```smalltalk
-aFuture := [ 2 + 2 ] shootIt.
+aFuture := [ 2 + 2 ] future.
 ```
 
-Once we have a future in our hands, we can retrieve its value both synchronously and asynchronously, and interact with it in many forms.
+One way to see futures is as placeholders. When the task is finished, it deploys its result into the corresponding future. A future then provides access to its value, but since we cannot know *when* this value will be available, we cannot access it right away. Instead, futures provide an asynchronous way to access it's value by using *callbacks*. A callback is an object that will be executed when the task execution is finished.  
 
+>In general terms, we do not want to **force** a future to retrieve his value in an asynchronous way.
+>By doing so, we would be going back to the synchronous world, blocking a process' execution, and not exploiting concurrency.
+>Later sections will discuss about synchronous (blocking) retrieval of a future's value.
 
-## Future Callbacks
+A future can provide two kind of results: either the task execution was a success or a failure. A success happens when the task completes in a normal way, while a failure happens when an uncatched exception is risen in the task. Because of these distinction, futures allow the subscription of two different callbacks using the methods `onSuccessDo:` and `onFailureDo:`.
 
-Support for asynchronous execution is provided via callbacks. A callback is a block with zero or one argument that will be executed when the task execution is finished. Futures accept callbacks for success and error of execution. On success, TaskIT will pass to the callback the result of the execution as argument. On the other side, when an error occurs during the task execution, TaskIT will execute the error callback with the exception object. A callback is represented by a `Block` object and configured for a future object via the `onSuccess:` and `onError:` messages. Note that callback arguments are optional, and many callbacks can be configured at the same time for the same future object.
+In the example below, we create a future and subscribe to it a success callback. As soon as the task finishes, the value gets deployed in the future and the callback is called with it.
+```smalltalk
+aFuture := [ 2 + 2 ] future.
+aFuture onSuccessDo: [ :result | result logCr ].
+```
+We can also subscribe callbacks that handle a task's failure using the `onFailureDo:` message. If an exception occurs and the task cannot finish its execution as expected, the corresponding exception will be passed as argument to the failure callback, as in the following example.
+```smalltalk
+aFuture := [ Error signal ] future.
+aFuture onFailureDo: [ :error | error sender method selector logCr ].
+```
+
+Futures accept more than one callback. When its associated task is finished, all its callbacks will be *scheduled* for execution. In other words, the only guarantee that callbacks give us is that they will be all eventually executed. However, the future itself cannot guarantee neither **when** will the callbacks be executed, nor **in which order**. The following example shows how we can subscribe several success callbacks for the same future.
 
 ```smalltalk
-future := [ 40000000 factorial ] shootIt.
-future onSuccess: [ 'Finished factorial and I dont care about the result' logCr ].
-
-future := [ 40000000 factorial ] shootIt.
-future onSuccess: [ :result | result logCr ].
-
-future := [ self error ] shootIt.
-future onError: [ 'An error ocurred!!' logCr ].
-
-future := [ self error ] shootIt.
-future onError: [ :exception | exception asString logCr ].
+future := [ 2 + 2 ] future.
+future onSuccessDo: [ :v | FileStream stdout nextPutAll: v asString; cr ].
+future onSuccessDo: [ :v | 'Finished' logCr ].
+future onSuccessDo: [ :v | [ v factorial logCr ] schedule ].
+future onFailureDo: [ :error | error logCr ].
 ```
 
-Callbacks handle transparently the finalization of a task. On the one hand, the callbacks registered while the task is running (and so, not yet finished) will be saved and executed when the task finishes on the process that executes the task. On the other hand, callbacks that are registered when the task has already finished will run synchronously in the caller process with the already available result.
+Callbacks work wether the task is still running or already finished. If the task is running, callbacks are registered and wait for the completion of the task. If the task is already finished, the callback will be immediately scheduled with the already deployed value. See below a code examples that illustrates this: we first create a future and subscribes a callback before it is finished, then we  wait for its completion and subscribe a second callback afterwards. Both callbacks are scheduled for execution.
 
+```smalltalk
+future := [ 1 second wait. 2 + 2 ] future.
+future onSuccessDo: [ :v | v logCr ].
+
+2 seconds wait.
+future onSuccessDo: [ :v | v logCr ].
+```
 
 ## Task Runners: Controlling Where Tasks are executed 
 
