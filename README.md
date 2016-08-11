@@ -11,7 +11,7 @@ Besides how expensive it is to create a process is an important concern to decid
 
 TaskIT is a library that ease Process usage in Pharo. It provides abstractions to execute and synchronize concurrent tasks, and several pre-built mechanisms that are useful for many application developers. This chapter explores starts by familiarizing the reader with TaskIT's abstractions, guided by examples and code snippets. At the end, we discuss TaskIT extension points and possible customizations.
 
-## Downloading it
+## Downloading TaskIT
 
 A metacello configuration of TaskIT is available in smalltalkhub in TaskIT's repository, and Pharo's Metacello Repository. You can download version 1.0 of TaskIT evaluating the following code.
 
@@ -58,7 +58,7 @@ or as well with the shortcut,
 
 Tipically, the Pharo processes do not let us handle it's return value. The process is removed from the system once finished, forbidding us to obtain the result of it's execution. TaskIT provides us with a way to obtain the result of our processes in many different ways by using futures.
 
-### Obtaining a task's result with futures
+## Retrieving a task's result
 
 As the execution of a task can last some time, the immediate result of the `shootIt` message is a future object. A future object, instance of `TKTFuture`, is the promise of an execution's result. A future can hold the value of the finished execution, an error produced by the task execution, or neither if the task has not yet finished.
 
@@ -68,42 +68,8 @@ aFuture := [ 2 + 2 ] shootIt.
 
 Once we have a future in our hands, we can retrieve its value both synchronously and asynchronously, and interact with it in many forms.
 
-### Synchronous result retrieval
 
-The simplest way to interact with a future is synchronously. That is, when asking for a future's value, it will block the actual process until the value is available. We can do that by sending our future the message `value`.
-
-```smalltalk
-future := [ 2 + 2 ] shootIt.
-self assert: future value equals: 4.
-```
-
-However, it could have happened that the finished in an erroneous state, with an exception. In such case, the exception that was thrown inside the task's execution is forwarded to the sender of `value`.
-
-```smalltalk
-future := [ SomeError signal ] shootIt.
-[ future value ] on: SomeError do: [ :error | "We handle the error" ].
-```
-
-A future can also tell us if the task is already finished or not, by sending it the message `isValueAvailable`. The `isValueAvailable` message, opposedly to the `value` message, will not block the caller's process but return immediately a boolean informing if the task has finished.
-
-```smalltalk
-future := [ 2 + 2 ] shootIt.
-future isValueAvailable.
-```
-
-However, waiting synchronously or polling for the task to be finished can be a waste of CPU time sometimes. For those cases when completely synchronous execution does not fit, TaskIT provides an alternative of retrieving a value with a timeout option, using the `valueTimeoutMilliseconds:` message. When we specify a timeout, we can also provide a block to handle the timeout case using the `valueTimeoutMilliseconds:ifTimeout:`. If we choose not to provide such a block, the default behavior in case of timeout is to throw a `TKTTimeoutError` exception.
-
-```smalltalk
-future := [ (Delay forMilliseconds: 100) wait ] shootIt.
-
-future
-    valueTimeoutMilliseconds: 2
-    ifTimeout: [ "if it times out we execute this block"].
-
-future valueTimeoutMilliseconds: 2.
-```
-
-### Aynchronous result retrieval and callbacks
+## Future Callbacks
 
 Support for asynchronous execution is provided via callbacks. A callback is a block with zero or one argument that will be executed when the task execution is finished. Futures accept callbacks for success and error of execution. On success, TaskIT will pass to the callback the result of the execution as argument. On the other side, when an error occurs during the task execution, TaskIT will execute the error callback with the exception object. A callback is represented by a `Block` object and configured for a future object via the `onSuccess:` and `onError:` messages. Note that callback arguments are optional, and many callbacks can be configured at the same time for the same future object.
 
@@ -123,33 +89,8 @@ future onError: [ :exception | exception asString logCr ].
 
 Callbacks handle transparently the finalization of a task. On the one hand, the callbacks registered while the task is running (and so, not yet finished) will be saved and executed when the task finishes on the process that executes the task. On the other hand, callbacks that are registered when the task has already finished will run synchronously in the caller process with the already available result.
 
-### Lazy result resolution
 
-A third way to work with futures is to ask them for a lazy result. A lazy result is an object that represents, almost transparently, the value of the task execution. This lazy result will be (using some reflective Pharo facilities) the value of the result once it is available, or under demand (for example, when a message is sent to it). Lazy results support a style of programming that is close to the synchronous style, while performing asynchronously if the result is not used. 
-
-```smalltalk
-future := [ employee computeBaseSallary ] shootIt.
-result := future asResult.
-
-subTotal := employee sumSallaryComponents
-
-result + subTotal
-```
-
-@@comment explain the code
-
-Note: Lazy results are to be used with care. They use Pharo's `become:` facility, and so, it will scan the system to update object references.
-
-Lazy results can be used to easily synchronize tasks. One task running in parallel with another one and waiting for it to finish can use a lazy result object to perform transparently as much work as it can in parallel and then get blocked waiting for the missing part. Only when the result object is sent a message the 
-
-```smalltalk
-future := [ employee computeBaseSallary ] shootIt.
-baseSallary := future asResult.
-
-[ employee sumSallaryComponents + baseSallary ] shootIt value.
-```
-
-## Into Task Runners
+## Task Runners: Controlling Where Tasks are executed 
 
 Task runners are in charge of the execution of tasks. They decide if a task executes in a separate process, in the same process, or in a process that is shared by many tasks. A task runner  schedule and prioritize tasks.
 
@@ -162,7 +103,7 @@ Task runners contract is based on the following messages:
 
 TaskIT provides already several task runners for simple and common tasks. In the following subsections we will provide an overview on each of them for normal usage.
 
-### The one shot runner
+### New Process Task Runner
 
 A one shot runner, instance of `TKTOneShotRunner`, is a task runner that is meant to run a single task in a separate Pharo process. The one shot runner will start a new process when the task is run, and so, handle the process' life cycle. A one shot runner, as it name says, is meant to be used once and be discarded. It should not be reused with several tasks.
 
@@ -181,7 +122,7 @@ TKTTask >> shootIt
 	^ TKTOneShotRunner new run: self
 ```
 
-!!! The same process runner
+### Local Process Task Runner
 
 The same process runner is a simple runner that executes a task in the caller process. This runner may come in handy to change the way a task runs in a transparent way, since it is polymorphic with the other task runners. A same process runner is reusable, since it holds no state.
 
@@ -198,7 +139,8 @@ TKTTask >> value
 	^ TKTSameProcessRunner new run: self
 ```
 
-### Persistent runners
+### The Worker Runner
+
 
 A persistent runner is a task runner that persists in time, executing many tasks. Persistent runners are associated to a unique Pharo process and manage its life-cycle. We can control the life-cicle of a persistent task runner with the following messages:
 
@@ -263,7 +205,7 @@ worker stop.
 
 You can create your own worker instances as shown in the examples, or also you can use it through the `TKTTaskDispatcher` singleton worker pool.
 
-## Worker pools
+## The Worker pool extension
 
 A worker pool is our implementation of a threads pool. Its main purpose is to provide with several worker runners and decouple us from the management of threads/processes. Worker pools are built on top of TaskIT, inside the PoolIT package. A worker pool, instance of `PITWorkersPool`, manages several worker runners. All runners inside a worker pool shared a single task queue. We can schedule a task for execution using the `dispatch:` message.
 
@@ -289,6 +231,73 @@ Finally, there is a fancy way to schedule tasks into the singleton pool of worke
 
 ```smalltalk
 future := [ 2 + 2 ] scheduleIt. 
+```
+
+## Advanced Futures
+
+
+
+# To Review
+
+### Synchronous result retrieval
+
+The simplest way to interact with a future is synchronously. That is, when asking for a future's value, it will block the actual process until the value is available. We can do that by sending our future the message `value`.
+
+```smalltalk
+future := [ 2 + 2 ] shootIt.
+self assert: future value equals: 4.
+```
+
+However, it could have happened that the finished in an erroneous state, with an exception. In such case, the exception that was thrown inside the task's execution is forwarded to the sender of `value`.
+
+```smalltalk
+future := [ SomeError signal ] shootIt.
+[ future value ] on: SomeError do: [ :error | "We handle the error" ].
+```
+
+A future can also tell us if the task is already finished or not, by sending it the message `isValueAvailable`. The `isValueAvailable` message, opposedly to the `value` message, will not block the caller's process but return immediately a boolean informing if the task has finished.
+
+```smalltalk
+future := [ 2 + 2 ] shootIt.
+future isValueAvailable.
+```
+
+However, waiting synchronously or polling for the task to be finished can be a waste of CPU time sometimes. For those cases when completely synchronous execution does not fit, TaskIT provides an alternative of retrieving a value with a timeout option, using the `valueTimeoutMilliseconds:` message. When we specify a timeout, we can also provide a block to handle the timeout case using the `valueTimeoutMilliseconds:ifTimeout:`. If we choose not to provide such a block, the default behavior in case of timeout is to throw a `TKTTimeoutError` exception.
+
+```smalltalk
+future := [ (Delay forMilliseconds: 100) wait ] shootIt.
+
+future
+    valueTimeoutMilliseconds: 2
+    ifTimeout: [ "if it times out we execute this block"].
+
+future valueTimeoutMilliseconds: 2.
+```
+
+### Lazy result resolution
+
+A third way to work with futures is to ask them for a lazy result. A lazy result is an object that represents, almost transparently, the value of the task execution. This lazy result will be (using some reflective Pharo facilities) the value of the result once it is available, or under demand (for example, when a message is sent to it). Lazy results support a style of programming that is close to the synchronous style, while performing asynchronously if the result is not used. 
+
+```smalltalk
+future := [ employee computeBaseSallary ] shootIt.
+result := future asResult.
+
+subTotal := employee sumSallaryComponents
+
+result + subTotal
+```
+
+@@comment explain the code
+
+Note: Lazy results are to be used with care. They use Pharo's `become:` facility, and so, it will scan the system to update object references.
+
+Lazy results can be used to easily synchronize tasks. One task running in parallel with another one and waiting for it to finish can use a lazy result object to perform transparently as much work as it can in parallel and then get blocked waiting for the missing part. Only when the result object is sent a message the 
+
+```smalltalk
+future := [ employee computeBaseSallary ] shootIt.
+baseSallary := future asResult.
+
+[ employee sumSallaryComponents + baseSallary ] shootIt value.
 ```
 
 ## Customizing TaskIT
