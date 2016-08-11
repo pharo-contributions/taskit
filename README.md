@@ -11,54 +11,40 @@ Besides how expensive it is to create a process is an important concern to decid
 
 TaskIT is a library that ease Process usage in Pharo. It provides abstractions to execute and synchronize concurrent tasks, and several pre-built mechanisms that are useful for many application developers. This chapter explores starts by familiarizing the reader with TaskIT's abstractions, guided by examples and code snippets. At the end, we discuss TaskIT extension points and possible customizations.
 
-## Downloading TaskIT
+## Downloading
 
-A metacello configuration of TaskIT is available in smalltalkhub in TaskIT's repository, and Pharo's Metacello Repository. You can download version 1.0 of TaskIT evaluating the following code.
-
-```smalltalk
-Gofer new 
-	smalltalkhubUser: 'sbragagnolo' project: 'TaskIT';
-	configuration;
-	loadVersion: '1.0'.
-```
-
-This version is also available from Pharo's Configuration Browser.
+TODO
 
 ## Asynchronous Tasks
 
-A task is a first class representation of a piece of code to be executed, the main abstraction inside TaskIT. By reifying a task, TaskIT can paralellize it, start it and/or stop it whenever we want. A task is created from a block with a piece of code to be run. The result of the task's execution will be the result of its block. Additionally, we can specify a priority that will be used to decide the order of execution between it and other tasks. If we do not specify a priority explicitly, the default `userBackgroundPriority` defined in Pharo's `ProcessorScheduler` is used. We will discuss about the importance of a task's priority in the task runners' section. A task, instance of `TKTTask`, is created in the following way:
+TaskIT's main abstraction are, as the name indicates it, tasks. A task is a unit of execution. By splitting the execution of a program in several tasks, TaskIT can run those tasks concurrently, synchronize their access to data, or order even help in ordering and synchronizing their execution.
 
+### First Example
+
+Launching a task is as easy as sending the message `schedule` to a block closure, as it is used in the following first code example:
 ```smalltalk
-TKTTask for: [ someObject someMessage ].
-TKTTask for: [ someObject someMessage ] at: aPriority.
+[ 1 + 1 ] schedule.
+```
+>The selector name `schedule` is chosen in purpose instead of others such as run, launch or execute. TaskIT promises you that a task will be *eventually* executed, but this is not necessarilly right away. In other words, a task is *scheduled* to be executed at some point in time in the future.
+
+This first example is however useful to clarify the first two concept but it remains too simple. We are schedulling a task that does nothing useful, and we cannot even observe it's result (*yet*). Let's explore some other code snippets that may help us understand what's going on.
+
+The following code snippet will schedule a task that prints to the `Transcript`. Just evaluating the expression below will make evident that the task is actually executed. However, a so simple task runs so fast that it's difficult to tell if it's actually running concurretly to our main process or not.
+```smalltalk
+[ 'Happened' logCr ] schedule.
+```
+The real acid test is to schedule a long-running task. The following example schedules a task that waits for a second before writing to the transcript. While normal synchronous code would block the main thread, you'll notice that this one does not. 
+```smalltalk
+[ 1 second wait.
+'Waited' logCr ] schedule.
 ```
 
-Alternatively, blocks are extended to provided a nice syntax sugar to create tasks:
+### Schedule vs fork
+You may be asking yourself what's the difference between the `schedule` and `fork`. From the examples above they seem to do the same but they do not. In a nutshell, to understand why `schedule` means something different than `fork`, picture that using TaskIT two tasks may execute inside a same process, or in a pool of processes, while `fork` creates a new process every time.
 
-```smalltalk
-[ someObject someMessage ] asTask.
-[ someObject someMessage ] asTaskAt: aPriority.
-```
+You will find a longer answer in the section below explaining *runners*. In TaskIT, tasks are not directly scheduled in Pharo's global `ProcessScheduler` object as usual `Process` objects are. Instead, a task is scheduled in a task runner. It is the responsibility of the task runner to execute the task.
 
-Tasks created in this way are not yet executed. We will discuss the different strategies for executing such tasks in the following sections.
-
-### Executing a Task
-
-The most basic way to execute a task is to run it as a one shoot task. A one shoot task is a task that is run in a new Pharo process. The Pharo process is discarded after the task is executed. To shoot a task we need to send it the message `shootIt`.
-
-```smalltalk
-[ 2 +  2 ] asTask shootIt.
-```
-
-or as well with the shortcut,
-
-```smalltalk
-[ 2 + 2 ] shootIt.
-```
-
-Tipically, the Pharo processes do not let us handle it's return value. The process is removed from the system once finished, forbidding us to obtain the result of it's execution. TaskIT provides us with a way to obtain the result of our processes in many different ways by using futures.
-
-## Retrieving a task's result
+## Retrieving a Task's Result with Futures
 
 As the execution of a task can last some time, the immediate result of the `shootIt` message is a future object. A future object, instance of `TKTFuture`, is the promise of an execution's result. A future can hold the value of the finished execution, an error produced by the task execution, or neither if the task has not yet finished.
 
