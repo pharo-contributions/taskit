@@ -1,5 +1,7 @@
 # TaskIT
 
+>Anything that can go wrong, will go wrong. -- Murphy's Law
+
 Expressing and managing concurrent computations is indeed a concern of importance to develop applications that scale. A web application may want to use different processes for each of its incoming requests. Or maybe it wants to use a "thread pool" in some cases. In other case, our desktop application may want to send computations to a worker to not block the UI thread. 
 
 Processes in Pharo are implemented as green threads scheduled by the virtual machine, without depending on the machinery of the underlying operating system. This has several consequences on the usage of concurrency we can do:
@@ -195,9 +197,26 @@ future3 := worker future: [ 1 + 1 ].
 
 Workers can be combined into *worker pools*. Worker pools are discussed in a later section.
 
-### Managing Runner exceptions
+### Managing Runner Exceptions
 
-As we stated before, we can use TaskIT either by scheduling tasks whose value does not interest us, 
+As we stated before, in TaskIT the result of a task can be interesting for us or not. In case we do not need a task's result, we will schedule it usign the `schedule` or `schedule:` messages. This is a kind of fire-and-forget way of executing tasks. On the other hand, if the result of a task execution interests us we can get a future on it using the `future` and `future:` messages. These two ways to execute tasks require different ways to handle exceptions during task execution.
+
+First, when an exception occurs during a task execution that has an associated future, the exception is forwarded to the future. In the future we can subscribe a failure callback using the `onFailureDo:` message to manage the exception accordingly.
+
+However, on a fire-and-forget kind of scheduling, the execution and results of a task is not anymore under our control. If an exception happens in this case, it is the responsibility of the task runner to catch the exception and manage it gracefully. For this, each task runners is configured with an exception handler in charge of it. TaskIT exception handler classes are subclasses of the abstract `TKTExceptionHandler` that defines a `handleException:` method. Subclasses need to override the `handleException:` method to define their own way to manage exceptions.
+
+TaskIt provides by default a `TKTDebuggerExceptionHandler` that will open a debugger on the raised exception. The `handleException:` method is defined as follows:
+
+```smalltalk
+handleException: anError 
+	anError debug
+```
+
+Changing a runner's exception handler can be done by sending it the `exceptionHandler:` message, as follows:
+
+```smalltalk
+aRunner exceptionHandler: TKTDebuggerExceptionHandler new.
+```
 
 ## The Worker pool
 
