@@ -1,4 +1,4 @@
 running
 schedule
 	
-	self schedule: TKTWorkerPool global
+	self schedule: TKTCurrentTaskRunner value

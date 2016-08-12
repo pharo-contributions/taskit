@@ -1,4 +1,4 @@
 running
 future
 	
-	^ self future: TKTWorkerPool global
+	^ self future: TKTCurrentTaskRunner value
