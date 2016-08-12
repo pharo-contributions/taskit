@@ -155,88 +155,51 @@ First, you'll see that a different processes is being used to execute each task.
 
 ### Local Process Task Runner
 
-The same process runner is a simple runner that executes a task in the caller process. This runner may come in handy to change the way a task runs in a transparent way, since it is polymorphic with the other task runners. A same process runner is reusable, since it holds no state.
-
+The local process runner, instance of `TKTLocalProcessTaskRunner`, is a task runner that executes a task in the caller process. In other words, this task runner does not run concurrently. Executing the following piece of code:
 ```smalltalk
-runner := TKTSameProcessRunner new.
-future := runner run: [ (Delay forMilliseconds: 30000) wait ] asTask.
+aRunner := TKTLocalProcessTaskRunner new.
+future := aRunner schedule: [ 1 second wait ].
+```
+is equivalent to the following piece of code:
+```smalltalk
+[ 1 second wait ] value.
+```
+or even:
+```smalltalk
+1 second wait.
 ```
 
-Additionally, sending the `value` message to a task is a shortcut to execute it with a same process runner.
-
-```smalltalk
-TKTTask >> value
-	" The future is dispendable in this case, cause is executing in the same thread "
-	^ TKTSameProcessRunner new run: self
-```
+While this runner may seem a bit naive, it may also come in handy to control and debug task executions. Besides, the power of task runners is that they offer a polymorphic API to execute tasks.
 
 ### The Worker Runner
 
+The worker runner, instance of `TKTWorker`, is a task runner that uses a single process to execute tasks from a queue. The worker's single process removes one-by-one the tasks from the queue and executes them sequenceally. Then, schedulling a task into a worker means to add the task inside the queue.
 
-A persistent runner is a task runner that persists in time, executing many tasks. Persistent runners are associated to a unique Pharo process and manage its life-cycle. We can control the life-cicle of a persistent task runner with the following messages:
-
-- **start** Starts the persistent runner and creates its associated process.
-- **stop** Stops the persistent runner and kill its associated process.
-- **suspend** Pauses the persistent runner. This can leave a task in the middle of an execution.
-- **resume** Resumes a paused execution of the persistent runner.
-- **waitToFinish** Will block the caller until the runner has finished to run.
-
-Version 1 of TaskIT presents two flavors of persistent runners: the Looping Runner and the Worker Runner.
-
-### The looping runner
-
-A looping runner is a task runner that will execute the same task over and over again iteratively. This runner, instance of `TKTLoopingRunner`, is configured with the task and the amount of times it has to execute.
-This looping runner will finish and kill its associated process once all its iterations are finished.
+A worker manages the life-cycle of its process and provides the messages `start` and `stop` to control when the worker thread will begin and end.
 
 ```smalltalk
-runner := TKTLoopingRunner new loopTimes: 20; yourself.
-value := 0.
-future := runner run: [ value := value + 1 ] asTask.
-```
-
-By default, if no loopTimes are configured, the looping runner will loop infinitely. When using a looping runner, the future will hold always the last value obtained from the task execution.
-
-
-```smalltalk
-runner := TKTLoopingRunner new.
-value := 0.
-future := runner run: [ value := value + 1 ] asTask.
-
-aSample := future value. 
-1 second asDelay wait. 
-
-self assert: future value > aSample. 
-```
-
-
-Note that we don't need to `start` explicitly the loop runner. It will be started automatically by the `run:` message.
-
-#### The worker runner 
-
-
-A worker is a runner instance of `TKTWorker` that has a queue of tasks to execute. The worker runner will execute its tasks sequencially, according to its queue. To add a task into a worker's queue, we can schedule the task using the `scheduleTask:` message. The `spawn` message provides with a shortcut to create and start a new worker.
-
-```smalltalk
-worker := TKTWorker spawn.
-future := worker schedduleTask: [ 2+2 ] asTask.
-self assert: future value = 4.
+worker := TKTWorker new.
+worker start.
+worker schedule: [ 1 + 5 ].
 worker stop.
 ```
 
-This kind of runner is mean for global system performance. By using workers, we can control the amount of alive processes and how tasks are distributed amongst them. For example, in the following example three tasks are executed in a separate process (which is the same process as it is the same worker), and we can still have a synchronousish style of programming.
+By using workers, we can control the amount of alive processes and how tasks are distributed amongst them. For example, in the following example three tasks are executed sequenceally in a single separate process while still allowing us to use an asynchronous style of programming.
 
 ```smalltalk
-worker := TKTWorker spawn .
-future := worker scheduleTask: [ 2+2 ] asTask.
-future2 := worker scheduleTask: [ 3+3 ] asTask.
-future3 := worker scheduleTask: [ 1+1 ] asTask.
-self assert: (future value + future2 value + future3 value) = 12.
-worker stop.
+worker := TKTWorker new start.
+future1 := worker future: [ 2 + 2 ].
+future2 := worker future: [ 3 + 3 ].
+future3 := worker future: [ 1 + 1 ].
 ```
 
-You can create your own worker instances as shown in the examples, or also you can use it through the `TKTTaskDispatcher` singleton worker pool.
+Workers can be combined into *worker pools*. Worker pools are discussed in a later section.
 
-## The Worker pool extension
+### Managing Runner exceptions
+
+As we stated before, we can use TaskIT either by scheduling tasks whose value does not interest us, 
+
+## The Worker pool
 
 A worker pool is our implementation of a threads pool. Its main purpose is to provide with several worker runners and decouple us from the management of threads/processes. Worker pools are built on top of TaskIT, inside the PoolIT package. A worker pool, instance of `PITWorkersPool`, manages several worker runners. All runners inside a worker pool shared a single task queue. We can schedule a task for execution using the `dispatch:` message.
 
