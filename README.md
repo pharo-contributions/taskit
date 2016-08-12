@@ -91,37 +91,67 @@ future onSuccessDo: [ :v | v logCr ].
 future onSuccessDo: [ :v | v logCr ].
 ```
 
-## Task Runners: Controlling Where Tasks are executed 
+## Task Runners: Controlling How Tasks are executed 
 
-Task runners are in charge of the execution of tasks. They decide if a task executes in a separate process, in the same process, or in a process that is shared by many tasks. A task runner  schedule and prioritize tasks.
+So far we created and executed tasks without caring too much on the form they were executed. Indeed, we knew that they were run concurrently because they were non-blocking. We also said already that the difference between a `schedule` message and a `fork` message is that scheduled messages are run by a **task runner**.
 
-Task runners contract is based on the following messages:
+A task runner is an object in charge of executing tasks *eventually*. Indeed, the main API of a task runner is the `schedule:` message that allows us to tell the task runner to schedule a task.
+```smalltalk
+aRunner schedule: [ 1 + 1 ]
+```
 
-- **run:** It is the main message a task runner implements. It receives as argument a task to run and provides a future as result.
-- **cancel** This message tells the runner to stop executing the task. It will, if possible, cancel the execution and notify all provided futures of this.
-- **isRunning** This is a testing message that indicates if a task runner is currently running.
-- **isTerminated** This is a testing message that indicates if a task runner has finished its execution.
+A nice extension built on top of schedule is the  `future:` message that allows us to schedule a task but obtain a future of its eventual execution.
 
-TaskIT provides already several task runners for simple and common tasks. In the following subsections we will provide an overview on each of them for normal usage.
+```smalltalk
+future := aRunner future: [ 1 + 1 ]
+```
+
+Indeed, the messages `schedule` and `future` we have learnt before are only syntax-sugar extensions that call these respective ones on a default task runner. This section discusses several useful task runners already provided by TaskIT.
 
 ### New Process Task Runner
 
-A one shot runner, instance of `TKTOneShotRunner`, is a task runner that is meant to run a single task in a separate Pharo process. The one shot runner will start a new process when the task is run, and so, handle the process' life cycle. A one shot runner, as it name says, is meant to be used once and be discarded. It should not be reused with several tasks.
-
-The usage of a one shot runner is simple. We should create a new instance of it and send it the message `run:` with the task to run as a parameter. The result of that message will be a future object.
+A new process task runner, instance of `TKTNewProcessTaskRunner`, is a task runner that runs each task in a new separate Pharo process. 
 
 ```smalltalk
-runner := TKTOneShotRunner new.
-future := runner run: [ (Delay forMilliseconds: 30000) wait ] asTask.
+aRunner := TKTNewProcessTaskRunner new.
+aRunner schedule: [ 1 second wait. 'test' logCr ].
 ```
-
-Since the usage of one shot runners is pretty common and straight forward, the `shootIt` method of a task is a shortcut to it.
+Moreover, since new processes are created to manage each task, scheduling two different tasks will be executed concurrently. For example, in the code snippet below, we schedule twice a task that printing the identity hash of the current process.
 
 ```smalltalk
-TKTTask >> shootIt
-	
-	^ TKTOneShotRunner new run: self
+aRunner := TKTNewProcessTaskRunner new.
+task := [ 10 timesRepeat: [ 10 milliSeconds wait.
+				('Hello from: ', Processor activeProcess identityHash asString) logCr ] ].
+aRunner schedule: task.
+aRunner schedule: task.
 ```
+
+The generated output will look something like this:
+
+```
+'Hello from: 887632640'
+'Hello from: 949846528'
+'Hello from: 887632640'
+'Hello from: 949846528'
+'Hello from: 949846528'
+'Hello from: 887632640'
+'Hello from: 949846528'
+'Hello from: 887632640'
+'Hello from: 949846528'
+'Hello from: 887632640'
+'Hello from: 949846528'
+'Hello from: 887632640'
+'Hello from: 949846528'
+'Hello from: 887632640'
+'Hello from: 949846528'
+'Hello from: 887632640'
+'Hello from: 949846528'
+'Hello from: 887632640'
+'Hello from: 949846528'
+'Hello from: 887632640'
+```
+
+First, you'll see that a different processes is being used to execute each task. Also, their execution is concurrent, as we can see the messages interleaved.
 
 ### Local Process Task Runner
 
