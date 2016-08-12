@@ -1,3 +1,0 @@
-evaluating
-valueWithArguments: aSequenceOfArguments
-	^ messageSend valueWithArguments: aSequenceOfArguments

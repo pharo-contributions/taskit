@@ -1,4 +1,0 @@
-callbacks
-onFailureDo: aBlockClosure 
-	
-	"nothing"

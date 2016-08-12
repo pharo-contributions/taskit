@@ -9,11 +9,9 @@
 		"block",
 		"result",
 		"valueSemaphore",
-		"timeoutMicroseconds",
-		"timeoutCallback",
-		"exceptionCallback",
 		"resultCallbacks",
-		"exceptionCallbacks" ],
+		"exceptionCallbacks",
+		"runner" ],
 	"name" : "TKTFuture",
 	"pools" : [
 		 ],

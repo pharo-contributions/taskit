@@ -4,11 +4,11 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "SantiagoBragagnolo 7/16/2015 13:49",
+	"commentStamp" : "",
 	"instvars" : [
-		"valuable" ],
-	"name" : "TKTTask",
+		 ],
+	"name" : "TKTCurrentTaskRunner",
 	"pools" : [
 		 ],
-	"super" : "Object",
+	"super" : "ProcessLocalVariable",
 	"type" : "normal" }

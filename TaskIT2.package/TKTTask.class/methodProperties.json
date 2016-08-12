@@ -1,13 +1,10 @@
 {
 	"class" : {
-		"forMessageSend:" : "SantiagoBragagnolo 6/17/2016 13:49:27",
-		"receiver:selector:" : "SantiagoBragagnolo 6/17/2016 13:49:27" },
+		"valuable:" : "GuillermoPolito 8/11/2016 21:21" },
 	"instance" : {
-		"messageSend" : "SantiagoBragagnolo 6/17/2016 13:49:27",
-		"messageSend:" : "SantiagoBragagnolo 6/17/2016 13:49:27",
-		"run" : "SantiagoBragagnolo 6/17/2016 13:49:27",
-		"runAsLoopingService" : "SantiagoBragagnolo 6/17/2016 13:49:27",
-		"value" : "SantiagoBragagnolo 6/17/2016 13:49:27",
-		"valueOn:" : "SantiagoBragagnolo 6/17/2016 13:49:27",
-		"valueWithArguments:" : "SantiagoBragagnolo 6/17/2016 13:49:27",
-		"valueWithArguments:on:" : "SantiagoBragagnolo 6/17/2016 13:49:27" } }
+		"future" : "GuillermoPolito 8/12/2016 13:43",
+		"future:" : "GuillermoPolito 8/11/2016 21:20",
+		"schedule" : "GuillermoPolito 8/12/2016 13:37",
+		"schedule:" : "GuillermoPolito 8/11/2016 21:20",
+		"valuable" : "GuillermoPolito 8/11/2016 21:17",
+		"valuable:" : "GuillermoPolito 8/11/2016 21:17" } }
