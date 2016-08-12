@@ -7,5 +7,6 @@ testFutureFailureCallbackIsCalledAfterFailureIsDeployed
 	future deployFailure: deployedError.
 	
 	future onFailureDo: [ :error | got := error ].
+	50 milliSeconds wait.
 	
 	self assert: got equals: deployedError

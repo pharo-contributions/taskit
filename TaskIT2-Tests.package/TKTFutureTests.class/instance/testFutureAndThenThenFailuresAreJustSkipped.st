@@ -11,5 +11,6 @@ testFutureAndThenThenFailuresAreJustSkipped
 		andThen: [ :v | collection add: v + 3 ].
 
 	future deploySuccess: 2.
+	50 milliSecond wait.
 	
 	self assert: collection asArray equals: #(3 5)

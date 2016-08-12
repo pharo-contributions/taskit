@@ -10,5 +10,6 @@ testFutureFirstCompleteOfFailsIfFirstFailsFaster
 	error := Error new.
 	future deployFailure: error.
 	secondFuture deploySuccess: 1.
-	
+	50 milliSecond wait.
+
 	self assert: got equals: error

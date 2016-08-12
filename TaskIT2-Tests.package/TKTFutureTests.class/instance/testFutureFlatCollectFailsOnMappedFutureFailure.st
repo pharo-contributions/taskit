@@ -8,6 +8,7 @@ testFutureFlatCollectFailsOnMappedFutureFailure
 	
 	error := Error new.
 	future deploySuccess: 2.
-	innerFuture deployFailure: error.  
+	innerFuture deployFailure: error.
+	50 milliSecond wait.
 	
 	self assert: got equals: error

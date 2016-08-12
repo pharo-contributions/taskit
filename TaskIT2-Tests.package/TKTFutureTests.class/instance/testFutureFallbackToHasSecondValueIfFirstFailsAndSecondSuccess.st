@@ -9,5 +9,6 @@ testFutureFallbackToHasSecondValueIfFirstFailsAndSecondSuccess
 
 	fallbackFuture deploySuccess: 2.
 	future	 deployFailure: Error new.
-	
+	50 milliSecond wait.
+
 	self assert: got equals: 2

@@ -11,5 +11,6 @@ testFutureAndThenExecutesInOrder
 		andThen: [ :v | collection add: v + 3 ].
 
 	future deploySuccess: 0.
+	50 milliSecond wait.
 	
 	self assert: collection asArray equals: #( 1 2 3)

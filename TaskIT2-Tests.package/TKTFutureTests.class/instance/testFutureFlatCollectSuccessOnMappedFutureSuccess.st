@@ -7,6 +7,7 @@ testFutureFlatCollectSuccessOnMappedFutureSuccess
 	(future flatCollect: [ :v | innerFuture ]) onSuccessDo: [ :v | got := v ].
 	
 	future deploySuccess: 2.
-	innerFuture deploySuccess: 42.  
+	innerFuture deploySuccess: 42.
+	50 milliSecond wait.
 	
 	self assert: got equals: 42

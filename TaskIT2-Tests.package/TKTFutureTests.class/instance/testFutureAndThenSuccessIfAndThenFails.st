@@ -13,5 +13,6 @@ testFutureAndThenSuccessIfAndThenFails
 	thenFuture onSuccessDo: [ :e | got := e ].
 	
 	future deploySuccess: 2.
+	50 milliSecond wait.
 	
 	self assert: got equals: 2

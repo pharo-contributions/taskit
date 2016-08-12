@@ -10,5 +10,6 @@ testFutureFallbackToFailsIfBothFail
 	error := Error new.
 	fallbackFuture deployFailure: error.
 	future	 deployFailure: Error new.
+	50 milliSecond wait.
 	
 	self assert: got equals: error

@@ -7,6 +7,7 @@ testFutureFlatCollectFailsOnSelfFailure
 	(future flatCollect: [ :v | innerFuture ]) onFailureDo: [ :v | got := v ].
 	
 	error := Error new.
-	future deployFailure: error. 
+	future deployFailure: error.
+	50 milliSecond wait.
 	
 	self assert: got equals: error

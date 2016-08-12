@@ -9,5 +9,6 @@ testFutureFirstCompleteOfSuccessIfFirstSuccessFaster
 
 	future deploySuccess: 5.
 	secondFuture deployFailure: Error new.
-	
+	50 milliSecond wait.
+
 	self assert: got equals: 5

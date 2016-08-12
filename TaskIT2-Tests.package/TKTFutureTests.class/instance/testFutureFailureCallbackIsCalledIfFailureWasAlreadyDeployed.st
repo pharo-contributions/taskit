@@ -7,5 +7,6 @@ testFutureFailureCallbackIsCalledIfFailureWasAlreadyDeployed
 	
 	deployedError := Error new.
 	future deployFailure: deployedError.
+	50 milliSecond wait.
 	
 	self assert: got equals: deployedError

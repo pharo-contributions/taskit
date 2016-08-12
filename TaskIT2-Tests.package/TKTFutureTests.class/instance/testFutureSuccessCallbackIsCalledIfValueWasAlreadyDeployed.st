@@ -7,4 +7,6 @@ testFutureSuccessCallbackIsCalledIfValueWasAlreadyDeployed
 		
 	future onSuccessDo: [ :value | got := value ].
 
+	50 milliSeconds wait.
+
 	self assert: got equals: 2

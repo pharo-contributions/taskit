@@ -10,5 +10,6 @@ testFutureZipFailsIfSecondFails
 	error := Error new.
 	zipFuture deployFailure: error.
 	future deploySuccess: 5.
+	50 milliSecond wait.
 	
 	self assert: got equals: error
