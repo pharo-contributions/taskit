@@ -220,35 +220,130 @@ aRunner exceptionHandler: TKTDebuggerExceptionHandler new.
 
 ## The Worker pool
 
-A worker pool is our implementation of a threads pool. Its main purpose is to provide with several worker runners and decouple us from the management of threads/processes. Worker pools are built on top of TaskIT, inside the PoolIT package. A worker pool, instance of `PITWorkersPool`, manages several worker runners. All runners inside a worker pool shared a single task queue. We can schedule a task for execution using the `dispatch:` message.
+A TaskIT worker pool is pool of worker runners, equivalent to a ThreadPool from other programming languages. Its main purpose is to provide several worker runners and decouple us from the management of threads/processes. A worker pool is a runner in the sense we use the `schedule:` message to schedule tasks in it. Internally, all runners inside a worker pool share a single task queue.
 
+Different applications may have different concurrency needs, thus, TaskIT worker pools do not provide a default amount of workers. Before using a pool, we need to specify the maximum number of workers in the pool using the `poolMaxSize:` message. A worker pool will create new workers on demand. 
 ```smalltalk
-dispatcher := PITWorkersPool instance. 
-future := dispatcher dispatch: [ 1+1 ] asTask.
-future value = 2
+pool := TKTWorkerPool new.
+pool poolMaxSize: 5.
+```
+TaskIT worker pools use internally an extra worker to synchronize the access to its task queue. Because of this, a worker pool has to be manually started using the `start` message before scheduled messages start to be executed.
+```smalltalk
+pool := TKTWorkerPool new.
+pool poolMaxSize: 5.
+pool start.
+pool schedule: [ 1 logCr ].
 ```
 
-By default, a worker pool spawns two workers during it initialization (which is lazy). We can add more workers to the pool with the `addWorker` message and remove them with the `removeWorker` message.
-
+Once we are done with the worker pool, we can stop it by sending it the `stop` message.
 ```smalltalk
-dispatcher := PITWorkersPool instance. 
-dispatcher addWorker.
-dispatcher
-    removeWorker;
-    removeWorker
-```
-
-The `removeWorker` message send will fail if there is no workers available to remove. The removed worker will stop after it finishes any task it is running, and it will not be available for usage any more. The last remaining reference to this worker is given as return of the message.
-
-Finally, there is a fancy way to schedule tasks into the singleton pool of workers.
-
-```smalltalk
-future := [ 2 + 2 ] scheduleIt. 
+pool stop.
 ```
 
 ## Advanced Futures
 
+Futures are a nice asynchronous way to obtain the results of our eventually executed tasks. However, as we do not know when tasks will finish, processing that result will be another asynchronous task that needs to start as soon as the first one finishes. To simplify the task of future management, TaskIT futures come along with some combinators.
 
+### Value combinators
+
+- **The `collect:` combinator**
+
+The `collect:` combinator does, as its name says, the same than the collection's API: it transforms a result using a transformation.
+
+```smalltalk
+future := [ 2 + 3 ] future.
+(future collect: [ :number | number factorial ])
+    onSuccessDo: [ :result | result logCr ].
+```
+
+The `collect:` combinator returns a new future whose value will be the result of transforming the first future's value.
+
+- **The `select:` combinator**
+
+The `select:` combinator does, as its name says, the same than the collection's API: it filters a result satisfying a condition.
+
+```smalltalk
+future := [ 2 + 3 ] future.
+(future select: [ :number | number even ])
+    onSuccessDo: [ :result | result logCr ];
+    onFailureDo: [ :error | error logCr ].
+```
+
+The `select:` combinator returns a new future whose result is the result of the first future if it satisfies the condition. Otherwise, its value will be a `NotFound` exception.
+
+- **The `flatCollect:`combinator**
+
+The `flatCollect:` combinator is similar to the `collect:` combinator, as it transforms the result of the first future using the given transformation block. However, `flatCollect:` excepts as the result of its transformation block a future.
+
+```smalltalk
+future := [ 2 + 3 ] future.
+(future flatCollect: [ :number | [ number factorial ] future ])
+    onSuccessDo: [ :result | result logCr ].
+```
+The `flatCollect:` combinator returns a new future whose value will be the result the value of the future yielded by the transformation.
+
+- **The `zip:`combinator**
+
+The `zip:` combinator combines two futures into a single future that returns an array with both results.
+
+```smalltalk
+future1 := [ 2 + 3 ] future.
+future2 := [ 18 factorial ] future.
+(future1 zip: future2)
+    onSuccessDo: [ :result | result logCr ].
+```
+`zip:` works only on success: the resulting future will be a failure if any of the futures is also a failure.
+
+- **The `on:do:`combinator**
+
+The `on:do:` allows us to transform a future that fails with an exception into a future with a result.
+
+```smalltalk
+future := [ Error signal ] future
+    on: Error do: [ :error | 5 ].
+future onSuccessDo: [ :result | result logCr ].
+```
+
+### Synchronization Combinators
+
+- **The `fallbackTo:` combinator**
+
+The `fallbackTo:` combinator combines two futures in a way such that if the first future fails, it is the second one that will be taken into account.
+
+```smalltalk
+failFuture := [ Error signal ] future.
+successFuture := [ 1 + 1 ] future.
+(failFuture fallbackTo: successFuture)
+    onSuccessDo: [ :result | result logCr ].
+```
+
+In other words, `fallbackTo:` produces a new future whose value is the first's future value if success, or it is the second future's value otherwise. 
+
+- **The `firstCompleteOf:` combinator**
+
+The `firstCompleteOf:` combinator combines two futures resulting in a new future whose value is the value of the future that finishes first, wether it is a success or a failure.
+
+```smalltalk
+failFuture := [ 1 second wait. Error signal ] future.
+successFuture := [ 1 second wait. 1 + 1 ] future.
+(failFuture firstCompleteOf: successFuture)
+    onSuccessDo: [ :result | result logCr ];
+    onFailureDo: [ :error | error logCr ].
+```
+
+In other words, `fallbackTo:` produces a new future whose value is the first's future value if success, or it is the second future's value otherwise.
+
+- **The `andThen:` combinator**
+
+The `andThen:` combinator allows to chain several futures to a single future's value. All futures chained using the `andThen:` combinator are guaranteed to be executed sequenceally (in contrast to normal callbacks), and all of them will receive as value the value of the first future (instead of the of of it's preceeding future).
+
+```smalltalk
+[ 1 + 1 ] future
+    andThen: [ :result | result logCr ];
+    andThen: [ :result | FileStream stdout nextPutAll: result ]. 
+```
+
+This combinator is meant to enforce the order of execution of several actions, and this it is mostly for side-effect purposes where we want to guarantee such order.
 
 # To Review
 
