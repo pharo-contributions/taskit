@@ -3,7 +3,7 @@
 	"classinstvars" : [
 		 ],
 	"classvars" : [
-		 ],
+		"GlobalInstance" ],
 	"commentStamp" : "GuillermoPolito 8/8/2016 14:48",
 	"instvars" : [
 		"poolMaxSize",
