@@ -50,7 +50,7 @@ You will find a longer answer in the section below explaining *runners*. In Task
 
 We have been using so far block closures as tasks. Block closures are a handy way to create a task since they implictly capture the context: they have access to `self` and other objects in the scope. However, blocks are not always the wisest choice for tasks. Indeed, when a block closure is created, it references the current `context` with all the objects in it and its *sender contexts*, being a potential source of memory leaks.
 
-The good news is that TaskIt tasks can be represented by almost any object. A task, in TaskIT's domain are **valuable objects** i.e., objects that will do some computation when they receive the `value` message. Actually, the messages `schedule` and `future` we just used are a syntax sugar for:
+The good news is that TaskIt tasks can be represented by almost any object. A task, in TaskIT's domain are **valuable objects** i.e., objects that will do some computation when they receive the `value` message. Actually, the message `schedule` is just a syntax sugar for:
 
 ```smalltalk
 (TKTTask valuable: [ 1 logCr ]) schedule.
