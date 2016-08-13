@@ -46,7 +46,7 @@ You may be asking yourself what's the difference between the `schedule` and `for
 
 You will find a longer answer in the section below explaining *runners*. In TaskIT, tasks are not directly scheduled in Pharo's global `ProcessScheduler` object as usual `Process` objects are. Instead, a task is scheduled in a task runner. It is the responsibility of the task runner to execute the task.
 
-### All valuables are Tasks
+### All valuables can be Tasks
 
 We have been using so far block closures as tasks. Block closures are a handy way to create a task since they implictly capture the context: they have access to `self` and other objects in the scope. However, blocks are not always the wisest choice for tasks. Indeed, when a block closure is created, it references the current `context` with all the objects in it and its *sender contexts*, being a potential source of memory leaks.
 
