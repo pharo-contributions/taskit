@@ -46,6 +46,41 @@ You may be asking yourself what's the difference between the `schedule` and `for
 
 You will find a longer answer in the section below explaining *runners*. In TaskIT, tasks are not directly scheduled in Pharo's global `ProcessScheduler` object as usual `Process` objects are. Instead, a task is scheduled in a task runner. It is the responsibility of the task runner to execute the task.
 
+### All valuables are Tasks
+
+We have been using so far block closures as tasks. Block closures are a handy way to create a task since they implictly capture the context: they have access to `self` and other objects in the scope. However, blocks are not always the wisest choice for tasks. Indeed, when a block closure is created, it references the current `context` with all the objects in it and its *sender contexts*, being a potential source of memory leaks.
+
+The good news is that TaskIt tasks can be represented by almost any object. A task, in TaskIT's domain are **valuable objects** i.e., objects that will do some computation when they receive the `value` message. Actually, the messages `schedule` and `future` we just used are a syntax sugar for:
+
+```smalltalk
+(TKTTask valuable: [ 1 logCr ]) schedule.
+```
+
+We can then create tasks using message sends or weak message sends:
+
+```smalltalk
+TKTTask valuable: (WeakMessageSend receiver: Object new selector: #yourself).
+TKTTask valuable: (MessageSend receiver: 1 selector: #+ arguments: { 7 }).
+```
+
+Or even create our own task object:
+
+```smalltalk
+Object subclass: #MyTask
+	instanceVariableNames: ''
+	classVariableNames: ''
+	package: 'MyPackage'.
+
+MyTask >> value
+    ^ 100 factorial
+```
+
+and use it as follows:
+
+```smalltalk
+TKTTask valuable: MyTask new.
+```
+
 ## Retrieving a Task's Result with Futures
 
 In TaskIT we differentiate two different kind of tasks: some tasks are just *scheduled* for execution, they produce some side-effect and no result, some other tasks will produce (generally) a side-effect free value. When the result of a task is important for us, TaskIT provides us with a *future* object. A *future* is no other thing than an object that represents the future value of the task's execution. We can schedule a task with a future by using the `future` message on a block closure, as follows.
@@ -56,7 +91,7 @@ aFuture := [ 2 + 2 ] future.
 
 One way to see futures is as placeholders. When the task is finished, it deploys its result into the corresponding future. A future then provides access to its value, but since we cannot know *when* this value will be available, we cannot access it right away. Instead, futures provide an asynchronous way to access it's value by using *callbacks*. A callback is an object that will be executed when the task execution is finished.  
 
->In general terms, we do not want to **force** a future to retrieve his value in an asynchronous way.
+>In general terms, we do not want to **force** a future to retrieve his value in a synchronous way.
 >By doing so, we would be going back to the synchronous world, blocking a process' execution, and not exploiting concurrency.
 >Later sections will discuss about synchronous (blocking) retrieval of a future's value.
 
