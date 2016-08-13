@@ -1,1 +1,0 @@
-a future is a promise of processing result

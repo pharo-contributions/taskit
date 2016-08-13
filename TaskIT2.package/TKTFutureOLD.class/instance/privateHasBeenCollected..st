@@ -1,3 +1,0 @@
-private
-privateHasBeenCollected: anUndefinedObject
-	self cancel

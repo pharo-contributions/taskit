@@ -1,1 +1,0 @@
-A task looper is an object that loops infinitely executing a task. 

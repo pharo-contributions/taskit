@@ -1,1 +1,0 @@
-A task execution is a runtime reification of the execution of a task. 
