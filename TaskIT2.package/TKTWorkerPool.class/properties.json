@@ -3,12 +3,16 @@
 	"classinstvars" : [
 		 ],
 	"classvars" : [
-		 ],
+		"GlobalInstance" ],
 	"commentStamp" : "GuillermoPolito 8/13/2016 21:16",
 	"instvars" : [
-		"exceptionHandler" ],
-	"name" : "TKTRunner",
+		"poolMaxSize",
+		"busyWorkers",
+		"freeWorkers",
+		"size",
+		"poolWorker" ],
+	"name" : "TKTWorkerPool",
 	"pools" : [
 		 ],
-	"super" : "Object",
+	"super" : "TKTAbstractWorker",
 	"type" : "normal" }

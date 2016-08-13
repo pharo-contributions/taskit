@@ -1,10 +1,10 @@
 {
-	"category" : "TaskIT2-Worker",
+	"category" : "TaskIT2-Kernel",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "GuillermoPolito 8/8/2016 14:48",
+	"commentStamp" : "GuillermoPolito 8/13/2016 21:14",
 	"instvars" : [
 		"process",
 		"name" ],
