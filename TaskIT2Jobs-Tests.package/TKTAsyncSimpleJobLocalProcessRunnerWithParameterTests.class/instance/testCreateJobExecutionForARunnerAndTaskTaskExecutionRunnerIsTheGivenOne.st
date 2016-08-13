@@ -1,4 +1,0 @@
-tests
-testCreateJobExecutionForARunnerAndTaskTaskExecutionRunnerIsTheGivenOne
-	self createPausedJobExecution.
-	self assert: self runner equals: self jobExecution runner

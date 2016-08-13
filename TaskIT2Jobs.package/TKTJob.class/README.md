@@ -1,1 +1,0 @@
-A Job is the representation of a task and it relation with the result, and the relation between the result and the environment. 

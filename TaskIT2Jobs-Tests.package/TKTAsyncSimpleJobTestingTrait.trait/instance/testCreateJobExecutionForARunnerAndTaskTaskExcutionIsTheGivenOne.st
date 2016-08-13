@@ -1,4 +1,0 @@
-tests
-testCreateJobExecutionForARunnerAndTaskTaskExcutionIsTheGivenOne
-	self createPausedJobExecution.
-	self assert: self taskExecution equals: self jobExecution taskExecution
