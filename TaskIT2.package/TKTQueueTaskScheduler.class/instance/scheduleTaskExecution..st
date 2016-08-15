@@ -1,4 +1,4 @@
 schedulling
-schedule: aTask
+scheduleTaskExecution: aTask
 	
 	queue nextPut: aTask

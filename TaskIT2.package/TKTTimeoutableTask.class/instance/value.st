@@ -5,11 +5,10 @@ value
 	[
 	finished := false.
 	taskProcess := Processor activeProcess.	
-	[ timeout wait.
+	TKTProcessProvider createProcessDoing: [ timeout wait.
 		finished ifFalse: [ | activeContext timeoutContext |
 			activeContext := taskProcess suspendedContext.
 			timeoutContext := [ TKTTimeoutException signal ] asContext.
 			timeoutContext privSender: activeContext.
-			taskProcess suspendedContext: timeoutContext ] ] fork.
-	
+			taskProcess suspendedContext: timeoutContext ] ] named: 'TimeoutProcess(task=', self asString, ')'.	
 	super value ] ensure: [ finished := true ]

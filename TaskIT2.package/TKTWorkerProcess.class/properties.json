@@ -12,5 +12,5 @@
 	"name" : "TKTWorkerProcess",
 	"pools" : [
 		 ],
-	"super" : "TKTAbstractExecutor",
+	"super" : "TKTRunner",
 	"type" : "normal" }

@@ -6,7 +6,6 @@
 		 ],
 	"commentStamp" : "GuillermoPolito 8/13/2016 21:18",
 	"instvars" : [
-		"block",
 		"result",
 		"valueSemaphore",
 		"resultCallbacks",

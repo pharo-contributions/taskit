@@ -1,0 +1,1 @@
+I am a task that has a timeout. I start a second pharo process (i.e., the timeout process) that governs myself. If the timeout process ends before the task, the task gets cancelled with an exception. Otherwise, the task finishes normally.

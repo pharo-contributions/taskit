@@ -10,5 +10,5 @@
 	"name" : "TKTCurrentTaskRunner",
 	"pools" : [
 		 ],
-	"super" : "ProcessLocalVariable",
+	"super" : "DynamicVariable",
 	"type" : "normal" }
