@@ -4,15 +4,11 @@
 		 ],
 	"classtraitcomposition" : "TTaskScheduler classTrait",
 	"classvars" : [
-		"GlobalInstance" ],
-	"commentStamp" : "GuillermoPolito 8/13/2016 21:16",
+		 ],
+	"commentStamp" : "GuillermoPolito 8/15/2016 12:31",
 	"instvars" : [
-		"poolMaxSize",
-		"busyWorkers",
-		"freeWorkers",
-		"size",
-		"poolWorker" ],
-	"name" : "TKTWorkerPool",
+		"queue" ],
+	"name" : "TKTQueueTaskScheduler",
 	"pools" : [
 		 ],
 	"super" : "Object",

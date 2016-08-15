@@ -1,4 +1,4 @@
-scheduling
+schedulling
 getAvailableWorker
 
 	| worker |

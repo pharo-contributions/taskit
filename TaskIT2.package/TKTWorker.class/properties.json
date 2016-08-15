@@ -1,5 +1,5 @@
 {
-	"category" : "TaskIT2-Kernel",
+	"category" : "TaskIT2-Worker",
 	"classinstvars" : [
 		 ],
 	"classvars" : [
@@ -10,5 +10,5 @@
 	"name" : "TKTWorker",
 	"pools" : [
 		 ],
-	"super" : "TKTAbstractWorker",
+	"super" : "TKTQueueTaskScheduler",
 	"type" : "normal" }

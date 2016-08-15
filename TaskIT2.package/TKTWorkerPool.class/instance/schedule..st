@@ -1,4 +1,4 @@
-scheduling
+schedulling
 schedule: aTask
 	
 	poolWorker schedule: [ | worker |

@@ -1,4 +1,0 @@
-starting
-start
-
-	self subclassResponsibility 

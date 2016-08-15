@@ -1,4 +1,4 @@
-as yet unclassified
+executing
 executeTask: aTask
 
 	TKTCurrentTaskRunner value: self.

@@ -2,15 +2,15 @@
 	"category" : "TaskIT2-Kernel",
 	"classinstvars" : [
 		 ],
-	"classtraitcomposition" : "TTaskExecutor classTrait + TTaskScheduler classTrait",
+	"classtraitcomposition" : "TTaskScheduler classTrait",
 	"classvars" : [
 		 ],
 	"commentStamp" : "GuillermoPolito 8/13/2016 21:16",
 	"instvars" : [
-		"exceptionHandler" ],
+		 ],
 	"name" : "TKTRunner",
 	"pools" : [
 		 ],
-	"super" : "Object",
-	"traitcomposition" : "TTaskExecutor + TTaskScheduler",
+	"super" : "TKTAbstractExecutor",
+	"traitcomposition" : "TTaskScheduler",
 	"type" : "normal" }
