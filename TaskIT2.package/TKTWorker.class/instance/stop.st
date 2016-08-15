@@ -1,4 +1,4 @@
 starting
 stop
 	
-	process terminate
+	process stop

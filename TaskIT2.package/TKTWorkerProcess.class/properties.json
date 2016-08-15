@@ -4,11 +4,13 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "GuillermoPolito 8/13/2016 21:14",
+	"commentStamp" : "",
 	"instvars" : [
+		"taskQueue",
+		"name",
 		"process" ],
-	"name" : "TKTWorker",
+	"name" : "TKTWorkerProcess",
 	"pools" : [
 		 ],
-	"super" : "TKTAbstractWorker",
+	"super" : "TKTRunner",
 	"type" : "normal" }

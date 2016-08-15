@@ -2,6 +2,7 @@
 	"category" : "TaskIT2-Kernel",
 	"classinstvars" : [
 		 ],
+	"classtraitcomposition" : "TTaskExecutor classTrait + TTaskScheduler classTrait",
 	"classvars" : [
 		 ],
 	"commentStamp" : "GuillermoPolito 8/13/2016 21:16",
@@ -11,4 +12,5 @@
 	"pools" : [
 		 ],
 	"super" : "Object",
+	"traitcomposition" : "TTaskExecutor + TTaskScheduler",
 	"type" : "normal" }

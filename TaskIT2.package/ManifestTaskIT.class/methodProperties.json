@@ -5,7 +5,6 @@
 		"ruleCodeCruftLeftInMethodsRuleV1FalsePositive" : "SantiagoBragagnolo 6/17/2016 13:49:27",
 		"ruleGuardClauseRuleV1FalsePositive" : "SantiagoBragagnolo 6/17/2016 13:49:27",
 		"ruleImplementedNotSentRuleV1FalsePositive" : "SantiagoBragagnolo 6/17/2016 13:49:27",
-		"ruleInconsistentMethodClassificationRuleV1FalsePositive" : "GuillermoPolito 8/9/2016 16:54",
 		"ruleRBBadMessageRuleV1FalsePositive" : "SantiagoBragagnolo 6/17/2016 13:49:27",
 		"ruleRBClassNotReferencedRuleV1FalsePositive" : "SantiagoBragagnolo 6/17/2016 13:49:27",
 		"ruleRBCodeCruftLeftInMethodsRuleV1FalsePositive" : "SantiagoBragagnolo 6/17/2016 13:49:27",
