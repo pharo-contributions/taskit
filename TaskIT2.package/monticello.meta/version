@@ -1,2 +1,2 @@
-(name 'TaskIT2-guille.22' message 'Restored runner hierarchy:  - TKTWorkerProcess does not need to be a subclass of TKTRunner anymore' id 'f7c63ed0-f565-47dd-8a49-d9781c27b3a9' date '16 August 2016' time '1:44:36.374389 am' author 'GuillermoPolito' ancestors ((name 'TaskIT2-guille.21' message 'implemented task cancellation via task executions
-' id 'dc8788ad-8977-55d6-87c7-117c3386335b' date '15 August 2016' time '11:54:16 pm' author 'guille' ancestors () stepChildren ())) stepChildren ())
+(name 'TaskIT2-guille.23' message 'Commented Task execution classes' id 'dd5e91a1-6480-4867-bfd7-e29d1fe2b005' date '16 August 2016' time '1:48:58.494382 am' author 'GuillermoPolito' ancestors ((name 'TaskIT2-guille.22' message 'Restored runner hierarchy:  - TKTWorkerProcess does not need to be a subclass of TKTRunner anymore
+' id 'da1da1fd-bccf-5904-aa83-1f0e142c104f' date '16 August 2016' time '1:45:15 am' author 'guille' ancestors () stepChildren ())) stepChildren ())
