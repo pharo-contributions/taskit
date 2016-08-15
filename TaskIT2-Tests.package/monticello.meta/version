@@ -1,2 +1,2 @@
-(name 'TaskIT2-Tests-guille.5' message 'removed obsolete classes' id 'f2c7e176-6e23-438a-bc8d-71c6fdb6bdad' date '13 August 2016' time '9:34:08.203156 pm' author 'GuillermoPolito' ancestors ((name 'TaskIT2-Tests-guille.4' message 'Merging TaskItPool tests into TaskIT tests
-' id '7962704d-85f0-50c5-8bc9-633351e27703' date '13 August 2016' time '9:28:55 pm' author 'guille' ancestors () stepChildren ())) stepChildren ())
+(name 'TaskIT2-Tests-guille.6' message '- Extracted Traits TScheduler and TExecutor- Separated worker and worker thread to allow for collection in the future' id '73ba256a-fe3e-4095-b221-a7428893ff06' date '15 August 2016' time '11:17:13.648743 am' author 'GuillermoPolito' ancestors ((name 'TaskIT2-Tests-guille.5' message 'removed obsolete classes
+' id '7f55b747-01f6-5edb-9f4c-f41c2de484e2' date '13 August 2016' time '9:34:09 pm' author 'guille' ancestors () stepChildren ())) stepChildren ())

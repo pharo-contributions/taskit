@@ -3,6 +3,6 @@
 		 },
 	"instance" : {
 		"testWorkerExceptionIsHandledByExceptionHandler" : "GuillermoPolito 8/10/2016 16:22",
-		"testWorkerProcessDiesAfterStop" : "GuillermoPolito 8/9/2016 16:54",
+		"testWorkerProcessDiesAfterStop" : "GuillermoPolito 8/15/2016 11:12",
 		"testWorkerRunsAlwaysInSameProcess" : "GuillermoPolito 8/10/2016 14:39",
 		"testWorkerRunsInSeparateProcess" : "GuillermoPolito 8/10/2016 14:39" } }

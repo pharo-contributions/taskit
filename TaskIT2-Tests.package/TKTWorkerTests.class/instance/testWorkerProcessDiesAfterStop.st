@@ -6,7 +6,7 @@ testWorkerProcessDiesAfterStop
 	worker start.
 	worker stop.
 	
-	future := TKTFuture doing: [ [ worker process isTerminated ] whileFalse: [ 50 milliSeconds wait ] ].
+	future := TKTFuture doing: [ [ worker process isRunning ] whileTrue: [ 50 milliSeconds wait ] ].
 	future valueTimeout: 2 seconds.
 	
-	self assert: worker process isTerminated
+	self deny: worker process isRunning

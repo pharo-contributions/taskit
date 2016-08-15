@@ -10,4 +10,4 @@ testFutureFailureCallbackExecutesInSameWorker
 	future waitForCompletion: 1 second.
 	100 milliSeconds wait.
 	
-	self assert: currentRunner equals: runner
+	self assert: currentRunner equals: runner process
