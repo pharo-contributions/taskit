@@ -7,7 +7,9 @@
 	"commentStamp" : "",
 	"instvars" : [
 		"runner",
-		"task" ],
+		"task",
+		"executionProcess",
+		"finished" ],
 	"name" : "TKTTaskExecution",
 	"pools" : [
 		 ],

@@ -1,2 +1,2 @@
-(name 'TaskIT2-guille.20' message 'Re-Added the TaskExecution abstraction to help in managing the current task runner and task cancellation' id 'a2cea2df-47a0-4a33-a365-76d3c995dbad' date '15 August 2016' time '11:38:57.774299 pm' author 'GuillermoPolito' ancestors ((name 'TaskIT2-guille.19' message 'Added timeoutable tasks
-' id 'efc10361-394d-5029-8993-05d39d7876cd' date '15 August 2016' time '2:12:23 pm' author 'guille' ancestors () stepChildren ())) stepChildren ())
+(name 'TaskIT2-guille.21' message 'implemented task cancellation via task executions' id '09b667ef-e29a-40e0-a1a0-3566a8d6f43b' date '15 August 2016' time '11:53:39.535485 pm' author 'GuillermoPolito' ancestors ((name 'TaskIT2-guille.20' message 'Re-Added the TaskExecution abstraction to help in managing the current task runner and task cancellation
+' id '7049c01a-80e2-5137-b9cb-a29659960b33' date '15 August 2016' time '11:39:51 pm' author 'guille' ancestors () stepChildren ())) stepChildren ())

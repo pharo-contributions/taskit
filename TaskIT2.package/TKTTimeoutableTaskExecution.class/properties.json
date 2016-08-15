@@ -4,11 +4,11 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "GuillermoPolito 8/15/2016 20:57",
+	"commentStamp" : "",
 	"instvars" : [
 		"timeout" ],
-	"name" : "TKTTimeoutableTask",
+	"name" : "TKTTimeoutableTaskExecution",
 	"pools" : [
 		 ],
-	"super" : "TKTGenericTask",
+	"super" : "TKTTaskExecution",
 	"type" : "normal" }

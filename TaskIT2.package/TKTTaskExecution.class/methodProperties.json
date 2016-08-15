@@ -2,6 +2,10 @@
 	"class" : {
 		 },
 	"instance" : {
+		"cancel" : "GuillermoPolito 8/15/2016 23:48",
+		"doExecuteTask" : "GuillermoPolito 8/15/2016 23:45",
+		"initialize" : "GuillermoPolito 8/15/2016 23:49",
+		"isFinished" : "GuillermoPolito 8/15/2016 23:49",
 		"runner:" : "GuillermoPolito 8/15/2016 21:56",
 		"task:" : "GuillermoPolito 8/15/2016 21:56",
-		"value" : "GuillermoPolito 8/15/2016 21:58" } }
+		"value" : "GuillermoPolito 8/15/2016 23:51" } }
