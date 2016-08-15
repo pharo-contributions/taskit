@@ -1,6 +1,6 @@
 instance-creation
 valuable: aValuable
 
-	^ self new
+	^ TKTGenericTask new
 		valuable: aValuable;
 		yourself

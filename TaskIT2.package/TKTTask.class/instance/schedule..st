@@ -1,4 +1,4 @@
 running
 schedule: executor
 	
-	executor schedule: valuable
+	executor schedule: self

@@ -4,11 +4,11 @@
 		 ],
 	"classvars" : [
 		 ],
-	"commentStamp" : "GuillermoPolito 8/13/2016 21:10",
+	"commentStamp" : "GuillermoPolito 8/15/2016 13:52",
 	"instvars" : [
-		 ],
-	"name" : "TKTTask",
+		"valuable" ],
+	"name" : "TKTGenericTask",
 	"pools" : [
 		 ],
-	"super" : "Object",
+	"super" : "TKTTask",
 	"type" : "normal" }
