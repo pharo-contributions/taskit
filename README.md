@@ -419,74 +419,24 @@ future := [ 5 seconds wait ] future.
 [ future synchronizeTimeout: 1 seconds ] on: TKTTimeoutException do: [ :error | error logCr ].
 ```
 
+## Services
+
+>TODO
+
+## TODOs
+
+- Write about services
+- ConfigurationOf
+- Examples?
+- ActIt2
+- 
+
 # To Review
-
-### Synchronous result retrieval
-
-The simplest way to interact with a future is synchronously. That is, when asking for a future's value, it will block the actual process until the value is available. We can do that by sending our future the message `value`.
-
-```smalltalk
-future := [ 2 + 2 ] shootIt.
-self assert: future value equals: 4.
-```
-
-However, it could have happened that the finished in an erroneous state, with an exception. In such case, the exception that was thrown inside the task's execution is forwarded to the sender of `value`.
-
-```smalltalk
-future := [ SomeError signal ] shootIt.
-[ future value ] on: SomeError do: [ :error | "We handle the error" ].
-```
-
-A future can also tell us if the task is already finished or not, by sending it the message `isValueAvailable`. The `isValueAvailable` message, opposedly to the `value` message, will not block the caller's process but return immediately a boolean informing if the task has finished.
-
-```smalltalk
-future := [ 2 + 2 ] shootIt.
-future isValueAvailable.
-```
-
-However, waiting synchronously or polling for the task to be finished can be a waste of CPU time sometimes. For those cases when completely synchronous execution does not fit, TaskIT provides an alternative of retrieving a value with a timeout option, using the `valueTimeoutMilliseconds:` message. When we specify a timeout, we can also provide a block to handle the timeout case using the `valueTimeoutMilliseconds:ifTimeout:`. If we choose not to provide such a block, the default behavior in case of timeout is to throw a `TKTTimeoutError` exception.
-
-```smalltalk
-future := [ (Delay forMilliseconds: 100) wait ] shootIt.
-
-future
-    valueTimeoutMilliseconds: 2
-    ifTimeout: [ "if it times out we execute this block"].
-
-future valueTimeoutMilliseconds: 2.
-```
-
-## Conclusion
-	
-In this chapter we present TaskIT framework for dealing with common concurrent architecture problems. We covered how to start a create a task from a block, how does that task run into a runner. We covered also futures as way to obtain a value, and to have a gate to synchronise your threads explicitly, and covered lazy results for synchronising your threads implicitly.
-
-Finally we explain also how TaskIT deal with thread pools, explaining how to use it, and the impact in the global system performance.  
-
-
-%!!ActIT: A Simple Actor Library on top of TaskIT
-
-
 
 %!!TODOs
 
-%- Discuss with Santi: What should be a good behavior if an error occurrs during a callback?
-%- Does it make sense to put callbacks on a task (besides or instead putting it on the future)?
+%!!ActIT: A Simple Actor Library on top of TaskIT
+
 %- What about implementing lazy results with proxies (and do just forwarding?)?
 %- ExclusiveVariable finalize is necesary?
 %- Lazy result can be cancelled?
-%- interruptCurrentTask
-
-%	currentTask ifNotNil: [ 
-%		currentTask value isProcessFinished ifFalse: [
-%			currentTask  priority: 10.
-%			workQueue do: currentTask.
-%		].
-%	].
-%- cleanup wtF?
-%- por que hay que ejecutar esto en un task?
-%self scheduleTask: [ keepRunning set: false ] asTask.
-
-
-% Local Variables:
-% eval: (flyspell-mode -1)
-% End:
