@@ -1,6 +1,5 @@
-accessing
-valueTimeout: aTimeout
+synchronization
+synchronizeTimeout: aTimeout
 	
-	timeoutMicroseconds := aTimeout.
 	self waitForCompletion: aTimeout.
 	^ result valueForFuture: self

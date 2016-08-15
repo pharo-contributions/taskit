@@ -1,4 +1,4 @@
-accessing
+synchronization
 waitForCompletion: aTimeout
 
 	self isFinished ifFalse: [ | expired |

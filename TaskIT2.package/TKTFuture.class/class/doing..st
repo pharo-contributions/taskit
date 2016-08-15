@@ -1,7 +1,4 @@
 instance-creation
 doing: aBlock
 
-	^ self new
-		block: aBlock;
-		run;
-		yourself
+	^ TKTCurrentTaskRunner value future: aBlock
