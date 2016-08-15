@@ -14,11 +14,11 @@ testWorkerProcessDiesAfterWorkerAndAllFuturesAreCollected
 	
 	worker := nil.
 	Smalltalk garbageCollect.
-	self should: [waitFuture1 valueTimeout: 200 milliSeconds] raise: TKTTimeoutException.
+	self should: [waitFuture1 synchronizeTimeout: 200 milliSeconds] raise: TKTTimeoutException.
 	self assert: process isRunning.
 	
 	future := nil.
 	Smalltalk garbageCollect.
-	waitFuture2 valueTimeout: 200 milliSeconds.
+	waitFuture2 synchronizeTimeout: 200 milliSeconds.
 	
 	self deny: process isRunning.

@@ -16,6 +16,6 @@ testWorkerProcessIsWorkingUntilAllTasksAreDone
 	50 milliSeconds wait.
 	self assert: process isRunning.
 	
-	waitFuture valueTimeout: 200 milliSeconds.
+	waitFuture synchronizeTimeout: 200 milliSeconds.
 	
 	self deny: process isRunning.

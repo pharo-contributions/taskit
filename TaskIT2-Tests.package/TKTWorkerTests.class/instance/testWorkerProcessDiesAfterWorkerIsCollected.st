@@ -12,6 +12,6 @@ testWorkerProcessDiesAfterWorkerIsCollected
 	
 	
 	future := TKTFuture doing: [ [ process isRunning ] whileTrue: [ 50 milliSeconds wait ] ].
-	future valueTimeout: 1 seconds.
+	future synchronizeTimeout: 1 seconds.
 	
 	self deny: process isRunning

@@ -6,6 +6,6 @@ testWorkerRunsAlwaysInSameProcess
 	worker start.
 	
 	futures := (1 to: 10) collect: [ :i | worker future: [ hash := Processor activeProcess identityHash ] ].
-	hashes := futures collect: [ :each | each valueTimeout: 1 hour ].
+	hashes := futures collect: [ :each | each synchronizeTimeout: 1 hour ].
 	
 	self assert: hashes asSet size equals: 1
