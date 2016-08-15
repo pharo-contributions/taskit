@@ -1,4 +1,4 @@
-as yet unclassified
+tests
 testWorkerPoolDoesNotExceedPoolSize
 
 	| pool |
@@ -7,6 +7,6 @@ testWorkerPoolDoesNotExceedPoolSize
 	pool start.
 		
 	((1 to: 10) collect: [:i | pool future: [ 1 + 1 ] ])
-		do: [ :future | future waitForCompletion: 500 milliSeconds. ].
+		do: [ :future | future waitForCompletion: 1 second. ].
 	
 	self assert: pool size equals: 4

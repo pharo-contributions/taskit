@@ -1,2 +1,2 @@
-(name 'TaskIT2-Tests-guille.10' message 'Added timeoutable tasks' id '83cbbb67-ca9b-4757-b20a-8b226903b032' date '15 August 2016' time '2:12:25.460498 pm' author 'GuillermoPolito' ancestors ((name 'TaskIT2-Tests-guille.9' message 'rename valueTimeout: -> synchronizeTimeout:
-' id '46a3f8ca-4842-5f9b-9dc6-96dfe2526061' date '15 August 2016' time '1:16:20 pm' author 'guille' ancestors () stepChildren ())) stepChildren ())
+(name 'TaskIT2-Tests-guille.11' message 'Re-Added the TaskExecution abstraction to help in managing the current task runner and task cancellation' id '18ffa281-be7a-4ff3-a8c8-fd9ef7f721af' date '15 August 2016' time '11:39:53.377542 pm' author 'GuillermoPolito' ancestors ((name 'TaskIT2-Tests-guille.10' message 'Added timeoutable tasks
+' id 'a68cae90-960c-59e5-978f-b34c7b8c5f9e' date '15 August 2016' time '2:13:44 pm' author 'guille' ancestors () stepChildren ())) stepChildren ())

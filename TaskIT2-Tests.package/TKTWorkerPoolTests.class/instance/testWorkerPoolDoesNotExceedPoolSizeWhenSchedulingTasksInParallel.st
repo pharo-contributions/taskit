@@ -1,4 +1,4 @@
-as yet unclassified
+tests
 testWorkerPoolDoesNotExceedPoolSizeWhenSchedulingTasksInParallel
 
 	| pool totalTasks futures |
