@@ -380,6 +380,45 @@ The `andThen:` combinator allows to chain several futures to a single future's v
 
 This combinator is meant to enforce the order of execution of several actions, and this it is mostly for side-effect purposes where we want to guarantee such order.
 
+### Synchronous Access
+
+Sometimes, although we do not recommend it, you will need or want to access the value of a task in a synchronous manner: that is, to wait for it. We do not recommend waiting for a task because of several reasons:
+  - sometimes you do not know how much a task will last and therefore the waiting can kill's your application's responsiveness
+  - also, it will block your current process until the waiting is finished
+  - you come back to the synchronous world, killing completely the purpose of using TaskIT :)
+
+However, since experienced users may still need this feature, TaskIT futures provide three different messages to access synchronously its result: `isFinished`, `waitForCompletion:` and `synchronizeTimeout:`.
+
+`isFinished` is a testing method that we can use to test if the corresponding future is still finished or not. The following piece of code shows how we could implement an active wait on a future:
+
+```smalltalk
+future := [1 second wait] future.
+[future isFinished] whileFalse: [50 milliseconds wait].
+```
+
+An alternative version for this code that does not require an active wait is the message `waitForCompletion:`. `waitForCompletion:` expects a duration as argument that he will use as timeout. This method will block the execution until the task finishes or the timeout expires, whatever comes first. If the task did not finish by the timeout, a `TKTTimeoutException` will be raised.
+
+```smalltalk
+future := [1 second wait] future.
+future waitForTimeout: 2 seconds.
+
+future := [1 second wait] future.
+[future waitForTimeout: 50 milliSeconds] on: TKTTimeoutException do: [ :error | error logCr ].
+```
+
+Finally, to retrieve the future's result, futures understand the `synchronizeTimeout:` message, that receives a duration as argument as its timeout. If a successful value is available by the timeout, then the result is returned. If the task finished by the timeout with a failure, an `UnhandledError` exception is raised wrapping the original exception. Otherwise, if the task is not finished by the timeout a `TKTTimeoutException` is raised.
+
+```smalltalk
+future := [1 second wait. 42] future.
+(future synchronizeTimeout: 2 seconds) logCr.
+
+future := [ self error ] future.
+[ future synchronizeTimeout: 2 seconds ] on: Error do: [ :error | error logCr ].
+
+future := [ 5 seconds wait ] future.
+[ future synchronizeTimeout: 1 seconds ] on: TKTTimeoutException do: [ :error | error logCr ].
+```
+
 # To Review
 
 ### Synchronous result retrieval
