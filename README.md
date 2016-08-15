@@ -6,7 +6,7 @@ Expressing and managing concurrent computations is indeed a concern of importanc
 
 Processes in Pharo are implemented as green threads scheduled by the virtual machine, without depending on the machinery of the underlying operating system. This has several consequences on the usage of concurrency we can do:
 
-- Processes are cheap to create and to schedule. We can create as many as them as we want, and performance will only degrade is the code executed in those processes do so, what is to be expected.
+- Processes are cheap to create and to schedule. We can create as many as them as we want, and performance will only degrade if the code executed in those processes do so, what is to be expected.
 - Processes provide concurrent execution but no real parallelism. Inside Pharo, it does not matter the amount of processes we use. They will be always executed in a single operating system thread, in a single operating system process.
 
 Besides how expensive it is to create a process is an important concern to decide how we organize our application processes, a more difficult task arises when we want to synchronize such processes. For example, maybe we need to execute two processes concurrently and we want a third one to wait the completion of the first two before starting. Or maybe we need to maximize the parallelism of our application while enforcing the concurrent access to some piece of state. And all these issues require avoiding the creation of deadlocks.
