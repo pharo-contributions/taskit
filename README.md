@@ -311,8 +311,6 @@ If the task surpasses the timeout, the scheduled task will be cancelled with an 
 A task's timeout must not be confused with a future's synchronous access timeout (*explained below*). The task timeout governs the task execution, while a future's timeout governs only the access to the future value. If a future times out while accessing its value, the task will continue its execution normally.
 
 
-## Advanced Futures
-
 ### Where do tasks and callbacks run by default?
 
 As we stated before, the messages #schedule and #future will schedule a task implicitly in a *default* task runner. To be more precise, it is not a default task runner but the **current task runner** that is used. In other words, task scheduling is context sensitive: if a task A is beign executed by a task runner R, new tasks scheduled by A are implicitly scheduled R. The only exception to this is when there is no such task runner, i.e., when the task is scheduled from, for example, a workspace. In that case a default task runner is chosen for scheduling.
@@ -320,6 +318,8 @@ As we stated before, the messages #schedule and #future will schedule a task imp
 > Note: In the current version of taskit (0.2) the default task runner is the global worker pool that can be explicitly accessed evaluating the following expression `TKTWorkerPool global`.
 
 Something similar happens with callbacks. Before we said that callbacks are eventually and concurrently executed. This happens because callbacks are scheduled as normal tasks after a task's execution. This scheduling follows the rules from above: callbacks will be scheduled in the task runner where it's task was executed.
+
+## Advanced Futures
 
 ### Future combinators
 
@@ -468,6 +468,4 @@ future := [ 5 seconds wait ] future.
 ## TODOs
 
 - Write about services
-- ConfigurationOf
-- Examples?
 - ActIt2
