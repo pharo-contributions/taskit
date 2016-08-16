@@ -1,12 +1,5 @@
 combinators
 select: aBlockClosure 
 	
-	| future |
-	future := TKTFuture new.
-	self onSuccessDo: [ :got | 
-		[(aBlockClosure value: got)
-			ifTrue: [ future deploySuccess: got ]
-			ifFalse: [ future deployFailure: (NotFound new object: aBlockClosure) ] ]
-				on: Error do: [ :e | future deployFailure: e ] ].
-	self onFailureDo: [ :error | future deployFailure: error ].
-	^ future
+	^ self collect: [ :r | (aBlockClosure value: r) ifTrue: [ r ] ifFalse: [ NotFound signalFor: aBlockClosure ] ].
+	
