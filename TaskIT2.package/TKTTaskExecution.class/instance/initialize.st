@@ -2,4 +2,4 @@ initialization
 initialize
 
 	super initialize.
-	finished := false.
+	state := TKTReadyTaskState new

@@ -1,6 +1,5 @@
 evaluating
 value
 
-	[ executionProcess := Processor activeProcess.
-	TKTCurrentTaskRunner value: runner during: [ self doExecuteTask ]
-	] ensure: [ finished := true ]
+	executionProcess := Processor activeProcess.
+	TKTCurrentTaskRunner value: runner during: [ self executeTask ].

@@ -1,4 +1,4 @@
 testing
 isFinished
 
-	^ state isFinished
+	^ false

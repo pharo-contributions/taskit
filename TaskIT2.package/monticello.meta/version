@@ -1,2 +1,2 @@
-(name 'TaskIT2-guille.24' message 'Future creation is a task execution responsibility ' id 'acfcb5f4-5ff1-4225-acd1-8eef6a64ad67' date '16 August 2016' time '2:21:09.30537 am' author 'GuillermoPolito' ancestors ((name 'TaskIT2-guille.23' message 'Commented Task execution classes
-' id 'e010a092-651b-5cd9-84de-9d6212b259ad' date '16 August 2016' time '1:49:46 am' author 'guille' ancestors () stepChildren ())) stepChildren ())
+(name 'TaskIT2-guille.25' message 'Refactored task cancellation into task execution states' id 'b1474fd7-9b38-471f-aad3-4328de545934' date '16 August 2016' time '2:59:01.086511 am' author 'GuillermoPolito' ancestors ((name 'TaskIT2-guille.24' message 'Future creation is a task execution responsibility
+' id 'c3e73a9d-07f2-5418-95bb-0c9270f08c89' date '16 August 2016' time '2:21:48 am' author 'guille' ancestors () stepChildren ())) stepChildren ())

@@ -9,7 +9,9 @@
 		"runner",
 		"task",
 		"executionProcess",
-		"finished" ],
+		"isRunning",
+		"cancelled",
+		"state" ],
 	"name" : "TKTTaskExecution",
 	"pools" : [
 		 ],
