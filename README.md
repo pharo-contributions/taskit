@@ -29,7 +29,7 @@ Metacello new
 
 Add the following in your metacello configuration or baseline:
 
-```
+```smalltalk
 spec
     baseline: 'TaskIT2'
     with: [ spec repository: 'github://sbragagnolo/taskit-2:dev-0.2' ]
