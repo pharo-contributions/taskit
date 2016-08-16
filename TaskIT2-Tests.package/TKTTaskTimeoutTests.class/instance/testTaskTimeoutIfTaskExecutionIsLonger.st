@@ -7,4 +7,4 @@ testTaskTimeoutIfTaskExecutionIsLonger
 	
 	runner schedule: [ 50 milliSeconds wait ] timeout: 10 milliSeconds.
 	
-	self assert: (runner exceptionHandler error isKindOf: TKTTimeoutException)
+	self assert: (runner exceptionHandler error isKindOf: TKTCancelledTaskException)
