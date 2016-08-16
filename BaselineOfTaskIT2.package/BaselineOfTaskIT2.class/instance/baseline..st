@@ -3,16 +3,11 @@ baseline: spec
   <baseline>
 	spec
 		for: #common
-		do:
-			[ 
+		do: [ 
 			spec
-				package: #TaskIT2;
-				package: #TaskIT2Tests with: [ spec requires: #('TaskIT2') ].
-			spec group: 'default' with: #(#TaskIT2 #TaskIT2Tests).
+				package: #'TaskIT2';
+				package: #'TaskIT2-Tests' with: [ spec requires: #('TaskIT2') ];
+				package: #'TaskIT2Services' with: [ spec requires: #('TaskIT2') ];
+				package: #'TaskIT2Services-Tests' with: [ spec requires: #('TaskIT2Services') ].
+				
 			spec group: 'minimal' with: #(#TaskIT2) ].
-	spec
-		for: #'pharo5.x'
-		do:
-			[ spec package: #TaskIT2Browser with: [ spec requires: #('TaskIT2') ].
-			spec group: 'default' with: #(#TaskIT2 #TaskIT2Browser #TaskIT2Tests).
-			spec group: 'minimal' with: #(#TaskIT2) ]
