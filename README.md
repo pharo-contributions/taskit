@@ -15,7 +15,30 @@ TaskIT is a library that ease Process usage in Pharo. It provides abstractions t
 
 ## Downloading
 
-> TODO
+Current development version of taskit can be downloaded usig metacello as follows:
+
+```smalltalk
+Metacello new
+  baseline: 'TaskIT2';
+  repository: 'github://sbragagnolo/taskit-2:dev-0.2';
+  load.
+```
+
+
+### Adding it as a Metacello dependency
+
+Add the following in your metacello configuration or baseline:
+
+```
+spec
+    baseline: 'TaskIT2'
+    with: [ spec repository: 'github://sbragagnolo/taskit-2:dev-0.2' ]
+```
+
+### For developers
+
+To develop TaskIT on github we use [iceberg](https://github.com/npasserini/iceberg). Just load iceberg and enter github's url to clone.
+
 
 ## Asynchronous Tasks
 
