@@ -375,8 +375,8 @@ In other words, `fallbackTo:` produces a new future whose value is the first's f
 The `andThen:` combinator allows to chain several futures to a single future's value. All futures chained using the `andThen:` combinator are guaranteed to be executed sequenceally (in contrast to normal callbacks), and all of them will receive as value the value of the first future (instead of the of of it's preceeding future).
 
 ```smalltalk
-[ 1 + 1 ] future
-    andThen: [ :result | result logCr ];
+([ 1 + 1 ] future
+    andThen: [ :result | result logCr ])
     andThen: [ :result | FileStream stdout nextPutAll: result ]. 
 ```
 
