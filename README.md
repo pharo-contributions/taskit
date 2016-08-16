@@ -253,7 +253,29 @@ future2 := worker future: [ 3 + 3 ].
 future3 := worker future: [ 1 + 1 ].
 ```
 
-Workers can be combined into *worker pools*. Worker pools are discussed in a later section.
+Workers can be combined into *worker pools*.
+
+### The Worker pool
+
+A TaskIT worker pool is pool of worker runners, equivalent to a ThreadPool from other programming languages. Its main purpose is to provide several worker runners and decouple us from the management of threads/processes. A worker pool is a runner in the sense we use the `schedule:` message to schedule tasks in it. Internally, all runners inside a worker pool share a single task queue.
+
+Different applications may have different concurrency needs, thus, TaskIT worker pools do not provide a default amount of workers. Before using a pool, we need to specify the maximum number of workers in the pool using the `poolMaxSize:` message. A worker pool will create new workers on demand. 
+```smalltalk
+pool := TKTWorkerPool new.
+pool poolMaxSize: 5.
+```
+TaskIT worker pools use internally an extra worker to synchronize the access to its task queue. Because of this, a worker pool has to be manually started using the `start` message before scheduled messages start to be executed.
+```smalltalk
+pool := TKTWorkerPool new.
+pool poolMaxSize: 5.
+pool start.
+pool schedule: [ 1 logCr ].
+```
+
+Once we are done with the worker pool, we can stop it by sending it the `stop` message.
+```smalltalk
+pool stop.
+```
 
 ### Managing Runner Exceptions
 
@@ -276,33 +298,28 @@ Changing a runner's exception handler can be done by sending it the `exceptionHa
 aRunner exceptionHandler: TKTDebuggerExceptionHandler new.
 ```
 
-## The Worker pool
+### Task Timeout
 
-A TaskIT worker pool is pool of worker runners, equivalent to a ThreadPool from other programming languages. Its main purpose is to provide several worker runners and decouple us from the management of threads/processes. A worker pool is a runner in the sense we use the `schedule:` message to schedule tasks in it. Internally, all runners inside a worker pool share a single task queue.
+In TaskIT tasks can be optionally schedulled with a timeout. A task's timeout limits the execution of a task to a window of time. If the task tries to run longer than the specified time, the task is cancelled automatically. This behaviour is desirable because a long running tasks may be a hint towards a problem, or it can just affect the responsiveness of our application.
 
-Different applications may have different concurrency needs, thus, TaskIT worker pools do not provide a default amount of workers. Before using a pool, we need to specify the maximum number of workers in the pool using the `poolMaxSize:` message. A worker pool will create new workers on demand. 
+A task's timeout can be provided while scheduling a task in a runner, using the `schedule:timeout:` message, asFollows: 
 ```smalltalk
-pool := TKTWorkerPool new.
-pool poolMaxSize: 5.
+aRunner schedule: [1 second wait] timeout: 50 milliSeconds.
 ```
-TaskIT worker pools use internally an extra worker to synchronize the access to its task queue. Because of this, a worker pool has to be manually started using the `start` message before scheduled messages start to be executed.
-```smalltalk
-pool := TKTWorkerPool new.
-pool poolMaxSize: 5.
-pool start.
-pool schedule: [ 1 logCr ].
-```
+If the task surpasses the timeout, the scheduled task will be cancelled with an exception.
 
-Once we are done with the worker pool, we can stop it by sending it the `stop` message.
-```smalltalk
-pool stop.
-```
+A task's timeout must not be confused with a future's synchronous access timeout (*explained below*). The task timeout governs the task execution, while a future's timeout governs only the access to the future value. If a future times out while accessing its value, the task will continue its execution normally.
+
 
 ## Advanced Futures
 
-### Where do futures and callbacks run
+### Where do tasks and callbacks run by default?
 
-> TODO
+As we stated before, the messages #schedule and #future will schedule a task implicitly in a *default* task runner. To be more precise, it is not a default task runner but the **current task runner** that is used. In other words, task scheduling is context sensitive: if a task A is beign executed by a task runner R, new tasks scheduled by A are implicitly scheduled R. The only exception to this is when there is no such task runner, i.e., when the task is scheduled from, for example, a workspace. In that case a default task runner is chosen for scheduling.
+
+> Note: In the current version of taskit (0.2) the default task runner is the global worker pool that can be explicitly accessed evaluating the following expression `TKTWorkerPool global`.
+
+Something similar happens with callbacks. Before we said that callbacks are eventually and concurrently executed. This happens because callbacks are scheduled as normal tasks after a task's execution. This scheduling follows the rules from above: callbacks will be scheduled in the task runner where it's task was executed.
 
 ### Future combinators
 
