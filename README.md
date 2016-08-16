@@ -277,13 +277,13 @@ pool stop.
 
 ## Advanced Futures
 
-Futures are a nice asynchronous way to obtain the results of our eventually executed tasks. However, as we do not know when tasks will finish, processing that result will be another asynchronous task that needs to start as soon as the first one finishes. To simplify the task of future management, TaskIT futures come along with some combinators.
-
 ### Where do futures and callbacks run
 
 > TODO
 
 ### Value combinators
+
+Futures are a nice asynchronous way to obtain the results of our eventually executed tasks. However, as we do not know when tasks will finish, processing that result will be another asynchronous task that needs to start as soon as the first one finishes. To simplify the task of future management, TaskIT futures come along with some combinators.
 
 - **The `collect:` combinator**
 
@@ -342,8 +342,6 @@ future := [ Error signal ] future
     on: Error do: [ :error | 5 ].
 future onSuccessDo: [ :result | result logCr ].
 ```
-
-### Synchronization Combinators
 
 - **The `fallbackTo:` combinator**
 
