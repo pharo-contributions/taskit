@@ -15,7 +15,7 @@ TaskIT is a library that ease Process usage in Pharo. It provides abstractions t
 
 ## Downloading
 
-TODO
+> TODO
 
 ## Asynchronous Tasks
 
@@ -29,7 +29,7 @@ Launching a task is as easy as sending the message `schedule` to a block closure
 ```
 >The selector name `schedule` is chosen in purpose instead of others such as run, launch or execute. TaskIT promises you that a task will be *eventually* executed, but this is not necessarilly right away. In other words, a task is *scheduled* to be executed at some point in time in the future.
 
-This first example is however useful to clarify the first two concept but it remains too simple. We are schedulling a task that does nothing useful, and we cannot even observe it's result (*yet*). Let's explore some other code snippets that may help us understand what's going on.
+This first example is however useful to clarify the first two concepts but it remains too simple. We are schedulling a task that does nothing useful, and we cannot even observe it's result (*yet*). Let's explore some other code snippets that may help us understand what's going on.
 
 The following code snippet will schedule a task that prints to the `Transcript`. Just evaluating the expression below will make evident that the task is actually executed. However, a so simple task runs so fast that it's difficult to tell if it's actually running concurretly to our main process or not.
 ```smalltalk
@@ -279,6 +279,10 @@ pool stop.
 
 Futures are a nice asynchronous way to obtain the results of our eventually executed tasks. However, as we do not know when tasks will finish, processing that result will be another asynchronous task that needs to start as soon as the first one finishes. To simplify the task of future management, TaskIT futures come along with some combinators.
 
+### Where do futures and callbacks run
+
+> TODO
+
 ### Value combinators
 
 - **The `collect:` combinator**
@@ -429,14 +433,3 @@ future := [ 5 seconds wait ] future.
 - ConfigurationOf
 - Examples?
 - ActIt2
-- 
-
-# To Review
-
-%!!TODOs
-
-%!!ActIT: A Simple Actor Library on top of TaskIT
-
-%- What about implementing lazy results with proxies (and do just forwarding?)?
-%- ExclusiveVariable finalize is necesary?
-%- Lazy result can be cancelled?
