@@ -1,11 +1,11 @@
 schedulling
 future: aTask
+
+	| execution |
+	execution := TKTFutureExecution new.
+	execution runner: self.
+	execution task: aTask.
 	
-	| future |
-	future := TKTFuture new.
-	future runner: self.
-	self schedule: [
-		[ future deploySuccess: aTask value ] 
-			on: Error
-			do: [ :error | future deployFailure: error ] ].
-	^ future
+	self scheduleTaskExecution: execution.
+	
+	^ execution future

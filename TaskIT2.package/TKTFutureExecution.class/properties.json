@@ -1,0 +1,14 @@
+{
+	"category" : "TaskIT2-Futures",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "GuillermoPolito 8/16/2016 02:19",
+	"instvars" : [
+		"future" ],
+	"name" : "TKTFutureExecution",
+	"pools" : [
+		 ],
+	"super" : "TKTTaskExecution",
+	"type" : "normal" }

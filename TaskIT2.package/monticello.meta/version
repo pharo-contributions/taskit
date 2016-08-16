@@ -1,2 +1,2 @@
-(name 'TaskIT2-guille.23' message 'Commented Task execution classes' id 'dd5e91a1-6480-4867-bfd7-e29d1fe2b005' date '16 August 2016' time '1:48:58.494382 am' author 'GuillermoPolito' ancestors ((name 'TaskIT2-guille.22' message 'Restored runner hierarchy:  - TKTWorkerProcess does not need to be a subclass of TKTRunner anymore
-' id 'da1da1fd-bccf-5904-aa83-1f0e142c104f' date '16 August 2016' time '1:45:15 am' author 'guille' ancestors () stepChildren ())) stepChildren ())
+(name 'TaskIT2-guille.24' message 'Future creation is a task execution responsibility ' id 'acfcb5f4-5ff1-4225-acd1-8eef6a64ad67' date '16 August 2016' time '2:21:09.30537 am' author 'GuillermoPolito' ancestors ((name 'TaskIT2-guille.23' message 'Commented Task execution classes
+' id 'e010a092-651b-5cd9-84de-9d6212b259ad' date '16 August 2016' time '1:49:46 am' author 'guille' ancestors () stepChildren ())) stepChildren ())
