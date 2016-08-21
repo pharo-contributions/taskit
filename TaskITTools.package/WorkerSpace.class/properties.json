@@ -1,0 +1,16 @@
+{
+	"category" : "TaskITTools",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "GuillermoPolito 8/16/2016 03:26",
+	"instvars" : [
+		"worker",
+		"window",
+		"waitImage" ],
+	"name" : "WorkerSpace",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }
