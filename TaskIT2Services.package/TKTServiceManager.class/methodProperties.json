@@ -1,8 +1,0 @@
-{
-	"class" : {
-		"uniqueInstance" : "GuillermoPolito 8/10/2016 17:13" },
-	"instance" : {
-		"initialize" : "GuillermoPolito 8/10/2016 17:04",
-		"purge" : "GuillermoPolito 8/10/2016 17:15",
-		"startService:" : "GuillermoPolito 8/10/2016 17:14",
-		"stopService:" : "GuillermoPolito 8/10/2016 17:17" } }

@@ -1,2 +1,0 @@
-(name 'TaskIT2-guille.26' message 'Added combinators for collections of futures- OrderedCollection[Future] -> Future[OrderedCollection]- reduce a collection of futures -> future of a reduced collection' id '870aadaf-46f6-4d5f-abf7-75f698933ea1' date '16 August 2016' time '7:02:54.527293 am' author 'GuillermoPolito' ancestors ((name 'TaskIT2-guille.25' message 'Refactored task cancellation into task execution states
-' id '49d924e0-03e9-5883-bfad-61b8e3835657' date '16 August 2016' time '2:59:36 am' author 'guille' ancestors () stepChildren ())) stepChildren ())

@@ -1,2 +1,0 @@
-(name 'TaskIT2-Tests-guille.12' message 'Refactored task cancellation into task execution states' id 'dc568026-f8b0-46d3-9567-306bf4714787' date '16 August 2016' time '2:59:37.181605 am' author 'GuillermoPolito' ancestors ((name 'TaskIT2-Tests-guille.11' message 'Re-Added the TaskExecution abstraction to help in managing the current task runner and task cancellation
-' id 'd20066b2-645a-5b30-9093-475c4e16fd3c' date '15 August 2016' time '11:40:15 pm' author 'guille' ancestors () stepChildren ())) stepChildren ())

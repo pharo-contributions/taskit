@@ -1,7 +1,0 @@
-{
-	"class" : {
-		 },
-	"instance" : {
-		"testNewProcessTaskRunnerExceptionIsHandledByExceptionHandler" : "GuillermoPolito 8/10/2016 16:20",
-		"testNewProcessTaskRunnerRunsInNewProcessEveryTime" : "GuillermoPolito 8/10/2016 14:39",
-		"testNewProcessTaskRunnerRunsNeverInLocalProcess" : "GuillermoPolito 8/10/2016 14:39" } }

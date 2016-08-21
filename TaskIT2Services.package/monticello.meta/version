@@ -1,2 +1,0 @@
-(name 'TaskIT2Services-guille.2' message '- Fixed exception handling in runners- Added Service manager' id '147bfba1-c68b-4d99-acc4-8579b10c5d25' date '10 August 2016' time '5:21:18.343682 pm' author 'GuillermoPolito' ancestors ((name 'TaskIT2Services-guille.1' message 'Importing package TaskIT2Services
-' id '4192b858-c4b3-5ead-80a2-12ae76cca6c6' date '10 August 2016' time '3:21:25 pm' author 'guille' ancestors () stepChildren ())) stepChildren ())

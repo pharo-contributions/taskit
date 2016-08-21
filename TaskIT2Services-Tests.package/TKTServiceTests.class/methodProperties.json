@@ -1,7 +1,0 @@
-{
-	"class" : {
-		 },
-	"instance" : {
-		"testCannotStartTwoServicesWithSameName" : "GuillermoPolito 8/10/2016 17:02",
-		"testServiceIsExecutedMultipleTimes" : "GuillermoPolito 8/10/2016 16:43",
-		"testStopServiceStopsUnderlyingWorker" : "GuillermoPolito 8/10/2016 16:43" } }

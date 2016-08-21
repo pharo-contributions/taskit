@@ -1,4 +1,0 @@
-accessing
-next
-	
-	^ queue next
