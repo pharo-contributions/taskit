@@ -1,4 +1,4 @@
-accessing
+evaluating
 task: aTask
 
 	task := aTask

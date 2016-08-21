@@ -1,4 +1,4 @@
 testing
 isRunning
 	
-	^ process isTerminated not
+	^ process notNil and: [ process isTerminated not ]
