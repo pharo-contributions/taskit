@@ -1,0 +1,14 @@
+{
+	"category" : "TaskIt-Kernel",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "GuillermoPolito 8/15/2016 12:12",
+	"instvars" : [
+		 ],
+	"name" : "TKTCurrentTaskRunner",
+	"pools" : [
+		 ],
+	"super" : "DynamicVariable",
+	"type" : "normal" }

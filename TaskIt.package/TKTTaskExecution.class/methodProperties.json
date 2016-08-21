@@ -1,0 +1,18 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"cancel" : "GuillermoPolito 8/16/2016 02:54",
+		"cancelWithReason:" : "GuillermoPolito 8/16/2016 02:54",
+		"doExecuteTask" : "GuillermoPolito 8/16/2016 02:17",
+		"executeTask" : "GuillermoPolito 8/16/2016 02:41",
+		"executionProcess" : "GuillermoPolito 8/16/2016 02:39",
+		"initialize" : "GuillermoPolito 8/16/2016 02:48",
+		"isFinished" : "GuillermoPolito 8/16/2016 02:48",
+		"isRunning" : "GuillermoPolito 8/16/2016 02:34",
+		"runner:" : "GuillermoPolito 8/15/2016 21:56",
+		"setCancelStateWithReason:" : "GuillermoPolito 8/16/2016 02:40",
+		"setFinishedState" : "GuillermoPolito 8/16/2016 02:50",
+		"setRunningState" : "GuillermoPolito 8/16/2016 02:49",
+		"task:" : "GuillermoPolito 8/15/2016 21:56",
+		"value" : "GuillermoPolito 8/16/2016 02:57" } }

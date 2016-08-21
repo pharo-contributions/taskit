@@ -1,0 +1,16 @@
+{
+	"category" : "TaskIt-Kernel",
+	"classinstvars" : [
+		 ],
+	"classtraitcomposition" : "TTaskScheduler classTrait",
+	"classvars" : [
+		 ],
+	"commentStamp" : "GuillermoPolito 8/13/2016 21:16",
+	"instvars" : [
+		 ],
+	"name" : "TKTRunner",
+	"pools" : [
+		 ],
+	"super" : "TKTAbstractExecutor",
+	"traitcomposition" : "TTaskScheduler",
+	"type" : "normal" }

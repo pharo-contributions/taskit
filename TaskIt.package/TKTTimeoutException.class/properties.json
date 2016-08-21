@@ -1,0 +1,14 @@
+{
+	"category" : "TaskIt-Futures",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "GuillermoPolito 8/15/2016 11:51",
+	"instvars" : [
+		 ],
+	"name" : "TKTTimeoutException",
+	"pools" : [
+		 ],
+	"super" : "Error",
+	"type" : "normal" }

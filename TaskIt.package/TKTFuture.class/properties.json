@@ -1,0 +1,18 @@
+{
+	"category" : "TaskIt-Futures",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "GuillermoPolito 8/13/2016 21:18",
+	"instvars" : [
+		"result",
+		"valueSemaphore",
+		"resultCallbacks",
+		"exceptionCallbacks",
+		"runner" ],
+	"name" : "TKTFuture",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }
