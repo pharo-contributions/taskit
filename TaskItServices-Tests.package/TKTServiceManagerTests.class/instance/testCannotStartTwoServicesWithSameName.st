@@ -6,13 +6,14 @@ testCannotStartTwoServicesWithSameName
 	
 	[service := TKTParameterizableService new.
 	service name: 'test'.
-	service task: [ 1 second wait ].
+	service step: [ 100 milliSeconds wait ].
 	service start.
 	
 	newService := TKTParameterizableService new.
 	newService name: 'test'.
-	newService task: [ 1 second wait ].
+	newService step: [ 100 milliSeconds wait ].
 	self should: [service start] raise: Error ] ensure: [ 
 		service stop.
-		[newService stop] ifError: [  ]
+		[newService stop] ifError: [  ].
+		200 milliSeconds wait.
 	]

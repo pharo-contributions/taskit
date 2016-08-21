@@ -2,6 +2,7 @@
 	"class" : {
 		 },
 	"instance" : {
-		"testCannotStartTwoServicesWithSameName" : "GuillermoPolito 8/10/2016 17:02",
-		"testServiceIsExecutedMultipleTimes" : "GuillermoPolito 8/10/2016 16:43",
-		"testStopServiceStopsUnderlyingWorker" : "GuillermoPolito 8/10/2016 16:43" } }
+		"tearDown" : "GuillermoPolito 8/21/2016 18:20",
+		"testServiceExecutesStartUpOnStart" : "GuillermoPolito 8/21/2016 17:35",
+		"testServiceExecutesTearDownOnStop" : "GuillermoPolito 8/21/2016 18:19",
+		"testServiceIsKilledAfterStop" : "GuillermoPolito 8/21/2016 18:18" } }

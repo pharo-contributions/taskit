@@ -6,8 +6,9 @@ testStopServiceStopsUnderlyingWorker
 	
 	service := TKTParameterizableService new.
 	service name: 'test'.
-	service task: [ executed := executed + 1 ].
+	service step: [ executed := executed + 1 ].
 	service start.
 	service stop.
+	200 milliSeconds wait.
 	
 	self deny: service worker isRunning

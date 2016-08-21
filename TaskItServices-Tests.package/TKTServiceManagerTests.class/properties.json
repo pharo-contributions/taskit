@@ -6,8 +6,8 @@
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		"service" ],
-	"name" : "TKTServiceTests",
+		 ],
+	"name" : "TKTServiceManagerTests",
 	"pools" : [
 		 ],
 	"super" : "TestCase",
