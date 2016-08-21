@@ -1,0 +1,17 @@
+{
+	"category" : "TaskItProcesses",
+	"classinstvars" : [
+		"announcer" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "SantiagoBragagnolo 7/22/2015 17:03",
+	"instvars" : [
+		"process",
+		"messageSend",
+		"processAnnotation",
+		"priority" ],
+	"name" : "TKTProcess",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

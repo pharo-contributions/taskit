@@ -1,0 +1,14 @@
+{
+	"category" : "TaskItProcesses",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "TKTTaskITProcessProvider",
+	"pools" : [
+		 ],
+	"super" : "TKTProcessProvider",
+	"type" : "normal" }
