@@ -1,3 +1,3 @@
 accessing
-task: aBlockClosure 
+step: aBlockClosure 
 	task := aBlockClosure

@@ -6,7 +6,10 @@
 		 ],
 	"commentStamp" : "",
 	"instvars" : [
-		"worker" ],
+		"worker",
+		"stopRequested",
+		"stopCallback",
+		"stopCallbacks" ],
 	"name" : "TKTService",
 	"pools" : [
 		 ],

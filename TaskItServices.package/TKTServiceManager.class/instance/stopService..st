@@ -1,5 +1,4 @@
-as yet unclassified
+start-stop
 stopService: aService
 
-	aService kill.
-	services remove: aService.
+	aService requestStop

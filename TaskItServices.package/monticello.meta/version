@@ -1,1 +1,2 @@
-(name 'TaskItServices-GuillermoPolito.1' message 'Importing package TaskItServices' id '93c4b20d-d161-4b88-ae82-2b56cc7e3083' date '21 August 2016' time '4:49:49.976119 pm' author 'GuillermoPolito' ancestors () stepChildren ())
+(name 'TaskItServices-guille.2' message 'Services have a setup and tear down' id 'e7e63887-deea-45ba-a786-6f8ac33cbcdf' date '21 August 2016' time '6:23:28.930776 pm' author 'GuillermoPolito' ancestors ((name 'TaskItServices-guille.1' message 'Importing package TaskItServices
+' id 'b24b7227-9f9f-59ca-bdb1-0b4456e9e344' date '21 August 2016' time '4:49:50 pm' author 'guille' ancestors () stepChildren ())) stepChildren ())

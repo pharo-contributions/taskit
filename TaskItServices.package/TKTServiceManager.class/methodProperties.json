@@ -4,5 +4,7 @@
 	"instance" : {
 		"initialize" : "GuillermoPolito 8/10/2016 17:04",
 		"purge" : "GuillermoPolito 8/10/2016 17:15",
+		"removeService:" : "GuillermoPolito 8/21/2016 17:02",
+		"services" : "GuillermoPolito 8/21/2016 17:12",
 		"startService:" : "GuillermoPolito 8/10/2016 17:14",
-		"stopService:" : "GuillermoPolito 8/10/2016 17:17" } }
+		"stopService:" : "GuillermoPolito 8/21/2016 16:57" } }

@@ -7,7 +7,9 @@
 	"commentStamp" : "",
 	"instvars" : [
 		"name",
-		"task" ],
+		"task",
+		"startUpTask",
+		"tearDownTask" ],
 	"name" : "TKTParameterizableService",
 	"pools" : [
 		 ],

@@ -2,7 +2,12 @@
 	"class" : {
 		 },
 	"instance" : {
+		"initialize" : "GuillermoPolito 8/21/2016 17:44",
 		"name" : "GuillermoPolito 8/10/2016 14:41",
 		"name:" : "GuillermoPolito 8/10/2016 14:40",
-		"stepService" : "GuillermoPolito 8/10/2016 14:42",
-		"task:" : "GuillermoPolito 8/10/2016 14:40" } }
+		"onSetUpDo:" : "GuillermoPolito 8/21/2016 17:37",
+		"onTearDownDo:" : "GuillermoPolito 8/21/2016 17:37",
+		"setUp" : "GuillermoPolito 8/21/2016 17:37",
+		"step:" : "GuillermoPolito 8/21/2016 17:08",
+		"stepService" : "GuillermoPolito 8/21/2016 17:30",
+		"tearDown" : "GuillermoPolito 8/21/2016 17:37" } }
