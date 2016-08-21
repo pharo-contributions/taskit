@@ -1,0 +1,14 @@
+{
+	"category" : "TaskItBrowser",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "<historical>",
+	"instvars" : [
+		 ],
+	"name" : "ManifestTaskITBrowser",
+	"pools" : [
+		 ],
+	"super" : "PackageManifest",
+	"type" : "normal" }
