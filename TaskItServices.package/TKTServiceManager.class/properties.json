@@ -1,0 +1,14 @@
+{
+	"category" : "TaskItServices",
+	"classinstvars" : [
+		"uniqueInstance" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"services" ],
+	"name" : "TKTServiceManager",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

@@ -1,0 +1,4 @@
+private
+kill
+
+	worker stop

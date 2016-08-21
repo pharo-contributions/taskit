@@ -1,0 +1,15 @@
+{
+	"category" : "TaskItServices",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"name",
+		"task" ],
+	"name" : "TKTParameterizableService",
+	"pools" : [
+		 ],
+	"super" : "TKTService",
+	"type" : "normal" }
