@@ -4,7 +4,7 @@ set -ex
 
 ./pharo Pharo.image eval "
 Metacello new 
-	baseline: 'TaskIt';
+	baseline: 'TaskIT';
 	repository: 'filetree://.';
 	load.
 
