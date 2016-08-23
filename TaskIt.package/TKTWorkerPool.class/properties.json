@@ -10,8 +10,8 @@
 		"poolMaxSize",
 		"busyWorkers",
 		"freeWorkers",
-		"size",
-		"poolWorker" ],
+		"poolWorker",
+		"workers" ],
 	"name" : "TKTWorkerPool",
 	"pools" : [
 		 ],

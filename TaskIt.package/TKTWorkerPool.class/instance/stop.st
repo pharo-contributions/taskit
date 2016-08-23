@@ -3,10 +3,9 @@ stop
 
 	poolWorker stop.
 	
-	busyWorkers do: #stop.
-	busyWorkers removeAll.
+	workers do: #stop.
+	workers removeAll.
 	
+	"Empty the free workers queue"
 	[freeWorkers isEmpty]
-		whileFalse: [ freeWorkers next stop ].
-	
-	size := 0
+		whileFalse: [ freeWorkers next ]
