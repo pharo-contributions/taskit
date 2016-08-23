@@ -5,5 +5,5 @@ startService: aService
 		ifTrue: [ self error: ('A service named "{name}" is already registered'
 											format: { 'name' -> aService name } asDictionary) ].
 										
+	aService launch.
 	services add: aService.
-	aService launch
