@@ -15,6 +15,6 @@ testWorkerPoolWorkersAreStoppedAfterPoolsCollection
 	workerProcess := WeakArray with: pool workers anyOne process.
 	
 	pool := nil.
-	10 timesRepeat: [Smalltalk garbageCollect].
+	3 timesRepeat: [Smalltalk garbageCollect. 10 milliSeconds wait ].
 
 	self assert: workerProcess first isNil.

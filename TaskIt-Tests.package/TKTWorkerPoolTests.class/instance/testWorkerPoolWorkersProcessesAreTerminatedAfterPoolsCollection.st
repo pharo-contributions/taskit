@@ -13,6 +13,6 @@ testWorkerPoolWorkersProcessesAreTerminatedAfterPoolsCollection
 	workerProcess := pool workers anyOne process process.
 	
 	pool := nil.
-	10 timesRepeat: [Smalltalk garbageCollect].
+	3 timesRepeat: [Smalltalk garbageCollect. 10 milliSeconds wait ].
 
 	self assert: workerProcess isTerminated
