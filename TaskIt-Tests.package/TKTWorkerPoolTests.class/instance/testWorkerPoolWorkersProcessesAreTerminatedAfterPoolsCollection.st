@@ -1,5 +1,5 @@
 tests
-testWorkerPoolWorkersAreStoppedAfterPoolsCollection
+testWorkerPoolWorkersProcessesAreTerminatedAfterPoolsCollection
 
 	| pool workerProcess |
 	pool := TKTWorkerPool new.
@@ -10,11 +10,9 @@ testWorkerPoolWorkersAreStoppedAfterPoolsCollection
 	(pool future: [ 1 ])
 		waitForCompletion: 1 second.
 
-	self assert: pool workers notEmpty.
-	
-	workerProcess := WeakArray with: pool workers anyOne process.
+	workerProcess := pool workers anyOne process process.
 	
 	pool := nil.
 	10 timesRepeat: [Smalltalk garbageCollect].
 
-	self assert: workerProcess first isNil.
+	self assert: workerProcess isTerminated
