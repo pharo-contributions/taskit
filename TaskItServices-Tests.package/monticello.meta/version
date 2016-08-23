@@ -1,2 +1,2 @@
-(name 'TaskItServices-Tests-guille.4' message 'Testing mock and parameterized services' id '8f21cfb5-6db0-40ea-98cd-a33d1b804138' date '23 August 2016' time '12:11:35.233592 pm' author 'GuillermoPolito' ancestors ((name 'TaskItServices-Tests-guille.3' message 'Fix issue #5. testing that workers of a pool are correctly collected after pool is collected.
-' id '3fad30a8-9b53-5a5e-bc6f-d1c72bda8bda' date '23 August 2016' time '11:17:36 am' author 'guille' ancestors () stepChildren ())) stepChildren ())
+(name 'TaskItServices-Tests-guille.5' message 'Added class comments' id '3dbadca7-b498-41e3-adf6-09e9e6db7069' date '23 August 2016' time '3:04:15.19067 pm' author 'GuillermoPolito' ancestors ((name 'TaskItServices-Tests-guille.4' message 'Testing mock and parameterized services
+' id 'bca20b6d-c09c-5d3f-a72a-7a3df1e9157f' date '23 August 2016' time '12:12 pm' author 'guille' ancestors () stepChildren ())) stepChildren ())
