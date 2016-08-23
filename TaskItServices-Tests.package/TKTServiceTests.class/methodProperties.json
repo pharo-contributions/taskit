@@ -3,7 +3,5 @@
 		 },
 	"instance" : {
 		"tearDown" : "GuillermoPolito 8/23/2016 10:05",
-		"testServiceExecutesStartUpOnStart" : "GuillermoPolito 8/23/2016 10:07",
-		"testServiceExecutesTearDownOnStop" : "GuillermoPolito 8/23/2016 10:07",
 		"testServiceIsKilledAfterStop" : "GuillermoPolito 8/23/2016 10:07",
 		"testServiceShouldHaveAName" : "GuillermoPolito 8/23/2016 10:05" } }
