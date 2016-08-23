@@ -2,7 +2,8 @@
 	"class" : {
 		 },
 	"instance" : {
-		"tearDown" : "GuillermoPolito 8/21/2016 18:20",
-		"testServiceExecutesStartUpOnStart" : "GuillermoPolito 8/21/2016 17:35",
-		"testServiceExecutesTearDownOnStop" : "GuillermoPolito 8/21/2016 18:19",
-		"testServiceIsKilledAfterStop" : "GuillermoPolito 8/21/2016 18:18" } }
+		"tearDown" : "GuillermoPolito 8/23/2016 10:05",
+		"testServiceExecutesStartUpOnStart" : "GuillermoPolito 8/23/2016 10:07",
+		"testServiceExecutesTearDownOnStop" : "GuillermoPolito 8/23/2016 10:07",
+		"testServiceIsKilledAfterStop" : "GuillermoPolito 8/23/2016 10:07",
+		"testServiceShouldHaveAName" : "GuillermoPolito 8/23/2016 10:05" } }
