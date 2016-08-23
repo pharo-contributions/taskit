@@ -1,6 +1,7 @@
 {
 	"class" : {
-		"global" : "guille 8/23/2016 09:46:21" },
+		"global" : "guille 8/23/2016 09:46:21",
+		"resetGlobal" : "GuillermoPolito 8/23/2016 15:10" },
 	"instance" : {
 		"basicSchedule:" : "guille 8/23/2016 09:46:21",
 		"future:" : "guille 8/23/2016 09:46:21",
