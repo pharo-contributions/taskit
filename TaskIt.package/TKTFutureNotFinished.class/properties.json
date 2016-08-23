@@ -1,14 +1,11 @@
 {
-	"category" : "TaskIt-Futures",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "GuillermoPolito 8/15/2016 11:49",
-	"instvars" : [
-		 ],
-	"name" : "TKTFutureNotFinished",
-	"pools" : [
-		 ],
 	"super" : "TKTFutureState",
-	"type" : "normal" }
+	"category" : "TaskIt-Futures",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TKTFutureNotFinished",
+	"type" : "normal"
+}

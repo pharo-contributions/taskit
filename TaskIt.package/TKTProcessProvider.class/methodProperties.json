@@ -1,10 +1,13 @@
 {
-	"class" : {
-		"createProcessDoing:" : "GuillermoPolito 8/15/2016 12:15",
-		"createProcessDoing:named:" : "GuillermoPolito 8/15/2016 12:15",
-		"current" : "GuillermoPolito 8/10/2016 17:24",
-		"current:" : "GuillermoPolito 8/10/2016 17:25",
-		"initialize" : "GuillermoPolito 8/10/2016 17:25" },
 	"instance" : {
 		"createProcessDoing:" : "GuillermoPolito 8/10/2016 17:23",
-		"createProcessDoing:named:" : "GuillermoPolito 8/11/2016 21:15" } }
+		"createProcessDoing:named:" : "GuillermoPolito 8/11/2016 21:15"
+	},
+	"class" : {
+		"initialize" : "GuillermoPolito 8/10/2016 17:25",
+		"current" : "GuillermoPolito 8/10/2016 17:24",
+		"createProcessDoing:named:" : "GuillermoPolito 8/15/2016 12:15",
+		"current:" : "GuillermoPolito 8/10/2016 17:25",
+		"createProcessDoing:" : "GuillermoPolito 8/15/2016 12:15"
+	}
+}

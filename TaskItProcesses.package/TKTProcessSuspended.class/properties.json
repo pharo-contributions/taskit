@@ -1,14 +1,11 @@
 {
-	"category" : "TaskItProcesses",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SantiagoBragagnolo 7/22/2015 16:41",
-	"instvars" : [
-		 ],
-	"name" : "TKTProcessSuspended",
-	"pools" : [
-		 ],
 	"super" : "TKTProcessAnnouncement",
-	"type" : "normal" }
+	"category" : "TaskItProcesses",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TKTProcessSuspended",
+	"type" : "normal"
+}

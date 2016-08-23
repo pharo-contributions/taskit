@@ -1,16 +1,15 @@
 {
-	"category" : "TaskIt-Kernel",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TTaskExecutor classTrait",
-	"classvars" : [
-		 ],
-	"commentStamp" : "GuillermoPolito 8/15/2016 12:10",
+	"classvars" : [ ],
 	"instvars" : [
-		"exceptionHandler" ],
+		"exceptionHandler"
+	],
 	"name" : "TKTAbstractExecutor",
-	"pools" : [
-		 ],
+	"commentStamp" : "GuillermoPolito 8/15/2016 12:10",
 	"super" : "Object",
 	"traitcomposition" : "TTaskExecutor",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "TaskIt-Kernel"
+}

@@ -10,6 +10,6 @@ menuColumn: column row: rowIndex
 	column id = 'Sending' ifTrue: [ ^ self selectorMenuColumn: column row: rowIndex ].	
 	column id = 'To' ifTrue: [ ^ self receiverMenuColumn: column row: rowIndex ].	
 	column id = 'With' ifTrue: [ ^ self argumentsMenuColumn: column row: rowIndex ].	
-	column id = 'Related Task execution' ifTrue: [ ^ self taskMenuColumn: column row: rowIndex ].	
-	column id = 'Related Job' ifTrue: [ ^ self jobMenuColumn: column row: rowIndex ].	
+	"column id = 'Related Task execution' ifTrue: [ ^ self taskMenuColumn: column row: rowIndex ].	"
+	"column id = 'Related Job' ifTrue: [ ^ self jobMenuColumn: column row: rowIndex ].	"
 	^ nil	

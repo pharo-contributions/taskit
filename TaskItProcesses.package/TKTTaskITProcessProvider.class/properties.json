@@ -1,14 +1,11 @@
 {
-	"category" : "TaskItProcesses",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
-	"commentStamp" : "",
-	"instvars" : [
-		 ],
-	"name" : "TKTTaskITProcessProvider",
-	"pools" : [
-		 ],
+	"commentStamp" : "SantiagoBragagnolo 8/23/2016 11:11",
 	"super" : "TKTProcessProvider",
-	"type" : "normal" }
+	"category" : "TaskItProcesses",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TKTTaskITProcessProvider",
+	"type" : "normal"
+}

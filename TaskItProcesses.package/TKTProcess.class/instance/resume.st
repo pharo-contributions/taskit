@@ -1,6 +1,5 @@
 suspend
 resume
 	process isSuspended
-		ifTrue: [ 
-			process resume.
+		ifTrue: [ process resume.
 			self announce: (TKTProcessResumed forProcess: self) ]

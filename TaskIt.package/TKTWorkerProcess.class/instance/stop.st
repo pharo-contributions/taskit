@@ -1,4 +1,3 @@
 start-stop
 stop
-	
-	process terminate
+	process ifNotNil: [ process terminate ]

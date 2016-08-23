@@ -1,20 +1,21 @@
 {
-	"category" : "TaskIt-Worker",
-	"classinstvars" : [
-		 ],
 	"classtraitcomposition" : "TTaskScheduler classTrait",
 	"classvars" : [
-		"GlobalInstance" ],
-	"commentStamp" : "GuillermoPolito 8/13/2016 21:16",
+		"GlobalInstance"
+	],
 	"instvars" : [
 		"poolMaxSize",
 		"busyWorkers",
 		"freeWorkers",
 		"size",
-		"poolWorker" ],
+		"poolWorker"
+	],
 	"name" : "TKTWorkerPool",
-	"pools" : [
-		 ],
+	"commentStamp" : "GuillermoPolito 8/13/2016 21:16",
 	"super" : "Object",
 	"traitcomposition" : "TTaskScheduler",
-	"type" : "normal" }
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "TaskIt-Worker"
+}

@@ -12,8 +12,8 @@ cellColumn: column row: rowIndex
 		ifTrue: [ ^ self argumentsColumn: column row: rowIndex ].
 	column id = 'State'
 		ifTrue: [ ^ self stateColumn: column row: rowIndex ].
-	column id = 'Related Task execution'
-		ifTrue: [ ^ self taskColumn: column row: rowIndex ].
-	column id = 'Related Job'
-		ifTrue: [ ^ self jobColumn: column row: rowIndex ].
+	"column id = 'Related Task execution'
+		ifTrue: [ ^ self taskColumn: column row: rowIndex ]."
+	"column id = 'Related Job'
+		ifTrue: [ ^ self jobColumn: column row: rowIndex ]."
 	self error: 'Invalid column'

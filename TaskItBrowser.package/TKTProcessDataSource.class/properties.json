@@ -1,14 +1,11 @@
 {
-	"category" : "TaskItBrowser-Widget",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SantiagoBragagnolo 7/22/2015 13:02",
-	"instvars" : [
-		 ],
-	"name" : "TKTProcessDataSource",
-	"pools" : [
-		 ],
 	"super" : "FTSimpleDataSource",
-	"type" : "normal" }
+	"category" : "TaskItBrowser-Widget",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TKTProcessDataSource",
+	"type" : "normal"
+}

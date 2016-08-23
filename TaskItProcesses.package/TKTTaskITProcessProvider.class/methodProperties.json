@@ -1,6 +1,7 @@
 {
-	"class" : {
-		 },
 	"instance" : {
-		"createProcessDoing:" : "GuillermoPolito 8/10/2016 17:38",
-		"createProcessDoing:named:" : "GuillermoPolito 8/11/2016 21:15" } }
+		"createProcessDoing:" : "SantiagoBragagnolo 8/23/2016 11:26",
+		"createProcessDoing:named:" : "SantiagoBragagnolo 8/23/2016 11:28"
+	},
+	"class" : { }
+}

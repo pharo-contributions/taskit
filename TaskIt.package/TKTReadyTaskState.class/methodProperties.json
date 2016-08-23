@@ -1,6 +1,7 @@
 {
-	"class" : {
-		 },
 	"instance" : {
 		"cancelTaskExecution:reason:" : "GuillermoPolito 8/16/2016 02:39",
-		"performTaskExecution:" : "GuillermoPolito 8/16/2016 02:49" } }
+		"performTaskExecution:" : "GuillermoPolito 8/16/2016 02:49"
+	},
+	"class" : { }
+}
