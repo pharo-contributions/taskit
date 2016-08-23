@@ -2,6 +2,9 @@
 
 >Anything that can go wrong, will go wrong. -- Murphy's Law
 
+
+[![Build Status](https://travis-ci.org/sbragagnolo/taskit.svg?branch=master)](https://travis-ci.org/sbragagnolo/taskit)
+
 Expressing and managing concurrent computations is indeed a concern of importance to develop applications that scale. A web application may want to use different processes for each of its incoming requests. Or maybe it wants to use a "thread pool" in some cases. In other case, our desktop application may want to send computations to a worker to not block the UI thread. 
 
 Processes in Pharo are implemented as green threads scheduled by the virtual machine, without depending on the machinery of the underlying operating system. This has several consequences on the usage of concurrency we can do:
