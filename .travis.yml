@@ -14,7 +14,7 @@ install:
   - ./scripts/install-packages.sh
 
 script:
-  - ./pharo Pharo.image test --no-xterm --fail-on-failure "TaskIt"
+  - ./pharo Pharo.image test --no-xterm --fail-on-failure "TaskIt.*"
 
 
 

@@ -1,7 +1,7 @@
 schedulling
 scheduleTaskExecution: aTaskExecution
 	
-	poolWorker future: [ | worker |
+	poolWorker schedule: [ | worker |
 		worker := self getAvailableWorker.
 		worker schedule: [
 			aTaskExecution value.

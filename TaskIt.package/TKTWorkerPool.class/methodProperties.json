@@ -1,24 +1,24 @@
 {
-	"instance" : {
-		"next" : "GuillermoPolito 8/8/2016 14:17",
-		"stop" : "GuillermoPolito 8/12/2016 17:20",
-		"purge" : "GuillermoPolito 8/15/2016 23:18",
-		"newWorker" : "GuillermoPolito 8/23/2016 09:22",
-		"start" : "GuillermoPolito 8/10/2016 12:07",
-		"name:" : "GuillermoPolito 8/12/2016 13:39",
-		"initialize" : "GuillermoPolito 8/12/2016 17:18",
-		"schedule:" : "GuillermoPolito 8/21/2016 18:22",
-		"schedule:timeout:" : "GuillermoPolito 8/21/2016 18:22",
-		"size" : "GuillermoPolito 8/10/2016 11:45",
-		"workers" : "GuillermoPolito 8/12/2016 17:14",
-		"scheduleTaskExecution:" : "GuillermoPolito 8/15/2016 23:37",
-		"poolMaxSize:" : "GuillermoPolito 8/9/2016 18:19",
-		"returnWorker:" : "GuillermoPolito 8/10/2016 12:07",
-		"basicSchedule:" : "GuillermoPolito 8/21/2016 18:22",
-		"getAvailableWorker" : "GuillermoPolito 8/10/2016 12:14",
-		"future:" : "GuillermoPolito 8/21/2016 17:56"
-	},
+
 	"class" : {
-		"global" : "GuillermoPolito 8/12/2016 13:39"
-	}
+		"global" : "guille 8/23/2016 09:46:21",
+		"resetGlobal" : "GuillermoPolito 8/23/2016 15:10" },
+	"instance" : {
+		"basicSchedule:" : "guille 8/23/2016 09:46:21",
+		"future:" : "guille 8/23/2016 09:46:21",
+		"getAvailableWorker" : "GuillermoPolito 8/23/2016 11:09",
+		"initialize" : "GuillermoPolito 8/23/2016 11:09",
+		"name:" : "guille 8/23/2016 09:46:21",
+		"newWorker" : "GuillermoPolito 8/23/2016 11:07",
+		"poolMaxSize:" : "guille 8/23/2016 09:46:21",
+		"purge" : "guille 8/23/2016 09:46:21",
+		"returnWorker:" : "GuillermoPolito 8/23/2016 11:07",
+		"schedule:" : "guille 8/23/2016 09:46:21",
+		"schedule:timeout:" : "guille 8/23/2016 09:46:21",
+		"scheduleTaskExecution:" : "GuillermoPolito 8/23/2016 10:44",
+		"size" : "GuillermoPolito 8/23/2016 11:09",
+		"start" : "guille 8/23/2016 09:46:21",
+		"stop" : "GuillermoPolito 8/23/2016 11:08",
+		"workers" : "GuillermoPolito 8/23/2016 11:08" }
 }
+

@@ -1,2 +1,2 @@
-(name 'TaskItServices-Tests-guille.2' message 'Services have a setup and tear down' id '4fcace00-c9d8-4a1f-b44e-d53a7360e4be' date '21 August 2016' time '6:23:30.140948 pm' author 'GuillermoPolito' ancestors ((name 'TaskItServices-Tests-guille.1' message 'Importing package TaskItServices-Tests
-' id 'aa0f069f-b604-5ded-8620-d8f8c1bd4cbb' date '21 August 2016' time '4:49:52 pm' author 'guille' ancestors () stepChildren ())) stepChildren ())
+(name 'TaskItServices-Tests-guille.5' message 'Added class comments' id '3dbadca7-b498-41e3-adf6-09e9e6db7069' date '23 August 2016' time '3:04:15.19067 pm' author 'GuillermoPolito' ancestors ((name 'TaskItServices-Tests-guille.4' message 'Testing mock and parameterized services
+' id 'bca20b6d-c09c-5d3f-a72a-7a3df1e9157f' date '23 August 2016' time '12:12 pm' author 'guille' ancestors () stepChildren ())) stepChildren ())

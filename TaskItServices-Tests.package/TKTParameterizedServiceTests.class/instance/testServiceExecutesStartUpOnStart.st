@@ -4,6 +4,7 @@ testServiceExecutesStartUpOnStart
 	| started |
 	started := false.
 	service := TKTParameterizableService new.
+	service name: 'test service'.
 	service onSetUpDo: [ started := true ].
 	service start.
 	

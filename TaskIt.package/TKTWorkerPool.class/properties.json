@@ -7,8 +7,8 @@
 		"poolMaxSize",
 		"busyWorkers",
 		"freeWorkers",
-		"size",
-		"poolWorker"
+		"poolWorker",
+		"workers" 
 	],
 	"name" : "TKTWorkerPool",
 	"commentStamp" : "GuillermoPolito 8/13/2016 21:16",
