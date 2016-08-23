@@ -1,2 +1,2 @@
-(name 'TaskItServices-guille.2' message 'Services have a setup and tear down' id 'e7e63887-deea-45ba-a786-6f8ac33cbcdf' date '21 August 2016' time '6:23:28.930776 pm' author 'GuillermoPolito' ancestors ((name 'TaskItServices-guille.1' message 'Importing package TaskItServices
-' id 'b24b7227-9f9f-59ca-bdb1-0b4456e9e344' date '21 August 2016' time '4:49:50 pm' author 'guille' ancestors () stepChildren ())) stepChildren ())
+(name 'TaskItServices-guille.3' message '- Added testing method #isEmpty in Worker- Worker pool should create workers named by him- Service should create workers named by them' id '78cefd35-a317-4970-ab03-f8e7501a4a92' date '23 August 2016' time '9:46:22.786574 am' author 'GuillermoPolito' ancestors ((name 'TaskItServices-guille.2' message 'Services have a setup and tear down
+' id 'afea9c38-0014-5ee8-93b3-c25bbb5e35c3' date '21 August 2016' time '6:23:29 pm' author 'guille' ancestors () stepChildren ())) stepChildren ())
