@@ -561,7 +561,82 @@ service step: [
 service start.
 ```
 
+
+## Process dashboard 
+
+TaskIt provides as well a far more interesting process dashboard, based on announcements. 
+
+For accessing this dashboard, go to World menu > TaskIt > Process dashboard, as showed in the following image. 
+
+![Please add an issue. Image is not loading!][image-menu]
+
+The window has two tabs. 
+
+### TaskIt tab 
+The first one showing the processes launched by TaskIt looks like 
+
+![Please add an issue. Image is not loading!][image-main]
+
+The showed table has six fields. 
+- \# ordinal number. Just for easing the reading.
+- Name: The name of the task. If none name was given it generates a name based on the related objects. 
+- Sending: The selector of the method that executes the task. If the task is based on a block, it will be #value. 
+- To: The receiver of the message that executes the task. 
+- With: The arguments of the message send that executes the task
+- State: [Running|NotRunning].
+
+
+Some of those fields have attached some contextual menu. 
+
+Do right-click on top of the name of the process for interacting with the process
+![Please add an issue. Image is not loading!][image-process]
+
+The options given are
+- Inspect the process: It opens an inspector showing the related TaskIt process.
+- Suspend|Resume the process: It pause|resume the selected process. 
+- Cancel the process: It cancel the process execution.  
+
+
+Do right-click on top of the message selector for interacting with selector|method
+![Please add an issue. Image is not loading!][image-selector]
+
+The options given are
+- Method. This option browses the method executed by the task.
+- Implementors. This option browses all the implementors of this selector. 
+
+
+Finally, do right-click on top of the receiver for interacting with it
+![Please add an issue. Image is not loading!][image-receiver]
+
+The option given is
+-  Inspect receiver. What does exactly that. Inspects the receiver of the message. 
+
+###System tab
+
+Finally, to allow the user to use just one interface. There is a second tab that shows the processes that were not spawnend by TaskIt. 
+
+![Please add an issue. Image is not loading!][image-system]
+
+
+### Based on announcements 
+  
+   The TaskIt browser is based on announcements. This fact allows the interface to be dynamic, having allways fresh information, without needing a pulling process, as in the native process browser. 
+   
+
+[image-menu]: https://github.com/sbragagnolo/taskit/raw/dev-0.2/images/AccessMenu.png "MenuTaskit"
+[image-main]: https://github.com/sbragagnolo/taskit/raw/dev-0.2/images/FirstScreen.png "Main tab"
+[image-process]: https://github.com/sbragagnolo/taskit/raw/dev-0.2/images/ProcessMenu.png "Process menu"
+[image-receiver]: https://github.com/sbragagnolo/taskit/raw/dev-0.2/images/ReceiverInspector.png "Receiver menu"
+[image-selector]: https://github.com/sbragagnolo/taskit/raw/dev-0.2/images/SelectorInspection.png "Selector (method) menu"
+[image-system]: https://github.com/sbragagnolo/taskit/raw/dev-0.2/images/SystemScreen.png "System process tab"
+
+
+
 ## Future versions
 
 - ActIt: an actor/active object implementation on top of taskit
 - Service manager.
+- Future inspection. (Or processing network combination) 
+- Autoorganized worker pool. 
+- Inter-innerprocess debugging
+- 
