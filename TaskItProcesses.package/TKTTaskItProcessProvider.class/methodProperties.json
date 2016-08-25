@@ -3,5 +3,7 @@
 		"createProcessDoing:" : "SantiagoBragagnolo 8/23/2016 11:26",
 		"createProcessDoing:named:" : "SantiagoBragagnolo 8/23/2016 11:28"
 	},
-	"class" : { }
+	"class" : {
+		"initialize" : "SantiagoBragagnolo 8/25/2016 10:45"
+	}
 }

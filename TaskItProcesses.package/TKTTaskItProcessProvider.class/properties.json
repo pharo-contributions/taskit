@@ -6,6 +6,6 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [ ],
-	"name" : "TKTTaskITProcessProvider",
+	"name" : "TKTTaskItProcessProvider",
 	"type" : "normal"
 }
