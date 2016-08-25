@@ -635,8 +635,7 @@ Finally, to allow the user to use just one interface. There is a second tab that
 ## Future versions
 
 - ActIt: an actor/active object implementation on top of taskit
-- Service manager.
+- Service manager
 - Future inspection. (Or processing network combination) 
-- Autoorganized worker pool. 
+- Autoorganized worker pool
 - Inter-innerprocess debugging
-- 
