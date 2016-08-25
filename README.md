@@ -1,4 +1,4 @@
-# TaskIT
+# TaskIt
 
 >Anything that can go wrong, will go wrong. -- Murphy's Law
 
@@ -14,7 +14,7 @@ Processes in Pharo are implemented as green threads scheduled by the virtual mac
 
 Also, besides how expensive it is to create a process, to know how we could organize the processes in our application, we need to know how to synchronize such processes. For example, maybe we need to execute two processes concurrently and we want a third one to wait the completion of the first two before starting. Or maybe we need to maximize the parallelism of our application while enforcing the concurrent access to some piece of state. And all these issues require avoiding the creation of deadlocks.
 
-TaskIT is a library that ease Process usage in Pharo. It provides abstractions to execute and synchronize concurrent tasks, and several pre-built mechanisms that are useful for many application developers. This chapter explores starts by familiarizing the reader with TaskIT's abstractions, guided by examples and code snippets. At the end, we discuss TaskIT extension points and possible customizations.
+TaskIt is a library that ease Process usage in Pharo. It provides abstractions to execute and synchronize concurrent tasks, and several pre-built mechanisms that are useful for many application developers. This chapter explores starts by familiarizing the reader with TaskIt's abstractions, guided by examples and code snippets. At the end, we discuss TaskIt extension points and possible customizations.
 
 ## Downloading
 
@@ -58,12 +58,12 @@ spec
 
 ### For developers
 
-To develop TaskIT on github we use [iceberg](https://github.com/npasserini/iceberg). Just load iceberg and enter github's url to clone. Remember to switch to the desired development branch or create one on your own.
+To develop TaskIt on github we use [iceberg](https://github.com/npasserini/iceberg). Just load iceberg and enter github's url to clone. Remember to switch to the desired development branch or create one on your own.
 
 
 ## Asynchronous Tasks
 
-TaskIT's main abstraction are, as the name indicates it, tasks. A task is a unit of execution. By splitting the execution of a program in several tasks, TaskIT can run those tasks concurrently, synchronize their access to data, or order even help in ordering and synchronizing their execution.
+TaskIt's main abstraction are, as the name indicates it, tasks. A task is a unit of execution. By splitting the execution of a program in several tasks, TaskIt can run those tasks concurrently, synchronize their access to data, or order even help in ordering and synchronizing their execution.
 
 ### First Example
 
@@ -71,7 +71,7 @@ Launching a task is as easy as sending the message `schedule` to a block closure
 ```smalltalk
 [ 1 + 1 ] schedule.
 ```
->The selector name `schedule` is chosen in purpose instead of others such as run, launch or execute. TaskIT promises you that a task will be *eventually* executed, but this is not necessarilly right away. In other words, a task is *scheduled* to be executed at some point in time in the future.
+>The selector name `schedule` is chosen in purpose instead of others such as run, launch or execute. TaskIt promises you that a task will be *eventually* executed, but this is not necessarilly right away. In other words, a task is *scheduled* to be executed at some point in time in the future.
 
 This first example is however useful to clarify the first two concepts but it remains too simple. We are schedulling a task that does nothing useful, and we cannot even observe it's result (*yet*). Let's explore some other code snippets that may help us understand what's going on.
 
@@ -86,15 +86,15 @@ The real acid test is to schedule a long-running task. The following example sch
 ```
 
 ### Schedule vs fork
-You may be asking yourself what's the difference between the `schedule` and `fork`. From the examples above they seem to do the same but they do not. In a nutshell, to understand why `schedule` means something different than `fork`, picture that using TaskIT two tasks may execute inside a same process, or in a pool of processes, while `fork` creates a new process every time.
+You may be asking yourself what's the difference between the `schedule` and `fork`. From the examples above they seem to do the same but they do not. In a nutshell, to understand why `schedule` means something different than `fork`, picture that using TaskIt two tasks may execute inside a same process, or in a pool of processes, while `fork` creates a new process every time.
 
-You will find a longer answer in the section below explaining *runners*. In TaskIT, tasks are not directly scheduled in Pharo's global `ProcessScheduler` object as usual `Process` objects are. Instead, a task is scheduled in a task runner. It is the responsibility of the task runner to execute the task.
+You will find a longer answer in the section below explaining *runners*. In TaskIt, tasks are not directly scheduled in Pharo's global `ProcessScheduler` object as usual `Process` objects are. Instead, a task is scheduled in a task runner. It is the responsibility of the task runner to execute the task.
 
 ### All valuables can be Tasks
 
 We have been using so far block closures as tasks. Block closures are a handy way to create a task since they implictly capture the context: they have access to `self` and other objects in the scope. However, blocks are not always the wisest choice for tasks. Indeed, when a block closure is created, it references the current `context` with all the objects in it and its *sender contexts*, being a potential source of memory leaks.
 
-The good news is that TaskIt tasks can be represented by almost any object. A task, in TaskIT's domain are **valuable objects** i.e., objects that will do some computation when they receive the `value` message. Actually, the message `schedule` is just a syntax sugar for:
+The good news is that TaskIt tasks can be represented by almost any object. A task, in TaskIt's domain are **valuable objects** i.e., objects that will do some computation when they receive the `value` message. Actually, the message `schedule` is just a syntax sugar for:
 
 ```smalltalk
 (TKTTask valuable: [ 1 logCr ]) schedule.
@@ -127,7 +127,7 @@ TKTTask valuable: MyTask new.
 
 ## Retrieving a Task's Result with Futures
 
-In TaskIT we differentiate two different kind of tasks: some tasks are just *scheduled* for execution, they produce some side-effect and no result, some other tasks will produce (generally) a side-effect free value. When the result of a task is important for us, TaskIT provides us with a *future* object. A *future* is no other thing than an object that represents the future value of the task's execution. We can schedule a task with a future by using the `future` message on a block closure, as follows.
+In TaskIt we differentiate two different kind of tasks: some tasks are just *scheduled* for execution, they produce some side-effect and no result, some other tasks will produce (generally) a side-effect free value. When the result of a task is important for us, TaskIt provides us with a *future* object. A *future* is no other thing than an object that represents the future value of the task's execution. We can schedule a task with a future by using the `future` message on a block closure, as follows.
 
 ```smalltalk
 aFuture := [ 2 + 2 ] future.
@@ -187,7 +187,7 @@ A nice extension built on top of schedule is the  `future:` message that allows 
 future := aRunner future: [ 1 + 1 ]
 ```
 
-Indeed, the messages `schedule` and `future` we have learnt before are only syntax-sugar extensions that call these respective ones on a default task runner. This section discusses several useful task runners already provided by TaskIT.
+Indeed, the messages `schedule` and `future` we have learnt before are only syntax-sugar extensions that call these respective ones on a default task runner. This section discusses several useful task runners already provided by TaskIt.
 
 ### New Process Task Runner
 
@@ -278,14 +278,14 @@ Workers can be combined into *worker pools*.
 
 ### The Worker pool
 
-A TaskIT worker pool is pool of worker runners, equivalent to a ThreadPool from other programming languages. Its main purpose is to provide several worker runners and decouple us from the management of threads/processes. A worker pool is a runner in the sense we use the `schedule:` message to schedule tasks in it. Internally, all runners inside a worker pool share a single task queue.
+A TaskIt worker pool is pool of worker runners, equivalent to a ThreadPool from other programming languages. Its main purpose is to provide several worker runners and decouple us from the management of threads/processes. A worker pool is a runner in the sense we use the `schedule:` message to schedule tasks in it. Internally, all runners inside a worker pool share a single task queue.
 
-Different applications may have different concurrency needs, thus, TaskIT worker pools do not provide a default amount of workers. Before using a pool, we need to specify the maximum number of workers in the pool using the `poolMaxSize:` message. A worker pool will create new workers on demand. 
+Different applications may have different concurrency needs, thus, TaskIt worker pools do not provide a default amount of workers. Before using a pool, we need to specify the maximum number of workers in the pool using the `poolMaxSize:` message. A worker pool will create new workers on demand. 
 ```smalltalk
 pool := TKTWorkerPool new.
 pool poolMaxSize: 5.
 ```
-TaskIT worker pools use internally an extra worker to synchronize the access to its task queue. Because of this, a worker pool has to be manually started using the `start` message before scheduled messages start to be executed.
+TaskIt worker pools use internally an extra worker to synchronize the access to its task queue. Because of this, a worker pool has to be manually started using the `start` message before scheduled messages start to be executed.
 ```smalltalk
 pool := TKTWorkerPool new.
 pool poolMaxSize: 5.
@@ -300,11 +300,11 @@ pool stop.
 
 ### Managing Runner Exceptions
 
-As we stated before, in TaskIT the result of a task can be interesting for us or not. In case we do not need a task's result, we will schedule it usign the `schedule` or `schedule:` messages. This is a kind of fire-and-forget way of executing tasks. On the other hand, if the result of a task execution interests us we can get a future on it using the `future` and `future:` messages. These two ways to execute tasks require different ways to handle exceptions during task execution.
+As we stated before, in TaskIt the result of a task can be interesting for us or not. In case we do not need a task's result, we will schedule it usign the `schedule` or `schedule:` messages. This is a kind of fire-and-forget way of executing tasks. On the other hand, if the result of a task execution interests us we can get a future on it using the `future` and `future:` messages. These two ways to execute tasks require different ways to handle exceptions during task execution.
 
 First, when an exception occurs during a task execution that has an associated future, the exception is forwarded to the future. In the future we can subscribe a failure callback using the `onFailureDo:` message to manage the exception accordingly.
 
-However, on a fire-and-forget kind of scheduling, the execution and results of a task is not anymore under our control. If an exception happens in this case, it is the responsibility of the task runner to catch the exception and manage it gracefully. For this, each task runners is configured with an exception handler in charge of it. TaskIT exception handler classes are subclasses of the abstract `TKTExceptionHandler` that defines a `handleException:` method. Subclasses need to override the `handleException:` method to define their own way to manage exceptions.
+However, on a fire-and-forget kind of scheduling, the execution and results of a task is not anymore under our control. If an exception happens in this case, it is the responsibility of the task runner to catch the exception and manage it gracefully. For this, each task runners is configured with an exception handler in charge of it. TaskIt exception handler classes are subclasses of the abstract `TKTExceptionHandler` that defines a `handleException:` method. Subclasses need to override the `handleException:` method to define their own way to manage exceptions.
 
 TaskIt provides by default a `TKTDebuggerExceptionHandler` that will open a debugger on the raised exception. The `handleException:` method is defined as follows:
 
@@ -321,7 +321,7 @@ aRunner exceptionHandler: TKTDebuggerExceptionHandler new.
 
 ### Task Timeout
 
-In TaskIT tasks can be optionally schedulled with a timeout. A task's timeout limits the execution of a task to a window of time. If the task tries to run longer than the specified time, the task is cancelled automatically. This behaviour is desirable because a long running tasks may be a hint towards a problem, or it can just affect the responsiveness of our application.
+In TaskIt tasks can be optionally schedulled with a timeout. A task's timeout limits the execution of a task to a window of time. If the task tries to run longer than the specified time, the task is cancelled automatically. This behaviour is desirable because a long running tasks may be a hint towards a problem, or it can just affect the responsiveness of our application.
 
 A task's timeout can be provided while scheduling a task in a runner, using the `schedule:timeout:` message, asFollows: 
 ```smalltalk
@@ -344,7 +344,7 @@ Something similar happens with callbacks. Before we said that callbacks are even
 
 ### Future combinators
 
-Futures are a nice asynchronous way to obtain the results of our eventually executed tasks. However, as we do not know when tasks will finish, processing that result will be another asynchronous task that needs to start as soon as the first one finishes. To simplify the task of future management, TaskIT futures come along with some combinators.
+Futures are a nice asynchronous way to obtain the results of our eventually executed tasks. However, as we do not know when tasks will finish, processing that result will be another asynchronous task that needs to start as soon as the first one finishes. To simplify the task of future management, TaskIt futures come along with some combinators.
 
 - **The `collect:` combinator**
 
@@ -448,9 +448,9 @@ This combinator is meant to enforce the order of execution of several actions, a
 Sometimes, although we do not recommend it, you will need or want to access the value of a task in a synchronous manner: that is, to wait for it. We do not recommend waiting for a task because of several reasons:
   - sometimes you do not know how much a task will last and therefore the waiting can kill's your application's responsiveness
   - also, it will block your current process until the waiting is finished
-  - you come back to the synchronous world, killing completely the purpose of using TaskIT :)
+  - you come back to the synchronous world, killing completely the purpose of using TaskIt :)
 
-However, since experienced users may still need this feature, TaskIT futures provide three different messages to access synchronously its result: `isFinished`, `waitForCompletion:` and `synchronizeTimeout:`.
+However, since experienced users may still need this feature, TaskIt futures provide three different messages to access synchronously its result: `isFinished`, `waitForCompletion:` and `synchronizeTimeout:`.
 
 `isFinished` is a testing method that we can use to test if the corresponding future is still finished or not. The following piece of code shows how we could implement an active wait on a future:
 
