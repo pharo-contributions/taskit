@@ -16,7 +16,9 @@ Also, besides how expensive it is to create a process, to know how we could orga
 
 TaskIt is a library that ease Process usage in Pharo. It provides abstractions to execute and synchronize concurrent tasks, and several pre-built mechanisms that are useful for many application developers. This chapter explores starts by familiarizing the reader with TaskIt's abstractions, guided by examples and code snippets. At the end, we discuss TaskIt extension points and possible customizations.
 
-## Downloading
+## Introduction
+
+### Downloading
 
 Current stable version of taskit can be downloaded using metacello as follows:
 
@@ -46,7 +48,7 @@ Metacello new
 ```
 
 
-### Adding it as a Metacello dependency
+#### Adding it as a Metacello dependency
 
 Add the following in your metacello configuration or baseline specifying the desired version:
 
@@ -56,10 +58,27 @@ spec
     with: [ spec repository: 'github://sbragagnolo/taskit-2:dev-0.2' ]
 ```
 
-### For developers
+#### For developers
 
 To develop TaskIt on github we use [iceberg](https://github.com/npasserini/iceberg). Just load iceberg and enter github's url to clone. Remember to switch to the desired development branch or create one on your own.
 
+### Changeslog
+
+#### v0.2
+
+##### Major Features
+
+- Task Runners
+  - NewProcessTaskRunner
+  - LocalProcessTaskRunner
+  - Worker
+  - WorkerPool
+- Futures with callbacks
+- Future combinators
+- Future synchronous access
+- Services
+
+[Entire changes log](changeslog.md)
 
 ## Asynchronous Tasks
 
