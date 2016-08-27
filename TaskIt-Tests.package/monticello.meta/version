@@ -1,2 +1,2 @@
-(name 'TaskIt-Tests-guille.6' message 'Fix Issue #18.Increment the number of gcs from 3 to 5.Increment the wait between collections from 50 to 100 ms, to give time to the finalization process.' id 'ffa63a52-c847-4d2d-aa4c-4c325f161cda' date '27 August 2016' time '4:11:27.283102 pm' author 'GuillermoPolito' ancestors ((name 'TaskIt-Tests-guille.5' message 'Added memory leak tests
-' id '369af2f7-4611-5475-8a45-ed26644f017d' date '27 August 2016' time '3:44:36 pm' author 'guille' ancestors () stepChildren ())) stepChildren ())
+(name 'TaskIt-Tests-guille.7' message 'Fix for Issue #18. Should do clean  GC before collecting the instances.' id 'd671fc0b-5e88-4f62-8690-cd0d994f5547' date '27 August 2016' time '4:19:46.895632 pm' author 'GuillermoPolito' ancestors ((name 'TaskIt-Tests-guille.6' message 'Fix Issue #18.
+' id '0ee19637-8f7c-579b-9f8a-a995451634d5' date '27 August 2016' time '4:11:27 pm' author 'guille' ancestors () stepChildren ())) stepChildren ())
