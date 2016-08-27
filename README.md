@@ -34,7 +34,7 @@ If you want a specific release such as v0.1, you can load the associated tag as 
 ```smalltalk
 Metacello new
   baseline: 'TaskIt';
-  repository: 'github://sbragagnolo/taskit:v0.1';
+  repository: 'github://sbragagnolo/taskit:v0.2';
   load.
 ```
 
@@ -43,7 +43,7 @@ Otherwise, if you want the latest development version, take a look at the develo
 ```smalltalk
 Metacello new
   baseline: 'TaskIt';
-  repository: 'github://sbragagnolo/taskit:dev-0.2';
+  repository: 'github://sbragagnolo/taskit:dev-0.3';
   load.
 ```
 
@@ -55,7 +55,7 @@ Add the following in your metacello configuration or baseline specifying the des
 ```smalltalk
 spec
     baseline: 'TaskIt'
-    with: [ spec repository: 'github://sbragagnolo/taskit-2:dev-0.2' ]
+    with: [ spec repository: 'github://sbragagnolo/taskit-2:v0.2' ]
 ```
 
 #### For developers
