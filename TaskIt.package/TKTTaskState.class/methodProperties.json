@@ -1,11 +1,8 @@
 {
+	"class" : {
+		 },
 	"instance" : {
-
-		"cancelTaskExecution:reason:" : "guille 8/23/2016 09:46:21",
-		"isFinished" : "guille 8/23/2016 09:46:21",
-		"isRunning" : "guille 8/23/2016 09:46:21",
-		"performTaskExecution:" : "guille 8/23/2016 09:46:21"
-	},
-	"class" : { }
-}
-
+		"cancelTaskExecution:reason:" : "GuillermoPolito 8/16/2016 02:38",
+		"isFinished" : "GuillermoPolito 8/16/2016 02:51",
+		"isRunning" : "GuillermoPolito 8/16/2016 02:34",
+		"performTaskExecution:" : "GuillermoPolito 8/16/2016 02:41" } }

@@ -1,11 +1,14 @@
 {
-	"commentStamp" : "GuillermoPolito 8/16/2016 02:55",
-	"super" : "Error",
 	"category" : "TaskIt-Kernel",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"classvars" : [ ],
-	"instvars" : [ ],
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "GuillermoPolito 8/16/2016 02:55",
+	"instvars" : [
+		 ],
 	"name" : "TKTCancelledTaskException",
-	"type" : "normal"
-}
+	"pools" : [
+		 ],
+	"super" : "Error",
+	"type" : "normal" }

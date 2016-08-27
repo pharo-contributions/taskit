@@ -1,11 +1,8 @@
 {
+	"class" : {
+		 },
 	"instance" : {
-
-		"doExecuteTask" : "guille 8/23/2016 09:46:21",
-		"future" : "guille 8/23/2016 09:46:21",
-		"initialize" : "guille 8/23/2016 09:46:21",
-		"runner:" : "guille 8/23/2016 09:46:21"
-	},
-	"class" : { }
-}
-
+		"doExecuteTask" : "GuillermoPolito 8/16/2016 02:12",
+		"future" : "GuillermoPolito 8/16/2016 02:12",
+		"initialize" : "GuillermoPolito 8/16/2016 02:11",
+		"runner:" : "GuillermoPolito 8/16/2016 02:13" } }

@@ -7,3 +7,4 @@ initialize
 	freeWorkers := AtomicSharedQueue new.
 
 	poolWorker := TKTWorker new.
+	self name: 'Worker' , self identityHash asString.

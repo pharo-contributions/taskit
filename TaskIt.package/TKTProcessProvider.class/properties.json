@@ -1,13 +1,14 @@
 {
-	"commentStamp" : "GuillermoPolito 8/15/2016 12:15",
-	"super" : "Object",
 	"category" : "TaskIt-Kernel",
 	"classinstvars" : [
-		"current"
-	],
-	"pools" : [ ],
-	"classvars" : [ ],
-	"instvars" : [ ],
+		"current" ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "GuillermoPolito 8/15/2016 12:15",
+	"instvars" : [
+		 ],
 	"name" : "TKTProcessProvider",
-	"type" : "normal"
-}
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

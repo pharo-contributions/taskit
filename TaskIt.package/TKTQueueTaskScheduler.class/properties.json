@@ -1,15 +1,16 @@
 {
+	"category" : "TaskIt-Worker",
+	"classinstvars" : [
+		 ],
 	"classtraitcomposition" : "TTaskScheduler classTrait",
-	"classvars" : [ ],
-	"instvars" : [
-		"queue"
-	],
-	"name" : "TKTQueueTaskScheduler",
+	"classvars" : [
+		 ],
 	"commentStamp" : "GuillermoPolito 8/15/2016 12:31",
+	"instvars" : [
+		"queue" ],
+	"name" : "TKTQueueTaskScheduler",
+	"pools" : [
+		 ],
 	"super" : "Object",
 	"traitcomposition" : "TTaskScheduler",
-	"type" : "normal",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"category" : "TaskIt-Worker"
-}
+	"type" : "normal" }

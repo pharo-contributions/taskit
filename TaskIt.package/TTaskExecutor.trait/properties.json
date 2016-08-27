@@ -1,5 +1,4 @@
 {
-	"name" : "TTaskExecutor",
+	"category" : "TaskIt-Kernel",
 	"commentStamp" : "GuillermoPolito 8/15/2016 11:52",
-	"category" : "TaskIt-Kernel"
-}
+	"name" : "TTaskExecutor" }

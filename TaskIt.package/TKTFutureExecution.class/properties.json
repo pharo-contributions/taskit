@@ -1,13 +1,14 @@
 {
-	"commentStamp" : "GuillermoPolito 8/16/2016 02:19",
-	"super" : "TKTTaskExecution",
 	"category" : "TaskIt-Futures",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"classvars" : [ ],
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "GuillermoPolito 8/16/2016 02:19",
 	"instvars" : [
-		"future"
-	],
+		"future" ],
 	"name" : "TKTFutureExecution",
-	"type" : "normal"
-}
+	"pools" : [
+		 ],
+	"super" : "TKTTaskExecution",
+	"type" : "normal" }

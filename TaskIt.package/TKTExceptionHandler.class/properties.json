@@ -1,11 +1,14 @@
 {
-	"commentStamp" : "GuillermoPolito 8/15/2016 12:13",
-	"super" : "Object",
 	"category" : "TaskIt-Kernel",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"classvars" : [ ],
-	"instvars" : [ ],
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "GuillermoPolito 8/15/2016 12:13",
+	"instvars" : [
+		 ],
 	"name" : "TKTExceptionHandler",
-	"type" : "normal"
-}
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

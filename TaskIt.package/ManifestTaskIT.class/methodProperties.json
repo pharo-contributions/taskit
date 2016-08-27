@@ -1,15 +1,13 @@
 {
-	"instance" : { },
 	"class" : {
-		"ruleBadMessageRuleV1FalsePositive" : "guille 8/23/2016 09:46:21",
-		"ruleClassNotReferencedRuleV1FalsePositive" : "guille 8/23/2016 09:46:21",
-		"ruleCodeCruftLeftInMethodsRuleV1FalsePositive" : "guille 8/23/2016 09:46:21",
-		"ruleGuardClauseRuleV1FalsePositive" : "guille 8/23/2016 09:46:21",
-		"ruleImplementedNotSentRuleV1FalsePositive" : "guille 8/23/2016 09:46:21",
-		"ruleRBBadMessageRuleV1FalsePositive" : "guille 8/23/2016 09:46:21",
-		"ruleRBClassNotReferencedRuleV1FalsePositive" : "guille 8/23/2016 09:46:21",
-		"ruleRBCodeCruftLeftInMethodsRuleV1FalsePositive" : "guille 8/23/2016 09:46:21",
-		"ruleRBMissingYourselfRuleV1FalsePositive" : "guille 8/23/2016 09:46:21"
-	}
-}
-		 
+		"ruleBadMessageRuleV1FalsePositive" : "SantiagoBragagnolo 6/17/2016 13:49:27",
+		"ruleClassNotReferencedRuleV1FalsePositive" : "SantiagoBragagnolo 6/17/2016 13:49:27",
+		"ruleCodeCruftLeftInMethodsRuleV1FalsePositive" : "SantiagoBragagnolo 6/17/2016 13:49:27",
+		"ruleGuardClauseRuleV1FalsePositive" : "SantiagoBragagnolo 6/17/2016 13:49:27",
+		"ruleImplementedNotSentRuleV1FalsePositive" : "SantiagoBragagnolo 6/17/2016 13:49:27",
+		"ruleRBBadMessageRuleV1FalsePositive" : "SantiagoBragagnolo 6/17/2016 13:49:27",
+		"ruleRBClassNotReferencedRuleV1FalsePositive" : "SantiagoBragagnolo 6/17/2016 13:49:27",
+		"ruleRBCodeCruftLeftInMethodsRuleV1FalsePositive" : "SantiagoBragagnolo 6/17/2016 13:49:27",
+		"ruleRBMissingYourselfRuleV1FalsePositive" : "SantiagoBragagnolo 6/17/2016 13:49:27" },
+	"instance" : {
+		 } }
