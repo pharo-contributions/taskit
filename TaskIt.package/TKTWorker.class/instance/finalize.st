@@ -1,4 +1,8 @@
 initialization
 finalize
 
-	self schedule: [ process stop ]
+	self schedule: [ | theProcess |
+		queue := nil.
+		theProcess := process.
+		theProcess kill.
+		process := nil ]

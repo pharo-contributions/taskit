@@ -1,2 +1,2 @@
-(name 'TaskIt-SantiagoBragagnolo.8' message 'Issue #15. Fixed worker''s, pool''s and worker process'' names.' id 'e2af05f2-1bd2-411f-b502-5b72c91b3be9' date '27 August 2016' time '7:39:39.089951 am' author 'GuillermoPolito' ancestors ((name 'TaskIt-SantiagoBragagnolo.7' message ' Merging  dev-0.2. with TKTPRocess branch. Solves issue #2
-' id 'edd26b3b-eec5-5fbf-b66a-818e8e04f8d0' date '23 August 2016' time '4:53:27 pm' author 'SantiagoBragagnolo' ancestors () stepChildren ())) stepChildren ())
+(name 'TaskIt-guille.9' message 'Added memory leak tests' id '7208d228-e429-4cdd-b2df-55d85a08c391' date '27 August 2016' time '3:44:31.182121 pm' author 'GuillermoPolito' ancestors ((name 'TaskIt-guille.8' message 'Issue #15. Fixed worker''s, pool''s and worker process'' names.
+' id 'd6794776-ca3a-55f6-abe7-8b5577efeb51' date '27 August 2016' time '7:39:39 am' author 'guille' ancestors () stepChildren ())) stepChildren ())
