@@ -6,8 +6,8 @@ trackInstancesOf: aClass during: aBlock
 	
 	aBlock value.
 	
-	3 timesRepeat: [
+	5 timesRepeat: [
 		Smalltalk garbageCollect.
-		50 milliSeconds wait ].
+		100 milliSeconds wait ].
 	
 	self assert: before equals: aClass allInstances size.
