@@ -1,2 +1,2 @@
-(name 'TaskItServices-Tests-guille.6' message 'Added memory leak tests' id '3ac7a722-e1c1-4a42-90b8-2886d4b4f0b6' date '27 August 2016' time '3:44:38.439881 pm' author 'GuillermoPolito' ancestors ((name 'TaskItServices-Tests-guille.5' message 'Added class comments
-' id '46c3bbdb-19b5-5171-aadd-69f2fdf557ab' date '23 August 2016' time '3:04:33 pm' author 'guille' ancestors () stepChildren ())) stepChildren ())
+(name 'TaskItServices-Tests-guille.7' message 'Fix for #19. Increment sleep time to guarantee service will start running. ' id '4f3d9997-7bb3-407b-9151-53895fb1b275' date '29 August 2016' time '9:41:06.961573 am' author 'GuillermoPolito' ancestors ((name 'TaskItServices-Tests-guille.6' message 'Added memory leak tests
+' id 'ffa4eafd-bc31-5620-9027-dc2935783e88' date '27 August 2016' time '3:44:39 pm' author 'guille' ancestors () stepChildren ())) stepChildren ())

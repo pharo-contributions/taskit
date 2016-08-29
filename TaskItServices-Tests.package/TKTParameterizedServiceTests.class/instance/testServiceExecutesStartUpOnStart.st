@@ -8,6 +8,6 @@ testServiceExecutesStartUpOnStart
 	service onSetUpDo: [ started := true ].
 	service start.
 	
-	10 milliSeconds wait.
+	100 milliSeconds wait.
 	
 	self assert: started.
