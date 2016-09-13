@@ -1,0 +1,10 @@
+{
+	"class" : {
+		"every:for:" : "GuillermoPolito 9/13/2016 12:07" },
+	"instance" : {
+		"doneBlock:" : "GuillermoPolito 9/13/2016 12:08",
+		"isDone" : "GuillermoPolito 9/13/2016 12:09",
+		"lapseBetweenRetries:" : "GuillermoPolito 9/13/2016 12:07",
+		"next" : "GuillermoPolito 9/13/2016 12:09",
+		"nextRetryBlock:" : "GuillermoPolito 9/13/2016 12:08",
+		"waitLapse" : "GuillermoPolito 9/13/2016 12:21" } }
