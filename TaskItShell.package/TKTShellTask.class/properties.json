@@ -1,0 +1,14 @@
+{
+	"category" : "TaskItShell",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		"bin" ],
+	"name" : "TKTShellTask",
+	"pools" : [
+		 ],
+	"super" : "TKTTask",
+	"type" : "normal" }

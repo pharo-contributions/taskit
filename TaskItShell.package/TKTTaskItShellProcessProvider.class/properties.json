@@ -1,0 +1,14 @@
+{
+	"category" : "TaskItShell",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "TKTTaskItShellProcessProvider",
+	"pools" : [
+		 ],
+	"super" : "TKTProcessProvider",
+	"type" : "normal" }

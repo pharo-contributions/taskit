@@ -7,7 +7,7 @@
 	"commentStamp" : "<historical>",
 	"instvars" : [
 		 ],
-	"name" : "ManifestTaskIT",
+	"name" : "ManifestTaskIt",
 	"pools" : [
 		 ],
 	"super" : "PackageManifest",

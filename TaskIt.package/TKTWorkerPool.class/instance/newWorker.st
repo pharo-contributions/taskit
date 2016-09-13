@@ -2,5 +2,5 @@ schedulling
 newWorker
 	
 	^ workers add: (TKTWorker new
-		name: self name, ' Worker #', (self size + 1) asString;
+		name: 'Global Pool Worker #', (self size + 1) asString;
 		start)

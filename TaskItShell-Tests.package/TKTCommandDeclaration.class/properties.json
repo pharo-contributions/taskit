@@ -1,0 +1,14 @@
+{
+	"category" : "TaskItShell-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "TKTCommandDeclaration",
+	"pools" : [
+		 ],
+	"super" : "Object",
+	"type" : "normal" }

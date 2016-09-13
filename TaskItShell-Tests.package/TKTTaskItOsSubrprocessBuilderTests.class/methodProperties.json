@@ -1,0 +1,7 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"testTaskBlockReceivesACommandDeclaration" : "SantiagoBragagnolo 9/13/2016 12:13",
+		"testTaskBlockShouldReturnACommandDeclarationOrFail" : "SantiagoBragagnolo 9/13/2016 12:05",
+		"testTaskExecutionReturnsStdOutputAsResult" : "SantiagoBragagnolo 9/13/2016 12:36" } }
