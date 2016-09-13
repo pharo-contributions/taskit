@@ -1,0 +1,13 @@
+{
+	"class" : {
+		"ruleBadMessageRuleV1FalsePositive" : "SantiagoBragagnolo 9/13/2016 14:10:22",
+		"ruleClassNotReferencedRuleV1FalsePositive" : "SantiagoBragagnolo 9/13/2016 14:10:22",
+		"ruleCodeCruftLeftInMethodsRuleV1FalsePositive" : "SantiagoBragagnolo 9/13/2016 14:10:22",
+		"ruleGuardClauseRuleV1FalsePositive" : "SantiagoBragagnolo 9/13/2016 14:10:22",
+		"ruleImplementedNotSentRuleV1FalsePositive" : "SantiagoBragagnolo 9/13/2016 14:10:22",
+		"ruleRBBadMessageRuleV1FalsePositive" : "SantiagoBragagnolo 9/13/2016 14:10:22",
+		"ruleRBClassNotReferencedRuleV1FalsePositive" : "SantiagoBragagnolo 9/13/2016 14:10:22",
+		"ruleRBCodeCruftLeftInMethodsRuleV1FalsePositive" : "SantiagoBragagnolo 9/13/2016 14:10:22",
+		"ruleRBMissingYourselfRuleV1FalsePositive" : "SantiagoBragagnolo 9/13/2016 14:10:22" },
+	"instance" : {
+		 } }
