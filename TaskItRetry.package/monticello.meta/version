@@ -1,1 +1,2 @@
-(name 'TaskItRetry-GuillermoPolito.1' message 'Importing package TaskItRetry' id 'd453c444-efb0-49a0-8448-749caad6a9eb' date '13 September 2016' time '4:41:54.673742 pm' author 'GuillermoPolito' ancestors () stepChildren ())
+(name 'TaskItRetry-guille.2' message 'Added taskit retry tests' id '08189216-0703-477c-a2c7-d415093626b6' date '13 September 2016' time '4:42:33.753153 pm' author 'GuillermoPolito' ancestors ((name 'TaskItRetry-guille.1' message 'Importing package TaskItRetry
+' id '0f877a86-aaaa-54e9-9f51-b25cf73ea33e' date '13 September 2016' time '4:41:54 pm' author 'guille' ancestors () stepChildren ())) stepChildren ())
