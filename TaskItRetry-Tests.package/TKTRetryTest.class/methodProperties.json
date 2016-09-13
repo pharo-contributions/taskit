@@ -1,0 +1,8 @@
+{
+	"class" : {
+		 },
+	"instance" : {
+		"testRetryEveryCanRetryAsManyTimesAsLapsesIsInsideTotal" : "GuillermoPolito 9/13/2016 12:28",
+		"testRetryEveryCannotRetryOverNumberOfLapsesIsInsideTotal" : "GuillermoPolito 9/13/2016 12:28",
+		"testRetryEveryIsDoneIfLapseTimeIsBiggerThanTotalRetryTime" : "GuillermoPolito 9/13/2016 12:24",
+		"testRetryEveryIsNotDoneIfLapseTimeIsSmallerThanTotalRetryTime" : "GuillermoPolito 9/13/2016 12:25" } }
