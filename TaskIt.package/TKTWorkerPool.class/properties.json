@@ -16,5 +16,5 @@
 	"pools" : [
 		 ],
 	"super" : "Object",
-	"traitcomposition" : "TTaskScheduler",
+	"traitcomposition" : "TTaskScheduler - {#scheduleTaskExecution:}",
 	"type" : "normal" }

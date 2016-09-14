@@ -1,3 +1,6 @@
 *~
 Pharo*
 pharo*
+*.zip
+*-cache
+*.dmp
