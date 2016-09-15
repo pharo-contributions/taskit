@@ -1,5 +1,5 @@
 as yet unclassified
-createTaskExecutionFor: aRunner
+futureTaskExecutionFor: aRunner
 	| execution |
 
 	execution := TKTOSTaskExecution new.

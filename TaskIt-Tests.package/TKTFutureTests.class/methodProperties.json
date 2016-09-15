@@ -13,7 +13,7 @@
 		"testFutureCollectSuccessOnSuccess" : "GuillermoPolito 8/12/2016 14:03",
 		"testFutureExecutesInNewProcessRunner" : "GuillermoPolito 8/15/2016 22:40",
 		"testFutureExecutesInSameLocalProcessRunner" : "GuillermoPolito 8/12/2016 15:30",
-		"testFutureFailureCallbackExecutesInSameLocalProcessRunner" : "GuillermoPolito 8/12/2016 16:31",
+		"testFutureFailureCallbackExecutesInSameLocalProcessRunner" : "SantiagoBragagnolo 9/15/2016 14:04",
 		"testFutureFailureCallbackExecutesInSameNewProcessRunner" : "GuillermoPolito 8/12/2016 16:31",
 		"testFutureFailureCallbackExecutesInSameWorker" : "GuillermoPolito 8/15/2016 22:41",
 		"testFutureFailureCallbackIsCalledAfterFailureIsDeployed" : "GuillermoPolito 8/12/2016 16:20",

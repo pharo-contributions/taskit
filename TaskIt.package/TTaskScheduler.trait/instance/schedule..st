@@ -1,5 +1,6 @@
 schedulling
 schedule: aTask
 	| execution |
-	execution := aTask asTask createTaskExecutionFor: self.
+	execution := aTask asTask scheduleTaskExecutionFor: self.
 	self scheduleTaskExecution: execution
+	

@@ -1,4 +1,3 @@
 evaluating
-executeTask
-
+executeTask 
 	^ state performTaskExecution: self 
