@@ -1,11 +1,14 @@
 {
-	"commentStamp" : "",
-	"super" : "BaselineOf",
 	"category" : "BaselineOfTaskIt",
-	"classinstvars" : [ ],
-	"pools" : [ ],
-	"classvars" : [ ],
-	"instvars" : [ ],
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
 	"name" : "BaselineOfTaskIt",
-	"type" : "normal"
-}
+	"pools" : [
+		 ],
+	"super" : "BaselineOf",
+	"type" : "normal" }
