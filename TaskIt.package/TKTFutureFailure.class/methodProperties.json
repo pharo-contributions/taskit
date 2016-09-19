@@ -2,6 +2,7 @@
 	"class" : {
 		 },
 	"instance" : {
+		"isFailure" : "GuillermoPolito 9/19/2016 15:01",
 		"onFailureDo:inFuture:" : "SantiagoBragagnolo 9/15/2016 16:25:55",
 		"value" : "SantiagoBragagnolo 9/15/2016 16:25:55",
 		"value:" : "SantiagoBragagnolo 9/15/2016 16:25:55",

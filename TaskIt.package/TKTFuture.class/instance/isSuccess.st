@@ -1,0 +1,4 @@
+testing
+isSuccess
+
+	^ result isSuccess
