@@ -1,0 +1,4 @@
+testing
+isFailure
+
+	^ result isFailure

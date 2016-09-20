@@ -7,6 +7,6 @@ on: anError do: aBlockClosure
 	self onFailureDo: [ :error | 
 		(anError handles: error)
 			ifTrue: [ [future deploySuccess: (aBlockClosure value: error)]
-							on: Error do: [ :e | future deployFailure: e ]  ]
+							on: Exception do: [ :e | future deployFailure: e ]  ]
 			ifFalse: [ future deployFailure: error ] ].
 	^ future

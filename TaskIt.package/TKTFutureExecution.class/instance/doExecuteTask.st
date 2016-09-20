@@ -1,5 +1,5 @@
 evaluating
 doExecuteTask
 	[ future deploySuccess: super doExecuteTask ]
-		on: Error
+		on: Exception
 		do: [ :error | future deployFailure: error ]

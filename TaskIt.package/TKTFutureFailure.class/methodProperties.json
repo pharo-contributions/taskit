@@ -2,7 +2,8 @@
 	"class" : {
 		 },
 	"instance" : {
-		"onFailureDo:inFuture:" : "guille 8/23/2016 09:46:21",
-		"value" : "guille 8/23/2016 09:46:21",
-		"value:" : "guille 8/23/2016 09:46:21",
-		"valueForFuture:" : "guille 8/23/2016 09:46:21" } }
+		"isFailure" : "GuillermoPolito 9/19/2016 15:01",
+		"onFailureDo:inFuture:" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"value" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"value:" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"valueForFuture:" : "SantiagoBragagnolo 9/15/2016 16:25:55" } }
