@@ -2,6 +2,10 @@ as yet unclassified
 testTaskBlockShouldReturnACommandDeclarationOrFail
 	" command: aSymbol options: anArrayOfOptions arguments: anArrayArguments"
 
-	|  future |
-	future := [ :spec | self ] asOSTask future.
-	self should: [ future synchronizeTimeout: 1 second ] raise: Error
+	| future worker |
+	worker := TKTWorker new.
+	worker exceptionHandler: TKTTestExceptionHandler new.
+	worker start.
+	future := [ :spec | self ] asOSTask future: worker.
+	future waitForCompletion: 1 second.
+	self assert: future isFailure description: ' Future should fail! '

@@ -2,5 +2,7 @@ as yet unclassified
 command
 	| command |
 	command := block value: TKTCommandDeclaration new.
-	self assert: command isCommandDeclaration.
+	command isCommandDeclaration
+		ifFalse: [ Error
+				signal: 'The result of the OSTask block must be a command declaration' ].
 	^ command

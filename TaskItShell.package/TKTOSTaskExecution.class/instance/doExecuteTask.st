@@ -3,4 +3,4 @@ doExecuteTask
 	
 	[ future deploySuccess: self executeCommand ] 
 		on: Error
-		do: [ :error | future deployFailure: error ]
+		do: [ :error |  future deployFailure: error ].
