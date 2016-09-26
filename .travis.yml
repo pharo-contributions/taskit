@@ -10,5 +10,5 @@ smalltalk:
   - Pharo-6.0
 
 smalltalk_config:
-  - .taskit.ci.ston
-  - .taskitshell.ci.ston
+  - .smalltalk.ston
+  - .taskitshell.ston
