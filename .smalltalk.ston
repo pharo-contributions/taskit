@@ -6,9 +6,9 @@ SmalltalkCISpec {
       #platforms : [ #pharo ]
     }
   ],
-  #testing : [
+  #testing : {
    #include : {
       #packages : [ 'TaskIt.*' ]
     }
-  ]
+  }
 }
