@@ -4,6 +4,11 @@ SmalltalkCISpec {
       #baseline : 'TaskIt',
       #directory : '',
       #platforms : [ #pharo ]
+    },
+    SCIMetacelloLoadSpec {
+      #baseline : 'TaskItShell',
+      #directory : '',
+      #platforms : [ #pharo ]
     }
   ]
 }
