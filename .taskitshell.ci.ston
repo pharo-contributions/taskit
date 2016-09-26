@@ -1,0 +1,9 @@
+SmalltalkCISpec {
+  #loading : [
+    SCIMetacelloLoadSpec {
+      #baseline : 'TaskItShell',
+      #directory : '',
+      #platforms : [ #pharo ]
+    }
+  ]
+}
