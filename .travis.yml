@@ -5,13 +5,10 @@ os:
   - linux
   - osx
 
-matrix:
-  include:
-    - smalltalk: Pharo-5.0
-      smalltalk_config: .taskit.ci.ston
-    - smalltalk: Pharo-5.0
-      smalltalk_config: .taskitshell.ci.ston
-    - smalltalk: Pharo-6.0
-      smalltalk_config: .taskit.ci.ston
-    - smalltalk: Pharo-6.0
-      smalltalk_config: .taskitshell.ci.ston
+smalltalk: 
+  - Pharo-5.0
+  - Pharo-6.0
+
+smalltalk_config:
+  - .taskit.ci.ston
+  - .taskitshell.ci.ston
