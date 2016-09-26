@@ -1,0 +1,4 @@
+accessing
+noteBusy
+
+	busy := true

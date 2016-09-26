@@ -4,4 +4,8 @@
 	"instance" : {
 		"exceptionHandler" : "SantiagoBragagnolo 9/15/2016 16:25:55",
 		"exceptionHandler:" : "SantiagoBragagnolo 9/15/2016 16:25:55",
-		"initialize" : "SantiagoBragagnolo 9/15/2016 16:25:55" } }
+		"initialize" : "GuillermoPolito 9/26/2016 11:40",
+		"isBusy" : "GuillermoPolito 9/26/2016 11:40",
+		"isFree" : "GuillermoPolito 9/26/2016 11:40",
+		"noteBusy" : "GuillermoPolito 9/26/2016 11:39",
+		"noteFree" : "GuillermoPolito 9/26/2016 11:39" } }
