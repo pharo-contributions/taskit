@@ -1,6 +1,5 @@
 building
 commandPath
-
-	^ ({command asFileReference.
-	(#/ asFileReference / #usr / #bin / command).
-	(#/ asFileReference / #bin / command)} select: #exists) first fullName
+	command asFileReference exists
+		ifTrue: [ ^ command ].
+	^ ((':' split: (OSEnvironment current at: 'PATH')) collect: #asFileReference thenSelect: #exists) first fullName
