@@ -7,5 +7,5 @@ andThen: aBlockClosure
 		[ aBlockClosure value: got ]
 			on: Exception do: [ :e | "Nothing?" ].
 		future deploySuccess: got ].
-	self onFailureDo: [ :error | future deployFailure: error ].
+	self onFailureDo: [ :error | future deployFailure: error freeze ].
 	^ future

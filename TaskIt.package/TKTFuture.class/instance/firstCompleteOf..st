@@ -4,6 +4,7 @@ firstCompleteOf: anotherFuture
 	| finished future |
 	finished := false.
 	future := TKTFuture new.
+	future runner: runner.
 	self onSuccessDo: [ :v |
 		finished ifFalse: [
 			finished := true.
@@ -11,7 +12,7 @@ firstCompleteOf: anotherFuture
 	self onFailureDo: [ :v |
 		finished ifFalse: [
 			finished := true.
-			future deployFailure: v ]].
+			future deployFailure: v freeze ]].
 	anotherFuture onSuccessDo: [ :v |
 		finished ifFalse: [
 			finished := true.
@@ -19,5 +20,5 @@ firstCompleteOf: anotherFuture
 	anotherFuture onFailureDo: [ :v |
 		finished ifFalse: [
 			finished := true.
-			future deployFailure: v ]].
+			future deployFailure: v freeze ]].
 	^ future
