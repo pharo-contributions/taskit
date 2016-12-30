@@ -16,5 +16,13 @@ baseline: spec
 				package: #TaskItProcesses with: [ spec requires: #('TaskIt') ];
 				package: #'TaskItProcesses-Tests' with: [ spec requires: #('TaskItProcesses') ];
 				
-				package: #TaskItBrowser with: [ spec requires: #('TaskItProcesses') ].
-			spec group: 'minimal' with: #(#TaskIt) ]
+				package: #TaskItBrowser with: [ spec requires: #('TaskItProcesses') ];
+				
+				package: #TaskItDebugger with: [ spec requires: #('TaskItProcesses') ];
+				package: #'TaskItDebugger-Tests' with: [ spec requires: #('TaskItDebugger') ].
+				
+			spec
+				group: 'minimal' with: #('TaskIt');
+				group: 'default' with: #('minimal' 'TaskItProcesses' 'TaskItRetry' 'TaskItServices');
+				group: 'debug' with: #('minimal' 'TaskItDebugger');
+				group: 'development' with: #('default' 'debug') ]
