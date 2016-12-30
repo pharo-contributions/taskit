@@ -25,4 +25,6 @@ baseline: spec
 				group: 'minimal' with: #('TaskIt');
 				group: 'default' with: #('minimal' 'TaskItProcesses' 'TaskItRetry' 'TaskItServices');
 				group: 'debug' with: #('minimal' 'TaskItDebugger');
-				group: 'development' with: #('default' 'debug') ]
+				group: 'tests' with: #('default' 'TaskIt-Tests' 'TaskItRetry-Tests' 'TaskItServices-Tests'
+					'TaskItProcesses-Tests' 'TaskItDebugger-Tests');
+				group: 'development' with: #('default' 'debug' 'tests') ]
