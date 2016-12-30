@@ -1,3 +1,3 @@
-as yet unclassified
+announcements
 uniqueAnnouncer
 	^ announcer ifNil: [ self resetAnnouncer ].

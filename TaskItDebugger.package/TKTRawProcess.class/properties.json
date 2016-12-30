@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "MaxLeske 12/30/2016 10:52",
+	"super" : "Process",
+	"category" : "TaskItDebugger",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"masterProcessHolder"
+	],
+	"name" : "TKTRawProcess",
+	"type" : "normal"
+}

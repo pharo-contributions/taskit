@@ -1,0 +1,3 @@
+testing
+availableAutomatically
+	^ self isEnabled
