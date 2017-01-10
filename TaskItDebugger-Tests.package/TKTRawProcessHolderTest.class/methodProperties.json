@@ -1,0 +1,13 @@
+{
+	"instance" : {
+		"testFindNextContextHolderSuchThat" : "MaxLeske 12/30/2016 11:18",
+		"testHolderForContext" : "MaxLeske 12/30/2016 11:19",
+		"testStackContainsOnlyLiveContexts" : "MaxLeske 12/30/2016 11:19",
+		"testStackContainsContextsOfMaster" : "MaxLeske 12/30/2016 11:19",
+		"testStackContainsEvenReturnedFromContexts" : "MaxLeske 12/30/2016 11:33",
+		"newRawProcess" : "MaxLeske 12/30/2016 11:18",
+		"testStackStartingAt" : "MaxLeske 12/30/2016 11:19",
+		"testHasContext" : "MaxLeske 12/30/2016 11:19"
+	},
+	"class" : { }
+}

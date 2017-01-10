@@ -1,0 +1,3 @@
+I am a helper that knows how to interact with context copies.
+
+I hold references to a context and its copy, know the position of the referenced context in the call stack and know which context holder is next in the virtual call stack. I also store a reference to the process to which the referenced context belongs, as the debugger only knows about single threaded call stacks but we may be dealing with multiple processes.
