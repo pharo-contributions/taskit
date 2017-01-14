@@ -1,7 +1,8 @@
 {
-	"class" : {
-		 },
 	"instance" : {
-		"asTask" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"schedule" : "SantiagoBragagnolo 9/15/2016 16:25:55",
 		"future" : "SantiagoBragagnolo 9/15/2016 16:25:55",
-		"schedule" : "SantiagoBragagnolo 9/15/2016 16:25:55" } }
+		"asTask" : "SantiagoBragagnolo 9/15/2016 16:25:55"
+	},
+	"class" : { }
+}

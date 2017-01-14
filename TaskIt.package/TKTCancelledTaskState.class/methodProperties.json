@@ -1,8 +1,11 @@
 {
-	"class" : {
-		"reason:" : "SantiagoBragagnolo 9/15/2016 16:25:55" },
 	"instance" : {
 		"cancelTaskExecution:reason:" : "SantiagoBragagnolo 9/15/2016 16:25:55",
 		"performTaskExecution:" : "SantiagoBragagnolo 9/15/2016 16:25:55",
 		"reason:" : "SantiagoBragagnolo 9/15/2016 16:25:55",
-		"signalCancelledException" : "SantiagoBragagnolo 9/15/2016 16:25:55" } }
+		"signalCancelledException" : "SantiagoBragagnolo 9/15/2016 16:25:55"
+	},
+	"class" : {
+		"reason:" : "SantiagoBragagnolo 9/15/2016 16:25:55"
+	}
+}
