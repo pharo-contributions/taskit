@@ -679,7 +679,7 @@ The TaskIt debugger shows an augmented stack, in which the process that represen
 -------------------
 ```
 
-The implementation and conception of this debugger extension can be found in Max Leske's Master's thesis entitled !["Improving live debugging of concurrent threads"](http://scg.unibe.ch/scgbib?query=Lesk16a&display=abstract).
+The implementation and conception of this debugger extension can be found in Max Leske's Master's thesis entitled ["Improving live debugging of concurrent threads"](http://scg.unibe.ch/scgbib?query=Lesk16a&display=abstract).
 
 ## Future versions
 
