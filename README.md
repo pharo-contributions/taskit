@@ -651,6 +651,35 @@ Finally, to allow the user to use just one interface. There is a second tab that
 [image-system]: https://github.com/sbragagnolo/taskit/raw/dev-0.2/images/SystemScreen.png "System process tab"
 
 
+## Debugger
+
+TaskIt comes with a debugger extension for Pharo that can be installed by loading the 'debug' group of the baseline (the debugger is not loaded by any other group):
+
+```smalltalk
+Metacello new
+  baseline: 'TaskIt';
+  repository: 'github://sbragagnolo/taskit';
+  load: 'debug'.
+```
+
+After installation the TaskIt debugger extension will automatically be available to processes that are associated with a task or future. You can manually enable or disable the debugger extension by evaluating `TKTDebugger enable.` or `TKTDebugger disable.`.
+
+The TaskIt debugger shows an augmented stack, in which the process that represents the task or future is at the top and the process that created the task or future is at the bottom (recursively for tasks and futures created from other tasks and futures). The following visualisation shows one future process (top) with frames `1` and `2` and the corresponding creator process (frames `3` and `4`):
+
+```
+-------------------
+|     frame 1     |
+-------------------
+|     frame 2     |
+-------------------
+-------------------
+|     frame 3     |
+-------------------
+|     frame 4     |
+-------------------
+```
+
+The implementation and conception of this debugger extension can be found in Max Leske's Master's thesis entitled !["Improving live debugging of concurrent threads"](http://scg.unibe.ch/scgbib?query=Lesk16a&display=abstract).
 
 ## Future versions
 
