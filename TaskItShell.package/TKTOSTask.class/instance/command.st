@@ -1,4 +1,4 @@
-as yet unclassified
+accessing
 command
 	| command |
 	command := block value: TKTCommandDeclaration new.

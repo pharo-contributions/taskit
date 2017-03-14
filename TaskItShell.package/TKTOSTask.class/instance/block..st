@@ -1,3 +1,3 @@
-as yet unclassified
+accessing
 block: aBuildingBlock
 	block := aBuildingBlock
