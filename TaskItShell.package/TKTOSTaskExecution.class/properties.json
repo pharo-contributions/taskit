@@ -1,14 +1,11 @@
 {
-	"category" : "TaskItShell",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SantiagoBragagnolo 9/14/2016 14:04",
-	"instvars" : [
-		 ],
-	"name" : "TKTOSTaskExecution",
-	"pools" : [
-		 ],
 	"super" : "TKTFutureExecution",
-	"type" : "normal" }
+	"category" : "TaskItShell",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TKTOSTaskExecution",
+	"type" : "normal"
+}

@@ -1,16 +1,16 @@
 {
-	"category" : "TaskItShell",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SantiagoBragagnolo 9/14/2016 14:13",
+	"super" : "Object",
+	"category" : "TaskItShell",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"command",
 		"options",
-		"arguments" ],
+		"arguments",
+		"workingDirectory"
+	],
 	"name" : "TKTCommandDeclaration",
-	"pools" : [
-		 ],
-	"super" : "Object",
-	"type" : "normal" }
+	"type" : "normal"
+}
