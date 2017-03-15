@@ -1,14 +1,11 @@
 {
-	"category" : "TaskIt-Kernel",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "GuillermoPolito 8/16/2016 02:47",
-	"instvars" : [
-		 ],
-	"name" : "TKTRunningTaskState",
-	"pools" : [
-		 ],
 	"super" : "TKTTaskState",
-	"type" : "normal" }
+	"category" : "TaskIt-Kernel",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TKTRunningTaskState",
+	"type" : "normal"
+}

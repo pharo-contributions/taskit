@@ -1,9 +1,10 @@
 {
+	"instance" : { },
 	"class" : {
-		"ruleBadMessageRuleV1FalsePositive" : "SantiagoBragagnolo 9/15/2016 16:25:55",
-		"ruleCodeCruftLeftInMethodsRuleV1FalsePositive" : "SantiagoBragagnolo 9/15/2016 16:25:55",
 		"ruleGuardClauseRuleV1FalsePositive" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"ruleRBBadMessageRuleV1FalsePositive" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"ruleCodeCruftLeftInMethodsRuleV1FalsePositive" : "SantiagoBragagnolo 9/15/2016 16:25:55",
 		"ruleImplementedNotSentRuleV1FalsePositive" : "SantiagoBragagnolo 9/15/2016 16:25:55",
-		"ruleRBBadMessageRuleV1FalsePositive" : "SantiagoBragagnolo 9/15/2016 16:25:55" },
-	"instance" : {
-		 } }
+		"ruleBadMessageRuleV1FalsePositive" : "SantiagoBragagnolo 9/15/2016 16:25:55"
+	}
+}

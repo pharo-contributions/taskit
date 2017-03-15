@@ -1,14 +1,13 @@
 {
-	"category" : "TaskIt-Kernel",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "GuillermoPolito 8/16/2016 01:48",
-	"instvars" : [
-		"timeout" ],
-	"name" : "TKTTimeoutableTaskExecution",
-	"pools" : [
-		 ],
 	"super" : "TKTTaskExecution",
-	"type" : "normal" }
+	"category" : "TaskIt-Kernel",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"timeout"
+	],
+	"name" : "TKTTimeoutableTaskExecution",
+	"type" : "normal"
+}
