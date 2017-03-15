@@ -1,8 +1,8 @@
-as yet unclassified
+executing
 futureTaskExecutionFor: aRunner
 	| execution |
 
-	execution := TKTOSTaskExecution new.
+	execution := self executionClass new.
 	execution runner: aRunner.
 	execution task: self.
 	^ execution

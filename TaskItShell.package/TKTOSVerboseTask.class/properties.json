@@ -1,11 +1,11 @@
 {
-	"commentStamp" : "SantiagoBragagnolo 9/14/2016 14:04",
-	"super" : "TKTFutureExecution",
+	"commentStamp" : "<historical>",
+	"super" : "TKTOSTask",
 	"category" : "TaskItShell",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [ ],
-	"name" : "TKTOSTaskExecution",
+	"name" : "TKTOSVerboseTask",
 	"type" : "normal"
 }

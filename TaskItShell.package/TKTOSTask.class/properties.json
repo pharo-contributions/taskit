@@ -1,14 +1,13 @@
 {
-	"category" : "TaskItShell",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "SantiagoBragagnolo 9/14/2016 14:01",
-	"instvars" : [
-		"block" ],
-	"name" : "TKTOSTask",
-	"pools" : [
-		 ],
 	"super" : "TKTTask",
-	"type" : "normal" }
+	"category" : "TaskItShell",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"block"
+	],
+	"name" : "TKTOSTask",
+	"type" : "normal"
+}
