@@ -19,7 +19,7 @@
 		"name:" : "SantiagoBragagnolo 8/23/2016 11:22",
 		"isRunningInTheSameProcess" : "SantiagoBragagnolo 6/17/2016 13:49:27",
 		"ifRunning:ifNotRunning:" : "SantiagoBragagnolo 6/17/2016 13:49:27",
-		"privateCreatePharoProcess" : "SantiagoBragagnolo 8/23/2016 11:25",
+		"privateCreatePharoProcess" : "MaxLeske 12/30/2016 15:13",
 		"terminate" : "SantiagoBragagnolo 6/17/2016 13:49:27",
 		"run" : "SantiagoBragagnolo 8/23/2016 11:28",
 		"messageSend:" : "SantiagoBragagnolo 6/17/2016 13:49:27",
@@ -39,9 +39,11 @@
 	},
 	"class" : {
 		"resetAnnouncer" : "SantiagoBragagnolo 6/17/2016 13:49:27",
+		"rawProcessClass:" : "MaxLeske 12/30/2016 15:16",
 		"send:to:" : "SantiagoBragagnolo 6/17/2016 13:49:27",
-		"uniqueAnnouncer" : "SantiagoBragagnolo 6/17/2016 13:49:27",
 		"send:with:to:" : "SantiagoBragagnolo 6/17/2016 13:49:27",
-		"forMessageSend:" : "SantiagoBragagnolo 6/17/2016 13:49:27"
+		"uniqueAnnouncer" : "SantiagoBragagnolo 6/17/2016 13:49:27",
+		"forMessageSend:" : "SantiagoBragagnolo 6/17/2016 13:49:27",
+		"rawProcessClass" : "MaxLeske 12/30/2016 15:15"
 	}
 }

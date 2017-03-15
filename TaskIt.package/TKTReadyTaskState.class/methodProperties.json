@@ -1,6 +1,7 @@
 {
-	"class" : {
-		 },
 	"instance" : {
 		"cancelTaskExecution:reason:" : "SantiagoBragagnolo 9/15/2016 16:25:55",
-		"performTaskExecution:" : "SantiagoBragagnolo 9/15/2016 16:25:55" } }
+		"performTaskExecution:" : "SantiagoBragagnolo 9/15/2016 16:25:55"
+	},
+	"class" : { }
+}

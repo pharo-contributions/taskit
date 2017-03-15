@@ -1,5 +1,6 @@
 {
-	"class" : {
-		 },
 	"instance" : {
-		"scheduleTaskExecution:" : "SantiagoBragagnolo 9/15/2016 16:25:55" } }
+		"scheduleTaskExecution:" : "SantiagoBragagnolo 9/15/2016 16:25:55"
+	},
+	"class" : { }
+}

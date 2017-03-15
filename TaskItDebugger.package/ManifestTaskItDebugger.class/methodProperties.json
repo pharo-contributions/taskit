@@ -1,0 +1,8 @@
+{
+	"instance" : { },
+	"class" : {
+		"ruleRBSentNotImplementedRuleV1FalsePositive" : "MaxLeske 12/30/2016 15:46",
+		"ruleRBCollectionMessagesToExternalObjectRuleV1FalsePositive" : "MaxLeske 12/30/2016 15:45",
+		"ruleRBContainsRuleV1FalsePositive" : "MaxLeske 12/30/2016 15:46"
+	}
+}

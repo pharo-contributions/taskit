@@ -1,9 +1,10 @@
 {
-	"class" : {
-		 },
 	"instance" : {
+		"scheduleTaskExecution:" : "SantiagoBragagnolo 9/15/2016 16:25:55",
 		"initialize" : "SantiagoBragagnolo 9/15/2016 16:25:55",
-		"isEmpty" : "SantiagoBragagnolo 9/15/2016 16:25:55",
-		"purge" : "SantiagoBragagnolo 9/15/2016 16:25:55",
 		"queue:" : "SantiagoBragagnolo 9/15/2016 16:25:55",
-		"scheduleTaskExecution:" : "SantiagoBragagnolo 9/15/2016 16:25:55" } }
+		"isEmpty" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"purge" : "SantiagoBragagnolo 9/15/2016 16:25:55"
+	},
+	"class" : { }
+}

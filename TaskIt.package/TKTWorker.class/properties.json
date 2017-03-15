@@ -1,14 +1,13 @@
 {
-	"category" : "TaskIt-Worker",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "GuillermoPolito 8/13/2016 21:14",
-	"instvars" : [
-		"process" ],
-	"name" : "TKTWorker",
-	"pools" : [
-		 ],
 	"super" : "TKTQueueTaskScheduler",
-	"type" : "normal" }
+	"category" : "TaskIt-Worker",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"process"
+	],
+	"name" : "TKTWorker",
+	"type" : "normal"
+}
