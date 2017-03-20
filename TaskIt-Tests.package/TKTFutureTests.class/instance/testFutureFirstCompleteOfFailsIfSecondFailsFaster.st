@@ -8,7 +8,9 @@ testFutureFirstCompleteOfFailsIfSecondFailsFaster
 	(future firstCompleteOf: secondFuture) onFailureDo: [ :v | got := v ].
 
 	error := Error new.
-	secondFuture deployFailure: error.
+	[ error signal ]
+		on: Error
+		do: [ :e | secondFuture deployFailure: e ].
 	future deploySuccess: 1.
 	50 milliSecond wait.
 

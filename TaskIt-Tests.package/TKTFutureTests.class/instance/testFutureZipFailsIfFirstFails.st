@@ -8,7 +8,9 @@ testFutureZipFailsIfFirstFails
 	(future zip: zipFuture) onFailureDo: [ :tuple | got := tuple ].
 
 	error := Error new.
-	future deployFailure: error.
+	[ error signal ]
+		on: Error
+		do: [ :e | future deployFailure: e ].
 	zipFuture deploySuccess: 5.
 	50 milliSecond wait.
 	
