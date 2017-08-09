@@ -1,24 +1,26 @@
 {
-
-	"class" : {
-		"global" : "guille 8/23/2016 09:46:21",
-		"resetGlobal" : "GuillermoPolito 8/23/2016 15:10" },
 	"instance" : {
-		"basicSchedule:" : "guille 8/23/2016 09:46:21",
-		"future:" : "guille 8/23/2016 09:46:21",
-		"getAvailableWorker" : "GuillermoPolito 8/23/2016 11:09",
-		"initialize" : "GuillermoPolito 8/23/2016 11:09",
-		"name:" : "guille 8/23/2016 09:46:21",
-		"newWorker" : "GuillermoPolito 8/23/2016 11:07",
-		"poolMaxSize:" : "guille 8/23/2016 09:46:21",
-		"purge" : "guille 8/23/2016 09:46:21",
-		"returnWorker:" : "GuillermoPolito 8/23/2016 11:07",
-		"schedule:" : "guille 8/23/2016 09:46:21",
-		"schedule:timeout:" : "guille 8/23/2016 09:46:21",
-		"scheduleTaskExecution:" : "GuillermoPolito 8/23/2016 10:44",
-		"size" : "GuillermoPolito 8/23/2016 11:09",
-		"start" : "guille 8/23/2016 09:46:21",
-		"stop" : "GuillermoPolito 8/23/2016 11:08",
-		"workers" : "GuillermoPolito 8/23/2016 11:08" }
+		"stop" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"name" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"purge" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"newWorker" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"freeWorkers" : "GuillermoPolito 9/26/2016 11:56",
+		"name:" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"initialize" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"printOn:" : "GuillermoPolito 9/26/2016 11:29",
+		"isFree" : "GuillermoPolito 9/26/2016 11:34",
+		"size" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"start" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"scheduleTaskExecution:" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"poolMaxSize:" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"workers" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"basicSchedule:" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"returnWorker:" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"getAvailableWorker" : "SantiagoBragagnolo 9/15/2016 16:25:55"
+	},
+	"class" : {
+		"initialize" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"resetGlobal" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"global" : "SantiagoBragagnolo 9/15/2016 16:25:55"
+	}
 }
-

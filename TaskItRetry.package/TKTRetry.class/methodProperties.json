@@ -1,0 +1,10 @@
+{
+	"class" : {
+		"every:for:" : "guille 9/13/2016 16:42:34" },
+	"instance" : {
+		"doneBlock:" : "guille 9/13/2016 16:42:34",
+		"isDone" : "guille 9/13/2016 16:42:34",
+		"lapseBetweenRetries:" : "guille 9/13/2016 16:42:34",
+		"next" : "guille 9/13/2016 16:42:34",
+		"nextRetryBlock:" : "guille 9/13/2016 16:42:34",
+		"waitLapse" : "guille 9/13/2016 16:42:34" } }

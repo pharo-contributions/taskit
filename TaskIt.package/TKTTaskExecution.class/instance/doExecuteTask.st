@@ -1,4 +1,3 @@
 evaluating
 doExecuteTask
-
 	^ task value

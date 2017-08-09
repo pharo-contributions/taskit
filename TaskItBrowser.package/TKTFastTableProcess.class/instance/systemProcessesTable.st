@@ -2,7 +2,7 @@ accessing
 systemProcessesTable
 	^ systable
 		ifNil: [ systemDataSource := TKTSystemProcessDataSource new.
-			systable := Tab
+			systable := TabMorph
 				label: 'System Processes'
 				icon: Smalltalk ui icons smallHelp
 				retrievingBlock: [ FTTableMorph new

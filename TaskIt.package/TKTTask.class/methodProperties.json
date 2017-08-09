@@ -1,12 +1,17 @@
 {
-	"class" : {
-		"valuable:" : "guille 8/23/2016 09:46:21",
-		"valuable:timeout:" : "guille 8/23/2016 09:46:21" },
 	"instance" : {
-		"future" : "guille 8/23/2016 09:46:21",
-		"future:" : "guille 8/23/2016 09:46:21",
-		"schedule" : "guille 8/23/2016 09:46:21",
-		"schedule:" : "guille 8/23/2016 09:46:21",
-		"value" : "guille 8/23/2016 09:46:21" }
+		"futureTaskExecutionFor:" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"asTask" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"schedule" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"value" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"schedule:" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"configureTaskExecution:with:" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"scheduleTaskExecutionFor:" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"future" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"future:" : "SantiagoBragagnolo 9/15/2016 16:25:55"
+	},
+	"class" : {
+		"valuable:" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"valuable:timeout:" : "SantiagoBragagnolo 9/15/2016 16:25:55"
+	}
 }
-

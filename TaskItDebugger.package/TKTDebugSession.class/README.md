@@ -1,0 +1,3 @@
+I implement the debugging logic for the ThreadDebugger.
+
+I override many of the action methods of DebugSession in order to deal with the virtual call stack correctly. I also hold a reference to the process holder that holds the process which caused the debugger to be opened; I need this reference to ensure continued access to the complete call stack, regardless of the currently active or focused context / process.

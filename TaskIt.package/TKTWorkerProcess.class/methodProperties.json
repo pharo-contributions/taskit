@@ -1,13 +1,14 @@
 {
 	"instance" : {
-		"isRunning" : "guille 8/23/2016 09:46:21",
-		"name:" : "guille 8/23/2016 09:46:21",
-		"process" : "GuillermoPolito 8/23/2016 10:11",
-		"start" : "guille 8/23/2016 09:46:21",
-		"stop" : "guille 8/23/2016 09:46:21",
-		"taskQueue" : "guille 8/23/2016 09:46:21",
-		"taskQueue:" : "guille 8/23/2016 09:46:21" 
+		"isRunning" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"process" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"taskQueue" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"taskQueue:" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"kill" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"stop" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"name" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"start" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"name:" : "SantiagoBragagnolo 9/15/2016 16:25:55"
 	},
 	"class" : { }
 }
-

@@ -1,4 +1,4 @@
-as yet unclassified
+instance creation
 forMessageSend: aMessageSend
 	^ self new
 		messageSend: aMessageSend;

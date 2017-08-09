@@ -1,11 +1,6 @@
 schedulling
 future: aTask
-
 	| execution |
-	execution := TKTFutureExecution new.
-	execution runner: self.
-	execution task: aTask.
-	
+	execution := aTask asTask futureTaskExecutionFor: self.
 	self scheduleTaskExecution: execution.
-	
 	^ execution future

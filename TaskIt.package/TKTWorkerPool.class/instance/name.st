@@ -1,0 +1,4 @@
+accessing
+name
+	
+	^ poolWorker name

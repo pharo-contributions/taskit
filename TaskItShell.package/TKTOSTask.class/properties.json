@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "SantiagoBragagnolo 9/14/2016 14:01",
+	"super" : "TKTTask",
+	"category" : "TaskItShell",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"block"
+	],
+	"name" : "TKTOSTask",
+	"type" : "normal"
+}

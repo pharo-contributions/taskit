@@ -5,7 +5,7 @@ andThen: aBlockClosure
 	future := TKTFuture new.
 	self onSuccessDo: [ :got | 
 		[ aBlockClosure value: got ]
-			on: Error do: [ :e | "Nothing?" ].
+			on: Exception do: [ :e | "Nothing?" ].
 		future deploySuccess: got ].
-	self onFailureDo: [ :error | future deployFailure: error ].
+	self onFailureDo: [ :error | future deployFailure: error freeze ].
 	^ future

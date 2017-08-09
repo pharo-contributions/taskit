@@ -8,12 +8,12 @@
 		"busyWorkers",
 		"freeWorkers",
 		"poolWorker",
-		"workers" 
+		"workers"
 	],
 	"name" : "TKTWorkerPool",
 	"commentStamp" : "GuillermoPolito 8/13/2016 21:16",
 	"super" : "Object",
-	"traitcomposition" : "TTaskScheduler",
+	"traitcomposition" : "TTaskScheduler - {#scheduleTaskExecution:}",
 	"type" : "normal",
 	"classinstvars" : [ ],
 	"pools" : [ ],

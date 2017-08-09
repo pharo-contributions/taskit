@@ -2,7 +2,7 @@ accessing
 taskItProcessesTable
 	^ table
 		ifNil: [ processDataSource := TKTProcessDataSource new.
-			table := Tab
+			table := TabMorph
 				label: 'TaskIT Processes'
 				icon: Smalltalk ui icons smallHelpIcon
 				retrievingBlock: [ FTTableMorph new

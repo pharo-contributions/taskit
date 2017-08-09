@@ -1,0 +1,14 @@
+{
+	"category" : "TaskItServices-Tests",
+	"classinstvars" : [
+		 ],
+	"classvars" : [
+		 ],
+	"commentStamp" : "",
+	"instvars" : [
+		 ],
+	"name" : "TKTServiceMemoryLeakTests",
+	"pools" : [
+		 ],
+	"super" : "TKTMemoryLeakTests",
+	"type" : "normal" }

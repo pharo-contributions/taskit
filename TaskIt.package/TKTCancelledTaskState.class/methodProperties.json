@@ -1,12 +1,11 @@
 {
 	"instance" : {
-		"cancelTaskExecution:reason:" : "guille 8/23/2016 09:46:21",
-		"performTaskExecution:" : "guille 8/23/2016 09:46:21",
-		"reason:" : "guille 8/23/2016 09:46:21",
-		"signalCancelledException" : "guille 8/23/2016 09:46:21" 
+		"cancelTaskExecution:reason:" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"performTaskExecution:" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"reason:" : "SantiagoBragagnolo 9/15/2016 16:25:55",
+		"signalCancelledException" : "SantiagoBragagnolo 9/15/2016 16:25:55"
 	},
 	"class" : {
-		"reason:" : "guille 8/23/2016 09:46:21"
+		"reason:" : "SantiagoBragagnolo 9/15/2016 16:25:55"
 	}
 }
-

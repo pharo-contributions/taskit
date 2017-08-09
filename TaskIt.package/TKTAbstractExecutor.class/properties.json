@@ -2,7 +2,8 @@
 	"classtraitcomposition" : "TTaskExecutor classTrait",
 	"classvars" : [ ],
 	"instvars" : [
-		"exceptionHandler"
+		"exceptionHandler",
+		"busy"
 	],
 	"name" : "TKTAbstractExecutor",
 	"commentStamp" : "GuillermoPolito 8/15/2016 12:10",

@@ -2,6 +2,6 @@
 	"class" : {
 		 },
 	"instance" : {
-		"tearDown" : "GuillermoPolito 8/23/2016 10:05",
-		"testServiceIsKilledAfterStop" : "GuillermoPolito 8/23/2016 10:07",
-		"testServiceShouldHaveAName" : "GuillermoPolito 8/23/2016 10:05" } }
+		"tearDown" : "guille 8/23/2016 15:04:33",
+		"testServiceIsKilledAfterStop" : "guille 8/23/2016 15:04:33",
+		"testServiceShouldHaveAName" : "guille 8/23/2016 15:04:33" } }

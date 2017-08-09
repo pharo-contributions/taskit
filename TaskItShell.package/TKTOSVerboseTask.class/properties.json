@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "<historical>",
+	"super" : "TKTOSTask",
+	"category" : "TaskItShell",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TKTOSVerboseTask",
+	"type" : "normal"
+}

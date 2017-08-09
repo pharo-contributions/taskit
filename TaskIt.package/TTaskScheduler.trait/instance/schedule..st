@@ -1,9 +1,6 @@
 schedulling
 schedule: aTask
-
 	| execution |
-	execution := TKTTaskExecution new.
-	execution runner: self.
-	execution task: aTask.
+	execution := aTask asTask scheduleTaskExecutionFor: self.
+	self scheduleTaskExecution: execution
 	
-	self scheduleTaskExecution: execution.

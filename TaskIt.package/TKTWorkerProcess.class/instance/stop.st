@@ -1,3 +1,5 @@
 start-stop
 stop
-	process ifNotNil: [ process terminate ]
+	process ifNotNil: [
+		process terminate.
+		process := nil ]

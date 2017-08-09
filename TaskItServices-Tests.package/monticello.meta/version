@@ -1,2 +1,2 @@
-(name 'TaskItServices-Tests-guille.5' message 'Added class comments' id '3dbadca7-b498-41e3-adf6-09e9e6db7069' date '23 August 2016' time '3:04:15.19067 pm' author 'GuillermoPolito' ancestors ((name 'TaskItServices-Tests-guille.4' message 'Testing mock and parameterized services
-' id 'bca20b6d-c09c-5d3f-a72a-7a3df1e9157f' date '23 August 2016' time '12:12 pm' author 'guille' ancestors () stepChildren ())) stepChildren ())
+(name 'TaskItServices-Tests-guille.7' message 'Fix for #19. Increment sleep time to guarantee service will start running. ' id '4f3d9997-7bb3-407b-9151-53895fb1b275' date '29 August 2016' time '9:41:06.961573 am' author 'GuillermoPolito' ancestors ((name 'TaskItServices-Tests-guille.6' message 'Added memory leak tests
+' id 'ffa4eafd-bc31-5620-9027-dc2935783e88' date '27 August 2016' time '3:44:39 pm' author 'guille' ancestors () stepChildren ())) stepChildren ())

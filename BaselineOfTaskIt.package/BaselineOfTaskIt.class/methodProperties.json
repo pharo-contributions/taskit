@@ -1,17 +1,17 @@
 {
 	"instance" : {
-		"baseline:" : "SantiagoBragagnolo 8/23/2016 17:45"
+		"baseline:" : "MaxLeske 12/30/2016 17:58"
 	},
 	"class" : {
-		"load" : "SantiagoBragagnolo 6/17/2016 13:48:21",
-		"catalogDescription" : "SantiagoBragagnolo 6/17/2016 13:48:21",
-		"baseConfigurationClassIfAbsent:" : "SantiagoBragagnolo 6/17/2016 13:48:21",
-		"DevelopmentSupport" : "SantiagoBragagnolo 6/17/2016 13:48:21",
-		"loadDevelopment" : "SantiagoBragagnolo 6/17/2016 13:48:21",
-		"catalogKeywords" : "SantiagoBragagnolo 6/17/2016 13:48:21",
-		"isMetacelloConfig" : "SantiagoBragagnolo 6/17/2016 13:48:21",
-		"ensureMetacelloBaseConfiguration" : "SantiagoBragagnolo 6/17/2016 13:48:21",
-		"loadBleedingEdge" : "SantiagoBragagnolo 6/17/2016 13:48:21",
-		"catalogContactInfo" : "SantiagoBragagnolo 6/17/2016 13:48:21"
+		"load" : "SantiagoBragagnolo 8/23/2016 17:47:47",
+		"catalogDescription" : "SantiagoBragagnolo 8/23/2016 17:47:47",
+		"baseConfigurationClassIfAbsent:" : "SantiagoBragagnolo 8/23/2016 17:47:47",
+		"DevelopmentSupport" : "SantiagoBragagnolo 8/23/2016 17:47:47",
+		"loadDevelopment" : "SantiagoBragagnolo 8/23/2016 17:47:47",
+		"catalogKeywords" : "SantiagoBragagnolo 8/23/2016 17:47:47",
+		"isMetacelloConfig" : "SantiagoBragagnolo 8/23/2016 17:47:47",
+		"ensureMetacelloBaseConfiguration" : "SantiagoBragagnolo 8/23/2016 17:47:47",
+		"loadBleedingEdge" : "SantiagoBragagnolo 8/23/2016 17:47:47",
+		"catalogContactInfo" : "SantiagoBragagnolo 8/23/2016 17:47:47"
 	}
 }

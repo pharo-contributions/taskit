@@ -6,7 +6,8 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"future"
+		"future",
+		"masterProcessHolder"
 	],
 	"name" : "TKTFutureExecution",
 	"type" : "normal"
