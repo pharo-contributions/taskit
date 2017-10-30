@@ -1,4 +1,3 @@
 schedulling
-scheduleTaskExecution: aTask
-	
-	TKTProcessProvider createProcessDoing: [ self executeTask: aTask ]
+scheduleTaskExecution: aTaskExecution
+	TKTProcessProvider createProcessDoing: [ self executeTask: aTaskExecution ]

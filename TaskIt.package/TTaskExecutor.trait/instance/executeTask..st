@@ -1,5 +1,5 @@
 executing
-executeTask: aTask
-	[ self noteBusy. aTask value. self noteFree ]
+executeTask: aTaskExecution
+	[ self noteBusy. aTaskExecution value. self noteFree ]
 		on: Error
 		do: [ :error | self exceptionHandler handleException: error ]

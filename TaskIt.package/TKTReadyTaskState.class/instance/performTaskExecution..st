@@ -1,6 +1,5 @@
 executing
 performTaskExecution: aTaskExecution
-
 	aTaskExecution setRunningState.
 	aTaskExecution doExecuteTask.
-	aTaskExecution setFinishedState.
+	aTaskExecution setFinishedState

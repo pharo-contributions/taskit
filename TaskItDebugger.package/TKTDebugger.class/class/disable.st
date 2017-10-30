@@ -1,7 +1,8 @@
 accessing
 disable
-	self isEnabled ifFalse: [ ^ self ].
-	
+	self isEnabled
+		ifFalse: [ ^ self ].
 	IsEnabled := false.
 	self unregister.
-	TKTProcess rawProcessClass: nil
+	TKTProcess rawProcessClass: nil.
+	TKTWorker processClass: nil
