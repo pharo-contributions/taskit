@@ -1,5 +1,4 @@
 private
 kill
-
-	TKTServiceManager uniqueInstance removeService: self.
+	TKTConfiguration serviceManager removeService: self.
 	worker stop

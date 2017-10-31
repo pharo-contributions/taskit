@@ -1,6 +1,5 @@
 schedulling
-newWorker
-	
-	^ workers add: (TKTWorker new
+newWorker	
+	^ workers add: (TKTConfiguration poolWorkerProcess new
 		name: self name, ' Worker #', (self size + 1) asString;
 		start)

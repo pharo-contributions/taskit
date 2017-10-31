@@ -1,6 +1,5 @@
 start-stop
 start
-	
-	process := TKTProcessProvider
+	process := TKTConfiguration processProvider
 		createProcessDoing: [ [ self executeTask: taskQueue next ] repeat ]
 		named: name

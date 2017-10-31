@@ -2,9 +2,7 @@
 	"commentStamp" : "GuillermoPolito 8/15/2016 12:15",
 	"super" : "Object",
 	"category" : "TaskIt-Kernel",
-	"classinstvars" : [
-		"current"
-	],
+	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [ ],

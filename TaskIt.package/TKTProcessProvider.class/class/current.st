@@ -1,4 +1,4 @@
 accessing
 current
 
-	^ current
+	^ self error: 'Use TKTConfiguration processProvider createProcessDoing: aValuable '

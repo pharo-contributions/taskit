@@ -3,7 +3,7 @@ initialize
 
 	super initialize.
 	result := TKTFutureNotFinished new.
-	runner := TKTCurrentTaskRunner value.
+	runner := TKTConfiguration runner.
 
 	valueSemaphore := Semaphore new.
 

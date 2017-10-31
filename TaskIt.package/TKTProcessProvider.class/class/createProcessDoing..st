@@ -1,4 +1,3 @@
 instance-creation
 createProcessDoing: aValuable
-
-	^ self current createProcessDoing: aValuable
+	^ self error: 'Use TKTConfiguration processProvider createProcessDoing: aValuable '

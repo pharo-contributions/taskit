@@ -1,4 +1,4 @@
 running
 future
 	
-	^ self future: TKTCurrentTaskRunner value
+	^ self future: TKTConfiguration runner

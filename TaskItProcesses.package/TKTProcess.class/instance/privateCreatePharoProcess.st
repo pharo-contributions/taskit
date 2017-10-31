@@ -1,5 +1,5 @@
 private
 privateCreatePharoProcess
-	^ process := self class rawProcessClass
+	^ process := TKTConfiguration process
 		forContext: self createContext
 		priority: self spawnPriority

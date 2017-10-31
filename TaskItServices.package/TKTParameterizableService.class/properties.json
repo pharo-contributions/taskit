@@ -1,17 +1,16 @@
 {
-	"category" : "TaskItServices",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "GuillermoPolito 8/23/2016 15:03",
+	"super" : "TKTService",
+	"category" : "TaskItServices",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"name",
 		"task",
 		"startUpTask",
-		"tearDownTask" ],
+		"tearDownTask"
+	],
 	"name" : "TKTParameterizableService",
-	"pools" : [
-		 ],
-	"super" : "TKTService",
-	"type" : "normal" }
+	"type" : "normal"
+}

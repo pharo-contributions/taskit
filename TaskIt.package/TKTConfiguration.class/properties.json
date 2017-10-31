@@ -6,6 +6,6 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [ ],
-	"name" : "TKTCurrentTaskRunner",
+	"name" : "TKTConfiguration",
 	"type" : "normal"
 }

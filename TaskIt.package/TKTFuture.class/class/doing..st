@@ -1,4 +1,4 @@
 instance-creation
 doing: aBlock
 
-	^ TKTCurrentTaskRunner value future: aBlock
+	^ TKTConfiguration runner future: aBlock

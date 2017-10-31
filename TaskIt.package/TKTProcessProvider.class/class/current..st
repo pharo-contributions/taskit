@@ -1,4 +1,3 @@
 accessing
 current: aProcessProvider
-
-	current := aProcessProvider
+	^ self error: 'Use a configuration'

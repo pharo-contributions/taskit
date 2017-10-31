@@ -1,4 +1,4 @@
 evaluating
 value
 	executionProcess := Processor activeProcess.
-	TKTCurrentTaskRunner value: runner during: [ self executeTask ].
+	TKTConfiguration runner: runner during: [ self executeTask ].

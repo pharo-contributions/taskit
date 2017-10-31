@@ -1,4 +1,4 @@
 running
 schedule
 	
-	self schedule: TKTCurrentTaskRunner value
+	self schedule: TKTConfiguration runner

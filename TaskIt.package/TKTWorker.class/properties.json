@@ -2,9 +2,7 @@
 	"commentStamp" : "GuillermoPolito 8/13/2016 21:14",
 	"super" : "TKTQueueTaskScheduler",
 	"category" : "TaskIt-Worker",
-	"classinstvars" : [
-		"processClass"
-	],
+	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [

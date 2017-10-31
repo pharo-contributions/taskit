@@ -6,9 +6,7 @@
 		"announcer"
 	],
 	"pools" : [ ],
-	"classvars" : [
-		"RawProcessClass"
-	],
+	"classvars" : [ ],
 	"instvars" : [
 		"process",
 		"messageSend",
