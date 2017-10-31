@@ -3,7 +3,7 @@ profiles
 	^ {(#profile -> #development).
 	(#development
 		-> [ {(#initialize -> [ TKTDebugger enable ]).
-			(#runner -> TKTWorkerPool new).
+			(#runner -> TKTWorkerPool global).
 			(#poolWorkerProcess -> TKTDebuggWorkerProcess).
 			(#process -> TKTRawProcess).
 			(#errorHandler -> TKTDebuggerExceptionHandler).
@@ -11,7 +11,7 @@ profiles
 			(#serviceManager -> TKTServiceManager)} asDictionary ]).
 	(#production
 		-> [ {(#initialize -> [ TKTDebugger disable ]).
-			(#runner -> TKTWorkerPool new).
+			(#runner -> TKTWorkerPool global).
 			(#poolWorkerProcess -> TKTWorkerProcess).
 			(#process -> TKTRawProcess).
 			(#errorHandler -> TKTExceptionHandler).
@@ -19,7 +19,7 @@ profiles
 			(#serviceManager -> TKTServiceManager)} asDictionary ]).
 	(#test
 		-> [ {(#initialize -> [ TKTDebugger disable ]).
-			(#runner -> TKTWorkerPool new).
+			(#runner -> TKTWorkerPool global).
 			(#poolWorkerProcess -> TKTWorkerProcess).
 			(#process -> TKTRawProcess).
 			(#errorHandler -> TKTExceptionHandler).
