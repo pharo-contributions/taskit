@@ -1,8 +1,6 @@
 {
 	"classtraitcomposition" : "TTaskScheduler classTrait",
-	"classvars" : [
-		"GlobalInstance"
-	],
+	"classvars" : [ ],
 	"instvars" : [
 		"poolMaxSize",
 		"busyWorkers",
