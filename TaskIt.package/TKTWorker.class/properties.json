@@ -6,7 +6,8 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"process"
+		"process",
+		"name"
 	],
 	"name" : "TKTWorker",
 	"type" : "normal"

@@ -1,0 +1,21 @@
+{
+	"classtraitcomposition" : "TTaskScheduler classTrait",
+	"classvars" : [
+		"GlobalInstance"
+	],
+	"instvars" : [
+		"poolMaxSize",
+		"poolWorker",
+		"workers",
+		"taskQueue",
+		"failedTasks"
+	],
+	"name" : "TKTCommonQueueWorkerPool",
+	"commentStamp" : "SantiagoBragagnolo 11/2/2017 13:00",
+	"super" : "Object",
+	"traitcomposition" : "TTaskScheduler - {#scheduleTaskExecution:}",
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "TaskIt-Worker"
+}

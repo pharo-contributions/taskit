@@ -1,0 +1,1 @@
+Common queue worker pool has in common queue. This makes that all the workers wait over the same queue 

@@ -4,30 +4,30 @@ profiles
 	(#development
 		-> [ {(#initialize
 				-> [ TKTDebugger enable.
-					TKTWorkerPool startGlobal ]).
-			(#runner -> TKTWorkerPool global).
+					TKTCommonQueueWorkerPool startGlobal ]).
+			(#runner -> TKTCommonQueueWorkerPool global).
 			(#poolWorkerProcess -> TKTDebuggWorkerProcess).
 			(#process -> TKTRawProcess).
 			(#errorHandler -> TKTDebuggerExceptionHandler).
 			(#processProvider -> TKTTaskItProcessProvider new).
-			(#serviceManager -> TKTServiceManager)} asDictionary ]).
+			(#serviceManager -> TKTServiceManager new)} asDictionary ]).
 	(#production
 		-> [ {(#initialize
 				-> [ TKTDebugger disable.
-					TKTWorkerPool startGlobal ]).
-			(#runner -> TKTWorkerPool global).
+					TKTCommonQueueWorkerPool startGlobal ]).
+			(#runner -> TKTCommonQueueWorkerPool global).
 			(#poolWorkerProcess -> TKTWorkerProcess).
 			(#process -> TKTRawProcess).
 			(#errorHandler -> TKTExceptionHandler).
 			(#processProvider -> TKTPharoProcessProvider new).
-			(#serviceManager -> TKTServiceManager)} asDictionary ]).
+			(#serviceManager -> TKTServiceManager new)} asDictionary ]).
 	(#test
 		-> [ {(#initialize
 				-> [ TKTDebugger disable.
-					TKTWorkerPool startGlobal ]).
-			(#runner -> TKTWorkerPool global).
+					TKTCommonQueueWorkerPool startGlobal ]).
+			(#runner -> TKTCommonQueueWorkerPool global).
 			(#poolWorkerProcess -> TKTWorkerProcess).
 			(#process -> TKTRawProcess).
 			(#errorHandler -> TKTExceptionHandler).
 			(#processProvider -> TKTTaskItProcessProvider new).
-			(#serviceManager -> TKTServiceManager)} asDictionary ])} asDictionary
+			(#serviceManager -> TKTServiceManager new)} asDictionary ])} asDictionary

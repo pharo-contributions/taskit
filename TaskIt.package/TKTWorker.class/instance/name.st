@@ -1,4 +1,3 @@
 accessing
-name 
-	
-	^ process name
+name
+	^ process ifNil: [ name ] ifNotNil: [ process name ]

@@ -1,4 +1,4 @@
 accessing
-name: aString 
-	
-	process name: aString
+name: aString
+	name := aString.
+	process ifNotNil: [ process name: aString ]
