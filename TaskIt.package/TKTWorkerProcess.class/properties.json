@@ -8,7 +8,8 @@
 	"instvars" : [
 		"taskQueue",
 		"name",
-		"process"
+		"process",
+		"currentTaskExecution"
 	],
 	"name" : "TKTWorkerProcess",
 	"type" : "normal"
