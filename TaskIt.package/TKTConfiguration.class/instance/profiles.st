@@ -2,7 +2,9 @@ accessing
 profiles
 	^ {(#profile -> #development).
 	(#development
-		-> [ {(#initialize -> [ TKTDebugger enable ]).
+		-> [ {(#initialize
+				-> [ TKTDebugger enable.
+					TKTWorkerPool startGlobal ]).
 			(#runner -> TKTWorkerPool global).
 			(#poolWorkerProcess -> TKTDebuggWorkerProcess).
 			(#process -> TKTRawProcess).
@@ -10,7 +12,9 @@ profiles
 			(#processProvider -> TKTTaskItProcessProvider new).
 			(#serviceManager -> TKTServiceManager)} asDictionary ]).
 	(#production
-		-> [ {(#initialize -> [ TKTDebugger disable ]).
+		-> [ {(#initialize
+				-> [ TKTDebugger disable.
+					TKTWorkerPool startGlobal ]).
 			(#runner -> TKTWorkerPool global).
 			(#poolWorkerProcess -> TKTWorkerProcess).
 			(#process -> TKTRawProcess).
@@ -18,7 +22,9 @@ profiles
 			(#processProvider -> TKTPharoProcessProvider new).
 			(#serviceManager -> TKTServiceManager)} asDictionary ]).
 	(#test
-		-> [ {(#initialize -> [ TKTDebugger disable ]).
+		-> [ {(#initialize
+				-> [ TKTDebugger disable.
+					TKTWorkerPool startGlobal ]).
 			(#runner -> TKTWorkerPool global).
 			(#poolWorkerProcess -> TKTWorkerProcess).
 			(#process -> TKTRawProcess).

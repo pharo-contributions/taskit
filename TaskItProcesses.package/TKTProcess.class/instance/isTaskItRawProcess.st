@@ -1,3 +1,3 @@
 testing
 isTaskItRawProcess
-	self halt. 
+	^ process isTaskItRawProcess

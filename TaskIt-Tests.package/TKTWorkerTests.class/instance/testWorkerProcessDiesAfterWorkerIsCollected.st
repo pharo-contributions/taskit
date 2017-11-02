@@ -1,17 +1,11 @@
 tests
 testWorkerProcessDiesAfterWorkerIsCollected
-
 	| worker future process |
 	worker := TKTWorker new.
 	worker start.
-	
 	process := worker process.
-	
 	worker := nil.
-	Smalltalk garbageCollect.
-	
-	
+	7 timesRepeat: [ Smalltalk garbageCollect ].
 	future := TKTFuture doing: [ [ process isRunning ] whileTrue: [ 50 milliSeconds wait ] ].
-	future synchronizeTimeout: 1 seconds.
-	
+	future synchronizeTimeout: 2 seconds.
 	self deny: process isRunning

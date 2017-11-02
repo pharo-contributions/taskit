@@ -19,6 +19,6 @@ testWorkerProcessDiesAfterWorkerAndAllFuturesAreCollected
 	
 	future := nil.
 	Smalltalk garbageCollect.
-	waitFuture2 synchronizeTimeout: 200 milliSeconds.
+	waitFuture2 synchronizeTimeout: 400 milliSeconds.
 	
 	self deny: process isRunning.

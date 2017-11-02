@@ -1,7 +1,7 @@
 initialization
 initialize
 	super initialize.
-	process := TKTWorkerProcess new
+	process := TKTConfiguration poolWorkerProcess new
 		taskQueue: queue;
 		yourself.
 	self name: ('Worker-{ID}' format: {(#ID -> UUID new)} asDictionary).
