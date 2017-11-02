@@ -1,3 +1,4 @@
 starting
 start
-	TKTConfiguration serviceManager startService: self
+	TKTConfiguration serviceManager startService: self.
+	

@@ -8,7 +8,7 @@ testFutureExecutesConcurrently
 	results addLast: 1 ] future.
 	future2 := [ 10 milliSeconds wait.
 	results addLast: 2 ] future.
-	
+
 	future1 waitForCompletion: 2 seconds.
 	future2 waitForCompletion: 2 seconds.
 	

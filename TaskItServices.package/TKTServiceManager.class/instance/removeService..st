@@ -1,4 +1,4 @@
 purging
 removeService: aService
 
-	services remove: aService
+	services remove: aService ifAbsent: [  ].

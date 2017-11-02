@@ -1,0 +1,1 @@
+It only defines a teardown for ensure that the current pool is properly clean after executing tests.

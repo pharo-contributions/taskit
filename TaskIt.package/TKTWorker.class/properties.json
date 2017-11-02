@@ -7,7 +7,8 @@
 	"classvars" : [ ],
 	"instvars" : [
 		"process",
-		"name"
+		"name",
+		"exceptionHandler"
 	],
 	"name" : "TKTWorker",
 	"type" : "normal"

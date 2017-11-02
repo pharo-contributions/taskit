@@ -1,3 +1,3 @@
 schedulling
 purge
-	taskQueue purge
+	taskQueue removeAll

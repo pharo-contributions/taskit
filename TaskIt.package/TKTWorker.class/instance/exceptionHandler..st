@@ -1,4 +1,4 @@
 accessing
 exceptionHandler: aHandler
-	
-	process exceptionHandler: aHandler
+	exceptionHandler := aHandler.
+	process ifNotNil: [ process exceptionHandler: aHandler ]

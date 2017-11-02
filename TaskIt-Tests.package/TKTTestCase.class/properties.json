@@ -1,11 +1,11 @@
 {
-	"commentStamp" : "",
-	"super" : "TKTTestCase",
+	"commentStamp" : "SantiagoBragagnolo 11/2/2017 15:53",
+	"super" : "TestCase",
 	"category" : "TaskIt-Tests",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [ ],
-	"name" : "TKTPharoProcessProviderTests",
+	"name" : "TKTTestCase",
 	"type" : "normal"
 }

@@ -1,7 +1,6 @@
 removing
 removeIdleWorker
 	| removing |
-	self halt. 
-	removing := (workers reject: #isRunning) first.
+	removing := (workers select: #isFree) anyOne.
 	removing stop.
 	workers remove: removing

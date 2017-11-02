@@ -1,6 +1,9 @@
 starting
 ensureWatchDog
-	(watchDog isNil or: [ watchDog isRunning not ])
-		ifTrue: [ watchDog := TKTParameterizableService new
+	watchDog
+		ifNil: [ watchDog := TKTParameterizableService new
 				step: [ self watchDogService ];
-				yourself ]
+				name: 'WatchDog-' , self name; start;
+				yourself ].
+	watchDog isRunning
+		ifFalse: [ watchDog restart ]
