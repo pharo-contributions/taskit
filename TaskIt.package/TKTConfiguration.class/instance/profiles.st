@@ -4,8 +4,8 @@ profiles
 	(#development
 		-> [ {(#initialize
 				-> [ TKTDebugger enable.
-					TKTCommonQueueWorkerPool startGlobal ]).
-			(#runner -> TKTCommonQueueWorkerPool global).
+					self class runner start ]).
+			(#runner -> TKTCommonQueueWorkerPool createDefault).
 			(#poolWorkerProcess -> TKTDebuggWorkerProcess).
 			(#process -> TKTRawProcess).
 			(#errorHandler -> TKTDebuggerExceptionHandler).
@@ -14,8 +14,8 @@ profiles
 	(#production
 		-> [ {(#initialize
 				-> [ TKTDebugger disable.
-					TKTCommonQueueWorkerPool startGlobal ]).
-			(#runner -> TKTCommonQueueWorkerPool global).
+					self class runner start ]).
+			(#runner -> TKTCommonQueueWorkerPool createDefault).
 			(#poolWorkerProcess -> TKTWorkerProcess).
 			(#process -> TKTRawProcess).
 			(#errorHandler -> TKTExceptionHandler).
@@ -24,8 +24,8 @@ profiles
 	(#test
 		-> [ {(#initialize
 				-> [ TKTDebugger disable.
-					TKTCommonQueueWorkerPool startGlobal ]).
-			(#runner -> TKTCommonQueueWorkerPool global).
+					self class runner start ]).
+			(#runner -> TKTCommonQueueWorkerPool createDefault).
 			(#poolWorkerProcess -> TKTWorkerProcess).
 			(#process -> TKTRawProcess).
 			(#errorHandler -> TKTExceptionHandler).
