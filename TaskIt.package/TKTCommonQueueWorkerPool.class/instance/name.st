@@ -1,4 +1,3 @@
 accessing
 name
-	
-	^ poolWorker name
+	^ watchDog ifNil: [ name ] ifNotNil: [ watchDog name ]

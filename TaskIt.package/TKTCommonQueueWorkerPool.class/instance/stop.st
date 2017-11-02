@@ -1,5 +1,5 @@
 starting
 stop
-	poolWorker stop.
+	watchDog ifNotNil: [ watchDog stop ].
 	workers do: #stop.
 	workers removeAll

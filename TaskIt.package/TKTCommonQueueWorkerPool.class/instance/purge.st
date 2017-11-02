@@ -1,4 +1,3 @@
 schedulling
 purge
-
-	poolWorker purge
+	taskQueue purge

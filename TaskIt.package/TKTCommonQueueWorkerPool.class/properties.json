@@ -3,10 +3,11 @@
 	"classvars" : [ ],
 	"instvars" : [
 		"poolMaxSize",
-		"poolWorker",
 		"workers",
 		"taskQueue",
-		"failedTasks"
+		"failedTasks",
+		"watchDog",
+		"name"
 	],
 	"name" : "TKTCommonQueueWorkerPool",
 	"commentStamp" : "SantiagoBragagnolo 11/2/2017 13:00",

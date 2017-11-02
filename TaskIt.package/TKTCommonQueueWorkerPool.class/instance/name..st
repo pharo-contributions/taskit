@@ -1,4 +1,4 @@
 accessing
-name: aString 
-	
-	poolWorker name: aString
+name: aString
+	name := aString.
+	watchDog ifNotNil: [ watchDog name: name , '-WatchDog' ]
