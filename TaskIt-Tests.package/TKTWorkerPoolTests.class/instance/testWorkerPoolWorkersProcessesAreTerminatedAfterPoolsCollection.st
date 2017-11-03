@@ -3,7 +3,7 @@ testWorkerPoolWorkersProcessesAreTerminatedAfterPoolsCollection
 
 	| pool workerProcess |
 	pool := TKTWorkerPool new.
-	pool name: 'test pool'.
+	pool name: 'Test pool'.
 	pool poolMaxSize: 4.
 	pool start.
 		
