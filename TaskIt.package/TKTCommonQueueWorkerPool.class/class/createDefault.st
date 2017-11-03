@@ -1,6 +1,6 @@
 current
 createDefault
 	^ self new
-		name: 'test pool';
+		name: 'CommonPool-' , UUID new asString;
 		poolMaxSize: 4;
 		yourself

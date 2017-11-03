@@ -6,7 +6,6 @@
 		"workers",
 		"taskQueue",
 		"failedTasks",
-		"watchDog",
 		"name"
 	],
 	"name" : "TKTCommonQueueWorkerPool",
