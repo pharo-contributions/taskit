@@ -4,5 +4,5 @@ finalize
 		schedule: [ | theProcess |
 			queue := nil.
 			theProcess := process.
-			theProcess kill.
+			theProcess ifNotNil: [ theProcess kill ].
 			process := nil ]

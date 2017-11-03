@@ -1,5 +1,3 @@
-starting
+accessing
 start
-	" nothing to do "
-
-	
+	TKTWatchDog on: self

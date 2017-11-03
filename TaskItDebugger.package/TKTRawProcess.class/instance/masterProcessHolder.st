@@ -1,3 +1,3 @@
 accessing
 masterProcessHolder
-	^ masterProcessHolder
+	^ masterProcessHolder at: 1

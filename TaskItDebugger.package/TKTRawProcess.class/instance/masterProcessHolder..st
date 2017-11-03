@@ -1,3 +1,3 @@
 accessing
 masterProcessHolder: aProcessHolder
-	masterProcessHolder := aProcessHolder
+	masterProcessHolder := aProcessHolder asWeakReference

@@ -3,7 +3,7 @@ testWorkerPoolWorkersAreStoppedAfterPoolsCollection
 
 	| pool workerProcess |
 	pool := TKTCommonQueueWorkerPool new.
-	pool name: 'test pool'.
+	pool name: 'test pool', UUID new asString.
 	pool poolMaxSize: 4.
 	pool start.
 		
