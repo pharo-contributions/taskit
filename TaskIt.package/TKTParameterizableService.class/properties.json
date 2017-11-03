@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "GuillermoPolito 8/23/2016 15:03",
 	"super" : "TKTService",
-	"category" : "TaskItServices",
+	"category" : "TaskIt-Services",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],

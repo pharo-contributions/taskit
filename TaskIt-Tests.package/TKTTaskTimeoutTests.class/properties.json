@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "",
 	"super" : "TKTTestCase",
-	"category" : "TaskIt-Tests",
+	"category" : "TaskIt-Tests-Kernel",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],

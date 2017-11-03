@@ -1,7 +1,0 @@
-{
-	"class" : {
-		 },
-	"instance" : {
-		"tearDown" : "guille 8/23/2016 15:04:33",
-		"testServiceIsKilledAfterStop" : "guille 8/23/2016 15:04:33",
-		"testServiceShouldHaveAName" : "guille 8/23/2016 15:04:33" } }

@@ -1,11 +1,11 @@
 {
 	"commentStamp" : "",
-	"super" : "TKTTestCase",
-	"category" : "TaskIt-Tests-Worker",
+	"super" : "TKTMemoryLeakTests",
+	"category" : "TaskIt-Tests-Services",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [ ],
-	"name" : "TKTCommonQueueWorkerPoolTests",
+	"name" : "TKTServiceMemoryLeakTests",
 	"type" : "normal"
 }

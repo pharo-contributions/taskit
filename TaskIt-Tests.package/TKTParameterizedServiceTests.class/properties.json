@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "",
+	"super" : "TestCase",
+	"category" : "TaskIt-Tests-Services",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"service"
+	],
+	"name" : "TKTParameterizedServiceTests",
+	"type" : "normal"
+}

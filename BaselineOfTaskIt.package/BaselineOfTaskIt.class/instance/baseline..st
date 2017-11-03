@@ -8,8 +8,6 @@ baseline: spec
 				package: #'TaskIt-Tests' with: [ spec requires: #('TaskIt') ];
 				package: #TaskItRetry with: [ spec requires: #('TaskIt') ];
 				package: #'TaskItRetry-Tests' with: [ spec requires: #('TaskItRetry') ];
-				package: #TaskItServices with: [ spec requires: #('TaskIt') ];
-				package: #'TaskItServices-Tests' with: [ spec requires: #('TaskItServices') ];
 				package: #TaskItProcesses with: [ spec requires: #('TaskIt') ];
 				package: #'TaskItProcesses-Tests' with: [ spec requires: #('TaskItProcesses') ];
 				package: #TaskItBrowser with: [ spec requires: #('TaskItProcesses') ];
@@ -17,7 +15,8 @@ baseline: spec
 				package: #'TaskItDebugger-Tests' with: [ spec requires: #('TaskItDebugger') ].
 			spec
 				group: 'minimal' with: #('TaskIt');
-				group: 'default' with: #('minimal' 'TaskItProcesses' 'TaskItRetry' 'TaskItServices' 'TaskItDebugger' 'TaskIt-Tests' 'TaskItRetry-Tests' 'TaskItServices-Tests' 'TaskItProcesses-Tests' 'TaskItDebugger-Tests');
+				group: 'default'
+					with: #('minimal' 'TaskItProcesses' 'TaskItRetry' 'TaskItDebugger' 'TaskIt-Tests' 'TaskItRetry-Tests' 'TaskItProcesses-Tests' 'TaskItDebugger-Tests');
 				group: 'debug' with: #('minimal' 'TaskItDebugger');
-				group: 'tests' with: #('default' 'TaskIt-Tests' 'TaskItRetry-Tests' 'TaskItServices-Tests' 'TaskItProcesses-Tests' 'TaskItDebugger-Tests');
+				group: 'tests' with: #('default' 'TaskIt-Tests' 'TaskItRetry-Tests' 'TaskItProcesses-Tests' 'TaskItDebugger-Tests');
 				group: 'development' with: #('default' 'debug' 'tests') ]

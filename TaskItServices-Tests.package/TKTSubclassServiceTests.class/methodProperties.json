@@ -1,8 +1,0 @@
-{
-	"class" : {
-		 },
-	"instance" : {
-		"tearDown" : "guille 8/23/2016 15:04:33",
-		"testServiceExecutesStartUpOnStart" : "guille 8/23/2016 15:04:33",
-		"testServiceExecutesTearDownOnStop" : "guille 8/23/2016 15:04:33",
-		"testServiceRunsAfterStart" : "guille 8/23/2016 15:04:33" } }

@@ -1,8 +1,0 @@
-{
-	"class" : {
-		 },
-	"instance" : {
-		"testServiceInstancesAreCollectedAfterStartingAndStoppingService" : "GuillermoPolito 8/27/2016 08:40",
-		"testWorkerInstancesAreCollectedAfterStartingAndStoppingService" : "GuillermoPolito 8/27/2016 08:40",
-		"testWorkerPoolInstancesAreCollectedAfterStartingAndStoppingService" : "GuillermoPolito 8/27/2016 08:40",
-		"testWorkerProcessInstancesAreCollectedAfterStartingAndStoppingService" : "GuillermoPolito 8/27/2016 08:40" } }

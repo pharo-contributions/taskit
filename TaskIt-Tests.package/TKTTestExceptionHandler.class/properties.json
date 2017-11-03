@@ -1,7 +1,7 @@
 {
 	"commentStamp" : "GuillermoPolito 8/15/2016 12:33",
 	"super" : "TKTExceptionHandler",
-	"category" : "TaskIt-Tests",
+	"category" : "TaskIt-Tests-Kernel",
 	"classinstvars" : [ ],
 	"pools" : [ ],
 	"classvars" : [ ],
