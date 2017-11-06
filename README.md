@@ -713,6 +713,7 @@ The TaskIt debugger shows an augmented stack, in which the process that represen
 |     frame 4     |
 -------------------
 ```
+The implementation and conception of this debugger extension can be found in Max Leske's Master's thesis entitled ["Improving live debugging of concurrent threads"](http://scg.unibe.ch/scgbib?query=Lesk16a&display=abstract).
 
 
 
@@ -755,12 +756,27 @@ The TaskIt debugger shows an augmented stack, in which the process that represen
 			(#serviceManager -> TKTServiceManager new)} asDictionary ])} asDictionary.```
 
 
+This configuration object contains many profiles. 
+The profile loaded by default is the specified at the first dictionary key `#profile`
 
-	
+
+For changing the profile, you just need to send the message profile with the required profile as parameter:
+
+`TKTConfiguration profile: #production.`
+
+
+Since this is a process variable, we can do also some magic for executing specfiic code with specific configurations as:
+
+`TKTConfiguration profile: #test during: [ "run tests" ].`
+
+Or also do smaller changes as:
+
+`TKTConfiguration errorHandler: #MyHandler during: [ "do something" ] .`
+
+In this last case the the block will be executed with the actual profile, but changing the errorHandler by default. 
 
 
 
-The implementation and conception of this debugger extension can be found in Max Leske's Master's thesis entitled ["Improving live debugging of concurrent threads"](http://scg.unibe.ch/scgbib?query=Lesk16a&display=abstract).
 
 ## Future versions
 
