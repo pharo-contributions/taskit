@@ -296,9 +296,20 @@ future3 := worker future: [ 1 + 1 ].
 
 Workers can be combined into *worker pools*.
 
+
 ### The Worker pool
 
-A TaskIt worker pool is pool of worker runners, equivalent to a ThreadPool from other programming languages. Its main purpose is to provide several worker runners and decouple us from the management of threads/processes. A worker pool is a runner in the sense we use the `schedule:` message to schedule tasks in it. Internally, all runners inside a worker pool share a single task queue.
+A TaskIt worker pool is pool of worker runners, equivalent to a ThreadPool from other programming languages. Its main purpose is to provide several worker runners and decouple us from the management of threads/processes. A worker pool is a runner in the sense we use the `schedule:` message to schedule tasks in it. 
+
+In TaskIt we count with two kind of worker pools: 
+
+ * TKTWorkerPool  
+ * TKTCommonQueueWorkerPool
+
+
+#### TKTWorkerPool
+
+Internally, all runners inside a TKTWorkerPool pool have a task queue. This pool counts with a worker that is in charge of scheduling tasks into one of the available workers, taking in account the work load of each worper. 
 
 Different applications may have different concurrency needs, thus, TaskIt worker pools do not provide a default amount of workers. Before using a pool, we need to specify the maximum number of workers in the pool using the `poolMaxSize:` message. A worker pool will create new workers on demand. 
 ```smalltalk
@@ -318,6 +329,30 @@ Once we are done with the worker pool, we can stop it by sending it the `stop` m
 pool stop.
 ```
 
+
+#### TKTCommonQueueWorkerPool
+
+Internally, all runners inside a TKTCommonQueueWorkerPool pool share a common queue. This pool counts with a watchdog that is in charge of ensuring that all the workers are alive, and in charge of reducing the amount of workers when the load of work goes down. 
+
+
+Different applications may have different concurrency needs, thus, TaskIt worker pools do not provide a default amount of workers. Before using a pool, we need to specify the maximum number of workers in the pool using the `poolMaxSize:` message. A worker pool will create new workers on demand. 
+```smalltalk
+pool := TKTCommonQueueWorkerPool new.
+pool poolMaxSize: 5.
+```
+TaskIt worker pools use internally an extra worker to synchronize the access to its task queue. Because of this, a worker pool has to be manually started using the `start` message before scheduled messages start to be executed.
+```smalltalk
+pool := TKTCommonQueueWorkerPool new.
+pool poolMaxSize: 5.
+pool start.
+pool schedule: [ 1 logCr ].
+```
+
+Once we are done with the worker pool, we can stop it by sending it the `stop` message.
+```smalltalk
+pool stop.
+```
+
 ### Managing Runner Exceptions
 
 As we stated before, in TaskIt the result of a task can be interesting for us or not. In case we do not need a task's result, we will schedule it usign the `schedule` or `schedule:` messages. This is a kind of fire-and-forget way of executing tasks. On the other hand, if the result of a task execution interests us we can get a future on it using the `future` and `future:` messages. These two ways to execute tasks require different ways to handle exceptions during task execution.
@@ -326,7 +361,7 @@ First, when an exception occurs during a task execution that has an associated f
 
 However, on a fire-and-forget kind of scheduling, the execution and results of a task is not anymore under our control. If an exception happens in this case, it is the responsibility of the task runner to catch the exception and manage it gracefully. For this, each task runners is configured with an exception handler in charge of it. TaskIt exception handler classes are subclasses of the abstract `TKTExceptionHandler` that defines a `handleException:` method. Subclasses need to override the `handleException:` method to define their own way to manage exceptions.
 
-TaskIt provides by default a `TKTDebuggerExceptionHandler` that will open a debugger on the raised exception. The `handleException:` method is defined as follows:
+TaskIt provides by default a `TKTDebuggerExceptionHandler`, accessible from the configuration `TKTConfiguration errorHandler` that will open a debugger on the raised exception. The `handleException:` method is defined as follows:
 
 ```smalltalk
 handleException: anError 
@@ -356,7 +391,7 @@ A task's timeout must not be confused with a future's synchronous access timeout
 
 As we stated before, the messages #schedule and #future will schedule a task implicitly in a *default* task runner. To be more precise, it is not a default task runner but the **current task runner** that is used. In other words, task scheduling is context sensitive: if a task A is beign executed by a task runner R, new tasks scheduled by A are implicitly scheduled R. The only exception to this is when there is no such task runner, i.e., when the task is scheduled from, for example, a workspace. In that case a default task runner is chosen for scheduling.
 
-> Note: In the current version of taskit (0.2) the default task runner is the global worker pool that can be explicitly accessed evaluating the following expression `TKTWorkerPool global`.
+> Note: In the current version of taskit (0.2) the default task runner is the global worker pool that can be explicitly accessed evaluating the following expression `TKTConfiguration runner`.
 
 Something similar happens with callbacks. Before we said that callbacks are eventually and concurrently executed. This happens because callbacks are scheduled as normal tasks after a task's execution. This scheduling follows the rules from above: callbacks will be scheduled in the task runner where it's task was executed.
 
@@ -678,6 +713,52 @@ The TaskIt debugger shows an augmented stack, in which the process that represen
 |     frame 4     |
 -------------------
 ```
+
+
+
+
+## Configuration
+
+	TaskIt comes with a configuration based on the DynamicVariables (process local variables). 
+	
+```profiles
+	^ {(#profile -> #development).
+	(#development
+		-> [ {(#initialize
+				-> [ TKTDebugger enable.
+					self class runner start ]).
+			(#runner -> TKTCommonQueueWorkerPool createDefault).
+			(#poolWorkerProcess -> TKTDebuggWorkerProcess).
+			(#process -> TKTRawProcess).
+			(#errorHandler -> TKTDebuggerExceptionHandler).
+			(#processProvider -> TKTTaskItProcessProvider new).
+			(#serviceManager -> TKTServiceManager new)} asDictionary ]).
+	(#production
+		-> [ {(#initialize
+				-> [ TKTDebugger disable.
+					self class runner start ]).
+			(#runner -> TKTCommonQueueWorkerPool createDefault).
+			(#poolWorkerProcess -> TKTWorkerProcess).
+			(#process -> TKTRawProcess).
+			(#errorHandler -> TKTExceptionHandler).
+			(#processProvider -> TKTPharoProcessProvider new).
+			(#serviceManager -> TKTServiceManager new)} asDictionary ]).
+	(#test
+		-> [ {(#initialize
+				-> [ TKTDebugger disable.
+					self class runner start ]).
+			(#runner -> TKTCommonQueueWorkerPool createDefault).
+			(#poolWorkerProcess -> TKTWorkerProcess).
+			(#process -> TKTRawProcess).
+			(#errorHandler -> TKTExceptionHandler).
+			(#processProvider -> TKTTaskItProcessProvider new).
+			(#serviceManager -> TKTServiceManager new)} asDictionary ])} asDictionary.```
+
+
+
+	
+
+
 
 The implementation and conception of this debugger extension can be found in Max Leske's Master's thesis entitled ["Improving live debugging of concurrent threads"](http://scg.unibe.ch/scgbib?query=Lesk16a&display=abstract).
 
