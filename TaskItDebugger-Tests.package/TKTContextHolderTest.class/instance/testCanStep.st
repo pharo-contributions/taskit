@@ -14,7 +14,10 @@ testCanStep
 			processContext := thisContext.
 			process2 := self newRawProcess.
 			semaphore signal.
-			Processor activeProcess suspend ] value ] asContext.
+			Processor activeProcess suspend.
+			 ] value.  
+			Processor activeProcess terminate.
+		] asContext.
 	process := (TKTRawProcess
 		forContext: context
 		priority: Processor activePriority)
