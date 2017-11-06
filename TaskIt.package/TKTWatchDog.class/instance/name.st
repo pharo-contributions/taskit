@@ -1,3 +1,3 @@
 initialization
 name
-	^ 'WatchDog' , self pool name
+	^ 'WatchDog' , self pool printString
