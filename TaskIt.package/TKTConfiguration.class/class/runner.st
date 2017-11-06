@@ -1,3 +1,3 @@
 accessing
 runner
-	^ self optionAt: #runner.
+	^ self optionAt: #runner

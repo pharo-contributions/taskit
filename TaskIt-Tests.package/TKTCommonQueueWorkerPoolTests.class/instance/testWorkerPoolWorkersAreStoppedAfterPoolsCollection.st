@@ -1,5 +1,6 @@
 tests
 testWorkerPoolWorkersAreStoppedAfterPoolsCollection
+<expectedFailure>
 
 	| pool workerProcess |
 	pool := TKTCommonQueueWorkerPool new.
