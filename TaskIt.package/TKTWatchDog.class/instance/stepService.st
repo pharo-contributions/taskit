@@ -4,4 +4,3 @@ stepService
 	self delay wait ]
 		on: Error
 		do: [ :err | self inform: err messageText ].
-	
