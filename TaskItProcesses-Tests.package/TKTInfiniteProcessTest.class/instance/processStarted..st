@@ -1,3 +1,4 @@
 accessing
 processStarted: aProcessStartedAnnouncement
-	processStarted := aProcessStartedAnnouncement process.
+	aProcessStartedAnnouncement process = process
+		ifTrue: [ processStarted := aProcessStartedAnnouncement process ]

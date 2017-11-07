@@ -3,7 +3,9 @@ printOn: aStream
 	| freeWorkers | 
 	freeWorkers := workers select: #isFree.
 	aStream
-		nextPutAll: 'TKTWorkerPool(';
+		nextPutAll: 'TKTCommonQueueWorkerPool(';
+		nextPutAll: 'name:';
+		nextPutAll: name;
 		nextPutAll: 'poolMaxSize: ';
 		print: poolMaxSize;
 		nextPutAll: '; busyWorkers: ';

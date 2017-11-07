@@ -1,3 +1,4 @@
 accessing
 processFinishing: aProcessFinishingAnnouncement
-	processFinishing := aProcessFinishingAnnouncement process.
+	process = aProcessFinishingAnnouncement process
+		ifTrue: [ processFinishing := aProcessFinishingAnnouncement process ]
