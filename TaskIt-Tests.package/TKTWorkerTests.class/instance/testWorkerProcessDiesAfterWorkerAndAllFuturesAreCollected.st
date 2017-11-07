@@ -1,6 +1,5 @@
 tests
 testWorkerProcessDiesAfterWorkerAndAllFuturesAreCollected
-<expectedFailure>
 	| worker future process waitFuture1 waitFuture2 |
 	worker := TKTWorker new.
 	worker start.

@@ -1,6 +1,6 @@
 tests-worker
 testWorkerInstancesAreCollectedAfterStartingAndStoppingService
-	<expectedFailure>
+
 	self
 		trackInstancesOf: TKTWorker
 		during: [ TKTParameterizableService new

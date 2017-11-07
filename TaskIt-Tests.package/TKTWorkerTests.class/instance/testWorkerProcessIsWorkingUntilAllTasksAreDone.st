@@ -1,6 +1,5 @@
 tests
 testWorkerProcessIsWorkingUntilAllTasksAreDone
-<expectedFailure>
 	| worker process waitFuture |
 	
 	self timeLimit: 10 minutes. 
