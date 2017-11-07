@@ -4,7 +4,7 @@ baseline: spec
 	spec
 		for: #common
 		do: [ spec
-				baseline: #TaskIt with: [ spec repository: 'github://sbragagnolo/taskit:dev-0.3' ];
+				baseline: #TaskIt with: [ spec repository: 'github://sbragagnolo/taskit' ];
 				baseline: #OSSubprocess with: [ spec repository: 'github://marianopeck/OSSubprocess:master/repository' ];
 				package: #TaskItShell with: [ spec requires: #('TaskIt' 'OSSubprocess') ];
 				package: #'TaskItShell-Tests' with: [ spec requires: #('TaskItShell') ].
