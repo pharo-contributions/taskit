@@ -1,17 +1,16 @@
 {
-	"category" : "TaskItProcesses-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "TKTTestCase",
+	"category" : "TaskItProcesses-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"dummyObject",
 		"process",
 		"processStarted",
-		"processFinishing" ],
+		"processFinishing"
+	],
 	"name" : "TKTMessageSendProcessTest",
-	"pools" : [
-		 ],
-	"super" : "TestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}

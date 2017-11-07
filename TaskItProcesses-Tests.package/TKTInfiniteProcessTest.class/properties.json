@@ -1,10 +1,10 @@
 {
-	"category" : "TaskItProcesses-Tests",
-	"classinstvars" : [
-		 ],
-	"classvars" : [
-		 ],
 	"commentStamp" : "",
+	"super" : "TKTTestCase",
+	"category" : "TaskItProcesses-Tests",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
 	"instvars" : [
 		"process",
 		"processStarted",
@@ -12,9 +12,8 @@
 		"processCancelled",
 		"contextCancelled",
 		"processSuspended",
-		"processResumed" ],
+		"processResumed"
+	],
 	"name" : "TKTInfiniteProcessTest",
-	"pools" : [
-		 ],
-	"super" : "TestCase",
-	"type" : "normal" }
+	"type" : "normal"
+}
