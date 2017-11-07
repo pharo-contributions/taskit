@@ -1,6 +1,5 @@
 tests
 testWorkerPoolDoesNotExceedPoolSize
-	<expectedFailure>
 	| pool |
 	pool := TKTCommonQueueWorkerPool new.
 	pool poolMaxSize: 4.
