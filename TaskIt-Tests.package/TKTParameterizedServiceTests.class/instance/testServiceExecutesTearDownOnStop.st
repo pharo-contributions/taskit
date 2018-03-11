@@ -1,4 +1,4 @@
-as yet unclassified
+tests
 testServiceExecutesTearDownOnStop
 
 	| stopped |
@@ -7,6 +7,6 @@ testServiceExecutesTearDownOnStop
 	service name: 'test service'.
 	service onTearDownDo: [ stopped := true ].
 	service start.
-	(service stop) waitForCompletion: 1 second.
+	(service stop) waitForCompletion: 2 second.
 
 	self assert: stopped.

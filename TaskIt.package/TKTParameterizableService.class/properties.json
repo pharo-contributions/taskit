@@ -8,6 +8,7 @@
 	"instvars" : [
 		"name",
 		"task",
+		"stepDelay",
 		"startUpTask",
 		"tearDownTask"
 	],
