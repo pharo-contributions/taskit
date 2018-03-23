@@ -9,7 +9,8 @@
 		"worker",
 		"stopRequested",
 		"stopCallback",
-		"stopCallbacks"
+		"stopCallbacks",
+		"stepDelay"
 	],
 	"name" : "TKTService",
 	"type" : "normal"
