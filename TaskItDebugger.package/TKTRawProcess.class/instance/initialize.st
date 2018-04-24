@@ -1,5 +1,4 @@
 initialization
 initialize
 	super initialize.
-	
-	masterProcessHolder := (TKTRawProcessHolder for: Processor activeProcess) asWeakReference 
+	masterProcessHolder := TKTRawProcessHolder for: Processor activeProcess
