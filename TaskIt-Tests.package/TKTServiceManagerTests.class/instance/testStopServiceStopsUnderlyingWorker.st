@@ -9,6 +9,6 @@ testStopServiceStopsUnderlyingWorker
 	service step: [ executed := executed + 1 ].
 	service start.
 	service stop.
-	200 milliSeconds wait.
+	(service stepDelay * 3) wait.
 	
 	self deny: service worker isRunning

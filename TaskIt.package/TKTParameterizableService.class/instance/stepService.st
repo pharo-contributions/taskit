@@ -1,4 +1,3 @@
 stepping
 stepService
-
-	task value
+	task value.
