@@ -1,6 +1,5 @@
 tests
 testWorkerPoolDoesNotExceedPoolSizeWhenSchedulingTasksInParallel
-	<expectedFailure>
 	| pool totalTasks futures |
 	pool := TKTCommonQueueWorkerPool new.
 	pool poolMaxSize: 10.

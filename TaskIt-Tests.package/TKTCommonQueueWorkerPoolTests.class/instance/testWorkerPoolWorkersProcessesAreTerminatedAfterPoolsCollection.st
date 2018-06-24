@@ -1,6 +1,5 @@
 tests
 testWorkerPoolWorkersProcessesAreTerminatedAfterPoolsCollection
-<expectedFailure>
 	| pool workerProcess |
 	pool := TKTCommonQueueWorkerPool createDefault.
 	(pool future: [ 1 ]) waitForCompletion: 1 second.

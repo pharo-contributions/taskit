@@ -1,6 +1,5 @@
 tests
 testWorkerPoolWorkersProcessesAreTerminatedAfterPoolsCollection
-	<expectedFailure>
 	| pool workerProcess |
 	pool := TKTWorkerPool new.
 	pool name: 'Test pool'.
