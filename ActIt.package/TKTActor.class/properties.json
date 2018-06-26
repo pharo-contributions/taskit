@@ -1,0 +1,15 @@
+{
+	"commentStamp" : "",
+	"super" : "Object",
+	"category" : "ActIt",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"mailbox",
+		"model",
+		"runner"
+	],
+	"name" : "TKTActor",
+	"type" : "normal"
+}
