@@ -17,7 +17,7 @@ profiles
 					self runner start ]).
 			(#runner -> TKTCommonQueueWorkerPool createDefault).
 			(#poolWorkerProcess -> TKTWorkerProcess).
-			(#process -> TKTRawProcess).
+			(#process -> Process).
 			(#errorHandler -> TKTExceptionHandler).
 			(#processProvider -> TKTPharoProcessProvider new).
 			(#serviceManager -> TKTServiceManager new)} asDictionary ]).
@@ -27,7 +27,7 @@ profiles
 					self runner start ]).
 			(#runner -> TKTCommonQueueWorkerPool createDefault).
 			(#poolWorkerProcess -> TKTWorkerProcess).
-			(#process -> TKTRawProcess).
+			(#process -> Process).
 			(#errorHandler -> TKTExceptionHandler).
 			(#processProvider -> TKTTaskItProcessProvider new).
 			(#serviceManager -> TKTServiceManager new)} asDictionary ])} asDictionary

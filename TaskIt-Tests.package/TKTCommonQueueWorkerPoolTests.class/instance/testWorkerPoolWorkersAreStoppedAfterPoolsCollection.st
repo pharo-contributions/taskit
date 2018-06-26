@@ -17,5 +17,5 @@ testWorkerPoolWorkersAreStoppedAfterPoolsCollection
 	pool := nil.
 	7 timesRepeat: [Smalltalk garbageCollect. 100 milliSeconds wait ].
 
-	Smalltalk tools pointerExplorer openOn: workerProcess first .
+
 	self assert: workerProcess first isNil.

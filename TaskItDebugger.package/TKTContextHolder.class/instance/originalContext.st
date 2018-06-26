@@ -1,3 +1,3 @@
 accessing
 originalContext
-	^ original
+	^ original at: 1
