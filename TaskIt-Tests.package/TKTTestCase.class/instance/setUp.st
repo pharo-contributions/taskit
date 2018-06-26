@@ -1,4 +1,6 @@
 running
 setUp
 	super setUp.
-	TKTConfiguration resetSoleInstance
+	TKTConfiguration
+		resetSoleInstance;
+		profile: #test

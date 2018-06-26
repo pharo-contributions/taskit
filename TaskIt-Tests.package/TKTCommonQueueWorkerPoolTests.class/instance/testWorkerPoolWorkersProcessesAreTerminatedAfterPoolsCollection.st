@@ -2,10 +2,10 @@ tests
 testWorkerPoolWorkersProcessesAreTerminatedAfterPoolsCollection
 	| pool workerProcess |
 	pool := TKTCommonQueueWorkerPool createDefault.
-	(pool future: [ 1 ]) waitForCompletion: 1 second.
+	(pool future: (MessageSend receiver: self selector: #yourself)) waitForCompletion: 1 second.
 	workerProcess := pool workers anyOne process process.
 	pool := nil.
-	3
+	7
 		timesRepeat: [ Smalltalk garbageCollect.
 			50 milliSeconds wait ].
 	1 second wait.

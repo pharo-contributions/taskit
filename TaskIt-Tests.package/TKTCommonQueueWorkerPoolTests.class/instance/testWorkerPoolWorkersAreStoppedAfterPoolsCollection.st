@@ -7,7 +7,7 @@ testWorkerPoolWorkersAreStoppedAfterPoolsCollection
 	pool poolMaxSize: 4.
 	pool start.
 		
-	(pool future: [ 1 ])
+	(pool future: (MessageSend receiver: self selector: #yourself))
 		waitForCompletion: 1 second.
 
 	self assert: pool workers notEmpty.
@@ -15,6 +15,7 @@ testWorkerPoolWorkersAreStoppedAfterPoolsCollection
 	workerProcess := WeakArray with: pool workers anyOne process.
 	
 	pool := nil.
-	3 timesRepeat: [Smalltalk garbageCollect. 10 milliSeconds wait ].
+	7 timesRepeat: [Smalltalk garbageCollect. 100 milliSeconds wait ].
 
+	Smalltalk tools pointerExplorer openOn: workerProcess first .
 	self assert: workerProcess first isNil.

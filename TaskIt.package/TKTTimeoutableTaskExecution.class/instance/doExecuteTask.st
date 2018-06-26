@@ -1,7 +1,4 @@
 evaluating
 doExecuteTask
-	TKTConfiguration processProvider
-		createProcessDoing: [ timeout wait.
-			self isFinished
-				ifFalse: [ self cancelWithReason: 'Timeout after: ' , timeout asString ] ].
+	TKTConfiguration runner scheduleTimeout: timeout on: self.
 	^ super doExecuteTask

@@ -1,5 +1,4 @@
 schedulling
 scheduleTaskExecution: aTaskExecution
-	TKTProcessProvider
-		createProcessDoing: [ self linkThreadsFor: aTaskExecution.
-			self executeTask: aTaskExecution ]
+	TKTConfiguration processProvider
+		createProcessDoing: (MessageSend receiver: self selector: #executeTask: arguments: {aTaskExecution})

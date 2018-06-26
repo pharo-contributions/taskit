@@ -1,5 +1,5 @@
 start-stop
 start
 	process := TKTConfiguration processProvider
-		createProcessDoing: [ [ self executeTask: taskQueue next ] repeat ]
+		createProcessDoing: (MessageSend receiver: self selector: #workerLoop)
 		named: name
