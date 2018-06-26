@@ -1,16 +1,17 @@
 initialization
 initializeWithProcess: aProcess
 	| stackCopy previousHolder |
-	process := aProcess.
+	process := WeakArray with: aProcess.
 	stackCopy := thisContext copyStack stack.
-	contextHolders := thisContext stack withIndexCollect: [ :context :index |
-		TKTContextHolder
-			forProcess: aProcess
-			context: context
-			andCopy: (stackCopy at: index)
-			withIndex: index ].
+	contextHolders := thisContext stack
+		withIndexCollect: [ :context :index | 
+			TKTContextHolder
+				forProcess: process
+				context: context
+				andCopy: (stackCopy at: index)
+				withIndex: index ].
 	previousHolder := nil.
-	contextHolders reverse do: [ :contextHolder |
-		contextHolder next: previousHolder.
-		previousHolder := contextHolder ]
-	
+	contextHolders reverse
+		do: [ :contextHolder | 
+			contextHolder next: previousHolder.
+			previousHolder := contextHolder ]

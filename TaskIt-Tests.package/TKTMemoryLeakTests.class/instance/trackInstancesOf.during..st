@@ -3,7 +3,7 @@ trackInstancesOf: aClass during: aBlock
 
 	| before |
 	
-	5 timesRepeat: [
+	7 timesRepeat: [
 		Smalltalk garbageCollect.
 		100 milliSeconds wait ].
 	
@@ -11,7 +11,7 @@ trackInstancesOf: aClass during: aBlock
 	
 	aBlock value.
 	
-	5 timesRepeat: [
+	7 timesRepeat: [
 		Smalltalk garbageCollect.
 		100 milliSeconds wait ].
 	

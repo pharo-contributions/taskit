@@ -1,9 +1,8 @@
 schedulling
 getAvailableWorker
-
 	| worker |
-	worker := freeWorkers nextIfNone: [
-			self size < poolMaxSize
+	worker := self freeWorkers
+		nextIfNone: [ self size < poolMaxSize
 				ifTrue: [ self newWorker ]
-				ifFalse: [ freeWorkers next ] ].
+				ifFalse: [ self freeWorkers next ] ].
 	^ worker

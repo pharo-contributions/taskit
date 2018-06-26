@@ -1,3 +1,3 @@
 accessing
 process
-	^ process
+	^ process at:1

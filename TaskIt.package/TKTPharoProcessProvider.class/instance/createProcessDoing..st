@@ -1,3 +1,7 @@
 instance-creation
 createProcessDoing: aValuable
-	^ aValuable fork
+	| toFork |
+	toFork := aValuable isBlock
+		ifTrue: [ aValuable ]
+		ifFalse: [ [ aValuable value ] ].
+	^ toFork fork

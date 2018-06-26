@@ -6,12 +6,12 @@ testWorkerPoolWorkersProcessesAreStoppedAfterPoolsCollection
 	pool poolMaxSize: 4.
 	pool start.
 		
-	(pool future: [ 1 ])
+	(pool future: (MessageSend receiver: self selector: #yourself))
 		waitForCompletion: 1 second.
 
 	workerProcess := WeakArray with: pool workers anyOne process process.
 	
 	pool := nil.
-	3 timesRepeat: [Smalltalk garbageCollect. 10 milliSeconds wait ].
+	7 timesRepeat: [Smalltalk garbageCollect. 10 milliSeconds wait ].
 
 	self assert: workerProcess first isNil

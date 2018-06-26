@@ -1,3 +1,3 @@
 accessing
 profile: aProfile
-	^ self soleInstance value: (self value profiles at: aProfile) value
+	^ self soleInstance value: (self profiles at: aProfile) value

@@ -1,3 +1,3 @@
 accessing
 copyContext
-	^ copy
+	^ copy at:1 
