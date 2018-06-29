@@ -1,0 +1,13 @@
+{
+	"classtraitcomposition" : "TKTActorBehaviour classTrait",
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TKTActorBehaviourTest",
+	"commentStamp" : "",
+	"super" : "Object",
+	"traitcomposition" : "TKTActorBehaviour",
+	"type" : "normal",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"category" : "ActIt-Tests"
+}
