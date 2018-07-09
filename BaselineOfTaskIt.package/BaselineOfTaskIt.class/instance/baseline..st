@@ -5,6 +5,7 @@ baseline: spec
 		for: #common
 		do: [ spec
 				package: #TaskIt;
+				package: #ActIt with: [ spec requires: #('ActIt') ];
 				package: #'TaskIt-Tests' with: [ spec requires: #('TaskIt') ];
 				package: #TaskItRetry with: [ spec requires: #('TaskIt') ];
 				package: #'TaskItRetry-Tests' with: [ spec requires: #('TaskItRetry') ];
@@ -16,7 +17,8 @@ baseline: spec
 			spec
 				group: 'minimal' with: #('TaskIt' 'ActIt');
 				group: 'default'
-					with: #('minimal' 'TaskItProcesses' 'TaskItRetry' 'TaskItDebugger' 'TaskIt-Tests' 'TaskItRetry-Tests' 'TaskItProcesses-Tests' 'TaskItDebugger-Tests');
+					with:
+					#('minimal' 'TaskItProcesses' 'TaskItRetry' 'TaskItDebugger' 'TaskIt-Tests' 'TaskItRetry-Tests' 'TaskItProcesses-Tests' 'TaskItDebugger-Tests');
 				group: 'debug' with: #('minimal' 'TaskItDebugger');
 				group: 'tests' with: #('default' 'TaskIt-Tests' 'TaskItRetry-Tests' 'TaskItProcesses-Tests' 'TaskItDebugger-Tests');
 				group: 'development' with: #('default' 'debug' 'tests') ]
