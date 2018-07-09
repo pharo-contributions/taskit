@@ -3,7 +3,7 @@
 	"classvars" : [ ],
 	"instvars" : [ ],
 	"name" : "TKTActorBehaviourTest",
-	"commentStamp" : "",
+	"commentStamp" : "SantiagoBragagnolo 7/9/2018 14:53",
 	"super" : "Object",
 	"traitcomposition" : "TKTActorBehaviour",
 	"type" : "normal",
