@@ -1,4 +1,4 @@
 running
 setUp
 	super setUp.
-	actor := TKTActorBehaviour new actor.
+	actor := TKTActorBehaviourTest new actor.

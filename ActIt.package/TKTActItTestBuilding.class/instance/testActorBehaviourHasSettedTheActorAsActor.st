@@ -1,6 +1,6 @@
 tests
 testActorBehaviourHasSettedTheActorAsActor
 	| actor behaviour |
-	behaviour := TKTActorBehaviour new.
+	behaviour := TKTActorBehaviourTest new.
 	actor := behaviour actor.
 	self assert: behaviour actor equals: actor

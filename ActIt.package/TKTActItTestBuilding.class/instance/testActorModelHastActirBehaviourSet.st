@@ -1,6 +1,6 @@
 tests
 testActorModelHastActirBehaviourSet
 	| actor behaviour |
-	behaviour := TKTActorBehaviour new.
+	behaviour := TKTActorBehaviourTest new.
 	actor := behaviour actor.
 	self assert: actor model equals: behaviour
