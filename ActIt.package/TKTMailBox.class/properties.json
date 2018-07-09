@@ -1,0 +1,11 @@
+{
+	"commentStamp" : "",
+	"super" : "SharedQueue",
+	"category" : "ActIt",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [ ],
+	"name" : "TKTMailBox",
+	"type" : "normal"
+}
