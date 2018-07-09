@@ -5,7 +5,7 @@ baseline: spec
 		for: #common
 		do: [ spec
 				package: #TaskIt;
-				package: #ActIt with: [ spec requires: #('ActIt') ];
+				package: #ActIt with: [ spec requires: #('TaskIt') ];
 				package: #'TaskIt-Tests' with: [ spec requires: #('TaskIt') ];
 				package: #TaskItRetry with: [ spec requires: #('TaskIt') ];
 				package: #'TaskItRetry-Tests' with: [ spec requires: #('TaskItRetry') ];
