@@ -1,5 +1,7 @@
 accessing
 mailbox
-	^ runner queue copy
-		beReadOnlyObject;
-		yourself
+	^ self isWorkerActor 
+		ifTrue: [ runner queue copy
+				beReadOnlyObject;
+				yourself ]
+		ifFalse: [ nil ]

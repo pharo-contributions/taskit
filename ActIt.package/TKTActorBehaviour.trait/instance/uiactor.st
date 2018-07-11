@@ -1,5 +1,5 @@
 accessing
-actor
+uiactor
 	^ self getOrCreateActor
-		beWorkerActor;
+		beUIActor;
 		yourself

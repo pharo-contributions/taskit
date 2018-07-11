@@ -1,0 +1,3 @@
+schedulling
+isLocalThreadRunner
+	^ true

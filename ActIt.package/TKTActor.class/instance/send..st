@@ -1,5 +1,6 @@
 sending
 send: aMessage
-	| messagesend |
+	| messagesend future |
 	messagesend := MessageSend receiver: model selector: aMessage selector arguments: aMessage arguments.
-	^ runner future: messagesend
+	actorModificationMutex critical: [ future := runner future: messagesend ].
+	^ future

@@ -1,9 +1,7 @@
 initialize
 initializeWith: aTKTActorBehaviour
 	self assert: model isNil.
+	actorModificationMutex := Mutex new.
 	model := aTKTActorBehaviour.
-	runner := TKTWorker new.
-	runner name: ('Actor-{ID}' format: {(#ID -> UUID new)} asDictionary).
-	runner queue: TKTMailBox new.
-	runner start.
 	self beReadOnlyObject.
+	self beWorkerActor.

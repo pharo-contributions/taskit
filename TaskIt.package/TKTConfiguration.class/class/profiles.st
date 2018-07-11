@@ -1,6 +1,6 @@
 accessing
 profiles
-	^ {(#profile -> #development).
+	^ {(#profile -> #test).
 	(#development
 		-> [ {(#initialize
 				-> [ TKTDebugger enable.

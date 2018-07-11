@@ -1,0 +1,13 @@
+{
+	"commentStamp" : "",
+	"super" : "TKTRunner",
+	"category" : "TaskIt-Kernel",
+	"classinstvars" : [ ],
+	"pools" : [ ],
+	"classvars" : [ ],
+	"instvars" : [
+		"process"
+	],
+	"name" : "TKTUIProcessTaskRunner",
+	"type" : "normal"
+}

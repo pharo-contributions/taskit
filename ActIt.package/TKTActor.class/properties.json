@@ -6,9 +6,9 @@
 	"pools" : [ ],
 	"classvars" : [ ],
 	"instvars" : [
-		"mailbox",
 		"model",
-		"runner"
+		"runner",
+		"actorModificationMutex"
 	],
 	"name" : "TKTActor",
 	"type" : "normal"
