@@ -1,7 +1,0 @@
-{
-	"commentStamp" : "GuillermoPolito 8/15/2016 12:00",
-	"classinstvars" : [ ],
-	"category" : "TaskIt-Kernel",
-	"instvars" : [ ],
-	"name" : "TTaskScheduler"
-}

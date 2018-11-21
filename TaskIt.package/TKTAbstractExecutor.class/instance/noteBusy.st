@@ -1,4 +1,0 @@
-accessing
-noteBusy
-
-	busy := true

@@ -1,3 +1,0 @@
-testing
-isBusy
-	^ process isBusy

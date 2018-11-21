@@ -1,2 +1,0 @@
-polimorfsms
-start

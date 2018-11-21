@@ -1,1 +1,0 @@
-I represent a debugger that can work with a virtual call stack composed of multiple processes.

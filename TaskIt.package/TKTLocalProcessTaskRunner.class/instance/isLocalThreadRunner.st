@@ -1,3 +1,0 @@
-schedulling
-isLocalThreadRunner
-	^ true

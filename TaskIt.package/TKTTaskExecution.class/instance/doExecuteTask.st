@@ -1,3 +1,0 @@
-evaluating
-doExecuteTask
-	^ task value 

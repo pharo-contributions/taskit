@@ -1,4 +1,0 @@
-iterating
-waitLapse
-	
-	^ lapseBetweenRetries wait

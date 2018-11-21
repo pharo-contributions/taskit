@@ -1,1 +1,0 @@
-Adds a class for testing

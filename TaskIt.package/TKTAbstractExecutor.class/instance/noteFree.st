@@ -1,4 +1,0 @@
-accessing
-noteFree
-
-	busy := false
