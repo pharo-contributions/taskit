@@ -1,4 +1,4 @@
 handling
 handleException: anError 
 	
-	self subclassResponsibility
+	anError debug 
