@@ -30,7 +30,7 @@ TKTWatchDog >> initializeWith: aPool [
 
 { #category : #initialization }
 TKTWatchDog >> name [
-	^ 'WatchDog' , self pool printString
+	^ 'WatchDog - ' , self pool printString
 ]
 
 { #category : #initialization }
