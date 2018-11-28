@@ -51,6 +51,7 @@ TKTWorkerTests >> testWorkerProcessDiesAfterWorkerAndAllFuturesAreCollected [
 	self assert: process isRunning.
 	future := nil.
 	self garbageCollectAndWait.
+	self garbageCollectAndWait.
 	waitFuture2 synchronizeTimeout: 400 milliSeconds.
 	self deny: process isRunning
 ]
