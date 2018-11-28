@@ -39,5 +39,5 @@ TKTFutureFailure >> value: aValue [
 { #category : #accessing }
 TKTFutureFailure >> valueForFuture: aFuture [
 	
-	UnhandledError signalForException: value
+	 value resume
 ]
