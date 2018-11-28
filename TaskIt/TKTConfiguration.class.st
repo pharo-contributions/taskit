@@ -41,14 +41,14 @@ TKTConfiguration class >> errorHandler: anErrorHandler during: aBlock [
 
 { #category : #accessing }
 TKTConfiguration class >> optionAt: aKey [
-	^ self value at: aKey
+	^ self value value at: aKey
 ]
 
 { #category : #accessing }
 TKTConfiguration class >> optionAt: aKey value: aValue during: aBlock [
 	| copy |
 	copy := self value copy.
-	copy at: aKey put: aValue.
+	copy value at: aKey put: aValue.
 	^ self value: copy during: aBlock
 ]
 

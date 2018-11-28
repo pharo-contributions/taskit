@@ -63,7 +63,7 @@ TKTProfile >> errorHandler: anObject [
 
 { #category : #accessing }
 TKTProfile >> finalizeProfile [
-	self options do: [ :option | self assert: (self at: option) finalize ]
+	self options do: [ :option | (self at: option) finalize ]
 ]
 
 { #category : #accessing }
