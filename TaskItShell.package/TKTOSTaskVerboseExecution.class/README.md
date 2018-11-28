@@ -1,1 +1,0 @@
-I'm a command to execute verbose tasks (verbose tasks do not redirect stdout/stderr so they write to console, if available).

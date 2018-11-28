@@ -1,9 +1,0 @@
-{
-	"commentStamp" : "",
-	"classinstvars" : [ ],
-	"category" : "ActIt-Kernel",
-	"instvars" : [
-		"aself"
-	],
-	"name" : "TKTActorBehaviour"
-}

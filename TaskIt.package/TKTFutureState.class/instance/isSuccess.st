@@ -1,4 +1,0 @@
-testing
-isSuccess
-
-	^ false

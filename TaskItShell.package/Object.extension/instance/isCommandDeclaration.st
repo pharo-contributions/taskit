@@ -1,3 +1,0 @@
-*TaskItShell
-isCommandDeclaration
-	^ false

@@ -1,3 +1,0 @@
-schedulling
-isWorker
-	^ true
