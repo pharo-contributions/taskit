@@ -11,6 +11,25 @@ Class {
 }
 
 { #category : #accessing }
+TKTConfiguration class >> defaultProfile [
+	^ #development
+]
+
+{ #category : #accessing }
+TKTConfiguration class >> development [
+	<profile: #development>
+	^ TKTProfile
+		on:
+			{(#debugging -> true).
+			(#runner -> TKTCommonQueueWorkerPool createDefault).
+			(#poolWorkerProcess -> TKTDebuggWorkerProcess).
+			(#process -> TKTRawProcess).
+			(#errorHandler -> TKTDebuggerExceptionHandler).
+			(#processProvider -> TKTTaskItProcessProvider new).
+			(#serviceManager -> TKTServiceManager new)} asDictionary
+]
+
+{ #category : #accessing }
 TKTConfiguration class >> errorHandler [
 	^ self optionAt: #errorHandler
 ]
@@ -63,49 +82,62 @@ TKTConfiguration class >> processProvider: aProcessProvider during: aBlock [
 	^ self optionAt: #processProvider value: aProcessProvider during: aBlock
 ]
 
-{ #category : #accessing }
-TKTConfiguration class >> profile: aProfile [
-	^ self soleInstance value: (self profiles at: aProfile) value
-]
-
-{ #category : #accessing }
-TKTConfiguration class >> profile: aProfile during: aBlock [
-	^ self value: (self value profiles at: aProfile) value during: aBlock
-]
-
-{ #category : #accessing }
-TKTConfiguration class >> profiles [
-	^ {(#profile -> #development).
-	(#development
-		-> [ {(#initialize
-				-> [ TKTDebugger enable.
-					self runner start ]).
-			(#runner -> TKTCommonQueueWorkerPool createDefault).
-			(#poolWorkerProcess -> TKTDebuggWorkerProcess).
-			(#process -> TKTRawProcess).
-			(#errorHandler -> TKTDebuggerExceptionHandler).
-			(#processProvider -> TKTTaskItProcessProvider new).
-			(#serviceManager -> TKTServiceManager new)} asDictionary ]).
-	(#production
-		-> [ {(#initialize
-				-> [ TKTDebugger disable.
-					self runner start ]).
+{ #category : #'as yet unclassified' }
+TKTConfiguration class >> production [
+	<profile: #production>
+	^ TKTProfile
+		on:
+			{
+			(#debugging -> false) .
 			(#runner -> TKTCommonQueueWorkerPool createDefault).
 			(#poolWorkerProcess -> TKTWorkerProcess).
 			(#process -> Process).
 			(#errorHandler -> TKTExceptionHandler).
 			(#processProvider -> TKTPharoProcessProvider new).
-			(#serviceManager -> TKTServiceManager new)} asDictionary ]).
-	(#test
-		-> [ {(#initialize
-				-> [ TKTDebugger disable.
-					self runner start ]).
-			(#runner -> TKTCommonQueueWorkerPool createDefault).
-			(#poolWorkerProcess -> TKTWorkerProcess).
-			(#process -> Process).
-			(#errorHandler -> TKTExceptionHandler).
-			(#processProvider -> TKTTaskItProcessProvider new).
-			(#serviceManager -> TKTServiceManager new)} asDictionary ])} asDictionary
+			(#serviceManager -> TKTServiceManager new)} asDictionary
+]
+
+{ #category : #accessing }
+TKTConfiguration class >> profile: aProfile [
+	self soleInstance basicValue ifNotNil: [ :p | p finalizeProfile ].
+	self soleInstance value: aProfile.
+	aProfile activateProfile
+]
+
+{ #category : #accessing }
+TKTConfiguration class >> profile: aProfile during: aBlock [
+	| return |
+	
+	return := self value: aProfile during: [aProfile activateProfile. aBlock value].
+	aProfile finalizeProfile.
+	^ return
+]
+
+{ #category : #accessing }
+TKTConfiguration class >> profileNamed: aProfileName [
+	| profile |
+	profile := (self profiles detect: [ :ass | ass key = aProfileName ]) value value.
+	profile name: aProfileName.
+	self profile: profile
+]
+
+{ #category : #accessing }
+TKTConfiguration class >> profileNamed: aProfileName during: aBlock [
+	| return profile |
+	profile := (self profiles detect: [ :ass | ass key = aProfileName ]) value value .
+	profile name: aProfileName.
+	return := self
+		value: profile
+		during: [ profile activateProfile.
+			aBlock value ].
+	profile finalizeProfile.
+	^ return
+]
+
+{ #category : #accessing }
+TKTConfiguration class >> profiles [
+	^ (Pragma allNamed: #profile: from: self class to: ProtoObject) asOrderedCollection
+		collect: [ :c | c arguments first -> (MessageSend receiver: self selector: c method selector) ]
 ]
 
 { #category : #accessing }
@@ -118,19 +150,41 @@ TKTConfiguration class >> runner: aRunner during: aBlock [
 	^ self optionAt: #runner value: aRunner during: aBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TKTConfiguration class >> serviceManager [
 	^ self optionAt: #serviceManager
+]
+
+{ #category : #accessing }
+TKTConfiguration class >> serviceManager: aManager during: aBlock [
+	^ self optionAt: #serviceManager value: aManager during: aBlock
+]
+
+{ #category : #accessing }
+TKTConfiguration class >> test [
+	<profile: #test>
+	^ TKTProfile
+		on:
+			{(#debugging -> false).
+			(#runner -> TKTCommonQueueWorkerPool createDefault).
+			(#poolWorkerProcess -> TKTWorkerProcess).
+			(#process -> Process).
+			(#errorHandler -> TKTExceptionHandler).
+			(#processProvider -> TKTTaskItProcessProvider new).
+			(#serviceManager -> TKTServiceManager new)} asDictionary
+]
+
+{ #category : #accessing }
+TKTConfiguration >> basicValue [ 
+	^ value
 ]
 
 { #category : #accessing }
 TKTConfiguration >> default [
 	| configuration |
 	^ value
-		ifNil: [ configuration := self class profiles.
-			value := (configuration at: (configuration at: #profile)) value.
-			(value at: #initialize) value.
-			value ]
+		ifNil: [ self class profileNamed: self class defaultProfile.
+			self assert: value isNotNil ]
 ]
 
 { #category : #accessing }

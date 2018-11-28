@@ -19,3 +19,8 @@ TKTTaskItProcessProvider >> createProcessDoing: aValuable named: aName [
 		name: aName;
 		run
 ]
+
+{ #category : #configuration }
+TKTTaskItProcessProvider >> isDebuggingCompatible [
+	^ true
+]

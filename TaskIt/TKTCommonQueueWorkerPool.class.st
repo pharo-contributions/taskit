@@ -54,6 +54,11 @@ TKTCommonQueueWorkerPool >> initialize [
 	
 ]
 
+{ #category : #configuration }
+TKTCommonQueueWorkerPool >> isDebuggingCompatible [
+	^ true
+]
+
 { #category : #testing }
 TKTCommonQueueWorkerPool >> isFree [
 

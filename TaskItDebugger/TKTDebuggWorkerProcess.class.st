@@ -8,6 +8,11 @@ Class {
 	#category : 'TaskItDebugger'
 }
 
+{ #category : #configuration }
+TKTDebuggWorkerProcess class >> isDebuggingCompatible [
+	^ true
+]
+
 { #category : #schedulling }
 TKTDebuggWorkerProcess >> linkThreads [
 	process isTaskItRawProcess
