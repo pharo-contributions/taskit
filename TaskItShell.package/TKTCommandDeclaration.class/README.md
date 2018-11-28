@@ -1,2 +1,0 @@
-The command declaration has as responsibility to spawn the proper objects , working as a generic interface easy to exchange. 
-This version as well finds the address of the command if the given command is in the standard folders (for this go to #commandPath)

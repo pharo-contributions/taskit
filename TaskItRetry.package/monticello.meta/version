@@ -1,2 +1,0 @@
-(name 'TaskItRetry-guille.4' message '- Errors should be freezed when passed to a future callback- Retry should rethrow exception' id 'd6270bc7-0505-4822-8a7e-f79381cdb348' date '10 October 2016' time '5:50:37.119673 pm' author 'GuillermoPolito' ancestors ((name 'TaskItRetry-guille.3' message '- Should manage Exceptions and not Errors- Doing a pass during retry breaks because contexts of the exception are already terminated
-' id 'fb9bd8e1-12c5-5d42-91f1-90ed37d87f87' date '19 September 2016' time '11:00:37 am' author 'guille' ancestors () stepChildren ())) stepChildren ())

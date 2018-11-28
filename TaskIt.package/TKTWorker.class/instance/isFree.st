@@ -1,3 +1,0 @@
-testing
-isFree
-	^ process isFree

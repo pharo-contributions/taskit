@@ -1,3 +1,0 @@
-testing
-isTaskItRawProcess
-	^ process isTaskItRawProcess

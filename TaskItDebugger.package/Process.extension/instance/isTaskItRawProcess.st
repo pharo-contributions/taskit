@@ -1,3 +1,0 @@
-*TaskItDebugger
-isTaskItRawProcess
-	^ false

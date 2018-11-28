@@ -1,1 +1,0 @@
-Watchdog watches the common queue worker pool to ensure the good working of this pool
