@@ -39,3 +39,8 @@ TKTProcessProvider >> createProcessDoing: aValuable named: aName [
 
 	self subclassResponsibility
 ]
+
+{ #category : #'instance-creation' }
+TKTProcessProvider >> isDebuggingCompatible [
+	^ false
+]

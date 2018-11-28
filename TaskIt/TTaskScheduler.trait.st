@@ -6,12 +6,22 @@ Trait {
 	#category : 'TaskIt-Kernel'
 }
 
+{ #category : #testing }
+TTaskScheduler classSide >> isDebuggingCompatible [
+	^ false
+]
+
 { #category : #schedulling }
 TTaskScheduler >> future: aTask [
 	| execution |
 	execution := aTask asTask futureTaskExecutionFor: self.
 	self scheduleTaskExecution: execution.
 	^ execution future
+]
+
+{ #category : #schedulling }
+TTaskScheduler >> isDebuggingCompatible [
+	^ false
 ]
 
 { #category : #schedulling }

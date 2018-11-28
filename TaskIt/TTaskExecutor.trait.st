@@ -6,10 +6,15 @@ Trait {
 	#category : 'TaskIt-Kernel'
 }
 
+{ #category : #testing }
+TTaskExecutor classSide >> isDebuggingCompatible [
+	^ false
+]
+
 { #category : #accessing }
 TTaskExecutor >> exceptionHandler [
 
-	self requirement
+	self shouldBeImplemented 
 ]
 
 { #category : #executing }
@@ -20,13 +25,18 @@ TTaskExecutor >> executeTask: aTaskExecution [
 ]
 
 { #category : #'as yet unclassified' }
+TTaskExecutor >> isDebuggingCompatible [
+	^ false
+]
+
+{ #category : #'as yet unclassified' }
 TTaskExecutor >> noteBusy [
 
-	self requirement
+	self shouldBeImplemented
 ]
 
 { #category : #'as yet unclassified' }
 TTaskExecutor >> noteFree [
 
-	self requirement
+	self shouldBeImplemented
 ]
