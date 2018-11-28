@@ -38,23 +38,21 @@ TKTWorkerTests >> testWorkerProcessDiesAfterWorkerAndAllFuturesAreCollected [
 	worker := TKTWorker new.
 	worker start.
 	process := worker process.
-	
-	waitFuture1 := TKTFuture doing: [ [ process isRunning ] whileTrue: [ 50 milliSeconds wait ] ].
-	waitFuture2 := TKTFuture doing: [ [ process isRunning ] whileTrue: [ 50 milliSeconds wait ] ].
-	
+	waitFuture1 := TKTFuture
+		doing: [ [ process isRunning ] whileTrue: [ 50 milliSeconds wait ] ].
+	waitFuture2 := TKTFuture
+		doing: [ [ process isRunning ] whileTrue: [ 50 milliSeconds wait ] ].
 	future := worker future: [ 10 milliSeconds wait ].
-	
-	
 	worker := nil.
-	Smalltalk garbageCollect.
-	self should: [waitFuture1 synchronizeTimeout: 200 milliSeconds] raise: TKTTimeoutException.
+	self garbageCollectAndWait.
+	self
+		should: [ waitFuture1 synchronizeTimeout: 200 milliSeconds ]
+		raise: TKTTimeoutException.
 	self assert: process isRunning.
-	
 	future := nil.
-	Smalltalk garbageCollect.
+	self garbageCollectAndWait.
 	waitFuture2 synchronizeTimeout: 400 milliSeconds.
-	
-	self deny: process isRunning.
+	self deny: process isRunning
 ]
 
 { #category : #tests }
@@ -64,7 +62,7 @@ TKTWorkerTests >> testWorkerProcessDiesAfterWorkerIsCollected [
 	worker start.
 	process := worker process.
 	worker := nil.
-	7 timesRepeat: [ Smalltalk garbageCollect ].
+	self garbageCollectAndWait.
 	future := TKTFuture doing: [ [ process isRunning ] whileTrue: [ 50 milliSeconds wait ] ].
 	future synchronizeTimeout: 2 seconds.
 	self deny: process isRunning
@@ -73,8 +71,7 @@ TKTWorkerTests >> testWorkerProcessDiesAfterWorkerIsCollected [
 { #category : #tests }
 TKTWorkerTests >> testWorkerProcessIsWorkingUntilAllTasksAreDone [
 	| worker process waitFuture |
-	
-	self timeLimit: 10 minutes. 
+	self timeLimit: 10 minutes.
 	worker := TKTWorker new.
 	worker start.
 	process := worker process.
@@ -84,11 +81,9 @@ TKTWorkerTests >> testWorkerProcessIsWorkingUntilAllTasksAreDone [
 	50 milliSeconds wait.
 	self assert: process taskQueue size equals: 0.
 	worker := nil.
-	Smalltalk garbageCollect.
-	50 milliSeconds wait.
-	Smalltalk garbageCollect.
 	self assert: process taskQueue size equals: 0.
 	self assert: process isRunning.
+	self garbageCollectAndWait .
 	waitFuture waitForCompletion: 10 second.
 	self deny: process isRunning
 ]

@@ -26,20 +26,17 @@ Workers can be combined into worker pools.
 Class {
 	#name : #TKTWorker,
 	#superclass : #TKTQueueTaskScheduler,
+	#traits : 'TFinalizable',
+	#classTraits : 'TFinalizable classTrait',
 	#instVars : [
 		'process',
 		'name',
 		'exceptionHandler'
 	],
-	#category : 'TaskIt-Worker'
+	#category : #'TaskIt-Worker'
 }
 
-{ #category : #'as yet unclassified' }
-TKTWorker >> currentTask [
-	self shouldBeImplemented.
-]
-
-{ #category : #'as yet unclassified' }
+{ #category : #'start-stop' }
 TKTWorker >> currentTaskExecution [
 	^ process currentTaskExecution
 ]
@@ -70,7 +67,7 @@ TKTWorker >> finalize [
 TKTWorker >> initialize [
 	super initialize.
 	self name: ('Worker-{ID}' format: {(#ID -> UUID new)} asDictionary).
-	WeakRegistry default add: self
+	
 ]
 
 { #category : #testing }
@@ -105,12 +102,12 @@ TKTWorker >> process [
 	^ process
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TKTWorker >> queue [
 	^ queue
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #starting }
 TKTWorker >> restart [
 	self stop.
 	self start.
@@ -123,17 +120,20 @@ TKTWorker >> start [
 		name: name;
 		yourself.
 	exceptionHandler ifNotNil: [ process exceptionHandler: exceptionHandler ].
-	process start
+	process start.
+	self noteNeedsToBeFinalized.
+	
 ]
 
 { #category : #starting }
 TKTWorker >> stop [
 	process
 		ifNotNil: [ process stop.
-			process := nil ]
+			process := nil ].
+	self noteDoesNotNeedToBeFinalized.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TKTWorker >> taskQueue: anAtomicSharedQueue [
 	queue := anAtomicSharedQueue.
 	process ifNotNil: [ process taskQueue: queue ]

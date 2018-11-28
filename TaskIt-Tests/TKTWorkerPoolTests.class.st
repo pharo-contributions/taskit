@@ -83,7 +83,7 @@ TKTWorkerPoolTests >> testWorkerPoolWorkersAreStoppedAfterPoolsCollection [
 	workerProcess := WeakArray with: pool workers anyOne process.
 	
 	pool := nil.
-	3 timesRepeat: [Smalltalk garbageCollect. 10 milliSeconds wait ].
+	self garbageCollectAndWait .
 
 	self assert: workerProcess first isNil.
 ]
@@ -102,7 +102,7 @@ TKTWorkerPoolTests >> testWorkerPoolWorkersProcessesAreStoppedAfterPoolsCollecti
 	workerProcess := WeakArray with: pool workers anyOne process process.
 	
 	pool := nil.
-	3 timesRepeat: [Smalltalk garbageCollect. 10 milliSeconds wait ].
+	self garbageCollectAndWait .
 
 	self assert: workerProcess first isNil
 ]
@@ -117,8 +117,6 @@ TKTWorkerPoolTests >> testWorkerPoolWorkersProcessesAreTerminatedAfterPoolsColle
 	(pool future: [ 1 ]) waitForCompletion: 1 second.
 	workerProcess := pool workers anyOne process process.
 	pool := nil.
-	3
-		timesRepeat: [ Smalltalk garbageCollect.
-			10 milliSeconds wait ].
+ 	self garbageCollectAndWait .
 	self assert: workerProcess isTerminated
 ]

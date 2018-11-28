@@ -8,6 +8,17 @@ Class {
 }
 
 { #category : #running }
+TKTTestCase >> garbageCollectAndWait [
+	5
+		timesRepeat: [ Smalltalk garbageCollect.
+			100 milliSeconds wait ].
+	1 second wait.
+	5
+		timesRepeat: [ Smalltalk garbageCollect.
+			100 milliSeconds wait ]
+]
+
+{ #category : #running }
 TKTTestCase >> setUp [
 	super setUp.
 	TKTConfiguration
