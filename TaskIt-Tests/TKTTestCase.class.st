@@ -30,7 +30,8 @@ TKTTestCase >> setUp [
 	super setUp.
 	TKTConfiguration
 		resetSoleInstance;
-		profile: #test
+		profile: #test.
+	self timeLimit: 60 seconds
 ]
 
 { #category : #running }

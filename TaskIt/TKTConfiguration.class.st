@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'value'
 	],
-	#category : 'TaskIt-Kernel'
+	#category : #'TaskIt-Profiles'
 }
 
 { #category : #accessing }
