@@ -15,6 +15,13 @@ TKTTestCase >> garbageCollectAndWait [
 	1 second wait.
 	5
 		timesRepeat: [ Smalltalk garbageCollect.
+			100 milliSeconds wait ].
+	5
+		timesRepeat: [ Smalltalk garbageCollect.
+			100 milliSeconds wait ].
+	1 second wait.
+	5
+		timesRepeat: [ Smalltalk garbageCollect.
 			100 milliSeconds wait ]
 ]
 
