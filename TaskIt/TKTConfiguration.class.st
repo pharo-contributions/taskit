@@ -1,5 +1,15 @@
 "
-I am a process local variable containing the task runner in charge of the current thread. If the current thread is not dominated by a task runner, my default value is the global worker pool.
+TKTConfiguration is a dynamic variable thread local and thread safe. 
+
+This configuration works as a global configuration for the TaskIt library.
+
+The current value is always pointing a TKTProfile entity. 
+
+For changing the actual profile, go to the settings browser, Taskit group
+
+For defining profiles, add a class method in TKTProfile
+
+
 "
 Class {
 	#name : #TKTConfiguration,
@@ -9,25 +19,6 @@ Class {
 	],
 	#category : #'TaskIt-Profiles'
 }
-
-{ #category : #accessing }
-TKTConfiguration class >> defaultProfile [
-	^ #development
-]
-
-{ #category : #accessing }
-TKTConfiguration class >> development [
-	<profile: #development>
-	^ TKTProfile
-		on:
-			{(#debugging -> true).
-			(#runner -> TKTCommonQueueWorkerPool createDefault).
-			(#poolWorkerProcess -> TKTDebuggWorkerProcess).
-			(#process -> TKTRawProcess).
-			(#errorHandler -> TKTDebuggerExceptionHandler).
-			(#processProvider -> TKTTaskItProcessProvider new).
-			(#serviceManager -> TKTServiceManager new)} asDictionary
-]
 
 { #category : #accessing }
 TKTConfiguration class >> errorHandler [
@@ -83,18 +74,8 @@ TKTConfiguration class >> processProvider: aProcessProvider during: aBlock [
 ]
 
 { #category : #'as yet unclassified' }
-TKTConfiguration class >> production [
-	<profile: #production>
-	^ TKTProfile
-		on:
-			{
-			(#debugging -> false) .
-			(#runner -> TKTCommonQueueWorkerPool createDefault).
-			(#poolWorkerProcess -> TKTWorkerProcess).
-			(#process -> Process).
-			(#errorHandler -> TKTExceptionHandler).
-			(#processProvider -> TKTPharoProcessProvider new).
-			(#serviceManager -> TKTServiceManager new)} asDictionary
+TKTConfiguration class >> profile [
+	^ #Hola
 ]
 
 { #category : #accessing }
@@ -111,6 +92,11 @@ TKTConfiguration class >> profile: aProfile during: aBlock [
 	return := self value: aProfile during: [aProfile activateProfile. aBlock value].
 	aProfile finalizeProfile.
 	^ return
+]
+
+{ #category : #accessing }
+TKTConfiguration class >> profileNamed [
+	^ self value value name
 ]
 
 { #category : #accessing }
@@ -136,8 +122,7 @@ TKTConfiguration class >> profileNamed: aProfileName during: aBlock [
 
 { #category : #accessing }
 TKTConfiguration class >> profiles [
-	^ (Pragma allNamed: #profile: from: self class to: ProtoObject) asOrderedCollection
-		collect: [ :c | c arguments first -> (MessageSend receiver: self selector: c method selector) ]
+	^ TKTProfile profiles
 ]
 
 { #category : #accessing }
@@ -160,18 +145,18 @@ TKTConfiguration class >> serviceManager: aManager during: aBlock [
 	^ self optionAt: #serviceManager value: aManager during: aBlock
 ]
 
-{ #category : #accessing }
-TKTConfiguration class >> test [
-	<profile: #test>
-	^ TKTProfile
-		on:
-			{(#debugging -> false).
-			(#runner -> TKTCommonQueueWorkerPool createDefault).
-			(#poolWorkerProcess -> TKTWorkerProcess).
-			(#process -> Process).
-			(#errorHandler -> TKTExceptionHandler).
-			(#processProvider -> TKTTaskItProcessProvider new).
-			(#serviceManager -> TKTServiceManager new)} asDictionary
+{ #category : #'as yet unclassified' }
+TKTConfiguration class >> settingsOn: aBuilder [
+	<systemsettings>
+	(aBuilder group: #taskitExecution)
+		label: 'Task it execution profile';
+		with: [ (aBuilder pickOne: #profileNamed)
+				label: 'Exeucting Profile';
+				target: self;
+				parent: #taskitExecution;
+				default: #development;
+				order: 1;
+				domainValues: (self profiles collect: #key) ]
 ]
 
 { #category : #accessing }
@@ -183,7 +168,7 @@ TKTConfiguration >> basicValue [
 TKTConfiguration >> default [
 	| configuration |
 	^ value
-		ifNil: [ self class profileNamed: self class defaultProfile.
+		ifNil: [ self class profileNamed:TKTProfile defaultProfile.
 			self assert: value isNotNil ]
 ]
 

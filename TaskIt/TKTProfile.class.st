@@ -1,3 +1,12 @@
+"
+The profile is a class that represents sets of configurations. 
+
+For adding a new profile, we have to add a class method with the pragma <profile: #name>, this method should return a TKTProfile object with it configuration.
+
+The profile building process ensures that the profile is properly setted from the debugging point of view. 
+
+For setting the currently working profile see in the TKTConfiguration class.
+"
 Class {
 	#name : #TKTProfile,
 	#superclass : #Object,
@@ -15,10 +24,64 @@ Class {
 }
 
 { #category : #'instance creation' }
+TKTProfile class >> defaultProfile [
+	^ #development
+]
+
+{ #category : #'instance creation' }
+TKTProfile class >> development [
+	<profile: #development>
+	^ TKTProfile
+		on:
+			{(#debugging -> true).
+			(#runner -> TKTCommonQueueWorkerPool createDefault).
+			(#poolWorkerProcess -> TKTDebuggWorkerProcess).
+			(#process -> TKTRawProcess).
+			(#errorHandler -> TKTDebuggerExceptionHandler).
+			(#processProvider -> TKTTaskItProcessProvider new).
+			(#serviceManager -> TKTServiceManager new)} asDictionary
+]
+
+{ #category : #'instance creation' }
 TKTProfile class >> on: aDictionary [
 	^ self new
 		values: aDictionary;
 		yourself
+]
+
+{ #category : #'instance creation' }
+TKTProfile class >> production [
+	<profile: #production>
+	^ TKTProfile
+		on:
+			{
+			(#debugging -> false) .
+			(#runner -> TKTCommonQueueWorkerPool createDefault).
+			(#poolWorkerProcess -> TKTWorkerProcess).
+			(#process -> Process).
+			(#errorHandler -> TKTExceptionHandler).
+			(#processProvider -> TKTPharoProcessProvider new).
+			(#serviceManager -> TKTServiceManager new)} asDictionary
+]
+
+{ #category : #'instance creation' }
+TKTProfile class >> profiles [
+	^ (Pragma allNamed: #profile: from: self class to: ProtoObject) asOrderedCollection
+		collect: [ :c | c arguments first -> (MessageSend receiver: self selector: c method selector) ]
+]
+
+{ #category : #'instance creation' }
+TKTProfile class >> test [
+	<profile: #test>
+	^ TKTProfile
+		on:
+			{(#debugging -> false).
+			(#runner -> TKTCommonQueueWorkerPool createDefault).
+			(#poolWorkerProcess -> TKTWorkerProcess).
+			(#process -> Process).
+			(#errorHandler -> TKTExceptionHandler).
+			(#processProvider -> TKTTaskItProcessProvider new).
+			(#serviceManager -> TKTServiceManager new)} asDictionary
 ]
 
 { #category : #accessing }
