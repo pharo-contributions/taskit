@@ -85,7 +85,7 @@ TKTWorkerTests >> testWorkerProcessIsWorkingUntilAllTasksAreDone [
 	self assert: process taskQueue size equals: 0.
 	self assert: process isRunning.
 	self garbageCollectAndWait .
-	waitFuture waitForCompletion: 10 second.
+	waitFuture waitForCompletion: 100 second.
 	self deny: process isRunning
 ]
 
