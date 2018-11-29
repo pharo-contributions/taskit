@@ -775,11 +775,13 @@ The implementation and conception of this debugger extension can be found in Max
 
 ## Configuration
 
-	TaskIt bases it general configuration in the idea of profiles. 
-	A profile define some major features needed by the library to work properly.
+TaskIt bases it general configuration in the idea of profiles. 
+A profile define some major features needed by the library to work properly.
+
 	
 ###TKTProfile
-	Defines the default profiles, on the class side, along side with the default profile to use
+Defines the default profiles, on the class side, along side with the default profile to use
+
 	
 	
 ```smalltalk
