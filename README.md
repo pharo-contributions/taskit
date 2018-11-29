@@ -3,8 +3,11 @@
 
 >Anything that can go wrong, will go wrong. -- Murphy's Law
 
-
+Master Build 
 [![Build Status](https://travis-ci.org/sbragagnolo/taskit.svg?branch=master)](https://travis-ci.org/sbragagnolo/taskit)
+
+Dev Build 
+[![Build Status](https://travis-ci.org/sbragagnolo/taskit.svg?branch=dev-1.1)](https://travis-ci.org/sbragagnolo/taskit)
 
 Expressing and managing concurrent computations is indeed a concern of importance to develop applications that scale. A web application may want to use different processes for each of its incoming requests. Or maybe it wants to use a "thread pool" in some cases. In other case, our desktop application may want to send computations to a worker to not block the UI thread. 
 
@@ -30,12 +33,12 @@ Metacello new
   load.
 ```
 
-If you want a specific release such as v0.1, you can load the associated tag as follows
+If you want a specific release such as v0.5, you can load the associated tag as follows
 
 ```smalltalk
 Metacello new
   baseline: 'TaskIt';
-  repository: 'github://sbragagnolo/taskit:v0.2';
+  repository: 'github://sbragagnolo/taskit:v1.0';
   load.
 ```
 
@@ -44,7 +47,7 @@ Otherwise, if you want the latest development version, take a look at the develo
 ```smalltalk
 Metacello new
   baseline: 'TaskIt';
-  repository: 'github://sbragagnolo/taskit:dev-0.3';
+  repository: 'github://sbragagnolo/taskit:dev-1.1';
   load.
 ```
 
@@ -56,28 +59,22 @@ Add the following in your metacello configuration or baseline specifying the des
 ```smalltalk
 spec
     baseline: 'TaskIt'
-    with: [ spec repository: 'github://sbragagnolo/taskit-2:v0.2' ]
+    with: [ spec repository: 'github://sbragagnolo/taskit:v1.0' ]
 ```
 
 #### For developers
 
-To develop TaskIt on github we use [iceberg](https://github.com/npasserini/iceberg). Just load iceberg and enter github's url to clone. Remember to switch to the desired development branch or create one on your own.
+To develop TaskIt on github we use [iceberg](https://github.com/pharo-vcs/iceberg.git). Just load iceberg and enter github's url to clone. Remember to switch to the desired development branch or create one on your own.
 
 ### Changeslog
 
-#### v0.2
+#### v1.0
 
 ##### Major Features
 
-- Task Runners
-  - NewProcessTaskRunner
-  - LocalProcessTaskRunner
-  - Worker
-  - WorkerPool
-- Futures with callbacks
-- Future combinators
-- Future synchronous access
-- Services
+- Actors (ActIt)
+- Configuration Profiles
+- Service
 
 [Entire changes log](changeslog.md)
 
@@ -391,7 +388,7 @@ A task's timeout must not be confused with a future's synchronous access timeout
 
 As we stated before, the messages #schedule and #future will schedule a task implicitly in a *default* task runner. To be more precise, it is not a default task runner but the **current task runner** that is used. In other words, task scheduling is context sensitive: if a task A is beign executed by a task runner R, new tasks scheduled by A are implicitly scheduled R. The only exception to this is when there is no such task runner, i.e., when the task is scheduled from, for example, a workspace. In that case a default task runner is chosen for scheduling.
 
-> Note: In the current version of taskit (0.2) the default task runner is the global worker pool that can be explicitly accessed evaluating the following expression `TKTConfiguration runner`.
+> Note: In the current version of taskit (v1.0) the default task runner is the global worker pool that can be explicitly accessed evaluating the following expression `TKTConfiguration runner`.
 
 Something similar happens with callbacks. Before we said that callbacks are eventually and concurrently executed. This happens because callbacks are scheduled as normal tasks after a task's execution. This scheduling follows the rules from above: callbacks will be scheduled in the task runner where it's task was executed.
 
@@ -616,6 +613,64 @@ service step: [
 service start.
 ```
 
+## Actors
+
+
+### Actors?
+In this new version of TaskIt we are also providing actors, leveraging the whole taskit implementation, and adding some extra features.
+ 
+Our implementation is inspired by "Actalk: a Testbed for Classifying and Designing Actor Languages in the Smalltalk-80 Environment", but adapted to the new Pharo state-full traits. 
+
+The actor's model proposes to provide an interface to interact with a process. Allowing the user of a process to ask for service to a process, by message sending.
+
+In order to achieve the same kind of behaviour in smalltalk, we subordinate a process to expose and serve the behaviour of an existing object. 
+
+
+### How to use it
+
+For achieving this we propose the trait TKTActorBehaviour, which is responsible to extend a class by adding the message actor. 
+
+
+This actor message will return an instance of the class TKTActor, which will act as a proxy (managed by #doesnotUnderstand: message) to the object, but transforming the calls into tasks, to be executed sequentially.
+
+Each method sent to the actor, will return a *future*. 
+
+For making your domain object to become an actor, add the usage of the trait TKTActorBehaviour as following:
+
+```smalltalk
+Object subclass: #MyDomainObject
+	uses: TKTActorBehaviour
+	instanceVariableNames: 'value'
+	classVariableNames: ''
+	package: 'MyDomainObjectPack'
+
+
+myObject := MyDomainObject new. 
+myObject setValue: 2.
+
+self assert: myObject getValue equals: 2.
+
+myActor := myObject actor.
+self assert:( myActor getValue isKindOf: TKTFuture).
+self assert:( myActor getValue synchronizeTimeout: 1 second) = myObject getValue. 
+ 
+```
+
+### How to act
+ 
+  So, to add this trait is not enough to make your Object into an Actor. 
+  You have to have in mind that any time that you use ```smalltalk self``` in your object, you are doing a synchronous call. 
+  That each time that you give your object's reference by parameter, instead of the actor's reference, your object will work as a classic object as well.
+  
+  For allowing the user to do async calls to self, the trait provides de propery ```smalltalk aself``` (Async-self). 
+  
+  Remind also that even when actors provide a nice way to avoid simple semaphores, they do not fully avoid deadlocks, since the interaction in between actors is:
+  - possible
+  - desirable 
+  - non-regulated 
+  
+
+
 
 ## Process dashboard 
 
@@ -720,68 +775,128 @@ The implementation and conception of this debugger extension can be found in Max
 
 ## Configuration
 
-	TaskIt comes with a configuration based on the DynamicVariables (process local variables). 
+	TaskIt bases it general configuration in the idea of profiles. 
+	A profile define some major features needed by the library to work properly.
 	
-```profiles
-	^ {(#profile -> #development).
-	(#development
-		-> [ {(#initialize
-				-> [ TKTDebugger enable.
-					self class runner start ]).
+###TKTProfile
+	Defines the default profiles, on the class side, along side with the default profile to use
+	
+	
+```smalltalk
+defaultProfile
+	^ #development
+	
+development
+	<profile: #development>
+	^ TKTProfile
+		on:
+			{(#debugging -> true).
 			(#runner -> TKTCommonQueueWorkerPool createDefault).
 			(#poolWorkerProcess -> TKTDebuggWorkerProcess).
 			(#process -> TKTRawProcess).
 			(#errorHandler -> TKTDebuggerExceptionHandler).
 			(#processProvider -> TKTTaskItProcessProvider new).
-			(#serviceManager -> TKTServiceManager new)} asDictionary ]).
-	(#production
-		-> [ {(#initialize
-				-> [ TKTDebugger disable.
-					self class runner start ]).
+			(#serviceManager -> TKTServiceManager new)} asDictionary
+production
+	<profile: #production>
+	^ TKTProfile
+		on:
+			{
+			(#debugging -> false) .
 			(#runner -> TKTCommonQueueWorkerPool createDefault).
 			(#poolWorkerProcess -> TKTWorkerProcess).
-			(#process -> TKTRawProcess).
+			(#process -> Process).
 			(#errorHandler -> TKTExceptionHandler).
 			(#processProvider -> TKTPharoProcessProvider new).
-			(#serviceManager -> TKTServiceManager new)} asDictionary ]).
-	(#test
-		-> [ {(#initialize
-				-> [ TKTDebugger disable.
-					self class runner start ]).
+			(#serviceManager -> TKTServiceManager new)} asDictionary
+
+test
+	<profile: #test>
+	^ TKTProfile
+		on:
+			{(#debugging -> false).
 			(#runner -> TKTCommonQueueWorkerPool createDefault).
 			(#poolWorkerProcess -> TKTWorkerProcess).
-			(#process -> TKTRawProcess).
+			(#process -> Process).
 			(#errorHandler -> TKTExceptionHandler).
 			(#processProvider -> TKTTaskItProcessProvider new).
-			(#serviceManager -> TKTServiceManager new)} asDictionary ])} asDictionary.```
+			(#serviceManager -> TKTServiceManager new)} asDictionary
+```
 
 
-This configuration object contains many profiles. 
-The profile loaded by default is the specified at the first dictionary key `#profile`
+
+- **Modifying the running profile** 
+
+  There are three ways of modifying the running profile.
+  
+  **The first** one and simpler, is to go to the *settings browser* and choose the available profile in the section 'TaskIt execution profile' 
+  In this combo box you will find all the predefined profiles. 
+  **The second** way is to use code
+  
+ ```smalltalk
+ 	TKTConfiguration profileNamed: #development 
+ ```
+	The method profileNamed: aProfile receives as parameter a name of a predefined profile. This way is handy for automatazing behaviour. 
+
+  **The third** one finally is to manually build your own profile, and set it up, agan by code 
+	
+ ```smalltalk
+    profile := TKTProfile new. 
+	... 
+	configure 
+	...
+ 	TKTConfiguration profile: profile.
+ ```
+	
+	
+	
+- **Defining a new predefined-profile** 
+To add a new profile is pretty easy, and so far, pretty static
+
+For adding a new profile you have only to define a new method in the class side of TKTProfile, adding the pragma 
+```<profile:#profileName>```
+
+This method should return an instance of TKTProfile, or polimorphic to it. 
+
+Since some configurations may not be compatible (since the debugging mode has some specific restrictions), a check of sanity of the configuration is done during the activation of the profile. Therefore, it is expected to have exceptions with some configurations. 
+
+- **Modifying an existing predefined-profile** 
+
+As to adding a new profile, everything is on the code. You just have to address the method related with the profile that you want to modify and modify it.
+If the modified profile is the one on usage, the changes will have no effect up to the next time that you activily set this profile. You can use any of the ways of setting up the current profile for forcing the reload of the profile. 
 
 
-For changing the profile, you just need to send the message profile with the required profile as parameter:
+- ** Using a specific profile during specific computations **
 
-`TKTConfiguration profile: #production.`
+At some points ,you may need to switch the working profile, or part of it, not for all the image but for some specific computation.
+We have defined some different methods that would allow you to achieve this feature by code. 
+ ```smalltalk
+ TKTConfiguration>>
+ 
+ profileNamed: aProfileName during: aBlock      	" Uses a predefined profile, during the execution of the given block "
+ profile: aProfile during: aBlock					" Uses a profile, during the execution of the given block "
+ errorHandler: anErrorHandler during: aBlock		" Uses a given errorHandler, during the execution of the given block "
+ poolWorkerProcess: anObject during: aBlock			" Uses a given Pool-Worker process, during the execution of the given block "
+ process: anObject during: aBlock					" Uses a given process, during the execution of the given block "
+ processProvider: aProcessProvider during: aBlock	" Uses a given Process provider, during the execution of the given block "
+ serviceManager: aManager during: aBlock			" 
+ Uses a given Service manager, during the execution of the given block "
+ 
+ ```
 
 
-Since this is a process variable, we can do also some magic for executing specfiic code with specific configurations as:
+An example of usage
+ ```smalltalk
+ future := TKTConfiguration>>profileNamed: #test during: [ [2 + 2 ] future ]
+ ```
 
-`TKTConfiguration profile: #test during: [ "run tests" ].`
-
-Or also do smaller changes as:
-
-`TKTConfiguration errorHandler: #MyHandler during: [ "do something" ] .`
-
-In this last case the the block will be executed with the actual profile, but changing the errorHandler by default. 
 
 
 
 
 ## Future versions
 
-- ActIt: an actor/active object implementation on top of taskit
-- Service manager
-- Future inspection. (Or processing network combination) 
-- Autoorganized worker pool
+- Better management of the profile configuration
 - Inter-innerprocess debugging
+- Enhancing actor's model 
+
