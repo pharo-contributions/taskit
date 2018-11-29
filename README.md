@@ -779,7 +779,7 @@ TaskIt bases it general configuration in the idea of profiles.
 A profile define some major features needed by the library to work properly.
 
 	
-###TKTProfile
+### TKTProfile
 Defines the default profiles, on the class side, along side with the default profile to use
 
 	
