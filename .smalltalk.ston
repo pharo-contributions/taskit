@@ -8,7 +8,7 @@ SmalltalkCISpec {
   ],
   #testing : {
    #include : {
-      #packages : [ 'TaskIt.*' , 'TaskItShell.*' ]
+      #packages : [ 'TaskIt.*' , 'TaskItShell.*' , 'ActIt.*' ]
     }
   }
 }

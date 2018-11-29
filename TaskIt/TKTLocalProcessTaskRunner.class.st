@@ -32,6 +32,16 @@ Class {
 }
 
 { #category : #schedulling }
+TKTLocalProcessTaskRunner >> isLocalThreadRunner [
+	^ true
+]
+
+{ #category : #schedulling }
 TKTLocalProcessTaskRunner >> scheduleTaskExecution: aTaskExecution [
 	self executeTask: aTaskExecution
+]
+
+{ #category : #polimorfism }
+TKTLocalProcessTaskRunner >> start [
+
 ]

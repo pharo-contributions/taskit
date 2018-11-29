@@ -205,7 +205,7 @@ TKTFuture >> andThen: aBlockClosure [
 	future := TKTFuture new.
 	self onSuccessDo: [ :got | 
 		[ aBlockClosure value: got ]
-			on: Exception do: [ :e | "Nothing?" ].
+			on: Error do: [ :e | "Nothing?" ].
 		future deploySuccess: got ].
 	self onFailureDo: [ :error | future deployFailure: error freeze ].
 	^ future
@@ -219,7 +219,7 @@ TKTFuture >> collect: aBlockClosure [
 	future runner: runner.
 	self onSuccessDo: [ :got | 
 		[ future deploySuccess: (aBlockClosure value: got) ]
-			on: Exception do: [ :e | future deployFailure: e freeze ] ].
+			on: Error do: [ :e | future deployFailure: e freeze ] ].
 	self onFailureDo: [ :error | future deployFailure: error freeze ].
 	^ future
 ]
@@ -283,7 +283,7 @@ TKTFuture >> flatCollect: aBlockClosure [
 	self onSuccessDo: [ :got | [(aBlockClosure value: got)
 		onSuccessDo: [ :got2 | future deploySuccess: got2 ];
 		onFailureDo: [ :error | future deployFailure: error freeze ]]
-				on: Exception do: [ :e | future deployFailure: e freeze ] ].
+				on: Error do: [ :e | future deployFailure: e freeze ] ].
 	self onFailureDo: [ :error | future deployFailure: error freeze ].
 	^ future
 ]
@@ -337,7 +337,7 @@ TKTFuture >> on: anError do: aBlockClosure [
 	self onFailureDo: [ :error | 
 		(anError handles: error)
 			ifTrue: [ [future deploySuccess: (aBlockClosure value: error)]
-							on: Exception do: [ :e | future deployFailure: e freeze ]  ]
+							on: Error do: [ :e | future deployFailure: e freeze ]  ]
 			ifFalse: [ future deployFailure: error freeze ] ].
 	^ future
 ]

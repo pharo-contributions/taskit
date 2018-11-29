@@ -36,6 +36,11 @@ Class {
 	#category : #'TaskIt-Worker'
 }
 
+{ #category : #'as yet unclassified' }
+TKTWorker >> currentTask [
+	self shouldBeImplemented.
+]
+
 { #category : #'start-stop' }
 TKTWorker >> currentTaskExecution [
 	^ process currentTaskExecution
@@ -83,6 +88,11 @@ TKTWorker >> isFree [
 { #category : #testing }
 TKTWorker >> isRunning [
 	^ process isNotNil and: [ process isRunning ]
+]
+
+{ #category : #schedulling }
+TKTWorker >> isWorker [
+	^ true
 ]
 
 { #category : #accessing }

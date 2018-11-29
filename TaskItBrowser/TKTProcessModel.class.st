@@ -67,6 +67,11 @@ TKTProcessModel >> indexString [
 ]
 
 { #category : #accessing }
+TKTProcessModel >> job [
+	^ job ifNil: [ 'NonJobRelated' ]
+]
+
+{ #category : #accessing }
 TKTProcessModel >> messageSend [
 	^ process messageSend
 ]

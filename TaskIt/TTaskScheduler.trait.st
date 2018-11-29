@@ -25,6 +25,21 @@ TTaskScheduler >> isDebuggingCompatible [
 ]
 
 { #category : #schedulling }
+TTaskScheduler >> isLocalThreadRunner [
+	^ false 
+]
+
+{ #category : #schedulling }
+TTaskScheduler >> isUIRunner [
+	^ false 
+]
+
+{ #category : #schedulling }
+TTaskScheduler >> isWorker [
+	^ false 
+]
+
+{ #category : #schedulling }
 TTaskScheduler >> privateTimeout: timeout on: aTaskExecution [
 	timeout wait.
 	aTaskExecution isFinished

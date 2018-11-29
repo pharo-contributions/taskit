@@ -98,6 +98,26 @@ TKTProcessDataSource >> initialize [
 	TKTProcess uniqueAnnouncer weak when: TKTProcessSuspended send: #noteProcessSuspended: to: self
 ]
 
+{ #category : #'accessing - columns' }
+TKTProcessDataSource >> jobColumn: column row: rowIndex [
+	^ FTCellMorph new
+		color: (self colorFor: rowIndex);
+		addMorph: (self elementAt: rowIndex) job asStringMorph;
+		yourself
+]
+
+{ #category : #'menu - columns' }
+TKTProcessDataSource >> jobMenuColumn: column row: rowIndex [
+	| job menu |
+	job := (self elementAt: rowIndex) job.
+	job = 'NonJobRelated'
+		ifFalse: [ 
+			menu := UIManager default newMenuIn: self table for: self.
+			menu add: 'Inspect job' target: job selector: #inspect.
+			^ menu ].
+	^ nil
+]
+
 { #category : #accessing }
 TKTProcessDataSource >> menuColumn: column row: rowIndex [
 	rowIndex = 0 ifTrue: [ 

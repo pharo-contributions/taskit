@@ -13,7 +13,7 @@ Class {
 { #category : #evaluating }
 TKTFutureExecution >> doExecuteTask [
 	[ future deploySuccess: super doExecuteTask ]
-		on: Exception
+		on: Error
 		do: [ :error | future deployFailure: error freeze ]
 ]
 
