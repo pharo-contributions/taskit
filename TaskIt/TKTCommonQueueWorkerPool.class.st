@@ -54,6 +54,11 @@ TKTCommonQueueWorkerPool >> initialize [
 	
 ]
 
+{ #category : #configuration }
+TKTCommonQueueWorkerPool >> isDebuggingCompatible [
+	^ true
+]
+
 { #category : #testing }
 TKTCommonQueueWorkerPool >> isFree [
 
@@ -73,10 +78,10 @@ TKTCommonQueueWorkerPool >> manageWorkersAfter [
 TKTCommonQueueWorkerPool >> manageWorkersBefore [
 	| free toremove |
 	toremove := workers reject: #isRunning.
-	toremove isEmpty
+"	toremove isEmpty
 		ifFalse: [ self halt ].
 
-	" do: [ :w | w stop ]."
+"	" do: [ :w | w stop ]."
 
 	free := workers select: #isFree.
 	free size - taskQueue size <= 0

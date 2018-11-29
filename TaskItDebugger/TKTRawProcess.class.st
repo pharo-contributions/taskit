@@ -16,6 +16,11 @@ Class {
 	#category : 'TaskItDebugger'
 }
 
+{ #category : #configuration }
+TKTRawProcess class >> isDebuggingCompatible [
+	^ true
+]
+
 { #category : #initialization }
 TKTRawProcess >> initialize [
 	super initialize.

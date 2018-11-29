@@ -17,6 +17,11 @@ TKTServiceManager >> initialize [
 	services := Set new.
 ]
 
+{ #category : #configuration }
+TKTServiceManager >> isDebuggingCompatible [
+	^ true
+]
+
 { #category : #purging }
 TKTServiceManager >> purge [
 	

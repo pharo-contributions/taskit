@@ -18,5 +18,9 @@ TKTPharoProcessProvider >> createProcessDoing: aValuable [
 
 { #category : #'instance-creation' }
 TKTPharoProcessProvider >> createProcessDoing: aValuable named: aName [
-	^ aValuable forkNamed: aName
+	| block |
+	block := aValuable isMessageSend
+		ifTrue: [ [ aValuable value ] ]
+		ifFalse: [ aValuable ].
+	^ block forkNamed: aName
 ]

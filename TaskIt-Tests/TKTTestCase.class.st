@@ -8,11 +8,30 @@ Class {
 }
 
 { #category : #running }
+TKTTestCase >> garbageCollectAndWait [
+	5
+		timesRepeat: [ Smalltalk garbageCollect.
+			100 milliSeconds wait ].
+	1 second wait.
+	5
+		timesRepeat: [ Smalltalk garbageCollect.
+			100 milliSeconds wait ].
+	5
+		timesRepeat: [ Smalltalk garbageCollect.
+			100 milliSeconds wait ].
+	1 second wait.
+	5
+		timesRepeat: [ Smalltalk garbageCollect.
+			100 milliSeconds wait ]
+]
+
+{ #category : #running }
 TKTTestCase >> setUp [
 	super setUp.
 	TKTConfiguration
 		resetSoleInstance;
-		profile: #test
+		profileNamed: #test.
+	self timeLimit: 60 seconds
 ]
 
 { #category : #running }

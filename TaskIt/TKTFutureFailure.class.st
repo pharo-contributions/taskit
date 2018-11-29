@@ -38,5 +38,6 @@ TKTFutureFailure >> value: aValue [
 
 { #category : #accessing }
 TKTFutureFailure >> valueForFuture: aFuture [
-	value signal
+	
+	 value resume
 ]

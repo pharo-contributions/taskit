@@ -90,16 +90,13 @@ TKTProcessModel >> name [
 TKTProcessModel >> process: aTktProcess [
 	| messageSend |
 	process := aTktProcess.
-	
-	
-	task := (aTktProcess annotation: #task).
-	messageSend := messageSend ifNil: [ aTktProcess messageSend ].
+	task := aTktProcess annotation: #task.
+	messageSend := aTktProcess messageSend.
 	messageSend
 		ifNotNil: [ :ms | 
 			receiver := ms receiver.
 			selector := ms selector.
 			arguments := ms arguments ].
-	job := aTktProcess annotation: #job
 ]
 
 { #category : #accessing }

@@ -73,7 +73,7 @@ TKTCommonQueueWorkerPoolTests >> testWorkerPoolWorkersAreStoppedAfterPoolsCollec
 	workerProcess := WeakArray with: pool workers anyOne process.
 	
 	pool := nil.
-	7 timesRepeat: [Smalltalk garbageCollect. 100 milliSeconds wait ].
+	self garbageCollectAndWait .
 
 
 	self assert: workerProcess first isNil.
@@ -83,18 +83,13 @@ TKTCommonQueueWorkerPoolTests >> testWorkerPoolWorkersAreStoppedAfterPoolsCollec
 TKTCommonQueueWorkerPoolTests >> testWorkerPoolWorkersProcessesAreStoppedAfterPoolsCollection [
 	| pool workerProcess |
 	pool := TKTCommonQueueWorkerPool new.
-	pool name: 'Test pool', UUID new asString.
+	pool name: 'Test pool' , UUID new asString.
 	pool poolMaxSize: 4.
 	pool start.
-		
-	(pool future: (MessageSend receiver: self selector: #yourself))
-		waitForCompletion: 1 second.
-
+	(pool future: (MessageSend receiver: self selector: #yourself)) waitForCompletion: 1 second.
 	workerProcess := WeakArray with: pool workers anyOne process process.
-	
 	pool := nil.
-	7 timesRepeat: [Smalltalk garbageCollect. 10 milliSeconds wait ].
-
+	self garbageCollectAndWait.
 	self assert: workerProcess first isNil
 ]
 
@@ -105,10 +100,7 @@ TKTCommonQueueWorkerPoolTests >> testWorkerPoolWorkersProcessesAreTerminatedAfte
 	(pool future: (MessageSend receiver: self selector: #yourself)) waitForCompletion: 1 second.
 	workerProcess := pool workers anyOne process process.
 	pool := nil.
-	7
-		timesRepeat: [ Smalltalk garbageCollect.
-			50 milliSeconds wait ].
-	1 second wait.
+	self garbageCollectAndWait.
 	workerProcess isTerminated.
 	self assert: workerProcess isTerminated
 ]

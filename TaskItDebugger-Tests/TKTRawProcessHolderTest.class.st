@@ -57,11 +57,17 @@ TKTRawProcessHolderTest >> testHolderForContext [
 
 { #category : #tests }
 TKTRawProcessHolderTest >> testStackContainsContextsOfMaster [
-	| process |
+	| process runTest |
+	runTest := true.
+	Smalltalk globals at: #SystemVersion ifAbsent: [ runTest := false ].
+	runTest := runTest
+		ifTrue: [ SystemVersion current major > 6 ]
+		ifFalse: [ false ].
+	runTest
+		ifFalse: [ ^ self ].
 	process := self newRawProcess.
-
-	thisContext stack do: [ :context |
-		self assert: (process masterProcessHolder stack identityIncludes: context) ].
+	thisContext stack
+		do: [ :context | self assert: (process masterProcessHolder stack identityIncludes: context) ]
 ]
 
 { #category : #tests }

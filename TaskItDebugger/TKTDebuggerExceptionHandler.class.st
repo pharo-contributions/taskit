@@ -7,6 +7,11 @@ Class {
 	#category : 'TaskItDebugger'
 }
 
+{ #category : #configuration }
+TKTDebuggerExceptionHandler class >> isDebuggingCompatible [
+	^ true
+]
+
 { #category : #handling }
 TKTDebuggerExceptionHandler >> handleException: anError [ 
 	anError debug

@@ -15,7 +15,12 @@ TKTExceptionHandler class >> handleException: anError [
 ]
 
 { #category : #handling }
+TKTExceptionHandler class >> isDebuggingCompatible [
+	^ false
+]
+
+{ #category : #handling }
 TKTExceptionHandler >> handleException: anError [ 
 	
-	self subclassResponsibility
+	anError debug 
 ]
