@@ -613,10 +613,12 @@ service step: [
 service start.
 ```
 
-## Actors
+## ActIt
 
 
-### Actors?
+**ActIt is only available for pharo 7, since it requires stateful traits support**
+
+### Actors
 In this new version of TaskIt we are also providing actors, leveraging the whole taskit implementation, and adding some extra features.
  
 Our implementation is inspired by "Actalk: a Testbed for Classifying and Designing Actor Languages in the Smalltalk-80 Environment", but adapted to the new Pharo state-full traits. 
