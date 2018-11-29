@@ -733,12 +733,12 @@ Finally, to allow the user to use just one interface. There is a second tab that
    The TaskIt browser is based on announcements. This fact allows the interface to be dynamic, having allways fresh information, without needing a pulling process, as in the native process browser. 
    
 
-[image-menu]: https://github.com/sbragagnolo/taskit/raw/dev-0.2/images/AccessMenu.png "MenuTaskit"
-[image-main]: https://github.com/sbragagnolo/taskit/raw/dev-0.2/images/FirstScreen.png "Main tab"
-[image-process]: https://github.com/sbragagnolo/taskit/raw/dev-0.2/images/ProcessMenu.png "Process menu"
-[image-receiver]: https://github.com/sbragagnolo/taskit/raw/dev-0.2/images/ReceiverInspector.png "Receiver menu"
-[image-selector]: https://github.com/sbragagnolo/taskit/raw/dev-0.2/images/SelectorInspection.png "Selector (method) menu"
-[image-system]: https://github.com/sbragagnolo/taskit/raw/dev-0.2/images/SystemScreen.png "System process tab"
+[image-menu]: https://github.com/sbragagnolo/taskit/blob/master/images/AccessMenu.png "MenuTaskit"
+[image-main]: https://github.com/sbragagnolo/taskit/blob/master/images/FirstScreen.png "Main tab"
+[image-process]: https://github.com/sbragagnolo/taskit/blob/master/images/ProcessMenu.png "Process menu"
+[image-receiver]: https://github.com/sbragagnolo/taskit/blob/master/images/ReceiverInspector.png "Receiver menu"
+[image-selector]: https://github.com/sbragagnolo/taskit/blob/master/images/SelectorInspection.png "Selector (method) menu"
+[image-system]: https://github.com/sbragagnolo/taskit/blob/master/images/SystemScreen.png "System process tab"
 
 
 ## Debugger
