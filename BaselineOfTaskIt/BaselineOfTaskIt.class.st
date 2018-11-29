@@ -95,7 +95,7 @@ BaselineOfTaskIt class >> loadDevelopment [
 BaselineOfTaskIt >> baseline: spec [
 	<baseline>
 	spec
-		for: #common
+		for: #'pharo7.x'
 			do: [ spec
 				package: #TaskIt;
 				package: #ActIt with: [ spec requires: #('TaskIt') ];
