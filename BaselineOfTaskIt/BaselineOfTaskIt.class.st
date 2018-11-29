@@ -95,7 +95,7 @@ BaselineOfTaskIt class >> loadDevelopment [
 BaselineOfTaskIt >> baseline: spec [
 	<baseline>
 	spec
-		for: #'pharo6.x'
+		for:  #'pharo6.1.x'
 			do: [ spec
 				package: #TaskIt;
 				package: #'TaskIt-Tests' with: [ spec requires: #('TaskIt') ];
