@@ -778,12 +778,11 @@ The implementation and conception of this debugger extension can be found in Max
 TaskIt bases it general configuration in the idea of profiles. 
 A profile define some major features needed by the library to work properly.
 
-	
+
 ### TKTProfile
 Defines the default profiles, on the class side, along side with the default profile to use
 
-	
-	
+
 ```smalltalk
 defaultProfile
 	^ #development
@@ -829,19 +828,18 @@ test
 
 - **Modifying the running profile** 
 
-  There are three ways of modifying the running profile.
+There are three ways of modifying the running profile.
   
-  **The first** one and simpler, is to go to the *settings browser* and choose the available profile in the section 'TaskIt execution profile' 
-  In this combo box you will find all the predefined profiles. 
-  **The second** way is to use code
+**The first** one and simpler, is to go to the *settings browser* and choose the available profile in the section 'TaskIt execution profile' 
+In this combo box you will find all the predefined profiles. 
+**The second** way is to use code
   
  ```smalltalk
  	TKTConfiguration profileNamed: #development 
  ```
-	The method profileNamed: aProfile receives as parameter a name of a predefined profile. This way is handy for automatazing behaviour. 
+The method profileNamed: aProfile receives as parameter a name of a predefined profile. This way is handy for automatazing behaviour. 
 
-  **The third** one finally is to manually build your own profile, and set it up, agan by code 
-	
+**The third** one finally is to manually build your own profile, and set it up, agan by code 	
  ```smalltalk
     profile := TKTProfile new. 
 	... 
@@ -849,9 +847,7 @@ test
 	...
  	TKTConfiguration profile: profile.
  ```
-	
-	
-	
+
 - **Defining a new predefined-profile** 
 To add a new profile is pretty easy, and so far, pretty static
 
@@ -891,7 +887,6 @@ An example of usage
  ```smalltalk
  future := TKTConfiguration>>profileNamed: #test during: [ [2 + 2 ] future ]
  ```
-
 
 
 
