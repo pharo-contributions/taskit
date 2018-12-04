@@ -33,7 +33,7 @@ Metacello new
   load.
 ```
 
-If you want a specific release such as v0.5, you can load the associated tag as follows
+If you want a specific release such as v1.0, you can load the associated tag as follows
 
 ```smalltalk
 Metacello new
@@ -873,14 +873,20 @@ We have defined some different methods that would allow you to achieve this feat
  ```smalltalk
  TKTConfiguration>>
  
- profileNamed: aProfileName during: aBlock      	" Uses a predefined profile, during the execution of the given block "
- profile: aProfile during: aBlock					" Uses a profile, during the execution of the given block "
- errorHandler: anErrorHandler during: aBlock		" Uses a given errorHandler, during the execution of the given block "
- poolWorkerProcess: anObject during: aBlock			" Uses a given Pool-Worker process, during the execution of the given block "
- process: anObject during: aBlock					" Uses a given process, during the execution of the given block "
- processProvider: aProcessProvider during: aBlock	" Uses a given Process provider, during the execution of the given block "
- serviceManager: aManager during: aBlock			" 
- Uses a given Service manager, during the execution of the given block "
+ profileNamed: aProfileName during: aBlock      	
+ 	" Uses a predefined profile, during the execution of the given block "
+ profile: aProfile during: aBlock					
+ 	" Uses a profile, during the execution of the given block "
+ errorHandler: anErrorHandler during: aBlock		
+ 	" Uses a given errorHandler, during the execution of the given block "
+ poolWorkerProcess: anObject during: aBlock			
+ 	" Uses a given Pool-Worker process, during the execution of the given block "
+ process: anObject during: aBlock					
+ 	" Uses a given process, during the execution of the given block "
+ processProvider: aProcessProvider during: aBlock	
+ 	" Uses a given Process provider, during the execution of the given block "
+ serviceManager: aManager during: aBlock			
+ 	" Uses a given Service manager, during the execution of the given block "
  
  ```
 
@@ -898,4 +904,5 @@ An example of usage
 - Better management of the profile configuration
 - Inter-innerprocess debugging
 - Enhancing actor's model 
+- Exploring again over forking images.
 
