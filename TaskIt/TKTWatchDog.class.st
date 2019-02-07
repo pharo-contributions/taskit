@@ -20,7 +20,13 @@ TKTWatchDog class >> on: aPool [
 
 { #category : #initialization }
 TKTWatchDog >> delay [
-	^ 2 seconds
+	^ 10 seconds
+]
+
+{ #category : #initialization }
+TKTWatchDog >> ensureIsAwake [
+	self isRunning
+		ifFalse: [ self restart ]
 ]
 
 { #category : #initialization }
@@ -48,9 +54,5 @@ TKTWatchDog >> stepService [
 
 { #category : #initialization }
 TKTWatchDog >> watchDog: aParameterPool [
-	aParameterPool failedTasks
-		addAll: (aParameterPool workers reject: #isRunning thenCollect: #currentTaskExecution).
-	(aParameterPool workers reject: #isRunning) do: #restart.
-	aParameterPool manageWorkersBefore.
-	aParameterPool manageWorkersAfter
+	aParameterPool ensureIsWorking
 ]
