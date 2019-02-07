@@ -58,25 +58,18 @@ TKTCommonQueueWorkerPoolTests >> testWorkerPoolStopStopsWorkers [
 
 { #category : #tests }
 TKTCommonQueueWorkerPoolTests >> testWorkerPoolWorkersAreStoppedAfterPoolsCollection [
-
 	| pool workerProcess |
 	pool := TKTCommonQueueWorkerPool new.
-	pool name: 'test pool', UUID new asString.
+	pool name: 'test pool' , UUID new asString.
 	pool poolMaxSize: 4.
 	pool start.
-		
 	(pool future: (MessageSend receiver: self selector: #yourself))
 		waitForCompletion: 1 second.
-
 	self assert: pool workers notEmpty.
-	
 	workerProcess := WeakArray with: pool workers anyOne process.
-	
 	pool := nil.
-	self garbageCollectAndWait .
-
-
-	self assert: workerProcess first isNil.
+	self garbageCollectAndWait.
+	self assert: workerProcess first isNil
 ]
 
 { #category : #tests }

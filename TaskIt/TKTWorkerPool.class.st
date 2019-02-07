@@ -40,12 +40,6 @@ Class {
 	#category : 'TaskIt-Worker'
 }
 
-{ #category : #testing }
-TKTWorkerPool >> freeWorkers [
-
-	^ workers select: [ :each | each isFree ]
-]
-
 { #category : #schedulling }
 TKTWorkerPool >> getAvailableWorker [
 

@@ -11,9 +11,11 @@ Class {
 		'workers',
 		'taskQueue',
 		'failedTasks',
-		'name'
+		'name',
+		'dog',
+		'mutex'
 	],
-	#category : 'TaskIt-Worker'
+	#category : #'TaskIt-Worker'
 }
 
 { #category : #current }
@@ -24,24 +26,30 @@ TKTCommonQueueWorkerPool class >> createDefault [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : #public }
+TKTCommonQueueWorkerPool >> ensureIsBeingWatched [
+	dog ifNotNil: [ dog ensureIsAwake ]
+]
+
+{ #category : #'public - mutexed' }
+TKTCommonQueueWorkerPool >> ensureIsWorking [
+	mutex
+		critical: [ failedTasks
+				add: (self workers reject: #isRunning thenCollect: #currentTaskExecution).
+			failedTasks
+				ifNotEmpty:
+					[ self logCr: failedTasks size asString , ' Failed tasks encountered' ].
+			(workers reject: #isRunning)
+				do: [ :w | 
+					w stop.
+					workers remove: w ].
+			self privateManageWorkersBefore.
+			self privateManageWorkersAfter ]
+]
+
+{ #category : #public }
 TKTCommonQueueWorkerPool >> failedTasks [
-	^ failedTasks
-]
-
-{ #category : #testing }
-TKTCommonQueueWorkerPool >> freeWorkers [
-	^ workers select: [ :each | each isFree ]
-]
-
-{ #category : #schedulling }
-TKTCommonQueueWorkerPool >> getAvailableWorker [
-	| worker |
-	worker := self freeWorkers
-		nextIfNone: [ self size < poolMaxSize
-				ifTrue: [ self newWorker ]
-				ifFalse: [ self freeWorkers next ] ].
-	^ worker
+	^ failedTasks copy
 ]
 
 { #category : #initialization }
@@ -50,6 +58,7 @@ TKTCommonQueueWorkerPool >> initialize [
 	workers := Set new.
 	failedTasks := OrderedCollection new.
 	taskQueue := AtomicSharedQueue new.
+	mutex := Mutex new.
 	self name: 'Worker' , self identityHash asString.
 	
 ]
@@ -59,125 +68,132 @@ TKTCommonQueueWorkerPool >> isDebuggingCompatible [
 	^ true
 ]
 
-{ #category : #testing }
-TKTCommonQueueWorkerPool >> isFree [
-
-	^ workers allSatisfy: [ :each | each isFree ]
-]
-
-{ #category : #schedulling }
-TKTCommonQueueWorkerPool >> manageWorkersAfter [
-	| free |
-
-	free := workers select: #isFree.
-	free size - taskQueue size > (poolMaxSize / 2)
-		ifTrue: [ self removeIdleWorker ]
-]
-
-{ #category : #schedulling }
-TKTCommonQueueWorkerPool >> manageWorkersBefore [
-	| free toremove |
-	toremove := workers reject: #isRunning.
-"	toremove isEmpty
-		ifFalse: [ self halt ].
-
-"	" do: [ :w | w stop ]."
-
-	free := workers select: #isFree.
-	free size - taskQueue size <= 0
-		ifTrue: [ self spawnWorkerIfNeeded ]
-]
-
-{ #category : #accessing }
+{ #category : #public }
 TKTCommonQueueWorkerPool >> name [
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : #public }
 TKTCommonQueueWorkerPool >> name: aString [
 	name := aString
 ]
 
-{ #category : #schedulling }
-TKTCommonQueueWorkerPool >> newWorker [	
-	^ workers add: (TKTWorker new
-		name: self name, ' Worker #', (self size + 1) asString;
-		taskQueue: taskQueue;
-		start)
+{ #category : #'public - mutexed' }
+TKTCommonQueueWorkerPool >> poolMaxSize: anInteger [
+	mutex critical: [ poolMaxSize := anInteger ]
 ]
 
-{ #category : #accessing }
-TKTCommonQueueWorkerPool >> poolMaxSize: anInteger [ 
-	
-	poolMaxSize := anInteger
-]
-
-{ #category : #printing }
+{ #category : #'public - mutexed' }
 TKTCommonQueueWorkerPool >> printOn: aStream [
-	| freeWorkers | 
-	freeWorkers := workers select: #isFree.
-	aStream
-		nextPutAll: 'TKTCommonQueueWorkerPool(';
-		nextPutAll: 'name:';
-		nextPutAll: name;
-		nextPutAll: 'poolMaxSize: ';
-		print: poolMaxSize;
-		nextPutAll: '; busyWorkers: ';
-		print: workers size - freeWorkers size;
-		nextPutAll: '; freeWorkers: ';
-		print: freeWorkers size;
-		nextPutAll: ')'
+	| freeWorkers |
+	mutex
+		critical: [ freeWorkers := self privateFreeWorkers.
+			aStream
+				nextPutAll: 'TKTCommonQueueWorkerPool(';
+				nextPutAll: 'name:';
+				nextPutAll: name;
+				nextPutAll: 'poolMaxSize: ';
+				print: poolMaxSize;
+				nextPutAll: '; busyWorkers: ';
+				print: workers size - freeWorkers size;
+				nextPutAll: '; freeWorkers: ';
+				print: freeWorkers size;
+				nextPutAll: ')' ]
 ]
 
-{ #category : #schedulling }
-TKTCommonQueueWorkerPool >> purge [
-	taskQueue removeAll
+{ #category : #private }
+TKTCommonQueueWorkerPool >> privateFreeWorkers [
+	^ workers select: [ :each | each isFree ]
 ]
 
-{ #category : #removing }
-TKTCommonQueueWorkerPool >> removeIdleWorker [
-	| removing |
-	removing := (workers select: #isFree) anyOne.
+{ #category : #private }
+TKTCommonQueueWorkerPool >> privateManageWorkersAfter [
+	| free toremove |
+	toremove := workers reject: #isRunning.
+	toremove do: [ :w | w stop ].
+	free := self privateFreeWorkers.
+	taskQueue size > free size
+		ifTrue: [ self privateSpawnWorkerIfNeeded ]
+]
+
+{ #category : #private }
+TKTCommonQueueWorkerPool >> privateManageWorkersBefore [
+	| free |
+	free := self privateFreeWorkers.
+	free size * 100 / (workers size max: 1) > 50
+		ifTrue: [ self privateRemoveIdleWorkerIfNeeded ]
+]
+
+{ #category : #private }
+TKTCommonQueueWorkerPool >> privateNewWorker [
+	workers
+		add:
+			(TKTWorker new
+				name: self name , ' Worker #' , (self size + 1) asString;
+				taskQueue: taskQueue;
+				start)
+]
+
+{ #category : #private }
+TKTCommonQueueWorkerPool >> privateRemoveIdleWorkerIfNeeded [
+	| removing free |
+	free := self privateFreeWorkers.
+	free size < taskQueue size
+		ifTrue: [ ^ self ].
+	removing := free anyOne.
 	removing stop.
 	workers remove: removing
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #private }
+TKTCommonQueueWorkerPool >> privateSpawnWorkerIfNeeded [
+	workers size < poolMaxSize
+		ifTrue: [ self privateNewWorker ]
+]
+
+{ #category : #public }
+TKTCommonQueueWorkerPool >> purge [
+	taskQueue removeAll
+]
+
+{ #category : #'public - mutexed' }
 TKTCommonQueueWorkerPool >> reset [
-	self purge.
-	workers do: #restart
+	mutex
+		critical: [ self purge.
+			workers do: #restart ]
 ]
 
-{ #category : #schedulling }
+{ #category : #'public - mutexed' }
 TKTCommonQueueWorkerPool >> scheduleTaskExecution: aTaskExecution [
-	self manageWorkersBefore.
-	taskQueue nextPut: aTaskExecution.
+	mutex
+		critical: [ self ensureIsBeingWatched.
+			self privateManageWorkersBefore.
+			taskQueue nextPut: aTaskExecution.
+			self privateManageWorkersAfter ]
 ]
 
-{ #category : #accessing }
+{ #category : #public }
 TKTCommonQueueWorkerPool >> size [
-	
 	^ workers size
 ]
 
-{ #category : #schedulling }
-TKTCommonQueueWorkerPool >> spawnWorkerIfNeeded [
-	workers size < poolMaxSize
-		ifTrue: [ self newWorker ]
-]
-
-{ #category : #accessing }
+{ #category : #'public - mutexed' }
 TKTCommonQueueWorkerPool >> start [
-	TKTWatchDog on: self
+	mutex
+		critical: [ dog
+				ifNil: [ dog := TKTWatchDog on: self ]
+				ifNotNil: [ self error: 'Already started' ] ]
 ]
 
-{ #category : #accessing }
+{ #category : #'public - mutexed' }
 TKTCommonQueueWorkerPool >> stop [
-	workers do: #stop.
-	workers removeAll
+	mutex
+		critical: [ dog := nil.
+			workers do: #stop.
+			workers removeAll ]
 ]
 
-{ #category : #accessing }
+{ #category : #public }
 TKTCommonQueueWorkerPool >> workers [
 	
 	^ workers copy
