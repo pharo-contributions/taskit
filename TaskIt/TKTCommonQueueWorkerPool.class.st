@@ -35,7 +35,7 @@ TKTCommonQueueWorkerPool >> ensureIsBeingWatched [
 TKTCommonQueueWorkerPool >> ensureIsWorking [
 	mutex
 		critical: [ failedTasks
-				add: (self workers reject: #isRunning thenCollect: #currentTaskExecution).
+				addAll: (self workers reject: #isRunning thenCollect: #currentTaskExecution).
 			failedTasks
 				ifNotEmpty:
 					[ self logCr: failedTasks size asString , ' Failed tasks encountered' ].
