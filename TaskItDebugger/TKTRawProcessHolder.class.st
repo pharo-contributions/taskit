@@ -8,9 +8,11 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'process',
-		'contextHolders'
+		'contextHolders',
+		'stackCopy',
+		'processStack'
 	],
-	#category : 'TaskItDebugger'
+	#category : #TaskItDebugger
 }
 
 { #category : #'instance creation' }
@@ -57,10 +59,11 @@ TKTRawProcessHolder >> holderForContext: aContext [
 
 { #category : #initialization }
 TKTRawProcessHolder >> initializeWithProcess: aProcess [
-	| stackCopy previousHolder |
-	process := WeakArray with: aProcess.
+	| previousHolder |
+	process := aProcess.
 	stackCopy := thisContext copyStack stack.
-	contextHolders := thisContext stack
+	processStack := thisContext stack.
+	contextHolders := processStack
 		withIndexCollect: [ :context :index | 
 			TKTContextHolder
 				forProcess: process
@@ -76,7 +79,7 @@ TKTRawProcessHolder >> initializeWithProcess: aProcess [
 
 { #category : #accessing }
 TKTRawProcessHolder >> process [
-	^ process at:1
+	^ process
 ]
 
 { #category : #query }

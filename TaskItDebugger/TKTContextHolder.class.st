@@ -41,7 +41,7 @@ TKTContextHolder >> completeStep [
 
 { #category : #accessing }
 TKTContextHolder >> copyContext [
-	^ copy at:1 
+	^ copy
 ]
 
 { #category : #testing }
@@ -57,14 +57,14 @@ TKTContextHolder >> index [
 { #category : #initialization }
 TKTContextHolder >> initializeWithProcess: aProcess context: originalContext andCopy: copyContext withIndex: anInteger [
 	process := aProcess.
-	original := WeakArray with: originalContext.
-	copy := WeakArray with: copyContext.
+	original := originalContext.
+	copy := copyContext.
 	index := anInteger
 ]
 
 { #category : #testing }
 TKTContextHolder >> isDead [
-	^ self originalContext isDead
+	^ self originalContext ifNil: [ true ] ifNotNil: [ :c | c isDead ]
 ]
 
 { #category : #accessing }
@@ -79,7 +79,7 @@ TKTContextHolder >> next: aContextHolder [
 
 { #category : #accessing }
 TKTContextHolder >> originalContext [
-	^ original at: 1
+	^ original
 ]
 
 { #category : #'changing suspended state' }

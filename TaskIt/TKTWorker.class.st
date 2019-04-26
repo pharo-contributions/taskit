@@ -82,7 +82,7 @@ TKTWorker >> isBusy [
 
 { #category : #testing }
 TKTWorker >> isFree [
-	^ process isFree
+	^ process ifNil: [ true ] ifNotNil: [ process isFree ]
 ]
 
 { #category : #testing }
