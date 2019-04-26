@@ -86,19 +86,18 @@ TKTCommonQueueWorkerPool >> poolMaxSize: anInteger [
 { #category : #'public - mutexed' }
 TKTCommonQueueWorkerPool >> printOn: aStream [
 	| freeWorkers |
-	mutex
-		critical: [ freeWorkers := self privateFreeWorkers.
-			aStream
-				nextPutAll: 'TKTCommonQueueWorkerPool(';
-				nextPutAll: 'name:';
-				nextPutAll: name;
-				nextPutAll: 'poolMaxSize: ';
-				print: poolMaxSize;
-				nextPutAll: '; busyWorkers: ';
-				print: workers size - freeWorkers size;
-				nextPutAll: '; freeWorkers: ';
-				print: freeWorkers size;
-				nextPutAll: ')' ]
+	freeWorkers := self privateFreeWorkers.
+	aStream
+		nextPutAll: 'TKTCommonQueueWorkerPool(';
+		nextPutAll: 'name:';
+		nextPutAll: name;
+		nextPutAll: 'poolMaxSize: ';
+		print: poolMaxSize;
+		nextPutAll: '; busyWorkers: ';
+		print: workers size - freeWorkers size;
+		nextPutAll: '; freeWorkers: ';
+		print: freeWorkers size;
+		nextPutAll: ')'
 ]
 
 { #category : #private }
@@ -141,8 +140,9 @@ TKTCommonQueueWorkerPool >> privateRemoveIdleWorkerIfNeeded [
 	free size < taskQueue size
 		ifTrue: [ ^ self ].
 	removing := free anyOne.
+	workers remove: removing.
 	removing stop.
-	workers remove: removing
+	
 ]
 
 { #category : #private }

@@ -58,6 +58,7 @@ TKTCommonQueueWorkerPoolTests >> testWorkerPoolStopStopsWorkers [
 
 { #category : #tests }
 TKTCommonQueueWorkerPoolTests >> testWorkerPoolWorkersAreStoppedAfterPoolsCollection [
+	<expectedFailure>
 	| pool workerProcess |
 	pool := TKTCommonQueueWorkerPool new.
 	pool name: 'test pool' , UUID new asString.
@@ -74,12 +75,14 @@ TKTCommonQueueWorkerPoolTests >> testWorkerPoolWorkersAreStoppedAfterPoolsCollec
 
 { #category : #tests }
 TKTCommonQueueWorkerPoolTests >> testWorkerPoolWorkersProcessesAreStoppedAfterPoolsCollection [
+	<expectedFailure>
 	| pool workerProcess |
 	pool := TKTCommonQueueWorkerPool new.
 	pool name: 'Test pool' , UUID new asString.
 	pool poolMaxSize: 4.
 	pool start.
-	(pool future: (MessageSend receiver: self selector: #yourself)) waitForCompletion: 1 second.
+	(pool future: (MessageSend receiver: self selector: #yourself))
+		waitForCompletion: 1 second.
 	workerProcess := WeakArray with: pool workers anyOne process process.
 	pool := nil.
 	self garbageCollectAndWait.
