@@ -36,11 +36,6 @@ Class {
 	#category : #'TaskIt-Worker'
 }
 
-{ #category : #'as yet unclassified' }
-TKTWorker >> currentTask [
-	self shouldBeImplemented.
-]
-
 { #category : #'start-stop' }
 TKTWorker >> currentTaskExecution [
 	^ process currentTaskExecution
@@ -65,7 +60,7 @@ TKTWorker >> finalize [
 			queue := nil.
 			theProcess := process.
 			theProcess ifNotNil: [ theProcess kill ].
-			process := nil ]
+			process := nil ].
 ]
 
 { #category : #initialization }
@@ -77,7 +72,7 @@ TKTWorker >> initialize [
 
 { #category : #testing }
 TKTWorker >> isBusy [
-	^ process isBusy
+	^ self isFree not
 ]
 
 { #category : #testing }

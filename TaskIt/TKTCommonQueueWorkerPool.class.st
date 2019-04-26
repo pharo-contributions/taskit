@@ -141,8 +141,9 @@ TKTCommonQueueWorkerPool >> privateRemoveIdleWorkerIfNeeded [
 	free size < taskQueue size
 		ifTrue: [ ^ self ].
 	removing := free anyOne.
+	workers remove: removing.
 	removing stop.
-	workers remove: removing
+	
 ]
 
 { #category : #private }
