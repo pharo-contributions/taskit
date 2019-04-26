@@ -89,7 +89,7 @@ TKTContextHolder >> popTo [
 
 { #category : #accessing }
 TKTContextHolder >> process [
-	^ process at: 1
+	^ process
 ]
 
 { #category : #'changing suspended state' }

@@ -44,7 +44,7 @@ TKTWorkerPoolTests >> testWorkerPoolDoesNotExceedPoolSizeWhenSchedulingTasksInPa
 			10 timesRepeat: [ futures nextPut: (pool future: [
 					totalTasks := totalTasks + 1 ]) ] ]) ].
 	
-	[ futures isEmpty ] whileFalse: [ futures next waitForCompletion: 100 milliSeconds ].
+	[ futures isEmpty ] whileFalse: [ futures next waitForCompletion: 1 second ].
 	
 	self assert: totalTasks equals: 100.
 	self assert: pool size equals: 10
