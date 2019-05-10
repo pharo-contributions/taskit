@@ -17,6 +17,16 @@ Class {
 }
 
 { #category : #configuration }
+TKTRawProcess class >> disableDebugger [
+	TKTDebugger disable
+]
+
+{ #category : #configuration }
+TKTRawProcess class >> enableDebugger [
+	TKTDebugger enable
+]
+
+{ #category : #configuration }
 TKTRawProcess class >> isDebuggingCompatible [
 	^ true
 ]
