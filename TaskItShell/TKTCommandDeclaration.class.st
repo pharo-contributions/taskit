@@ -47,6 +47,23 @@ TKTCommandDeclaration >> createOSSubprocess [
 		yourself
 ]
 
+{ #category : #convenience }
+TKTCommandDeclaration >> fixedTask [
+	^ TKTFixedCommandTask new
+		command: self;
+		yourself
+]
+
+{ #category : #convenience }
+TKTCommandDeclaration >> future [
+	^ self fixedTask future
+]
+
+{ #category : #convenience }
+TKTCommandDeclaration >> future: aRunner [
+	^ self fixedTask future: aRunner
+]
+
 { #category : #accessing }
 TKTCommandDeclaration >> initialize [
 	super initialize.
@@ -72,9 +89,26 @@ TKTCommandDeclaration >> option: anOption [
 ]
 
 { #category : #accessing }
+TKTCommandDeclaration >> option: anOption value: aValue [
+	options add: anOption.
+	options add: aValue.
+	^ self
+]
+
+{ #category : #accessing }
 TKTCommandDeclaration >> options: aSetOfOptions [
 	options := aSetOfOptions asOrderedCollection.
 	^ self
+]
+
+{ #category : #convenience }
+TKTCommandDeclaration >> schedule [
+	^ self fixedTask schedule
+]
+
+{ #category : #convenience }
+TKTCommandDeclaration >> schedule: aRunner [
+	^ self fixedTask schedule: aRunner
 ]
 
 { #category : #accessing }
