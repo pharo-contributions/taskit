@@ -9,16 +9,58 @@ Class {
 }
 
 { #category : #accessing }
+TKTDeployed class >> pharoScript [
+	^ '#!/usr/bin/env bash
+# some magic to find out the real location of this script dealing with symlinks
+DIR=`readlink "$0"` || DIR="$0";
+DIR=`dirname "$DIR"`;
+cd "$DIR"
+DIR=`pwd`
+cd - > /dev/null
+# disable parameter expansion to forward all arguments unprocessed to the VM
+set -f
+# run the VM and pass along all arguments as is
+"$DIR"/"pharo-vm/Pharo.app/Contents/MacOS/Pharo" --headless "$@"'
+]
+
+{ #category : #accessing }
+TKTDeployed class >> pharoUiScript [
+	^ '#!/usr/bin/env bash
+# some magic to find out the real location of this script dealing with symlinks
+DIR=`readlink "$0"` || DIR="$0";
+DIR=`dirname "$DIR"`;
+cd "$DIR"
+DIR=`pwd`
+cd - > /dev/null
+# disable parameter expansion to forward all arguments unprocessed to the VM
+set -f
+# run the VM and pass along all arguments as is
+"$DIR"/"pharo-vm/Pharo.app/Contents/MacOS/Pharo" "$@"'
+]
+
+{ #category : #accessing }
 TKTDeployed >> changesFile [
 	^ location / 'Pharo.changes'
 ]
 
 { #category : #accessing }
 TKTDeployed >> command [
-	^ self vmBinary command
-		option: '--headless';
+	^ self pharoScript command
 		option: self imageFile fullName;
 		yourself
+]
+
+{ #category : #accessing }
+TKTDeployed >> createScript: ref with: content [
+	(ref
+		ensureCreateFile;
+		writeStream)
+		nextPutAll: content;
+		close.
+	(TKTSystem chmod
+		option: '+x';
+		argument: ref fullName;
+		future) synchronizeTimeout: 5 seconds
 ]
 
 { #category : #accessing }
@@ -35,11 +77,18 @@ TKTDeployed >> initializeWithLocation: aLocation andArchetype: anArquetype [
 
 { #category : #accessing }
 TKTDeployed >> pharoScript [
+	(location / 'pharo') exists
+		ifFalse:
+			[ self createScript: location / 'pharo' with: self class pharoScript ].
 	^ location / 'pharo'
 ]
 
 { #category : #accessing }
 TKTDeployed >> pharoUiScript [
+	(location / 'pharo-ui') exists
+		ifFalse: [ self
+				createScript: location / 'pharo-ui'
+				with: self class pharoUiScript ].
 	^ location / 'pharo-ui'
 ]
 

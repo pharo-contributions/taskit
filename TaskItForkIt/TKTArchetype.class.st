@@ -133,7 +133,7 @@ TKTArchetype >> deploy [
 	^ TKTDeployer default
 		deploy: self
 		at:
-			((#/ asFileReference / #tmp / self name / UUID new asString)
+			(('pharo-local' asFileReference/ #forking  / #deployCache / self name / UUID new asString)
 				ensureCreateDirectory;
 				yourself)
 ]
