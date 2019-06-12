@@ -23,7 +23,31 @@ TKTArchetype class >> currentArchitecture [
 ]
 
 { #category : #shortcuts }
+TKTArchetype class >> pharo61 [
+	^ self new
+		imageSelector: '61';
+		architectureSelector: 64;
+		vmSelector: #stable
+]
+
+{ #category : #shortcuts }
+TKTArchetype class >> pharo6132Bits [
+	^ self new
+		imageSelector: '61';
+		architectureSelector: 32;
+		vmSelector: #stable
+]
+
+{ #category : #shortcuts }
 TKTArchetype class >> pharo70 [
+	^ self new
+		imageSelector: '70';
+		architectureSelector: 64;
+		vmSelector: #stable
+]
+
+{ #category : #shortcuts }
+TKTArchetype class >> pharo7032Bits [
 	^ self new
 		imageSelector: '70';
 		architectureSelector: 32;
@@ -35,6 +59,14 @@ TKTArchetype class >> pharo80 [
 	^ self new
 		imageSelector: '80';
 		architectureSelector: 64;
+		vmSelector: #stable
+]
+
+{ #category : #shortcuts }
+TKTArchetype class >> pharo8032Bits [
+	^ self new
+		imageSelector: '80';
+		architectureSelector: 32;
 		vmSelector: #stable
 ]
 
