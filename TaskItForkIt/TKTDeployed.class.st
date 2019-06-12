@@ -14,6 +14,14 @@ TKTDeployed >> changesFile [
 ]
 
 { #category : #accessing }
+TKTDeployed >> command [
+	^ self vmBinary command
+		option: '--headless';
+		option: self imageFile fullName;
+		yourself
+]
+
+{ #category : #accessing }
 TKTDeployed >> imageFile [
 	^ location / #'Pharo.image'
 ]
@@ -47,6 +55,16 @@ TKTDeployed >> sourcesFile [
 { #category : #accessing }
 TKTDeployed >> vm [
 	^ location / 'pharo-vm'
+]
+
+{ #category : #accessing }
+TKTDeployed >> vmBinary [
+	| ref |
+	ref := OSPlatform current isMacOS
+		ifTrue: [ self vmFolder / 'Pharo.app' / #Contents / #MacOS / #Pharo ]
+		ifFalse: [ self vmFolder / #pharo ].
+	self assert: ref isFile.
+	^ ref
 ]
 
 { #category : #'accessingas yet unclassified' }
