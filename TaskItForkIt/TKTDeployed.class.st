@@ -10,7 +10,8 @@ Class {
 
 { #category : #accessing }
 TKTDeployed class >> pharoScript [
-	^ '#!/usr/bin/env bash
+	^ '
+#!/usr/bin/env bash
 # some magic to find out the real location of this script dealing with symlinks
 DIR=`readlink "$0"` || DIR="$0";
 DIR=`dirname "$DIR"`;
@@ -52,15 +53,21 @@ TKTDeployed >> command [
 
 { #category : #accessing }
 TKTDeployed >> createScript: ref with: content [
-	(ref
-		ensureCreateFile;
-		writeStream)
+	ref ensureCreateFile.
+	(ZnNewLineWriterStream on: ref writeStream)
+		forPlatformLineEnding;
+		yourself;
 		nextPutAll: content;
 		close.
 	(TKTSystem chmod
 		option: '+x';
 		argument: ref fullName;
 		future) synchronizeTimeout: 5 seconds
+]
+
+{ #category : #accessing }
+TKTDeployed >> eval [
+	^ self command option: 'eval'
 ]
 
 { #category : #accessing }
@@ -73,6 +80,25 @@ TKTDeployed >> initializeWithLocation: aLocation andArchetype: anArquetype [
 	location := aLocation.
 	archetype := anArquetype.
 	archetype dependancies do: [ :d | d deployIn: self ]
+]
+
+{ #category : #accessing }
+TKTDeployed >> install: url configurationOrBaselineName: confOrBaseline [
+	^ self command
+		option: 'metacello';
+		option: 'install';
+		option: confOrBaseline asString;
+		future
+]
+
+{ #category : #accessing }
+TKTDeployed >> install: url configurationOrBaselineName: confOrBaseline groups: aCollectionOfGroup [
+	^ self command
+		option: 'metacello';
+		option: 'install';
+		option: confOrBaseline asString;
+		option: ('--groups={1}' format: {(',' join: aCollectionOfGroup)});
+		future
 ]
 
 { #category : #accessing }
