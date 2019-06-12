@@ -97,6 +97,16 @@ TKTArchetype >> dependsOnConfigurationOf: name version: aVersion repository: aRe
 ]
 
 { #category : #accessing }
+TKTArchetype >> deploy [
+	^ TKTDeployer default
+		deploy: self
+		at:
+			((#/ asFileReference / #tmp / self name / UUID new asString)
+				ensureCreateDirectory;
+				yourself)
+]
+
+{ #category : #accessing }
 TKTArchetype >> headless: aFalse [
 	isHeadless := aFalse
 ]
