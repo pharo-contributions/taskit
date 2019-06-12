@@ -47,8 +47,8 @@ TKTImageProvider >> install: aString architecture: anInteger at: aFileReference 
 { #category : #resolving }
 TKTImageProvider >> resolve: aString architecture: anArchitecture [
 	| cache |
-	aString = #current
-		ifTrue: [ self resolveCurrentImageAsOption ].
+	aString asString = 'current'
+		ifTrue: [ ^ self resolveCurrentImageAsOption ].
 	cache := self imagePathFor: aString architecture: anArchitecture.
 	(cache exists and: [ cache entries isNotEmpty ])
 		ifFalse: [ cache ensureCreateDirectory.
