@@ -48,6 +48,18 @@ TKTDeployed >> changesFile [
 TKTDeployed >> command [
 	^ self pharoScript command
 		option: self imageFile fullName;
+		yourself.
+		
+		"self vmBinary command
+		option:'--headless';
+		option: self imageFile fullName;
+		yourself"
+]
+
+{ #category : #accessing }
+TKTDeployed >> commandUi [
+	^ self pharoUiScript command
+		option: self imageFile fullName;
 		yourself
 ]
 
@@ -70,6 +82,25 @@ TKTDeployed >> eval [
 	^ self command option: 'eval'
 ]
 
+{ #category : #'evalas yet unclassified' }
+TKTDeployed >> evalSerialized: aString [
+	| output return input |
+	output := UUID new asString asFileReference.
+	input := '
+	| ston | 
+	ston := STONWriter on: (''{1}'' asFileReference ensureDelete; writeStream).
+	[ ston nextPut: [{2}] value  ] on:Error do: [ :e |  ston nextPut: e ].
+	ston close. 
+  '
+		format:
+			{output fullName.
+			aString}.
+	(self eval argument: input) future synchronizeTimeout: 15 minutes.
+	return := (STONReader on: output readStream) next.
+	output ensureDelete.
+	^ return 
+]
+
 { #category : #accessing }
 TKTDeployed >> imageFile [
 	^ location / #'Pharo.image'
@@ -79,7 +110,7 @@ TKTDeployed >> imageFile [
 TKTDeployed >> initializeWithLocation: aLocation andArchetype: anArquetype [
 	location := aLocation.
 	archetype := anArquetype.
-	archetype dependancies do: [ :d | d deployIn: self ]
+
 ]
 
 { #category : #accessing }
@@ -87,6 +118,7 @@ TKTDeployed >> install: url configurationOrBaselineName: confOrBaseline [
 	^ self command
 		option: 'metacello';
 		option: 'install';
+		option: url asString;
 		option: confOrBaseline asString;
 		future
 ]
@@ -96,6 +128,7 @@ TKTDeployed >> install: url configurationOrBaselineName: confOrBaseline groups: 
 	^ self command
 		option: 'metacello';
 		option: 'install';
+		option: url asString;
 		option: confOrBaseline asString;
 		option: ('--groups={1}' format: {(',' join: aCollectionOfGroup)});
 		future

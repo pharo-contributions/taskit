@@ -33,7 +33,8 @@ TKTVMProvider >> downloadVm: aString forImage: aString2 architecture: anInteger 
 		url: imageUrl;
 		downloadTo: zipFile.
 	self assert: zipFile exists.
-	(ZipArchive new readFrom: zipFile) extractAllTo: aFileReference / 'pharo-vm'.
+	TKTSystem unzip: zipFile into: aFileReference / 'pharo-vm'.
+	"(ZipArchive new readFrom: zipFile) extractAllTo: aFileReference / 'pharo-vm'."
 	(TKTSystem chmod
 		option: '-R';
 		option: '+x';
@@ -45,12 +46,12 @@ TKTVMProvider >> downloadVm: aString forImage: aString2 architecture: anInteger 
 { #category : #intalling }
 TKTVMProvider >> install: aVmSelector forImage: anImageSelector architecture: anInteger at: aFileReference [
 	self
-		installAllSymlinksTo:
+		copyAll:
 			(self
 				resolve: aVmSelector
 				forImage: anImageSelector
 				architecture: anInteger)
-		at: aFileReference
+		to: aFileReference
 ]
 
 { #category : #accessing }

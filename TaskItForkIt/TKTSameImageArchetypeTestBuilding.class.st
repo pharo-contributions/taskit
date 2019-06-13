@@ -46,16 +46,6 @@ TKTSameImageArchetypeTestBuilding >> tearDown [
 ]
 
 { #category : #tests }
-TKTSameImageArchetypeTestBuilding >> testArchetypeIsDeleteOnQuit [
-	self assert: archetype deleteOnQuit
-]
-
-{ #category : #tests }
-TKTSameImageArchetypeTestBuilding >> testArchetypeIsQuitOnFinalization [
-	self assert: archetype quitOnFinalization.
-]
-
-{ #category : #tests }
 TKTSameImageArchetypeTestBuilding >> testCommunicationStonHasNoDependancies [
 	self assert: archetype dependancies size equals: 0
 ]
@@ -75,17 +65,6 @@ TKTSameImageArchetypeTestBuilding >> testDeployDeploysAFunctionalEnvironment [
 
 	
 
-]
-
-{ #category : #tests }
-TKTSameImageArchetypeTestBuilding >> testTheArchetypeIsHeadless [
-	self assert: archetype isHeadless
-]
-
-{ #category : #tests }
-TKTSameImageArchetypeTestBuilding >> testTheArchetypeIsNotHeadless [
-	archetype headless: false.
-	self deny: archetype isHeadless
 ]
 
 { #category : #tests }

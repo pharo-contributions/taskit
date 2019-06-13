@@ -6,10 +6,7 @@ Class {
 		'imageSelector',
 		'vmSelector',
 		'architectureSelector',
-		'isHeadless',
-		'dependencies',
-		'deleteOnQuit',
-		'quitOnFinalization'
+		'dependencies'
 	],
 	#category : #TaskItForkIt
 }
@@ -20,6 +17,14 @@ TKTArchetype class >> currentArchitecture [
 		indexOfSubCollection: '32bit') > 0
 		ifTrue: [ 32 ]
 		ifFalse: [ 64 ]
+]
+
+{ #category : #shortcuts }
+TKTArchetype class >> moose80 [
+	^ self pharo80
+		dependsOnBaselineOf: 'Moose'
+			repository: 'github://impetuosa/Moose:development';
+		yourself
 ]
 
 { #category : #shortcuts }
@@ -90,11 +95,6 @@ TKTArchetype >> architectureSelector: aSelector [
 ]
 
 { #category : #accessing }
-TKTArchetype >> deleteOnQuit [
-	^ deleteOnQuit ifNil: [ deleteOnQuit := true ]
-]
-
-{ #category : #accessing }
 TKTArchetype >> dependancies [
 	^  dependencies
 ]
@@ -105,13 +105,12 @@ TKTArchetype >> dependsOn: aTKTProject [
 ]
 
 { #category : #accessing }
-TKTArchetype >> dependsOnBaselineOf: name version: aVersion repository: aRepository [
+TKTArchetype >> dependsOnBaselineOf: aName  repository: aRepository [
 	self
 		dependsOn:
 			(TKTProject new
-				name: name;
+				name: aName;
 				kind: #BaselineOf;
-				version: aVersion;
 				repository: aRepository;
 				yourself)
 ]
@@ -139,11 +138,6 @@ TKTArchetype >> deploy [
 ]
 
 { #category : #accessing }
-TKTArchetype >> headless: aFalse [
-	isHeadless := aFalse
-]
-
-{ #category : #accessing }
 TKTArchetype >> imageSelector [
 	^ imageSelector 
 ]
@@ -160,11 +154,6 @@ TKTArchetype >> initialize [
 ]
 
 { #category : #accessing }
-TKTArchetype >> isHeadless [
-	^ isHeadless ifNil: [ isHeadless := true ]
-]
-
-{ #category : #accessing }
 TKTArchetype >> name [
 	^ name ifNil: [ name := imageSelector ,'vm', vmSelector  ]
 ]
@@ -172,11 +161,6 @@ TKTArchetype >> name [
 { #category : #accessing }
 TKTArchetype >> name: aName [
 	name := aName
-]
-
-{ #category : #accessing }
-TKTArchetype >> quitOnFinalization [
-	^ quitOnFinalization ifNil: [ quitOnFinalization := true ]
 ]
 
 { #category : #accessing }

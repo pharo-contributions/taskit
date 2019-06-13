@@ -20,7 +20,7 @@ TKTFixedCommandTask >> command: aCommand [
 { #category : #executing }
 TKTFixedCommandTask >> futureTaskExecutionFor: aRunner [
 	| execution |
-	execution := TKTOSTaskExecution new.
+	execution := TKTOSTaskVerboseExecution new.
 	execution runner: aRunner.
 	execution task: self.
 	^ execution

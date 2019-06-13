@@ -38,3 +38,13 @@ TKTSystem class >> mv [
 TKTSystem class >> rm [
 	^ '/bin/rm' asFileReference command
 ]
+
+{ #category : #'as yet unclassified' }
+TKTSystem class >> unzip: aFileReference into: aDirectory [
+	aDirectory ensureCreateDirectory.
+	^ [ :spec | 
+	spec
+		command: 'unzip';
+		option: '-d' value: aDirectory fullName;
+		argument: aFileReference fullName ] asOSTask future 
+]

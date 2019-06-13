@@ -6,9 +6,16 @@ Class {
 
 { #category : #copying }
 TKTResourceProvider >> copy: aFileReference to: aDestination [
+	(TKTSystem cp
+		option: '-r';
+		arguments:
+			{aFileReference asFileReference fullName.
+			aDestination asFileReference fullName};
+		future) synchronizeTimeout: 1 minute.
+	"
 	aFileReference isDirectory
-		ifTrue: [ aFileReference copyAllTo: aDestination ]
-		ifFalse: [ aFileReference copyTo: aDestination ].
+		ifTrue: [ aFileReference asFileReference copyAllTo: aDestination ]
+		ifFalse: [ aFileReference asFileReference copyTo: aDestination ]."
 	^ aDestination
 ]
 
@@ -19,8 +26,8 @@ TKTResourceProvider >> copyAll: aCollection to: aFileReference [
 ]
 
 { #category : #'resolving and install' }
-TKTResourceProvider >> install: aString at: aFileReference [ 
-	self subclassResponsibility 
+TKTResourceProvider >> install: aProject at: aDeployed [
+	aProject deployIn: aDeployed
 ]
 
 { #category : #linking }

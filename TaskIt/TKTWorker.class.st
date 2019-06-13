@@ -38,7 +38,7 @@ Class {
 
 { #category : #'start-stop' }
 TKTWorker >> currentTaskExecution [
-	^ process currentTaskExecution
+	^ process ifNotNil: [ process currentTaskExecution ] ifNil: [ nil ]
 ]
 
 { #category : #accessing }

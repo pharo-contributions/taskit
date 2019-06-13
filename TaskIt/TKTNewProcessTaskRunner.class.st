@@ -53,5 +53,10 @@ Class {
 
 { #category : #schedulling }
 TKTNewProcessTaskRunner >> scheduleTaskExecution: aTaskExecution [
-	TKTConfiguration processProvider createProcessDoing: (MessageSend receiver: self selector: #executeTask: arguments: {aTaskExecution})
+	TKTConfiguration processProvider
+		createProcessDoing:
+			(MessageSend
+				receiver: self
+				selector: #executeTask:
+				arguments: {aTaskExecution})
 ]
