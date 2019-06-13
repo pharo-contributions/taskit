@@ -40,6 +40,11 @@ set -f
 ]
 
 { #category : #accessing }
+TKTDeployed >> archetype [
+	^ archetype
+]
+
+{ #category : #accessing }
 TKTDeployed >> changesFile [
 	^ location / 'Pharo.changes'
 ]

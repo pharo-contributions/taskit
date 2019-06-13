@@ -46,7 +46,7 @@ TKTVMProvider >> downloadVm: aString forImage: aString2 architecture: anInteger 
 { #category : #intalling }
 TKTVMProvider >> install: aVmSelector forImage: anImageSelector architecture: anInteger at: aFileReference [
 	self
-		copyAll:
+		copy:
 			(self
 				resolve: aVmSelector
 				forImage: anImageSelector
@@ -71,11 +71,12 @@ TKTVMProvider >> resolve: aString forImage: anImageVersion architecture: anInteg
 				architecture: anInteger
 				at: cache.
 			self assert: cache entries size = 1 ].
-	^ cache entries
+
+	^ cache / #'pharo-vm'
 ]
 
 { #category : #accessing }
 TKTVMProvider >> vmPathFor: vmVersion forImage: imageVersion architecture: anInteger [
-	^ 'pharo-local/forking/vm/' asFileReference / imageVersion
-		/ (anInteger asString,'bits') / vmVersion
+	^ self vmFolder / imageVersion / (anInteger asString , 'bits')
+		/ vmVersion
 ]

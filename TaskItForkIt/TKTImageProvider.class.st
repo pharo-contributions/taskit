@@ -24,12 +24,6 @@ TKTImageProvider >> download: aString architecture: anArchitecture at: destinati
 ]
 
 { #category : #resolving }
-TKTImageProvider >> imagePathFor: aString architecture: anArchitecture [
-	^ 'pharo-local' asFileReference / #forking / #image
-		/ anArchitecture asString
-]
-
-{ #category : #resolving }
 TKTImageProvider >> imageUrlFor: aString and: anArchitecture [
 	^ 'http://files.pharo.org/get-files/' , aString asString , '/pharo'
 		,
@@ -62,15 +56,14 @@ TKTImageProvider >> resolve: aString architecture: anArchitecture [
 TKTImageProvider >> resolveCurrentImageAsOption [
 	| session |
 	session := Smalltalk session.
-	'pharo-local/forking/current/Pharo.image' asFileReference
-		ensureDelete.
-	'pharo-local/forking/current/Pharo.changes' asFileReference
-		ensureDelete.
-	'pharo-local/forking/current' asFileReference ensureCreateDirectory.
-	Smalltalk image backupTo: 'pharo-local/forking/current/Pharo'.
+	(self currentCacheFolder / 'Pharo.image') ensureDelete.
+	(self currentCacheFolder / 'Pharo.changes') ensureDelete.
+	self currentCacheFolder ensureCreateDirectory.
+	Smalltalk image
+		backupTo: (self currentCacheFolder / 'Pharo') fullName.
 	session ~= Smalltalk session
 		ifTrue: [ UIManager default spawnNewProcess.
 			Processor activeProcess terminate ].
-	^ {'pharo-local/forking/current/Pharo.image' asFileReference.
-	'pharo-local/forking/current/Pharo.changes' asFileReference}
+	^ {(self currentCacheFolder / 'Pharo.image').
+	(self currentCacheFolder / 'Pharo.changes')}
 ]

@@ -4,7 +4,17 @@ Class {
 	#category : #TaskItForkIt
 }
 
-{ #category : #copying }
+{ #category : #folder }
+TKTResourceProvider >> archetypesFolder [
+	^ self baseFolder / #archetypes 
+]
+
+{ #category : #folder }
+TKTResourceProvider >> baseFolder [
+	^ 'pharo-local' asFileReference / #forking
+]
+
+{ #category : #copy }
 TKTResourceProvider >> copy: aFileReference to: aDestination [
 	(TKTSystem cp
 		option: '-r';
@@ -25,9 +35,24 @@ TKTResourceProvider >> copyAll: aCollection to: aFileReference [
 	aCollection do: [ :f | self copy: f to: aFileReference / f basename ]
 ]
 
-{ #category : #'resolving and install' }
-TKTResourceProvider >> install: aProject at: aDeployed [
-	aProject deployIn: aDeployed
+{ #category : #folder }
+TKTResourceProvider >> currentCacheFolder [
+	^ self baseFolder / #current
+]
+
+{ #category : #folder }
+TKTResourceProvider >> defaultDeployFolder [
+	^ self baseFolder / #deployCache
+]
+
+{ #category : #folder }
+TKTResourceProvider >> imageFolder [
+	^ self baseFolder / #image  
+]
+
+{ #category : #linking }
+TKTResourceProvider >> imagePathFor: aString architecture: anArchitecture [
+	^ self imageFolder / aString / anArchitecture asString
 ]
 
 { #category : #linking }
@@ -47,4 +72,17 @@ TKTResourceProvider >> installSymlinkTo: aFileReference at: aDestination [
 			{aFileReference fullName.
 			destination fullName};
 		future) synchronizeTimeout: 2 seconds
+]
+
+{ #category : #copy }
+TKTResourceProvider >> rm: aFileOrFolder [
+	^ (TKTSystem rm
+		option: '-rf';
+		argument: aFileOrFolder fullName) future
+		synchronizeTimeout: 1 minute
+]
+
+{ #category : #folder }
+TKTResourceProvider >> vmFolder [
+	^ self baseFolder / #vm
 ]

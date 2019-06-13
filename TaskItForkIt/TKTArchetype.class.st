@@ -1,3 +1,10 @@
+"
+In forkit the archetype is a really simple description of an image to build. 
+
+It is defined in terms of image selector (the version of the image, for the default providers), vm selector (the version of the vm, for the default providers) and architecture selector (32/64 bits, for the default providers).
+
+An archetype hierarchy is available for reusing definitions. The very first archetype should define a functional image, and the rest of the childs, project's specialization.
+"
 Class {
 	#name : #TKTArchetype,
 	#superclass : #Object,
@@ -6,7 +13,8 @@ Class {
 		'imageSelector',
 		'vmSelector',
 		'architectureSelector',
-		'dependencies'
+		'dependencies',
+		'parent'
 	],
 	#category : #TaskItForkIt
 }
@@ -20,11 +28,39 @@ TKTArchetype class >> currentArchitecture [
 ]
 
 { #category : #shortcuts }
+TKTArchetype class >> moose61 [
+	^ self pharo61
+		+
+			(TKTProject moose
+				repository: 'github://impetuosa/Moose:development';
+				yourself)
+]
+
+{ #category : #shortcuts }
+TKTArchetype class >> moose70 [
+	^ self pharo70
+		+
+			(TKTProject moose
+				repository: 'github://impetuosa/Moose:development';
+				yourself)
+]
+
+{ #category : #shortcuts }
 TKTArchetype class >> moose80 [
 	^ self pharo80
-		dependsOnBaselineOf: 'Moose'
-			repository: 'github://impetuosa/Moose:development';
-		yourself
+		+
+			(TKTProject moose
+				repository: 'github://impetuosa/Moose:development';
+				yourself)
+]
+
+{ #category : #shortcuts }
+TKTArchetype class >> mooseCurrent [
+	^ self pharoCurrent
+		+
+			(TKTProject moose
+				repository: 'github://impetuosa/Moose:development';
+				yourself)
 ]
 
 { #category : #shortcuts }
@@ -85,6 +121,14 @@ TKTArchetype class >> pharoCurrent [
 ]
 
 { #category : #accessing }
+TKTArchetype >> + aProject [
+	^ self copy 
+		parent: self;
+		dependsOn: aProject;
+		yourself
+]
+
+{ #category : #accessing }
 TKTArchetype >> architectureSelector [
 	^ architectureSelector
 ]
@@ -105,7 +149,7 @@ TKTArchetype >> dependsOn: aTKTProject [
 ]
 
 { #category : #accessing }
-TKTArchetype >> dependsOnBaselineOf: aName  repository: aRepository [
+TKTArchetype >> dependsOnBaselineOf: aName repository: aRepository [
 	self
 		dependsOn:
 			(TKTProject new
@@ -129,10 +173,16 @@ TKTArchetype >> dependsOnConfigurationOf: name version: aVersion repository: aRe
 
 { #category : #accessing }
 TKTArchetype >> deploy [
+	^ TKTArchetypeProvider default installOnDefaultLocation: self
+]
+
+{ #category : #accessing }
+TKTArchetype >> deployDirect [
 	^ TKTDeployer default
 		deploy: self
 		at:
-			(('pharo-local' asFileReference/ #forking  / #deployCache / self name / UUID new asString)
+			(('pharo-local' asFileReference / #forking / #deployCache / self name
+				/ UUID new asString)
 				ensureCreateDirectory;
 				yourself)
 ]
@@ -150,17 +200,37 @@ TKTArchetype >> imageSelector: aSelector [
 { #category : #accessing }
 TKTArchetype >> initialize [ 
 	super initialize .
-	dependencies := OrderedCollection new
+	dependencies := OrderedCollection new.
+
 ]
 
 { #category : #accessing }
 TKTArchetype >> name [
-	^ name ifNil: [ name := imageSelector ,'vm', vmSelector  ]
+	^ name ifNil: [ 
+		parent ifNil: [ name := imageSelector ,'vm', vmSelector ] ifNotNil: [
+			name := dependencies inject: parent name into: [ :bn : each | bn , each archetypeName  ]
+		]. 
+		    ]
 ]
 
 { #category : #accessing }
 TKTArchetype >> name: aName [
 	name := aName
+]
+
+{ #category : #acceesing }
+TKTArchetype >> parent [
+	^ parent
+]
+
+{ #category : #accessing }
+TKTArchetype >> parent: aParent [
+	parent := aParent
+]
+
+{ #category : #accessing }
+TKTArchetype >> postCopy [
+	dependencies := dependencies copy.
 ]
 
 { #category : #accessing }

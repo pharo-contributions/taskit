@@ -4,12 +4,6 @@ Class {
 	#category : #TaskItForkIt
 }
 
-{ #category : #resolving }
-TKTSourceProvider >> imagePathFor: aString architecture: anArchitecture [
-	^ 'pharo-local' asFileReference / #forking / #image
-		/ anArchitecture asString
-]
-
 { #category : #'resolving and install' }
 TKTSourceProvider >> install: aString architecture: anArchitecture at: aFileReference [ 
 	self installSymlinkTo: (self resolve: aString architecture: anArchitecture ) at: aFileReference.

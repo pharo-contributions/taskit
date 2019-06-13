@@ -10,6 +10,38 @@ Class {
 	#category : #TaskItForkIt
 }
 
+{ #category : #'as yet unclassified' }
+TKTProject class >> baselineTests [
+	^ TKTProject new
+		name: #BaselineTest;
+		kind: #BaselineOf;
+		repository: 'github://sbragagnolo/BaselineTest';
+		yourself
+]
+
+{ #category : #'as yet unclassified' }
+TKTProject class >> moose [
+	^ TKTProject new
+		name: #Moose;
+		kind: #BaselineOf;
+		repository: 'github://moosetechnology/Moose:development';
+		yourself
+]
+
+{ #category : #'as yet unclassified' }
+TKTProject class >> taskit [
+	^ TKTProject new
+		name: #TaskIt;
+		kind: #BaselineOf;
+		repository: 'github://sbragagnolo/taskit';
+		yourself
+]
+
+{ #category : #accesisng }
+TKTProject >> archetypeName [
+	^ name,( url copyReplaceAll: '/' with:'') copyReplaceAll:':' with: '_' asString
+]
+
 { #category : #'deployingas yet unclassified' }
 TKTProject >> deployIn: aTKTDeployed [
 	| s future |

@@ -39,8 +39,7 @@ TKTDeployer >> deploy: anArchetype at: location [
 	deployed := TKTDeployed new
 		initializeWithLocation: location andArchetype: anArchetype;
 		yourself.
-	anArchetype dependancies
-		do: [ :d | projectsProvider install: d at: deployed ].
+	self updateDeployed: deployed.
 	^ deployed
 ]
 
@@ -73,6 +72,12 @@ TKTDeployer >> sourceFileProvider [
 { #category : #accessing }
 TKTDeployer >> sourceFileProvider: aForkItSameSrcProvider [
 	sourceProvider := aForkItSameSrcProvider
+]
+
+{ #category : #accessing }
+TKTDeployer >> updateDeployed: aDeployed [
+	aDeployed archetype dependancies
+		do: [ :d | projectsProvider install: d at: aDeployed ]
 ]
 
 { #category : #accessing }
