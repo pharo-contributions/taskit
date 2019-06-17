@@ -1,6 +1,8 @@
 Class {
 	#name : #TKTDeployed,
 	#superclass : #Object,
+	#traits : 'TEquality',
+	#classTraits : 'TEquality classTrait',
 	#instVars : [
 		'location',
 		'archetype'

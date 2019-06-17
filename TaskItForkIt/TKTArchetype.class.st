@@ -8,6 +8,8 @@ An archetype hierarchy is available for reusing definitions. The very first arch
 Class {
 	#name : #TKTArchetype,
 	#superclass : #Object,
+	#traits : 'TEquality',
+	#classTraits : 'TEquality classTrait',
 	#instVars : [
 		'name',
 		'imageSelector',

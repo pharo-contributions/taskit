@@ -1,6 +1,8 @@
 Class {
 	#name : #TKTProject,
 	#superclass : #Object,
+	#traits : 'TEquality',
+	#classTraits : 'TEquality classTrait',
 	#instVars : [
 		'name',
 		'url',
