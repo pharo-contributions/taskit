@@ -16,6 +16,7 @@ TKTForkItPoolTestCase >> setUp [
 
 { #category : #running }
 TKTForkItPoolTestCase >> tearDown [
+	super tearDown.
 	pool stop.
 	(TKTSystem rm
 		option: '-rf';

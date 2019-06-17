@@ -193,7 +193,6 @@ TKTDeployed >> startImageNoQuit: aString [
 	startup := 1.
 	input := '
 	| ston | 
-	self halt.
 	ston := STONWriter on: (''{1}'' asFileReference ensureDelete; writeStream).
 	[ ston nextPut: [{2}] value  ] on:Error do: [ :e |  ston nextPut: e messageText ].
 	ston close. 
