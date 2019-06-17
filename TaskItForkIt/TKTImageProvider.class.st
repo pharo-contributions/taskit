@@ -1,7 +1,7 @@
 Class {
 	#name : #TKTImageProvider,
 	#superclass : #TKTResourceProvider,
-	#category : #TaskItForkIt
+	#category : #'TaskItForkIt-ImageBuilding'
 }
 
 { #category : #resolving }

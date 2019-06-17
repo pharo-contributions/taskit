@@ -145,6 +145,11 @@ TKTCommonQueueWorkerPool >> privateRemoveIdleWorkerIfNeeded [
 	
 ]
 
+{ #category : #'public - mutexed' }
+TKTCommonQueueWorkerPool >> privateScheduleTaskExecutionFromCriticalArea: aTaskExecution [
+	taskQueue nextPut: aTaskExecution
+]
+
 { #category : #private }
 TKTCommonQueueWorkerPool >> privateSpawnWorkerIfNeeded [
 	workers size < poolMaxSize
@@ -168,7 +173,7 @@ TKTCommonQueueWorkerPool >> scheduleTaskExecution: aTaskExecution [
 	mutex
 		critical: [ self ensureIsBeingWatched.
 			self privateManageWorkersBefore.
-			taskQueue nextPut: aTaskExecution.
+			self privateScheduleTaskExecutionFromCriticalArea: aTaskExecution.
 			self privateManageWorkersAfter ]
 ]
 
@@ -191,6 +196,11 @@ TKTCommonQueueWorkerPool >> stop [
 		critical: [ dog := nil.
 			workers do: #stop.
 			workers removeAll ]
+]
+
+{ #category : #accessing }
+TKTCommonQueueWorkerPool >> taskQueueSize [
+	^ taskQueue size
 ]
 
 { #category : #public }

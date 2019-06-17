@@ -1,7 +1,7 @@
 Class {
 	#name : #TKTResourceProvider,
 	#superclass : #Object,
-	#category : #TaskItForkIt
+	#category : #'TaskItForkIt-ImageBuilding'
 }
 
 { #category : #folder }

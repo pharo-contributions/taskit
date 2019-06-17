@@ -61,6 +61,11 @@ TKTWorkerProcess >> name: aString [
 	name := aString
 ]
 
+{ #category : #'start-stop' }
+TKTWorkerProcess >> privateNextTask [
+	^ taskQueue next
+]
+
 { #category : #testing }
 TKTWorkerProcess >> process [
 
@@ -93,5 +98,5 @@ TKTWorkerProcess >> taskQueue: aQueue [
 
 { #category : #'start-stop' }
 TKTWorkerProcess >> workerLoop [
-	[ self executeTask: taskQueue next ] repeat
+	[ self executeTask: self privateNextTask ] repeat
 ]

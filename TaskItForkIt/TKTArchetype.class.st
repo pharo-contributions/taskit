@@ -16,10 +16,13 @@ Class {
 		'dependencies',
 		'parent'
 	],
-	#category : #TaskItForkIt
+	#classInstVars : [
+		'lightweight'
+	],
+	#category : #'TaskItForkIt-ImageBuilding'
 }
 
-{ #category : #shortcuts }
+{ #category : #accessing }
 TKTArchetype class >> currentArchitecture [
 	^ (Smalltalk image sourceFileVersionString
 		indexOfSubCollection: '32bit') > 0
@@ -27,97 +30,136 @@ TKTArchetype class >> currentArchitecture [
 		ifFalse: [ 64 ]
 ]
 
-{ #category : #shortcuts }
+{ #category : #accessing }
+TKTArchetype class >> lightweight [
+	^ lightweight ifNil: [ lightweight := Dictionary new ]
+]
+
+{ #category : #moose }
 TKTArchetype class >> moose61 [
-	^ self pharo61
-		+
-			(TKTProject moose
-				repository: 'github://impetuosa/Moose:development';
-				yourself)
+	^ self lightweight
+		at: #moose61
+		ifAbsentPut: [ self pharo61
+				+
+					(TKTProject moose
+						repository: 'github://impetuosa/Moose:development';
+						yourself) ]
 ]
 
-{ #category : #shortcuts }
+{ #category : #moose }
 TKTArchetype class >> moose70 [
-	^ self pharo70
-		+
-			(TKTProject moose
-				repository: 'github://impetuosa/Moose:development';
-				yourself)
+	^ self lightweight
+		at: #moose70
+		ifAbsentPut: [ self pharo70
+				+
+					(TKTProject moose
+						repository: 'github://impetuosa/Moose:development';
+						yourself) ]
 ]
 
-{ #category : #shortcuts }
+{ #category : #moose }
 TKTArchetype class >> moose80 [
-	^ self pharo80
-		+
-			(TKTProject moose
-				repository: 'github://impetuosa/Moose:development';
-				yourself)
+	^ self lightweight
+		at: #moose80
+		ifAbsentPut: [ self pharo80
+				+
+					(TKTProject moose
+						repository: 'github://impetuosa/Moose:development';
+						yourself) ]
 ]
 
-{ #category : #shortcuts }
+{ #category : #moose }
 TKTArchetype class >> mooseCurrent [
-	^ self pharoCurrent
-		+
-			(TKTProject moose
-				repository: 'github://impetuosa/Moose:development';
-				yourself)
+	^ self lightweight
+		at: #mooseCurrent
+		ifAbsentPut: [ self pharoCurrent
+				+
+					(TKTProject moose
+						repository: 'github://impetuosa/Moose:development';
+						yourself) ]
 ]
 
-{ #category : #shortcuts }
+{ #category : #instantiating }
+TKTArchetype class >> named: aTag imageSelector: imageSelector architectureSelector: archectureSelector vmSelector: vmSelector [
+	^ self lightweight
+		at: aTag
+		ifAbsentPut: [ self new
+				name: aTag;
+				imageSelector: imageSelector;
+				architectureSelector: archectureSelector;
+				vmSelector: vmSelector ]
+]
+
+{ #category : #pharo }
 TKTArchetype class >> pharo61 [
-	^ self new
-		imageSelector: '61';
-		architectureSelector: 64;
+	^ self
+		named: #pharo61
+		imageSelector: '61'
+		architectureSelector: 64
 		vmSelector: #stable
 ]
 
-{ #category : #shortcuts }
+{ #category : #'pharo 32' }
 TKTArchetype class >> pharo6132Bits [
-	^ self new
-		imageSelector: '61';
-		architectureSelector: 32;
+	^ self
+		named: #pharo6132Bits
+		imageSelector: '61'
+		architectureSelector: 32
 		vmSelector: #stable
 ]
 
-{ #category : #shortcuts }
+{ #category : #pharo }
 TKTArchetype class >> pharo70 [
-	^ self new
-		imageSelector: '70';
-		architectureSelector: 64;
+	^ self
+		named: #pharo70
+		imageSelector: '70'
+		architectureSelector: 64
 		vmSelector: #stable
 ]
 
-{ #category : #shortcuts }
+{ #category : #'pharo 32' }
 TKTArchetype class >> pharo7032Bits [
-	^ self new
-		imageSelector: '70';
-		architectureSelector: 32;
+	^ self
+		named: #pharo7032Bits
+		imageSelector: '70'
+		architectureSelector: 32
 		vmSelector: #stable
 ]
 
-{ #category : #shortcuts }
+{ #category : #pharo }
 TKTArchetype class >> pharo80 [
-	^ self new
-		imageSelector: '80';
-		architectureSelector: 64;
+	^ self
+		named: #pharo80
+		imageSelector: '80'
+		architectureSelector: 64
 		vmSelector: #stable
 ]
 
-{ #category : #shortcuts }
+{ #category : #'pharo 32' }
 TKTArchetype class >> pharo8032Bits [
-	^ self new
-		imageSelector: '80';
-		architectureSelector: 32;
+	^ self
+		named: #pharo8032Bits
+		imageSelector: '80'
+		architectureSelector: 32
 		vmSelector: #stable
 ]
 
-{ #category : #shortcuts }
+{ #category : #pharo }
 TKTArchetype class >> pharoCurrent [
-	^ self new
-		imageSelector: 'current';
-		vmSelector: #current;
-		architectureSelector: self currentArchitecture;
-		yourself
+	^ self
+		named: #pharoCurrent
+		imageSelector: 'current'
+		architectureSelector: self currentArchitecture
+		vmSelector: #current
+]
+
+{ #category : #'this image' }
+TKTArchetype class >> thisImage [
+	^ self
+		named: #thisImage
+		imageSelector: nil
+		architectureSelector: nil
+		vmSelector: nil
 ]
 
 { #category : #accessing }
@@ -208,7 +250,7 @@ TKTArchetype >> initialize [
 TKTArchetype >> name [
 	^ name ifNil: [ 
 		parent ifNil: [ name := imageSelector ,'vm', vmSelector ] ifNotNil: [
-			name := dependencies inject: parent name into: [ :bn : each | bn , each archetypeName  ]
+			name := dependencies inject: parent name into: [ :bn : each | bn , each name  ]
 		]. 
 		    ]
 ]

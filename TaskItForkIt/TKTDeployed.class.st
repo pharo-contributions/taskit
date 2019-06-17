@@ -5,7 +5,7 @@ Class {
 		'location',
 		'archetype'
 	],
-	#category : #TaskItForkIt
+	#category : #'TaskItForkIt-ImageBuilding'
 }
 
 { #category : #accessing }

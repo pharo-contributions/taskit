@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'deployer'
 	],
-	#category : #TaskItForkIt
+	#category : #'TaskItForkIt-ImageBuilding'
 }
 
 { #category : #accessing }

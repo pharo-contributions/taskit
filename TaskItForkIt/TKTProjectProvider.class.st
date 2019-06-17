@@ -1,7 +1,7 @@
 Class {
 	#name : #TKTProjectProvider,
 	#superclass : #TKTResourceProvider,
-	#category : #TaskItForkIt
+	#category : #'TaskItForkIt-ImageBuilding'
 }
 
 { #category : #'resolving and install' }

@@ -1,7 +1,7 @@
 Class {
 	#name : #TKTVMProvider,
 	#superclass : #TKTResourceProvider,
-	#category : #TaskItForkIt
+	#category : #'TaskItForkIt-ImageBuilding'
 }
 
 { #category : #download }

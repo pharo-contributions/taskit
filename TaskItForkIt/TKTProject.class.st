@@ -7,7 +7,7 @@ Class {
 		'version',
 		'kind'
 	],
-	#category : #TaskItForkIt
+	#category : #'TaskItForkIt-ImageBuilding'
 }
 
 { #category : #'as yet unclassified' }

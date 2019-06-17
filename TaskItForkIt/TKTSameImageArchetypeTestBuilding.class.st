@@ -6,7 +6,7 @@ Class {
 		'deployer',
 		'session'
 	],
-	#category : #TaskItForkIt
+	#category : #'TaskItForkIt-ImageBuilding'
 }
 
 { #category : #tests }

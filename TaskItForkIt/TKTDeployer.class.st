@@ -7,7 +7,7 @@ Class {
 		'sourceProvider',
 		'projectsProvider'
 	],
-	#category : #TaskItForkIt
+	#category : #'TaskItForkIt-ImageBuilding'
 }
 
 { #category : #accessing }
