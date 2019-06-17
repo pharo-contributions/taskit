@@ -46,19 +46,19 @@ TKTVMProvider >> downloadVm: aString forImage: aString2 architecture: anInteger 
 { #category : #intalling }
 TKTVMProvider >> install: aVmSelector forImage: anImageSelector architecture: anInteger at: aFileReference [
 	self
-		copy:
+		installSymlinkTo:
 			(self
 				resolve: aVmSelector
 				forImage: anImageSelector
 				architecture: anInteger)
-		to: aFileReference
+		at: aFileReference
 ]
 
 { #category : #accessing }
 TKTVMProvider >> resolve: aString forImage: anImageVersion architecture: anInteger [
 	| cache |
 	aString = #current
-		ifTrue: [ ^ {Smalltalk vmDirectory asFileReference} ].
+		ifTrue: [ ^ Smalltalk vmDirectory asFileReference ].
 	cache := self
 		vmPathFor: aString
 		forImage: anImageVersion
@@ -71,7 +71,6 @@ TKTVMProvider >> resolve: aString forImage: anImageVersion architecture: anInteg
 				architecture: anInteger
 				at: cache.
 			self assert: cache entries size = 1 ].
-
 	^ cache / #'pharo-vm'
 ]
 
