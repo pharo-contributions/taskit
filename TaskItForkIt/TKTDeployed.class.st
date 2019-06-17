@@ -86,7 +86,7 @@ TKTDeployed >> createScript: ref with: content [
 
 { #category : #accessing }
 TKTDeployed >> eval [
-	^ self command option: 'eval'
+	^ self commandUi option: 'eval'
 ]
 
 { #category : #'evalas yet unclassified' }
@@ -141,7 +141,7 @@ TKTDeployed >> initializeWithLocation: aLocation andArchetype: anArquetype [
 
 { #category : #accessing }
 TKTDeployed >> install: url configurationOrBaselineName: confOrBaseline [
-	^ self command
+	^ self commandUi
 		option: 'metacello';
 		option: 'install';
 		option: url asString;
@@ -187,28 +187,35 @@ TKTDeployed >> sourcesFile [
 ]
 
 { #category : #'evalas yet unclassified' }
-TKTDeployed >> startImageNoQuit:  aString [
+TKTDeployed >> startImageNoQuit: aString [
 	| output return input startup |
 	output := UUID new asString asFileReference.
-	startup := 60 seconds.
+	startup := 1.
 	input := '
 	| ston | 
+	self halt.
 	ston := STONWriter on: (''{1}'' asFileReference ensureDelete; writeStream).
-	[ ston nextPut: [{2}] value  ] on:Error do: [ :e |  ston nextPut: e ].
+	[ ston nextPut: [{2}] value  ] on:Error do: [ :e |  ston nextPut: e messageText ].
 	ston close. 
   '
 		format:
 			{output fullName.
 			aString}.
-	return := (self eval arguments: {input . '--no-quit' }) createOSSubprocess run.
-	
-	
-	[ output exists and: [ startup > 0 ] ] whileFalse:[  startup := startup - 10. 10 seconds wait ].
-
-	output exists ifTrue: [ self halt. (STONReader on: output readStream) next ].
-
+	return := (self commandUi option:'eval'; 
+		arguments:
+			{'--no-quit' . input.
+			}) createOSSubprocess run.
+	[ output exists or: [ startup <= 0 or: [ return isComplete ] ] ]
+		whileFalse: [ startup := startup - 10.
+			10 seconds wait ].
+		
+		
+	return isComplete ifTrue: [ self error: 'Error stargin image ' ].
+	output exists
+		ifTrue: [ self halt.
+			(STONReader on: output readStream) next ].
 	output ensureDelete.
-	^ return 
+	^ return
 ]
 
 { #category : #accessing }

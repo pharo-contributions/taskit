@@ -168,6 +168,7 @@ TKTArchetype class >> thisImage [
 TKTArchetype >> + aProject [
 	^ self copy 
 		parent: self;
+		name: nil;
 		dependsOn: aProject;
 		yourself
 ]

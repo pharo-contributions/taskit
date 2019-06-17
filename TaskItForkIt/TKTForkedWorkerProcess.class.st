@@ -42,12 +42,6 @@ TKTForkedWorkerProcess >> new [
 ]
 
 { #category : #accessing }
-TKTForkedWorkerProcess >> remoteStartupCode [
-	| service |
-	service := TKTForkedWorkerProcess new
-]
-
-{ #category : #accessing }
 TKTForkedWorkerProcess >> sendTaskAndProcessResponse: aTask [
 	| response |
 	response := ZnEasy
@@ -75,25 +69,25 @@ TKTForkedWorkerProcess >> start [
 		next.
 	url := ('http://{1}:{2}/'
 		format:
-			{(ipPort at: 1).
-			(ipPort at: 2) asString}) asZnUrl.
+			{(ipPort at: 2).
+			(ipPort at: 1) asString}) asZnUrl.
 	self assert: self isAlive
 ]
 
 { #category : #accessing }
 TKTForkedWorkerProcess >> startupCodeIp: anIp outputFile: anOutputFile [
-	'
+	^ '
 	| service stream |
-	stream := (STONWriter on: {2} asFileReference writeStream).
+	stream := (STONWriter on: ''{2}'' asFileReference writeStream).
 	service := TKTForkItService new.
 	[service startOn: ''{1}''.
 		stream nextPut:
-			{service port asString.
-			service ip};
+			\{service port asString.
+			service ip\};
 		close] on: Error do: [ :e | stream nextPut: e; close].
 '
 		format:
-			{NetNameResolver loopBackAddress.
+			{NetNameResolver localAddressString.
 			anOutputFile fullName}
 ]
 

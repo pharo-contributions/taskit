@@ -35,9 +35,9 @@ TKTForkItService >> handleRequest: request [
 		ifFalse: [ request uri firstPathSegment ].
 	prefixHandler := prefixMap at: prefix ifAbsent: [ nil ].
 	prefixHandler isNil
-		ifFalse: [ 
-			^ prefixHandler isSymbol
-				ifTrue: [ self perform: prefixHandler with: request ]
+		ifFalse: [ ^ prefixHandler isSymbol
+				ifTrue:
+					[ (MessageSend receiver: self selector: prefixHandler) cull: request ]
 				ifFalse: [ prefixHandler value: request ] ].
 	^ ZnResponse notFound: request uri
 ]
@@ -66,7 +66,7 @@ TKTForkItService >> ip [
 
 { #category : #initialization }
 TKTForkItService >> isFree [
-	pool privateFreeWorkers size > 1
+	^ pool privateFreeWorkers size > 1
 ]
 
 { #category : #initialization }
@@ -99,20 +99,12 @@ TKTForkItService >> retries [
 
 { #category : #initialization }
 TKTForkItService >> startOn: anAddress [
-	|  tries |
-	pool := TKTConfiguration runner. 
-	server := (ZnServer on: 2300 + 60 atRandom)
+	pool := TKTConfiguration runner.
+	server := (ZnServer on: 0)
 		bindingAddress: (NetNameResolver addressForName: anAddress);
 		delegate: self;
 		start;
-		yourself.
-	tries := self retries.
-	[ (server isRunning & server isListening) not and: [ tries > 0 ] ]
-		whileTrue: [ tries := tries - 1.
-			server stop.
-			server port: 2300 + 60 atRandom.
-			server start ].
-		
+		yourself
 ]
 
 { #category : #initialization }

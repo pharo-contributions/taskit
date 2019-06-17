@@ -38,6 +38,11 @@ TKTCommandDeclaration >> commandPath [
 	^ ((':' split: (OSEnvironment current at: 'PATH')) collect: [ :p | p asFileReference / command ] thenSelect: #exists) first fullName
 ]
 
+{ #category : #accessing }
+TKTCommandDeclaration >> consoleCommand [
+	^ command , ' ' , (' ' join: options) , ' ' , (' ' join: arguments)
+]
+
 { #category : #building }
 TKTCommandDeclaration >> createOSSubprocess [
 	^ OSSUnixSubprocess new

@@ -67,6 +67,11 @@ TKTProject >> kind: aString [
 	kind := aString
 ]
 
+{ #category : #naming }
+TKTProject >> name [
+	^ name
+]
+
 { #category : #accesisng }
 TKTProject >> name: aString [ 
 	name := aString
