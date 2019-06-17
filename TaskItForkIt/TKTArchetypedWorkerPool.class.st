@@ -47,6 +47,12 @@ TKTArchetypedWorkerPool >> privateNewWorker [
 ]
 
 { #category : #'as yet unclassified' }
+TKTArchetypedWorkerPool >> stop [
+	self halt. 
+	super stop.
+]
+
+{ #category : #'as yet unclassified' }
 TKTArchetypedWorkerPool >> supportsArchetyping [
 	^ true
 ]
