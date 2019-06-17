@@ -94,11 +94,6 @@ TKTForkItService >> prefixMap [
 ]
 
 { #category : #initialization }
-TKTForkItService >> retries [
-	^ 10
-]
-
-{ #category : #initialization }
 TKTForkItService >> startOn: anAddress [
 	pool := TKTConfiguration runner.
 	server := (ZnServer on: 0)
@@ -110,7 +105,7 @@ TKTForkItService >> startOn: anAddress [
 
 { #category : #initialization }
 TKTForkItService >> stop [
-	Smalltalk exit: 0
+	^ Smalltalk exit: 0
 ]
 
 { #category : #initialization }
