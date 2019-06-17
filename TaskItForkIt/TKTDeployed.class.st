@@ -108,25 +108,6 @@ TKTDeployed >> evalSerialized: aString [
 	^ return 
 ]
 
-{ #category : #'evalas yet unclassified' }
-TKTDeployed >> evalSerializedNoFutureNoQuit: aString [
-	| output return input |
-	output := UUID new asString asFileReference.
-	input := '
-	| ston | 
-	ston := STONWriter on: (''{1}'' asFileReference ensureDelete; writeStream).
-	[ ston nextPut: [{2}] value  ] on:Error do: [ :e |  ston nextPut: e ].
-	ston close. 
-  '
-		format:
-			{output fullName.
-			aString}.
-	(self eval arguments: {input . '--no-quit' }) future synchronizeTimeout: 15 minutes.
-	return := (STONReader on: output readStream) next.
-	output ensureDelete.
-	^ return 
-]
-
 { #category : #accessing }
 TKTDeployed >> imageFile [
 	^ location / #'Pharo.image'
@@ -141,7 +122,7 @@ TKTDeployed >> initializeWithLocation: aLocation andArchetype: anArquetype [
 
 { #category : #accessing }
 TKTDeployed >> install: url configurationOrBaselineName: confOrBaseline [
-	^ self commandUi
+	^ self command
 		option: 'metacello';
 		option: 'install';
 		option: url asString;
@@ -200,7 +181,7 @@ TKTDeployed >> startImageNoQuit: aString [
 		format:
 			{output fullName.
 			aString}.
-	return := (self commandUi
+	return := (self command
 		option: 'eval';
 		arguments:
 			{'--no-quit'.
