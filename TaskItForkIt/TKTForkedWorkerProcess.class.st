@@ -30,8 +30,7 @@ TKTForkedWorkerProcess >> isFree [
 
 { #category : #accessing }
 TKTForkedWorkerProcess >> isRunning [
-	
-	^	self isAlive
+	^ super isRunning and: [ self isAlive ]
 ]
 
 { #category : #'instance creation' }
@@ -71,7 +70,8 @@ TKTForkedWorkerProcess >> start [
 		format:
 			{(ipPort at: 2).
 			(ipPort at: 1) asString}) asZnUrl.
-	self assert: self isAlive
+	self assert: self isAlive.
+	super start
 ]
 
 { #category : #accessing }
@@ -93,6 +93,7 @@ TKTForkedWorkerProcess >> startupCodeIp: anIp outputFile: anOutputFile [
 
 { #category : #accessing }
 TKTForkedWorkerProcess >> stop [
+	super stop.
 	url
 		ifNotNil: [ [ ZnEasy get: url / #stop.
 			1 second wait.
