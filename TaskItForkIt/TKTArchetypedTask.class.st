@@ -22,7 +22,6 @@ TKTArchetypedTask >> archetype: aTKTArchetype [
 
 { #category : #accessing }
 TKTArchetypedTask >> futureTaskExecutionFor: aRunner [
-	self halt.
 	aRunner supportsArchetyping
 		ifFalse: [ ^ self error: ' The current runner do no support archetyping. ' ].
 	^ self

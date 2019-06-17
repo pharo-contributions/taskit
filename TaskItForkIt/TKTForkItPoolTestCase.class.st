@@ -32,6 +32,17 @@ TKTForkItPoolTestCase >> testDefaultTaskIsScheduledInSuperClassQueue [
 ]
 
 { #category : #running }
+TKTForkItPoolTestCase >> testRemoteWorkerHasAnInstanceOfForkItService [
+	| future |
+	future := pool
+		future:
+			([ TKTForkItService allInstances size ]
+				asArchetypedTaskOn: TKTArchetype pharo70).
+	self assert: (future synchronizeTimeout: 5 minutes) equals: 1.
+	self assert: TKTForkItService allInstances size equals: 0.
+]
+
+{ #category : #running }
 TKTForkItPoolTestCase >> testSpecificArchetypeNonInstalledTriggersInstallation [
 	self deny: (pool includesArchetype: TKTArchetype pharo70).
 	pool schedule: ([  ] asArchetypedTaskOn: TKTArchetype pharo70).

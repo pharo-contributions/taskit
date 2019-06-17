@@ -55,12 +55,7 @@ TKTDeployed >> changesFile [
 TKTDeployed >> command [
 	^ self pharoScript command
 		option: self imageFile fullName;
-		yourself.
-		
-		"self vmBinary command
-		option:'--headless';
-		option: self imageFile fullName;
-		yourself"
+		yourself
 ]
 
 { #category : #accessing }
@@ -75,7 +70,6 @@ TKTDeployed >> createScript: ref with: content [
 	ref ensureCreateFile.
 	(ZnNewLineWriterStream on: ref writeStream)
 		forPlatformLineEnding;
-		yourself;
 		nextPutAll: content;
 		close.
 	(TKTSystem chmod
@@ -86,7 +80,7 @@ TKTDeployed >> createScript: ref with: content [
 
 { #category : #accessing }
 TKTDeployed >> eval [
-	^ self commandUi option: 'eval'
+	^ self command option: 'eval'
 ]
 
 { #category : #'evalas yet unclassified' }
@@ -144,8 +138,7 @@ TKTDeployed >> install: url configurationOrBaselineName: confOrBaseline groups: 
 { #category : #accessing }
 TKTDeployed >> pharoScript [
 	(location / 'pharo') exists
-		ifFalse:
-			[ self createScript: location / 'pharo' with: self class pharoScript ].
+		ifFalse: [ self createScript: location / 'pharo' with: self class pharoScript ].
 	^ location / 'pharo'
 ]
 
@@ -160,10 +153,9 @@ TKTDeployed >> pharoUiScript [
 
 { #category : #accessing }
 TKTDeployed >> sourcesFile [
-
 	^ location entries
 		detect: [ :f | 
-			(f basename beginsWith: (archetype version readStream upTo:$-))
+			(f basename beginsWith: (archetype version readStream upTo: $-))
 				and: [ f basename endsWith: '.sources' ] ]
 ]
 
@@ -181,7 +173,7 @@ TKTDeployed >> startImageNoQuit: aString [
 		format:
 			{output fullName.
 			aString}.
-	return := (self command
+	return := (self commandUi
 		option: 'eval';
 		arguments:
 			{'--no-quit'.
