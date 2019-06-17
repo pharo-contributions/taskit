@@ -93,5 +93,8 @@ TKTForkedWorkerProcess >> startupCodeIp: anIp outputFile: anOutputFile [
 
 { #category : #accessing }
 TKTForkedWorkerProcess >> stop [
-	^ ZnEasy get: url / #stop
+	ZnEasy get: url / #stop.
+	1 second wait.
+	imageProcess isComplete
+		ifFalse: [ imageProcess terminate ]
 ]

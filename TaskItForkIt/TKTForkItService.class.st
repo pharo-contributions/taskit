@@ -56,7 +56,8 @@ TKTForkItService >> initialize [
 	self
 		map: 'alive' to: #alive;
 		map: 'isFree' to: #isFree;
-		map: 'task' to: #task:
+		map: 'task' to: #task:;
+		map: 'stop' to: #stop
 ]
 
 { #category : #initialization }
@@ -105,6 +106,11 @@ TKTForkItService >> startOn: anAddress [
 		delegate: self;
 		start;
 		yourself
+]
+
+{ #category : #initialization }
+TKTForkItService >> stop [
+	Smalltalk exit: 0
 ]
 
 { #category : #initialization }

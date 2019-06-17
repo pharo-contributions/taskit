@@ -201,19 +201,19 @@ TKTDeployed >> startImageNoQuit: aString [
 		format:
 			{output fullName.
 			aString}.
-	return := (self commandUi option:'eval'; 
+	return := (self commandUi
+		option: 'eval';
 		arguments:
-			{'--no-quit' . input.
-			}) createOSSubprocess run.
+			{'--no-quit'.
+			input}) createOSSubprocess run.
 	[ output exists or: [ startup <= 0 or: [ return isComplete ] ] ]
 		whileFalse: [ startup := startup - 10.
 			10 seconds wait ].
-		
-		
-	return isComplete ifTrue: [ self error: 'Error stargin image ' ].
+	return isComplete
+		ifTrue: [ self error: 'Error stargin image ' ].
 	output exists
-		ifTrue: [ self halt.
-			(STONReader on: output readStream) next ].
+		ifTrue: [ (STONReader on: output readStream) next
+				ifError: [ :t | self error: t ] ].
 	output ensureDelete.
 	^ return
 ]
