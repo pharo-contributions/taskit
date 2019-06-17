@@ -15,6 +15,14 @@ TKTForkItService >> alive [
 ]
 
 { #category : #initialization }
+TKTForkItService >> encodeIntoResponse: anObject [
+	| serial |
+	serial := String
+		streamContents: [ :str | (STONWriter on: str) nextPut: anObject ].
+	^ ZnResponse ok: (ZnEntity text: serial)
+]
+
+{ #category : #initialization }
 TKTForkItService >> generateHelp [
 	"Generate an HTML page with links to all pages I support"
 	
@@ -35,10 +43,9 @@ TKTForkItService >> handleRequest: request [
 		ifFalse: [ request uri firstPathSegment ].
 	prefixHandler := prefixMap at: prefix ifAbsent: [ nil ].
 	prefixHandler isNil
-		ifFalse: [ ^ prefixHandler isSymbol
-				ifTrue:
-					[ (MessageSend receiver: self selector: prefixHandler) cull: request ]
-				ifFalse: [ prefixHandler value: request ] ].
+		ifFalse: [ ^ self
+				encodeIntoResponse:
+					((MessageSend receiver: self selector: prefixHandler) cull: request) ].
 	^ ZnResponse notFound: request uri
 ]
 

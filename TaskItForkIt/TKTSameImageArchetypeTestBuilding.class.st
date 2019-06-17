@@ -84,6 +84,6 @@ TKTSameImageArchetypeTestBuilding >> testTheSameVmProviderUsesTheSameVm [
 			(deployer vmProvider
 				resolve: #current
 				forImage: #current
-				architecture: 32) first
+				architecture: 32) 
 		equals: Smalltalk vmDirectory asFileReference
 ]
