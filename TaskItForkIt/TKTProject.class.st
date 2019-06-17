@@ -20,6 +20,15 @@ TKTProject class >> baselineTests [
 ]
 
 { #category : #'as yet unclassified' }
+TKTProject class >> forkit [
+	^ TKTProject new
+		name: #ForkIt;
+		kind: #BaselineOf;
+		repository: 'github://sbragagnolo/taskit';
+		yourself
+]
+
+{ #category : #'as yet unclassified' }
 TKTProject class >> moose [
 	^ TKTProject new
 		name: #Moose;

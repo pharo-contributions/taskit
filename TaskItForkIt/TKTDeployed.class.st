@@ -106,6 +106,25 @@ TKTDeployed >> evalSerialized: aString [
 	^ return 
 ]
 
+{ #category : #'evalas yet unclassified' }
+TKTDeployed >> evalSerializedNoFutureNoQuit: aString [
+	| output return input |
+	output := UUID new asString asFileReference.
+	input := '
+	| ston | 
+	ston := STONWriter on: (''{1}'' asFileReference ensureDelete; writeStream).
+	[ ston nextPut: [{2}] value  ] on:Error do: [ :e |  ston nextPut: e ].
+	ston close. 
+  '
+		format:
+			{output fullName.
+			aString}.
+	(self eval arguments: {input . '--no-quit' }) future synchronizeTimeout: 15 minutes.
+	return := (STONReader on: output readStream) next.
+	output ensureDelete.
+	^ return 
+]
+
 { #category : #accessing }
 TKTDeployed >> imageFile [
 	^ location / #'Pharo.image'
@@ -163,6 +182,31 @@ TKTDeployed >> sourcesFile [
 		detect: [ :f | 
 			(f basename beginsWith: (archetype version readStream upTo:$-))
 				and: [ f basename endsWith: '.sources' ] ]
+]
+
+{ #category : #'evalas yet unclassified' }
+TKTDeployed >> startImageNoQuit:  aString [
+	| output return input startup |
+	output := UUID new asString asFileReference.
+	startup := 60 seconds.
+	input := '
+	| ston | 
+	ston := STONWriter on: (''{1}'' asFileReference ensureDelete; writeStream).
+	[ ston nextPut: [{2}] value  ] on:Error do: [ :e |  ston nextPut: e ].
+	ston close. 
+  '
+		format:
+			{output fullName.
+			aString}.
+	return := (self eval arguments: {input . '--no-quit' }) createOSSubprocess run.
+	
+	
+	[ output exists and: [ startup > 0 ] ] whileFalse:[  startup := startup - 10. 10 seconds wait ].
+
+	output exists ifTrue: [ self halt. (STONReader on: output readStream) next ].
+
+	output ensureDelete.
+	^ return 
 ]
 
 { #category : #accessing }

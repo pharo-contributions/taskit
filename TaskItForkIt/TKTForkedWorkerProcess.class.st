@@ -3,20 +3,24 @@ Class {
 	#superclass : #TKTWorkerProcess,
 	#instVars : [
 		'deploy',
-		'url'
+		'url',
+		'imageProcess'
 	],
 	#category : #'TaskItForkIt-Worker'
 }
 
 { #category : #accessing }
 TKTForkedWorkerProcess >> archetype: aTKTArchetype [  
-	deploy := (aTKTArchetype + TKTProject worker) deploy.
+	deploy := (aTKTArchetype + TKTProject forkit) deploy.
 	
 ]
 
 { #category : #accessing }
 TKTForkedWorkerProcess >> isAlive [
-	^ ZnEasy get: url / #alive
+	[ ZnEasy get: url / #alive.
+	^ true ]
+		on: Error
+		do: [ ^ false ]
 ]
 
 { #category : #accessing }
@@ -38,6 +42,12 @@ TKTForkedWorkerProcess >> new [
 ]
 
 { #category : #accessing }
+TKTForkedWorkerProcess >> remoteStartupCode [
+	| service |
+	service := TKTForkedWorkerProcess new
+]
+
+{ #category : #accessing }
 TKTForkedWorkerProcess >> sendTaskAndProcessResponse: aTask [
 	| response |
 	response := ZnEasy
@@ -52,8 +62,39 @@ TKTForkedWorkerProcess >> sendTaskAndProcessResponse: aTask [
 
 { #category : #accessing }
 TKTForkedWorkerProcess >> start [
-	url := deploy evalSerialized: ' TKTWorkerService startUp '.
+	| ipPort |
+	imageProcess := deploy
+		startImageNoQuit:
+			(self
+				startupCodeIp: NetNameResolver loopBackAddress
+				outputFile: deploy hash asString asFileReference , '.start').
+	[ (deploy hash asString asFileReference , '.start') exists ]
+		whileFalse: [ 10 seconds wait ].
+	ipPort := (STONReader
+		on: (deploy hash asString asFileReference , '.start') readStream)
+		next.
+	url := ('http://{1}:{2}/'
+		format:
+			{(ipPort at: 1).
+			(ipPort at: 2) asString}) asZnUrl.
 	self assert: self isAlive
+]
+
+{ #category : #accessing }
+TKTForkedWorkerProcess >> startupCodeIp: anIp outputFile: anOutputFile [
+	'
+	| service stream |
+	stream := (STONWriter on: {2} asFileReference writeStream).
+	service := TKTForkItService new.
+	[service startOn: ''{1}''.
+		stream nextPut:
+			{service port asString.
+			service ip};
+		close] on: Error do: [ :e | stream nextPut: e; close].
+'
+		format:
+			{NetNameResolver loopBackAddress.
+			anOutputFile fullName}
 ]
 
 { #category : #accessing }
