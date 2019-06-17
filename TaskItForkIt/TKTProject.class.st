@@ -24,7 +24,7 @@ TKTProject class >> forkit [
 	^ TKTProject new
 		name: #ForkIt;
 		kind: #BaselineOf;
-		repository: 'github://sbragagnolo/taskit';
+		repository: 'github://sbragagnolo/taskit:ForkIt';
 		yourself
 ]
 
