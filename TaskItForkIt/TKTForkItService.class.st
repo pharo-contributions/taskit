@@ -74,7 +74,7 @@ TKTForkItService >> ip [
 
 { #category : #initialization }
 TKTForkItService >> isFree [
-	^ pool privateFreeWorkers size > 1
+	^ true
 ]
 
 { #category : #initialization }

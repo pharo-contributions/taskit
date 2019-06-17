@@ -25,7 +25,7 @@ TKTForkedWorkerProcess >> isAlive [
 
 { #category : #accessing }
 TKTForkedWorkerProcess >> isFree [
-	^ ZnEasy get: url / #isFree
+	^( STONReader on: ( ZnEasy get: url / #isFree) entity string readStream) next
 ]
 
 { #category : #accessing }
