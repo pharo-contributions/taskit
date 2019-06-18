@@ -27,20 +27,18 @@ TKTArchetypedWorkerPool >> archetype: aTKTArchetype [
 { #category : #accessing }
 TKTArchetypedWorkerPool >> privateNewWorker [
 	| newWorker |
-	newWorker := workers
-		add:
-			(TKTWorker new
-				name:
-					self name , ' ArchetypeWorker #' , (self size + 1) asString , ' '
-						, archetype name;
-				taskQueue: taskQueue;
-				yourself).
-	TKTConfiguration
-		poolWorkerProcess:
+	newWorker := TKTWorker new
+		name:
+			self name , ' ArchetypeWorker #' , (self size + 1) asString , ' '
+				, archetype name;
+		taskQueue: taskQueue;
+		yourself.
+	workers add: newWorker.
+	newWorker
+		startWithWorkerProcess:
 			(TKTForkedWorkerProcess new
 				archetype: archetype;
-				yourself)
-		during: [ newWorker start ].
+				yourself).
 	^ newWorker
 ]
 

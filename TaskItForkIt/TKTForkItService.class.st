@@ -9,6 +9,11 @@ Class {
 	#category : #'TaskItForkIt-Worker'
 }
 
+{ #category : #'as yet unclassified' }
+TKTForkItService class >> allInstancesSize [
+	^ self allInstances size
+]
+
 { #category : #initialization }
 TKTForkItService >> alive [
 	^ (server isRunning & server isListening)

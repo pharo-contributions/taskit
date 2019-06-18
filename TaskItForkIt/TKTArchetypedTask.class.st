@@ -10,6 +10,11 @@ Class {
 	#category : #'TaskItForkIt-Worker'
 }
 
+{ #category : #'ston persistence' }
+TKTArchetypedTask class >> stonOn: aStonWriter [
+	
+]
+
 { #category : #accessing }
 TKTArchetypedTask >> archetype [
 	^ archetype
@@ -41,4 +46,12 @@ TKTArchetypedTask >> scheduleTaskExecutionFor: aRunner [
 	^ self
 		configureTaskExecution: TKTArchetypedTaskExecution new
 		with: aRunner
+]
+
+{ #category : #accessing }
+TKTArchetypedTask >> stonOn: stonWriter [
+	"Encode non-variable classes with a map of their instance variable and values.
+	Override to customize and add a matching #fromSton: (see implementors)."
+self halt.
+			stonWriter writeObject: self 
 ]

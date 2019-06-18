@@ -34,12 +34,13 @@ TKTForkItPoolTestCase >> testDefaultTaskIsScheduledInSuperClassQueue [
 { #category : #running }
 TKTForkItPoolTestCase >> testRemoteWorkerHasAnInstanceOfForkItService [
 	| future |
+	self halt.
 	future := pool
 		future:
-			([ TKTForkItService allInstances size ]
+			((MessageSend receiver: TKTForkItService selector: #allInstancesSize)
 				asArchetypedTaskOn: TKTArchetype pharo70).
 	self assert: (future synchronizeTimeout: 5 minutes) equals: 1.
-	self assert: TKTForkItService allInstances size equals: 0.
+	self assert: TKTForkItService allInstances size equals: 0
 ]
 
 { #category : #running }

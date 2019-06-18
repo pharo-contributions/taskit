@@ -1,7 +1,7 @@
-Extension { #name : #BlockClosure }
+Extension { #name : #MessageSend }
 
 { #category : #'*TaskItForkIt' }
-BlockClosure >> asArchetypedTaskOn: aTKTArchetype [ 
+MessageSend >> asArchetypedTaskOn: aTKTArchetype [ 
 
 	^ TKTArchetypedTask new
 		valuable: self ;
