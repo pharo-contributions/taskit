@@ -46,11 +46,15 @@ TKTForkedWorkerProcess >> sendTaskAndProcessResponse: aTask [
 	response := ZnEasy
 		post: url / #task
 		data:
-			(String streamContents: [ :str | (STONWriter on: str) nextPut: aTask ]).
+			(ZnEntity
+				text:
+					(String
+						streamContents:
+							[ :str | (STONWriter on: str) nextPut: (TKTTask valuable: aTask valuable) ])).
 	response := (STONReader on: response entity string readStream) next.
-	(response at: #isError)
-		ifTrue: [ ^ self error: (response at: #result) ].
-	^ response at: #result
+	(response isKindOf: Exception)
+		ifTrue: [ ^ response signalIn: thisContext ].
+	^ response
 ]
 
 { #category : #accessing }

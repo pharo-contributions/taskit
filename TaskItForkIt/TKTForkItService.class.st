@@ -47,10 +47,11 @@ TKTForkItService >> handleRequest: request [
 		ifTrue: [ prefixMap at: '/' ifAbsent: [ nil ] ]
 		ifFalse: [ request uri firstPathSegment ].
 	prefixHandler := prefixMap at: prefix ifAbsent: [ nil ].
-	prefixHandler isNil
+	[ prefixHandler isNil
 		ifFalse: [ ^ self
-				encodeIntoResponse:
-					((MessageSend receiver: self selector: prefixHandler) cull: request) ].
+				encodeIntoResponse: ((MessageSend receiver: self selector: prefixHandler) cull: request) ] ]
+		on: Error
+		do: [ :e | ^ self encodeIntoResponse: e ].
 	^ ZnResponse notFound: request uri
 ]
 
@@ -123,8 +124,8 @@ TKTForkItService >> stop [
 { #category : #initialization }
 TKTForkItService >> task: aRequest [
 	| future timeout |
-	timeout := aRequest entity at: #timeout.
-	future := (STONReader on: (aRequest entity at: #task) readStream)
-		next future: pool.
+	timeout := 1000.
+	future := (STONReader on: aRequest entity string readStream) next
+		future: pool.
 	^ future synchronizeTimeout: timeout seconds
 ]
