@@ -6,7 +6,7 @@ Class {
 
 { #category : #evaluating }
 TKTArchetypedTaskExecution >> doExecuteTask [
-	[ future deploySuccess: (runner sendTaskAndProcessResponse: task) ]
+	[ future deploySuccess: (runner doRemoteExecute: task) ]
 		on: Error
 		do: [ :error | future deployFailure: error freeze ]
 ]

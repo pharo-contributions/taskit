@@ -101,6 +101,23 @@ TKTWorker >> name: aString [
 	process ifNotNil: [ process name: aString ]
 ]
 
+{ #category : #starting }
+TKTWorker >> privatePrepareProcess: aWorkerProcess [
+	process := aWorkerProcess.
+	process
+		taskQueue: queue;
+		name: name;
+		yourself.
+	exceptionHandler
+		ifNotNil: [ process exceptionHandler: exceptionHandler ].
+	self noteNeedsToBeFinalized
+]
+
+{ #category : #starting }
+TKTWorker >> privateStart [.
+	process start
+]
+
 { #category : #accessing }
 TKTWorker >> process [
 
@@ -120,19 +137,8 @@ TKTWorker >> restart [
 
 { #category : #starting }
 TKTWorker >> start [
-	^ self startWithWorkerProcess: TKTConfiguration poolWorkerProcess new
-]
-
-{ #category : #starting }
-TKTWorker >> startWithWorkerProcess: aWorkerProcess [ 
-	process := aWorkerProcess 
-		taskQueue: queue;
-		name: name;
-		yourself.
-	exceptionHandler ifNotNil: [ process exceptionHandler: exceptionHandler ].
-	process start.
-	self noteNeedsToBeFinalized.
-	
+	self privatePrepareProcess: TKTConfiguration poolWorkerProcess new.
+	self privateStart
 ]
 
 { #category : #starting }

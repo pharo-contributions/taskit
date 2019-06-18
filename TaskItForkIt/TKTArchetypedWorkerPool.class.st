@@ -5,7 +5,8 @@ Class {
 	#name : #TKTArchetypedWorkerPool,
 	#superclass : #TKTCommonQueueWorkerPool,
 	#instVars : [
-		'archetype'
+		'archetype',
+		'backends'
 	],
 	#category : #'TaskItForkIt-Worker'
 }
@@ -25,20 +26,36 @@ TKTArchetypedWorkerPool >> archetype: aTKTArchetype [
 ]
 
 { #category : #accessing }
+TKTArchetypedWorkerPool >> getOrCreateBackend [
+	backends
+		ifEmpty: [ backends
+				add:
+					(TKTForkedBackend new
+						archetype: archetype;
+						yourself) ].
+	^ backends first
+]
+
+{ #category : #accessing }
+TKTArchetypedWorkerPool >> initialize [
+	super initialize.
+	backends := OrderedCollection new
+]
+
+{ #category : #accessing }
 TKTArchetypedWorkerPool >> privateNewWorker [
-	| newWorker |
+	| newWorker processWorker |
+	processWorker := TKTForkedWorkerProcess new.
+	processWorker backend: self getOrCreateBackend.
 	newWorker := TKTWorker new
 		name:
 			self name , ' ArchetypeWorker #' , (self size + 1) asString , ' '
 				, archetype name;
 		taskQueue: taskQueue;
+		privatePrepareProcess: processWorker;
+		privateStart;
 		yourself.
 	workers add: newWorker.
-	newWorker
-		startWithWorkerProcess:
-			(TKTForkedWorkerProcess new
-				archetype: archetype;
-				yourself).
 	^ newWorker
 ]
 
@@ -46,7 +63,7 @@ TKTArchetypedWorkerPool >> privateNewWorker [
 TKTArchetypedWorkerPool >> privateRemoveIdleWorkerIfNeeded [
 	| removing free |
 	free := self privateFreeWorkers.
-	(free size < (taskQueue size * 2))
+	free size < ((taskQueue size + 1) * 2)
 		ifTrue: [ ^ self ].
 	self halt.
 	removing := free anyOne.
