@@ -43,6 +43,18 @@ TKTArchetypedWorkerPool >> privateNewWorker [
 ]
 
 { #category : #'as yet unclassified' }
+TKTArchetypedWorkerPool >> privateRemoveIdleWorkerIfNeeded [
+	| removing free |
+	free := self privateFreeWorkers.
+	(free size < (taskQueue size * 2))
+		ifTrue: [ ^ self ].
+	self halt.
+	removing := free anyOne.
+	workers remove: removing.
+	removing stop
+]
+
+{ #category : #'as yet unclassified' }
 TKTArchetypedWorkerPool >> supportsArchetyping [
 	^ true
 ]

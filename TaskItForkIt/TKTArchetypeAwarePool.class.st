@@ -87,5 +87,6 @@ TKTArchetypeAwarePool >> workerFor: anArchetype [
 		at: anArchetype
 		ifAbsentPut: [ anArchetype = TKTArchetype thisImage
 				ifTrue: [ TKTCommonQueueWorkerPool createDefault ]
-				ifFalse: [ TKTArchetypedWorkerPool createFor: anArchetype ] ]
+				ifFalse: [ 
+					TKTArchetypedWorkerPool createFor: anArchetype ] ]
 ]
