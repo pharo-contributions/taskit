@@ -120,7 +120,12 @@ TKTWorker >> restart [
 
 { #category : #starting }
 TKTWorker >> start [
-	process := TKTConfiguration poolWorkerProcess new
+	self start: TKTConfiguration poolWorkerProcess new
+]
+
+{ #category : #starting }
+TKTWorker >> start: aWorkerProcess [ 
+	process := aWorkerProcess 
 		taskQueue: queue;
 		name: name;
 		yourself.
