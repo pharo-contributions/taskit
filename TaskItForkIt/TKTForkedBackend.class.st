@@ -19,7 +19,10 @@ TKTForkedBackend >> archetype: aTKTArchetype [
 
 { #category : #accessing }
 TKTForkedBackend >> deploy [
-	^ deploy ifNil: [ deploy := archetype deploy ]
+	^ deploy
+		ifNil: [ TKTConfiguration
+				runner: TKTNewProcessTaskRunner new
+				during: [ deploy := archetype deploy ] ]
 ]
 
 { #category : #accessing }

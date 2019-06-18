@@ -27,7 +27,6 @@ TKTWorkerProcess >> currentTaskExecution [
 { #category : #'start-stop' }
 TKTWorkerProcess >> executeTask: aTaskExecution [
 	currentTaskExecution := aTaskExecution.
-	aTaskExecution runner: self.
 	super executeTask: aTaskExecution.
 	currentTaskExecution := nil
 ]

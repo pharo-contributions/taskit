@@ -32,6 +32,7 @@ TKTArchetypedWorkerPool >> getOrCreateBackend [
 				add:
 					(TKTForkedBackend new
 						archetype: archetype;
+						start;
 						yourself) ].
 	^ backends first
 ]
@@ -65,10 +66,16 @@ TKTArchetypedWorkerPool >> privateRemoveIdleWorkerIfNeeded [
 	free := self privateFreeWorkers.
 	free size < ((taskQueue size + 1) * 2)
 		ifTrue: [ ^ self ].
-	self halt.
 	removing := free anyOne.
 	workers remove: removing.
 	removing stop
+]
+
+{ #category : #'as yet unclassified' }
+TKTArchetypedWorkerPool >> stop [
+	super stop.
+	backends do: #stop.
+	backends removeAll
 ]
 
 { #category : #'as yet unclassified' }

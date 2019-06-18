@@ -21,6 +21,12 @@ TKTForkedWorkerProcess >> doRemoteExecute: aTask [
 ]
 
 { #category : #accessing }
+TKTForkedWorkerProcess >> executeTask: aTaskExecution [
+	aTaskExecution runner: self.
+	super executeTask: aTaskExecution
+]
+
+{ #category : #accessing }
 TKTForkedWorkerProcess >> isAlive [
 	^ backend isAlive
 ]
