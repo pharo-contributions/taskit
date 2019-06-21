@@ -3,7 +3,7 @@ The command declaration has as responsibility to spawn the proper objects , work
 This version as well finds the address of the command if the given command is in the standard folders (for this go to #commandPath)
 "
 Class {
-	#name : #TKTCommandDeclaration,
+	#name : #TKTShellCommandDeclaration,
 	#superclass : #Object,
 	#instVars : [
 		'command',
@@ -11,40 +11,40 @@ Class {
 		'arguments',
 		'workingDirectory'
 	],
-	#category : 'TaskItShell'
+	#category : #TaskItShell
 }
 
 { #category : #accessing }
-TKTCommandDeclaration >> argument: anArgument [
+TKTShellCommandDeclaration >> argument: anArgument [
 	arguments add: anArgument.
 	^ self
 ]
 
 { #category : #accessing }
-TKTCommandDeclaration >> arguments: aSetOfArguments [
+TKTShellCommandDeclaration >> arguments: aSetOfArguments [
 	arguments := aSetOfArguments asOrderedCollection.
 	^ self
 ]
 
 { #category : #accessing }
-TKTCommandDeclaration >> command: aCommandName [
+TKTShellCommandDeclaration >> command: aCommandName [
 	command := aCommandName
 ]
 
 { #category : #building }
-TKTCommandDeclaration >> commandPath [
+TKTShellCommandDeclaration >> commandPath [
 	command asFileReference exists
 		ifTrue: [ ^ command ].
-	^ ((':' split: (OSEnvironment current at: 'PATH')) collect: [ :p | p asFileReference / command ] thenSelect: #exists) first fullName
+	^ ((':' split: (OSEnvironment current at: 'PATH')) collect: [ :p | p asFileReference / command  ] thenSelect: #exists) first fullName
 ]
 
 { #category : #accessing }
-TKTCommandDeclaration >> consoleCommand [
+TKTShellCommandDeclaration >> consoleCommand [
 	^ command , ' ' , (' ' join: options) , ' ' , (' ' join: arguments)
 ]
 
 { #category : #building }
-TKTCommandDeclaration >> createOSSubprocess [
+TKTShellCommandDeclaration >> createOSSubprocess [
 	^ OSSUnixSubprocess new
 		workingDirectory: self workingDirectory;
 		command: self commandPath;
@@ -53,75 +53,75 @@ TKTCommandDeclaration >> createOSSubprocess [
 ]
 
 { #category : #convenience }
-TKTCommandDeclaration >> fixedTask [
+TKTShellCommandDeclaration >> fixedTask [
 	^ TKTFixedCommandTask new
 		command: self;
 		yourself
 ]
 
 { #category : #convenience }
-TKTCommandDeclaration >> future [
+TKTShellCommandDeclaration >> future [
 	^ self fixedTask future
 ]
 
 { #category : #convenience }
-TKTCommandDeclaration >> future: aRunner [
+TKTShellCommandDeclaration >> future: aRunner [
 	^ self fixedTask future: aRunner
 ]
 
 { #category : #accessing }
-TKTCommandDeclaration >> initialize [
+TKTShellCommandDeclaration >> initialize [
 	super initialize.
 	options := OrderedCollection new.
 	arguments := OrderedCollection new
 ]
 
 { #category : #testing }
-TKTCommandDeclaration >> isCommandDeclaration [
+TKTShellCommandDeclaration >> isCommandDeclaration [
 	^ true
 ]
 
 { #category : #convenience }
-TKTCommandDeclaration >> ls [
+TKTShellCommandDeclaration >> ls [
 	self command: #ls.
 	^ self
 ]
 
 { #category : #accessing }
-TKTCommandDeclaration >> option: anOption [
+TKTShellCommandDeclaration >> option: anOption [
 	options add: anOption.
 	^ self
 ]
 
 { #category : #accessing }
-TKTCommandDeclaration >> option: anOption value: aValue [
+TKTShellCommandDeclaration >> option: anOption value: aValue [
 	options add: anOption.
 	options add: aValue.
 	^ self
 ]
 
 { #category : #accessing }
-TKTCommandDeclaration >> options: aSetOfOptions [
+TKTShellCommandDeclaration >> options: aSetOfOptions [
 	options := aSetOfOptions asOrderedCollection.
 	^ self
 ]
 
 { #category : #convenience }
-TKTCommandDeclaration >> schedule [
+TKTShellCommandDeclaration >> schedule [
 	^ self fixedTask schedule
 ]
 
 { #category : #convenience }
-TKTCommandDeclaration >> schedule: aRunner [
+TKTShellCommandDeclaration >> schedule: aRunner [
 	^ self fixedTask schedule: aRunner
 ]
 
 { #category : #accessing }
-TKTCommandDeclaration >> workingDirectory [
+TKTShellCommandDeclaration >> workingDirectory [
 	^ workingDirectory
 ]
 
 { #category : #accessing }
-TKTCommandDeclaration >> workingDirectory: aString [
+TKTShellCommandDeclaration >> workingDirectory: aString [
 	workingDirectory := aString
 ]

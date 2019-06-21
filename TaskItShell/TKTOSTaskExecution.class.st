@@ -16,9 +16,25 @@ TKTOSTaskExecution >> doExecuteTask [
 
 { #category : #private }
 TKTOSTaskExecution >> executeCommand [
+	^ task isVerbose
+		ifTrue: [ self executeCommandStdoutConsole ]
+		ifFalse: [ self executeCommandStdoutAsResult ]
+]
+
+{ #category : #private }
+TKTOSTaskExecution >> executeCommandStdoutAsResult [
 	task command createOSSubprocess
 		redirectStdout;
 		redirectStderr;
+		runAndWaitOnExitDo: [ :process :outString :errString | 
+			process isSuccess
+				ifTrue: [ ^ outString ]
+				ifFalse: [ Error signal: errString ] ]
+]
+
+{ #category : #private }
+TKTOSTaskExecution >> executeCommandStdoutConsole [
+	task command createOSSubprocess
 		runAndWaitOnExitDo: [ :process :outString :errString | 
 			process isSuccess
 				ifTrue: [ ^ outString ]

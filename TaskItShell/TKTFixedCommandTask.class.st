@@ -2,7 +2,8 @@ Class {
 	#name : #TKTFixedCommandTask,
 	#superclass : #TKTTask,
 	#instVars : [
-		'command'
+		'command',
+		'isVerbose'
 	],
 	#category : #TaskItShell
 }
@@ -20,8 +21,23 @@ TKTFixedCommandTask >> command: aCommand [
 { #category : #executing }
 TKTFixedCommandTask >> futureTaskExecutionFor: aRunner [
 	| execution |
-	execution := TKTOSTaskVerboseExecution new.
+	execution := TKTOSTaskExecution new.
 	execution runner: aRunner.
 	execution task: self.
 	^ execution
+]
+
+{ #category : #executing }
+TKTFixedCommandTask >> isVerbose [
+	^ isVerbose ifNil: [ isVerbose := false ]
+]
+
+{ #category : #executing }
+TKTFixedCommandTask >> redirectStdoutAsResult [
+	isVerbose := false
+]
+
+{ #category : #executing }
+TKTFixedCommandTask >> redirectStdoutToConsole [
+	isVerbose := true
 ]

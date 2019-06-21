@@ -205,6 +205,5 @@ TKTCommonQueueWorkerPool >> taskQueueSize [
 
 { #category : #public }
 TKTCommonQueueWorkerPool >> workers [
-	
 	^ workers copy
 ]

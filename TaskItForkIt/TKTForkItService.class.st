@@ -1,3 +1,6 @@
+"
+Forkit Service is the base Facade of the remote image, interfacing the incoming calls (ZnServer managed) to a local default Worker pool
+"
 Class {
 	#name : #TKTForkItService,
 	#superclass : #Object,
@@ -6,7 +9,7 @@ Class {
 		'pool',
 		'prefixMap'
 	],
-	#category : #'TaskItForkIt-Worker'
+	#category : #'TaskItForkIt-Worker-RemoteExtentions'
 }
 
 { #category : #'as yet unclassified' }
@@ -16,7 +19,7 @@ TKTForkItService class >> allInstancesSize [
 
 { #category : #initialization }
 TKTForkItService >> alive [
-	^ (server isRunning & server isListening)
+	^ server isRunning & server isListening
 ]
 
 { #category : #initialization }

@@ -10,7 +10,7 @@ TKTTaskItOsSubrprocessBuilderTests >> testTaskBlockReceivesACommandDeclaration [
 
 	| assertion future |
 	future := [ :spec | 
-	assertion := spec isKindOf: TKTCommandDeclaration.
+	assertion := spec isKindOf: TKTShellCommandDeclaration.
 	spec ls ] asOSTask future.
 	future waitForCompletion: 1 second.
 	self assert: assertion description: 'Spec is not a command declaration'

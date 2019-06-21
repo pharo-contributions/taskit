@@ -1,7 +1,10 @@
+"
+The archetyped task execution relies on the runner as dispatcher to the proper backend to the remote process
+"
 Class {
 	#name : #TKTArchetypedTaskExecution,
 	#superclass : #TKTFutureExecution,
-	#category : #'TaskItForkIt-Worker'
+	#category : #'TaskItForkIt-Task'
 }
 
 { #category : #evaluating }

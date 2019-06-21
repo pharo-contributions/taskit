@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'archetype'
 	],
-	#category : #'TaskItForkIt-Worker'
+	#category : #'TaskItForkIt-Task'
 }
 
 { #category : #'ston persistence' }
@@ -35,22 +35,10 @@ TKTArchetypedTask >> futureTaskExecutionFor: aRunner [
 ]
 
 { #category : #accessing }
-TKTArchetypedTask >> isArchetyped [
-	^ true
-]
-
-{ #category : #accessing }
 TKTArchetypedTask >> scheduleTaskExecutionFor: aRunner [
 	aRunner supportsArchetyping
 		ifFalse: [ ^ self error: ' The current runner do no support archetyping. ' ].
 	^ self
 		configureTaskExecution: TKTArchetypedTaskExecution new
 		with: aRunner
-]
-
-{ #category : #accessing }
-TKTArchetypedTask >> stonOn: stonWriter [
-	"Encode non-variable classes with a map of their instance variable and values.
-	Override to customize and add a matching #fromSton: (see implementors)."
-		super stonOn: stonWriter
 ]

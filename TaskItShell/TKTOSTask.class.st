@@ -30,23 +30,17 @@ TKTOSTask >> block: aBuildingBlock [
 { #category : #accessing }
 TKTOSTask >> command [
 	| command |
-	command := block value: TKTCommandDeclaration new.
+	command := block value: TKTShellCommandDeclaration new.
 	command isCommandDeclaration
 		ifFalse: [ Error
 				signal: 'The result of the OSTask block must be a command declaration' ].
 	^ command
 ]
 
-{ #category : #private }
-TKTOSTask >> executionClass [
-	^ TKTOSTaskExecution
-]
-
 { #category : #executing }
 TKTOSTask >> futureTaskExecutionFor: aRunner [
 	| execution |
-
-	execution := self executionClass new.
+	execution := TKTOSTaskExecution new.
 	execution runner: aRunner.
 	execution task: self.
 	^ execution

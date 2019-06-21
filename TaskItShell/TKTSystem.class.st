@@ -6,45 +6,49 @@ Class {
 
 { #category : #'as yet unclassified' }
 TKTSystem class >> chmod [
-	^ '/bin/chmod' asFileReference command
+	^ #chmod command
 ]
 
 { #category : #'as yet unclassified' }
 TKTSystem class >> cp [
-	^ '/bin/cp' asFileReference command
+	^ #cp command
 ]
 
 { #category : #'as yet unclassified' }
 TKTSystem class >> grep [
-	^ '/bin/grep' asFileReference command
+	^ #grep command
 ]
 
 { #category : #'as yet unclassified' }
 TKTSystem class >> ln [
-	^ '/bin/ln' asFileReference command
+	^ #ln command
 ]
 
 { #category : #'as yet unclassified' }
 TKTSystem class >> ls [
-	^ '/bin/ls' asFileReference command
+	^ #ls command
 ]
 
 { #category : #'as yet unclassified' }
 TKTSystem class >> mv [
-	^ '/bin/mv' asFileReference command
+	^ #mv command
 ]
 
 { #category : #'as yet unclassified' }
 TKTSystem class >> rm [
-	^ '/bin/rm' asFileReference command
+	^ #rm command
+]
+
+{ #category : #'as yet unclassified' }
+TKTSystem class >> unzip [
+	^ #unzip command
 ]
 
 { #category : #'as yet unclassified' }
 TKTSystem class >> unzip: aFileReference into: aDirectory [
 	aDirectory ensureCreateDirectory.
-	^ [ :spec | 
-	spec
-		command: 'unzip';
+	^ (self unzip
 		option: '-d' value: aDirectory fullName;
-		argument: aFileReference fullName ] asOSTask future 
+		argument: aFileReference fullName future)
+		synchronizeTimeout: 5 minutes
 ]

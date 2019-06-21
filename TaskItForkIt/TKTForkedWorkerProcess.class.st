@@ -1,3 +1,6 @@
+"
+Worker Process This runner is based in a backend in which it delegates. 
+"
 Class {
 	#name : #TKTForkedWorkerProcess,
 	#superclass : #TKTWorkerProcess,
