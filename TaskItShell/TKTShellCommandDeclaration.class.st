@@ -9,7 +9,8 @@ Class {
 		'command',
 		'options',
 		'arguments',
-		'workingDirectory'
+		'workingDirectory',
+		'isVerbose'
 	],
 	#category : #TaskItShell
 }
@@ -81,6 +82,11 @@ TKTShellCommandDeclaration >> isCommandDeclaration [
 	^ true
 ]
 
+{ #category : #executing }
+TKTShellCommandDeclaration >> isVerbose [
+	^ isVerbose ifNil: [ isVerbose := true ]
+]
+
 { #category : #convenience }
 TKTShellCommandDeclaration >> ls [
 	self command: #ls.
@@ -104,6 +110,16 @@ TKTShellCommandDeclaration >> option: anOption value: aValue [
 TKTShellCommandDeclaration >> options: aSetOfOptions [
 	options := aSetOfOptions asOrderedCollection.
 	^ self
+]
+
+{ #category : #executing }
+TKTShellCommandDeclaration >> redirectStdoutAsResult [
+	isVerbose := false
+]
+
+{ #category : #executing }
+TKTShellCommandDeclaration >> redirectStdoutToConsole [
+	isVerbose := true
 ]
 
 { #category : #convenience }

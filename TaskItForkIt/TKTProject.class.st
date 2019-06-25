@@ -62,6 +62,11 @@ TKTProject >> deployIn: aTKTDeployed [
 	future synchronizeTimeout: 15 minutes.
 ]
 
+{ #category : #deploy }
+TKTProject >> deployIn: aTKTDeployed using: aTKTDeployer [
+	^ self deployIn: aTKTDeployed
+]
+
 { #category : #accessing }
 TKTProject >> kind: aString [ 
 	kind := aString

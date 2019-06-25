@@ -29,7 +29,7 @@ TKTSameImageArchetypeTestBuilding >> archetype: anArchetype [
 TKTSameImageArchetypeTestBuilding >> setUp [
 	super setUp.
 	session := Smalltalk session.
-	deployer := TKTDeployer default.
+	deployer := TKTFileOrientedDeployer default.
 ]
 
 { #category : #tests }
@@ -74,16 +74,5 @@ TKTSameImageArchetypeTestBuilding >> testTheArchetypeUsesCopyImageProvider [
 
 { #category : #tests }
 TKTSameImageArchetypeTestBuilding >> testTheArchetypeVmProviderIsSameVmProvider [
-	self assert: (deployer vmProvider isKindOf: TKTVMProvider)
-]
-
-{ #category : #tests }
-TKTSameImageArchetypeTestBuilding >> testTheSameVmProviderUsesTheSameVm [
-	self
-		assert:
-			(deployer vmProvider
-				resolve: #current
-				forImage: #current
-				architecture: 32) 
-		equals: Smalltalk vmDirectory asFileReference
+	self assert: (deployer vmProvider isKindOf: TKTResourceProvider)
 ]

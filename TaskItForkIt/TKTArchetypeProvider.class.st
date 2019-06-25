@@ -1,95 +1,65 @@
 Class {
 	#name : #TKTArchetypeProvider,
 	#superclass : #TKTResourceProvider,
-	#instVars : [
-		'deployer'
-	],
 	#category : #'TaskItForkIt-ImageBuilding'
 }
 
-{ #category : #accessing }
-TKTArchetypeProvider class >> default [
-	^ self new
-		deployer: TKTDeployer default;
-		yourself
-]
-
 { #category : #'resolving and install' }
-TKTArchetypeProvider >> buildArchetype: anArchetype [
+TKTArchetypeProvider >> buildArchetype: anArchetype using: aDeployer [
 	anArchetype parent
-		ifNil: [ self ensureInstallationDirectory: anArchetype.
-			self deployer
+		ifNil: [ .
+			aDeployer
 				deploy: anArchetype
-				at: self archetypesFolder / anArchetype name ]
-		ifNotNil: [ self
+				at: (aDeployer archetypesDestinationFor: anArchetype) ]
+		ifNotNil: [ 
+			self
 				install: anArchetype parent
-				at: self archetypesFolder / anArchetype name.
-			self updateArchetype: anArchetype ].
-	self installStonFile: anArchetype
+				at: (aDeployer archetypesDestinationFor: anArchetype)
+				using: aDeployer.
+			self updateArchetype: anArchetype using: aDeployer ].
+	self installStonFile: anArchetype using: aDeployer
 ]
 
 { #category : #'resolving and install' }
-TKTArchetypeProvider >> clone: anArchetype at: aLocation [
+TKTArchetypeProvider >> clone: anArchetype at: aLocation using: aDeployer [
 	| date reader copy |
 	reader := STONReader
-		on:
-			(self archetypesFolder / anArchetype name / anArchetype name , 'ston')
-				readStream.
+		on: (aDeployer archetypesStonDestinationFor: anArchetype) readStream.
 	date := reader next.
 	copy := reader next.
 	(self shouldReBuild: DateAndTime now - date)
-		ifTrue: [ self buildArchetype: anArchetype ].
+		ifTrue: [ self buildArchetype: anArchetype using: aDeployer ].
 	(self shouldUpdate: DateAndTime now - date)
-		ifTrue: [ self updateArchetype: anArchetype ].
-	self copy: self archetypesFolder / anArchetype name to: aLocation.
+		ifTrue: [ self updateArchetype: anArchetype using: aDeployer ].
+	aDeployer
+		copy: (aDeployer archetypesDestinationFor: anArchetype)
+		to: aLocation.
 	^ TKTDeployed new
 		initializeWithLocation: aLocation
 		andArchetype: anArchetype
 ]
 
 { #category : #'resolving and install' }
-TKTArchetypeProvider >> deployer [
-	^ deployer
-]
-
-{ #category : #'resolving and install' }
-TKTArchetypeProvider >> deployer: aDeployer [
-	deployer := aDeployer
-]
-
-{ #category : #accessing }
-TKTArchetypeProvider >> ensureInstallationDirectory: anArchetype [
-	(self archetypesFolder / anArchetype name) exists
-		ifTrue: [ self rm: self archetypesFolder / anArchetype name ].
-	(self archetypesFolder / anArchetype name) ensureCreateDirectory
-]
-
-{ #category : #'resolving and install' }
-TKTArchetypeProvider >> install: anArchetype at: aLocation [
-	(self archetypesFolder / anArchetype name / anArchetype name , 'ston')
-		exists
-		ifFalse: [ self buildArchetype: anArchetype ].
+TKTArchetypeProvider >> install: anArchetype at: aLocation using: aDeployer [
+	(aDeployer archetypesStonDestinationFor: anArchetype) exists
+		ifFalse: [ self buildArchetype: anArchetype using: aDeployer ].
 	self
-		assert:
-			(self archetypesFolder / anArchetype name / anArchetype name , 'ston')
-				exists.
-	^ self clone: anArchetype at: aLocation
+		assert: (aDeployer archetypesStonDestinationFor: anArchetype) exists.
+	^ self clone: anArchetype at: aLocation using: aDeployer
 ]
 
 { #category : #'resolving and install' }
-TKTArchetypeProvider >> installOnDefaultLocation: anArchetype [
-	(self defaultDeployFolder / anArchetype name) ensureCreateDirectory.
+TKTArchetypeProvider >> installOnDefaultLocation: anArchetype using: aDeployer [
 	^ self
 		install: anArchetype
-		at: self defaultDeployFolder / anArchetype name / UUID new asString
+		at: (aDeployer defaultDeployArchetypeLocationFor: anArchetype)
+		using: aDeployer
 ]
 
 { #category : #'resolving and install' }
-TKTArchetypeProvider >> installStonFile: anArchetype [
+TKTArchetypeProvider >> installStonFile: anArchetype using: aDeployer [
 	(STONWriter
-		on:
-		(self archetypesFolder / anArchetype name / anArchetype name , 'ston')
-		writeStream)
+		on: (aDeployer archetypesStonDestinationFor: anArchetype) writeStream)
 		nextPut: DateAndTime now;
 		nextPut: anArchetype;
 		close
@@ -106,11 +76,12 @@ TKTArchetypeProvider >> shouldUpdate: aDuration [
 ]
 
 { #category : #'resolving and install' }
-TKTArchetypeProvider >> updateArchetype: anArchetype [
-	self deployer
+TKTArchetypeProvider >> updateArchetype: anArchetype using: aDeployer [
+	aDeployer
 		updateDeployed:
 			(TKTDeployed new
-				initializeWithLocation: self archetypesFolder / anArchetype name
+				initializeWithLocation: (aDeployer archetypesDestinationFor: anArchetype)
 					andArchetype: anArchetype;
 				yourself)
+		using: aDeployer
 ]

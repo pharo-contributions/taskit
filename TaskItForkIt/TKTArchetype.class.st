@@ -218,12 +218,14 @@ TKTArchetype >> dependsOnConfigurationOf: name version: aVersion repository: aRe
 
 { #category : #accessing }
 TKTArchetype >> deploy [
-	^ TKTArchetypeProvider default installOnDefaultLocation: self
+	^ TKTArchetypeProvider new
+		installOnDefaultLocation: self
+		using: TKTFileOrientedDeployer default
 ]
 
 { #category : #accessing }
 TKTArchetype >> deployDirect [
-	^ TKTDeployer default
+	^ TKTFileOrientedDeployer default
 		deploy: self
 		at:
 			(('pharo-local' asFileReference / #forking / #deployCache / self name
