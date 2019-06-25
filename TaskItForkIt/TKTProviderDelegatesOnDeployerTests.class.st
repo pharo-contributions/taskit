@@ -47,19 +47,3 @@ TKTProviderDelegatesOnDeployerTests >> testProviderDefaultDeployFolderDirectoryI
 		assert: deployer defaultDeployFolder
 		equals: FileLocator workingDirectory / 'pharo-local' / #forking / #deployCache
 ]
-
-{ #category : #accessing }
-TKTProviderDelegatesOnDeployerTests >> testProviderSpecifiedCurrentCacheDirectoryIsInDefaultWorkingDirectoryPlusPath [
-	deployer workingDirectory: '/' asFileReference.
-	self
-		assert: deployer currentCacheFolder
-		equals: #/ asFileReference / 'pharo-local' / #forking / #current
-]
-
-{ #category : #accessing }
-TKTProviderDelegatesOnDeployerTests >> testProviderSpecifiedDefaultDeployFolderDirectoryIsInDefaultWorkingDirectoryPlusPath [
-	deployer workingDirectory: '/' asFileReference.
-	self
-		assert: deployer defaultDeployFolder
-		equals: #/ asFileReference / 'pharo-local' / #forking / #deployCache
-]

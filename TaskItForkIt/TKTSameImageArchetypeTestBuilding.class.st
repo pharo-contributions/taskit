@@ -66,13 +66,3 @@ TKTSameImageArchetypeTestBuilding >> testDeployDeploysAFunctionalEnvironment [
 	
 
 ]
-
-{ #category : #tests }
-TKTSameImageArchetypeTestBuilding >> testTheArchetypeUsesCopyImageProvider [
-	self assert: (deployer imageProvider isKindOf: TKTImageProvider)
-]
-
-{ #category : #tests }
-TKTSameImageArchetypeTestBuilding >> testTheArchetypeVmProviderIsSameVmProvider [
-	self assert: (deployer vmProvider isKindOf: TKTResourceProvider)
-]

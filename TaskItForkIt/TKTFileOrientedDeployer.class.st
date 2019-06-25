@@ -12,6 +12,7 @@ Class {
 TKTFileOrientedDeployer class >> default [
 	^ self new
 		provider: TKTResourceProvider new;
+		backend: TKTSystemBackend new;
 		yourself
 ]
 
@@ -31,16 +32,25 @@ TKTFileOrientedDeployer >> archetypesStonDestinationFor: anArchetype [
 		, 'ston'
 ]
 
+{ #category : #accessing }
+TKTFileOrientedDeployer >> backend: aTKTSystemBackend [ 
+	backend := aTKTSystemBackend
+]
+
 { #category : #'deploy destination' }
 TKTFileOrientedDeployer >> backupCurrentImage [
-	| session |
+	| session sources |
 	session := Smalltalk session.
 	Smalltalk image
 		backupTo: (self currentCacheFolder / 'Pharo') fullName.
+	sources := (Smalltalk imageDirectory entries
+		detect: [ :f | f basename endsWith: '.sources' ]) asFileReference.
+	sources copyTo: self currentCacheFolder / sources basename.
 	session ~= Smalltalk session
 		ifTrue: [ UIManager default spawnNewProcess.
 			Processor activeProcess terminate ].
-	^ {(self currentCacheFolder / 'Pharo.image').
+	^ {(self currentCacheFolder / sources basename).
+	(self currentCacheFolder / 'Pharo.image').
 	(self currentCacheFolder / 'Pharo.changes')}
 ]
 
@@ -53,12 +63,6 @@ TKTFileOrientedDeployer >> baseFolder [
 TKTFileOrientedDeployer >> copy: aFileReference to: aDestination [
 	^ backend copy: aFileReference to: aDestination.
 
-]
-
-{ #category : #'system calls' }
-TKTFileOrientedDeployer >> copyAll: aCollection to: aFileReference [
-	self assert: aFileReference isDirectory.
-	aCollection do: [ :f | self copy: f to: aFileReference / f basename ]
 ]
 
 { #category : #'deploy destination' }
@@ -97,61 +101,48 @@ TKTFileOrientedDeployer >> deploy: anArchetype at: location [
 				architecture: anArchetype architectureSelector
 				using: self)
 		at: location.
-	
 	deployed := TKTDeployed new
 		initializeWithLocation: location andArchetype: anArchetype;
 		yourself.
-	
 	self updateDeployed: deployed using: self.
 	^ deployed
-]
-
-{ #category : #'image calls' }
-TKTFileOrientedDeployer >> downloadUrlForVm: vmVersion forImage: imageVersion architecture: anInteger [
-	^ 'http://files.pharo.org/get-files/{1}/pharo{2}-{3}-{4}.zip'
-		format:
-			{imageVersion asString.
-			(anInteger = 32
-				ifTrue: [ '' ]
-				ifFalse: [ anInteger ]) asString.
-			self platformName.
-			vmVersion}
-]
-
-{ #category : #'deploy destination' }
-TKTFileOrientedDeployer >> downloadVm: vmVersion forImage: imageVersion architecture: anInteger at: aFileReference [
-	| imageUrl zipFile |
-	imageUrl := (self
-		downloadUrlForVm: vmVersion
-		forImage: imageVersion
-		architecture: anInteger) asZnUrl.
-	zipFile := aFileReference / 'zipfile'.
-	ZnClient new
-		url: imageUrl;
-		downloadTo: zipFile.
-	self assert: zipFile exists.
-	TKTSystem unzip: zipFile into: aFileReference / 'pharo-vm'.
-	"(ZipArchive new readFrom: zipFile) extractAllTo: aFileReference / 'pharo-vm'."
-	(TKTSystem chmod
-		option: '-R';
-		option: '+x';
-		argument: aFileReference fullName;
-		future) synchronizeTimeout: 5 seconds.
-	zipFile ensureDelete
 ]
 
 { #category : #'deploy destination' }
 TKTFileOrientedDeployer >> ensureInstallationDirectoryFor: anArchetype [
 	(self archetypesDestinationFor: anArchetype) exists
-		ifTrue: [ self rm: (self archetypesDestinationFor: anArchetype) ].
+		ifTrue: [ backend rm: (self archetypesDestinationFor: anArchetype) ].
 	(self archetypesDestinationFor: anArchetype) ensureCreateDirectory
 ]
 
-{ #category : #'deploy destination' }
-TKTFileOrientedDeployer >> ensureToCleanupCurrentCache [
-	(self currentCacheFolder / 'Pharo.image') ensureDelete.
-	(self currentCacheFolder / 'Pharo.changes') ensureDelete.
-	self currentCacheFolder ensureCreateDirectory
+{ #category : #getting }
+TKTFileOrientedDeployer >> fetchBundle: aZnUrl [
+	| expectedLocation |
+	expectedLocation := (aZnUrl segments allButFirst
+		inject: self imageFolder 
+		into: [ :acc :each | acc / (each copyReplaceAll: '.zip' with: '') ]).
+	expectedLocation exists ifFalse: [ 
+			expectedLocation ensureCreateDirectory.
+			backend downloadAndUnzip: aZnUrl at: expectedLocation 
+		].
+	expectedLocation children
+		select: [ :c | #(image changes) includes: c extension ]
+		thenDo: [ :child | child renameTo: 'Pharo.' , child extension ].
+		
+	^ expectedLocation entries
+]
+
+{ #category : #fetch }
+TKTFileOrientedDeployer >> fetchVm: aZnUrl [
+	| expectedLocation |
+	expectedLocation := (aZnUrl segments allButFirst
+		inject: self vmFolder
+		into: [ :acc :each | acc / (each copyReplaceAll: '.zip' with: '') ])
+		/ 'pharo-vm'.
+	expectedLocation exists
+		ifFalse: [ expectedLocation ensureCreateDirectory.
+			backend downloadAndUnzip: aZnUrl at: expectedLocation ].
+	^ expectedLocation
 ]
 
 { #category : #folder }
@@ -172,8 +163,11 @@ TKTFileOrientedDeployer >> installAllSymlinksTo: aCollection at: aDestination [
 
 { #category : #accessing }
 TKTFileOrientedDeployer >> installImageAndSource: bundle at: location [
-	self halt: 'check cache '.
-	self copy: bundle to: location 
+	| imageChangesAndSourceFileReferenceArray |
+	imageChangesAndSourceFileReferenceArray := bundle = #current
+		ifTrue: [ self resolveCurrentImageAnChangesFile ]
+		ifFalse: [ self fetchBundle: bundle ].
+	backend copyAll: imageChangesAndSourceFileReferenceArray to: location
 ]
 
 { #category : #'system calls' }
@@ -183,8 +177,11 @@ TKTFileOrientedDeployer >> installSymlinkTo: aFileReference at: aDestination [
 
 { #category : #accessing }
 TKTFileOrientedDeployer >> installVm: aVm at: location [
-	self halt: 'check cache '.
-	self installSymlinkTo: aVm at: location
+	| vmFolderReference |
+	vmFolderReference := aVm = #current
+		ifTrue: [ self resolveCurrentVM ]
+		ifFalse: [ self fetchVm: aVm ].
+	self installSymlinkTo: vmFolderReference at: location
 ]
 
 { #category : #accessing }
@@ -208,36 +205,15 @@ TKTFileOrientedDeployer >> provider: aResourceProvider [
 
 { #category : #'image calls' }
 TKTFileOrientedDeployer >> resolveCurrentImageAnChangesFile [
-	self ensureToCleanupCurrentCache.
+	(self currentCacheFolder / 'Pharo.image') ensureDelete.
+	(self currentCacheFolder / 'Pharo.changes') ensureDelete.
+	self currentCacheFolder ensureCreateDirectory.
 	^ self backupCurrentImage
 ]
 
 { #category : #'deploy destination' }
 TKTFileOrientedDeployer >> resolveCurrentVM [
 	^ Smalltalk vmDirectory asFileReference
-]
-
-{ #category : #'deploy destination' }
-TKTFileOrientedDeployer >> resolveVm: aVmSelector forImage: anImageSelector architecture: anInteger [
-	| cache |
-	cache := self
-		vmPathFor: aVmSelector
-		forImage: anImageSelector
-		architecture: anInteger.
-	(cache exists and: [ cache entries size = 1 ])
-		ifFalse: [ cache ensureCreateDirectory.
-			self
-				downloadVm: aVmSelector
-				forImage: anImageSelector
-				architecture: anInteger
-				at: cache.
-			self assert: cache entries size = 1 ].
-	^ cache / #'pharo-vm'
-]
-
-{ #category : #'system calls' }
-TKTFileOrientedDeployer >> rm: aFileOrFolder [
-	^ backend rm: aFileOrFolder
 ]
 
 { #category : #'image calls' }
@@ -249,12 +225,6 @@ TKTFileOrientedDeployer >> updateDeployed: aDeployed using: aDeployer [
 { #category : #folder }
 TKTFileOrientedDeployer >> vmFolder [
 	^ self baseFolder / #vm
-]
-
-{ #category : #folder }
-TKTFileOrientedDeployer >> vmPathFor: vmVersion forImage: imageVersion architecture: anInteger [
-	^ self vmFolder / imageVersion / (anInteger asString , 'bits')
-		/ vmVersion
 ]
 
 { #category : #working }
