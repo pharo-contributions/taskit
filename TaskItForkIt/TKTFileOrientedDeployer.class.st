@@ -71,12 +71,6 @@ TKTFileOrientedDeployer >> currentCacheFolder [
 ]
 
 { #category : #folder }
-TKTFileOrientedDeployer >> defaultDeployArchetypeLocationFor: anArchetype [
-	(self defaultDeployFolder / anArchetype name) ensureCreateDirectory.
-	^ self defaultDeployFolder / anArchetype name / UUID new asString
-]
-
-{ #category : #folder }
 TKTFileOrientedDeployer >> defaultDeployFolder [
 	^ self baseFolder / #deployCache
 ]
@@ -84,6 +78,26 @@ TKTFileOrientedDeployer >> defaultDeployFolder [
 { #category : #accessing }
 TKTFileOrientedDeployer >> deploy: anArchetype at: location [
 	| deployed |
+	anArchetype parent
+		ifNil: [ self deployFiles: anArchetype at: location ]
+		ifNotNil: [ self deploy: anArchetype parent at: location ].
+	deployed := TKTDeployed new
+		initializeWithLocation: location andArchetype: anArchetype;
+		yourself.
+	self updateDeployed: deployed using: self.
+	^ deployed
+]
+
+{ #category : #folder }
+TKTFileOrientedDeployer >> deployAtDefaultLocation: anArchetype [
+	(self defaultDeployFolder / anArchetype name) ensureCreateDirectory.
+	^ self
+		deploy: anArchetype
+		at: self defaultDeployFolder / anArchetype name / UUID new asString
+]
+
+{ #category : #accessing }
+TKTFileOrientedDeployer >> deployFiles: anArchetype at: location [
 	self ensureInstallationDirectoryFor: anArchetype.
 	self
 		installVm:
@@ -100,12 +114,7 @@ TKTFileOrientedDeployer >> deploy: anArchetype at: location [
 				forImage: anArchetype imageSelector
 				architecture: anArchetype architectureSelector
 				using: self)
-		at: location.
-	deployed := TKTDeployed new
-		initializeWithLocation: location andArchetype: anArchetype;
-		yourself.
-	self updateDeployed: deployed using: self.
-	^ deployed
+		at: location
 ]
 
 { #category : #'deploy destination' }
@@ -142,17 +151,13 @@ TKTFileOrientedDeployer >> fetchVm: aZnUrl [
 	expectedLocation exists
 		ifFalse: [ expectedLocation ensureCreateDirectory.
 			backend downloadAndUnzip: aZnUrl at: expectedLocation ].
+	backend chmod: expectedLocation / #* flag: '+x'.
 	^ expectedLocation
 ]
 
 { #category : #folder }
 TKTFileOrientedDeployer >> imageFolder [
 	^ self baseFolder / #image
-]
-
-{ #category : #folder }
-TKTFileOrientedDeployer >> imagePathFor: aString architecture: anArchitecture [
-	^ self imageFolder / aString / anArchitecture asString
 ]
 
 { #category : #'system calls' }

@@ -8,6 +8,14 @@ Class {
 }
 
 { #category : #copying }
+TKTSystemBackend >> chmod: aFileReference flag: aString [
+	(TKTSystem chmod
+		option: aString;
+		argument: aFileReference fullName;
+		future) synchronizeTimeout: 5 seconds
+]
+
+{ #category : #copying }
 TKTSystemBackend >> copy: aFileReference to: aDestination [
 	(TKTSystem cp
 		option: '-r';
