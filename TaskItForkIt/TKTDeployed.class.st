@@ -111,9 +111,8 @@ TKTDeployed >> sourcesFile [
 
 { #category : #'evalas yet unclassified' }
 TKTDeployed >> startImageNoQuit: aString [
-	| output return input startup |
+	| output return input |
 	output := UUID new asString asFileReference.
-	startup := 1.
 	input := '
 	| ston | 
 	ston := STONWriter on: (''{1}'' asFileReference ensureDelete; writeStream).
@@ -128,9 +127,6 @@ TKTDeployed >> startImageNoQuit: aString [
 		arguments:
 			{'--no-quit'.
 			input}) createOSSubprocess run.
-	[ output exists or: [ startup <= 0 or: [ return isComplete ] ] ]
-		whileFalse: [ startup := startup - 10.
-			10 seconds wait ].
 	return isComplete
 		ifTrue: [ self error: 'Error stargin image ' ].
 	output exists
