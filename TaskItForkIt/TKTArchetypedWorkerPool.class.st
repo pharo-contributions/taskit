@@ -6,16 +6,18 @@ Class {
 	#superclass : #TKTCommonQueueWorkerPool,
 	#instVars : [
 		'archetype',
-		'backends'
+		'backend',
+		'futuresRegistry'
 	],
 	#category : #'TaskItForkIt-Worker'
 }
 
 { #category : #'as yet unclassified' }
-TKTArchetypedWorkerPool class >> createFor: anArchetype [
+TKTArchetypedWorkerPool class >> createFor: anArchetype using: aFuturesRegistry [
 	^ self new
 		name: 'ArchetypedPool-' , UUID new asString;
 		archetype: anArchetype;
+		futuresRegistry: aFuturesRegistry;
 		poolMaxSize: 2;
 		yourself
 ]
@@ -27,20 +29,11 @@ TKTArchetypedWorkerPool >> archetype: aTKTArchetype [
 
 { #category : #accessing }
 TKTArchetypedWorkerPool >> getOrCreateBackend [
-	backends
-		ifEmpty: [ backends
-				add:
-					(TKTForkedBackend new
-						archetype: archetype;
-						start;
-						yourself) ].
-	^ backends first
-]
-
-{ #category : #accessing }
-TKTArchetypedWorkerPool >> initialize [
-	super initialize.
-	backends := OrderedCollection new
+	^ backend
+		ifNil: [ backend := TKTForkedBackend new
+				archetype: archetype;
+				startWith: futuresRegistry;
+				yourself ]
 ]
 
 { #category : #accessing }
@@ -74,8 +67,7 @@ TKTArchetypedWorkerPool >> privateRemoveIdleWorkerIfNeeded [
 { #category : #'as yet unclassified' }
 TKTArchetypedWorkerPool >> stop [
 	super stop.
-	backends do: #stop.
-	backends removeAll
+	backend stop
 ]
 
 { #category : #'as yet unclassified' }

@@ -89,6 +89,21 @@ TKTForkedBackend >> start [
 ]
 
 { #category : #accessing }
+TKTForkedBackend >> startWith: aRegistry [
+	imageProcess ifNotNil: [ ^ self ].
+	mutex
+		critical: [ imageProcess ifNotNil: [ ^ self ].
+			imageProcess := self deploy
+				startImageNoQuit:
+					(self
+						startupCodeIp: NetNameResolver loopBackAddress
+						outputFile: deploy hash asString asFileReference , '.start'
+						with: aRegistry) ].
+	1 second wait.
+	self assert: self isAlive
+]
+
+{ #category : #accessing }
 TKTForkedBackend >> startupCodeIp: anIp outputFile: anOutputFile [
 	^ '
 	| service stream |
@@ -106,6 +121,26 @@ TKTForkedBackend >> startupCodeIp: anIp outputFile: anOutputFile [
 ]
 
 { #category : #accessing }
+TKTForkedBackend >> startupCodeIp: anIp outputFile: anOutputFile with: aRegister [
+	^ '
+	| service stream |
+	stream := (STONWriter on: ''{2}'' asFileReference writeStream).
+	service := TKTForkItService registeringOn:''{3}'' asZnUrl backend: {4}.
+	service 
+	[service startOn: ''{1}''.
+		stream nextPut:
+			\{service port asString.
+			service ip\};
+		close] on: Error do: [ :e | stream nextPut: e; close].
+'
+		format:
+			{NetNameResolver localAddressString.
+			anOutputFile fullName.
+			aRegister url.
+			self hash asString}
+]
+
+{ #category : #accessing }
 TKTForkedBackend >> stop [
 	mutex
 		critical: [ url
@@ -120,6 +155,5 @@ TKTForkedBackend >> stop [
 { #category : #accessing }
 TKTForkedBackend >> url [
 	url ifNotNil: [ :u | ^ u ].
-	self start.
-	^ self url
+	self error: 'Not url setted'
 ]

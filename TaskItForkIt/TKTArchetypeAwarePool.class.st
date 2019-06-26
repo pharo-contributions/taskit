@@ -5,7 +5,8 @@ Class {
 	#name : #TKTArchetypeAwarePool,
 	#superclass : #Object,
 	#instVars : [
-		'archetypedPools'
+		'archetypedPools',
+		'remoteFutureRegistry'
 	],
 	#category : #'TaskItForkIt-Worker'
 }
@@ -55,6 +56,14 @@ TKTArchetypeAwarePool >> isUIRunner [
 ]
 
 { #category : #'public - mutexed' }
+TKTArchetypeAwarePool >> remoteFutureRegistry [
+	remoteFutureRegistry
+		ifNil: [ remoteFutureRegistry := TKTArchetypedFutureRegistry new
+				top: self;
+				yourself ]
+]
+
+{ #category : #'public - mutexed' }
 TKTArchetypeAwarePool >> schedule: aTask [
 	^ (self workerFor: aTask archetype) schedule: aTask
 ]
@@ -87,6 +96,7 @@ TKTArchetypeAwarePool >> workerFor: anArchetype [
 		at: anArchetype
 		ifAbsentPut: [ anArchetype = TKTArchetype thisImage
 				ifTrue: [ TKTCommonQueueWorkerPool createDefault ]
-				ifFalse: [ 
-					TKTArchetypedWorkerPool createFor: anArchetype ] ]
+				ifFalse: [ TKTArchetypedWorkerPool
+						createFor: anArchetype
+						using: self remoteFutureRegistry ] ]
 ]

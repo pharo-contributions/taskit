@@ -8,8 +8,18 @@ Class {
 }
 
 { #category : #evaluating }
+TKTArchetypedTaskExecution >> deployFailure: error [
+	future deployFailure: error
+]
+
+{ #category : #evaluating }
+TKTArchetypedTaskExecution >> deploySuccess: aValue [
+	future deploySuccess: aValue
+]
+
+{ #category : #evaluating }
 TKTArchetypedTaskExecution >> doExecuteTask [
-	[ future deploySuccess: (runner doRemoteExecute: task) ]
+	[ runner doRemoteExecute: self ]
 		on: Error
 		do: [ :error | future deployFailure: error freeze ]
 ]
