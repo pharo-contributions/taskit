@@ -22,7 +22,10 @@ TKTArchetypedFutureRegistry >> registerBackend: aRequest [
 { #category : #registry }
 TKTArchetypedFutureRegistry >> start [
 	server ifNotNil: [ ^ self ].
-	server := ZnServer on: 0
+	server := (ZnServer on: 0)
+		delegate: self;
+		start;
+		yourself
 ]
 
 { #category : #registry }

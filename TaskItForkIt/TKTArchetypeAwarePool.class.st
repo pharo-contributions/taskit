@@ -60,6 +60,7 @@ TKTArchetypeAwarePool >> remoteFutureRegistry [
 	^ remoteFutureRegistry
 		ifNil: [ remoteFutureRegistry := TKTArchetypedFutureRegistry new
 				top: self;
+				start;
 				yourself ]
 ]
 
