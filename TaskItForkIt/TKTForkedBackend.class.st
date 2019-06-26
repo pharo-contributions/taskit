@@ -99,7 +99,7 @@ TKTForkedBackend >> startWith: aRegistry [
 						startupCodeIp: NetNameResolver loopBackAddress
 						outputFile: deploy hash asString asFileReference , '.start'
 						with: aRegistry) ].
-	1 second wait.
+	10 second wait.
 	self assert: self isAlive
 ]
 
@@ -125,8 +125,7 @@ TKTForkedBackend >> startupCodeIp: anIp outputFile: anOutputFile with: aRegister
 	^ '
 	| service stream |
 	stream := (STONWriter on: ''{2}'' asFileReference writeStream).
-	service := TKTForkItService registeringOn:''{3}'' asZnUrl backend: {4}.
-	service 
+	service := TKTForkItService registeringOn:''{3}'' asZnUrl backend: {4}. 
 	[service startOn: ''{1}''.
 		stream nextPut:
 			\{service port asString.
