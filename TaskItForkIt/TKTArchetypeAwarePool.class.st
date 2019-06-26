@@ -57,7 +57,7 @@ TKTArchetypeAwarePool >> isUIRunner [
 
 { #category : #'public - mutexed' }
 TKTArchetypeAwarePool >> remoteFutureRegistry [
-	remoteFutureRegistry
+	^ remoteFutureRegistry
 		ifNil: [ remoteFutureRegistry := TKTArchetypedFutureRegistry new
 				top: self;
 				yourself ]
@@ -88,6 +88,11 @@ TKTArchetypeAwarePool >> stop [
 { #category : #accessing }
 TKTArchetypeAwarePool >> taskQueueSize: aTKTArchetype [
 	^ (archetypedPools at: aTKTArchetype ifAbsent: [ ^ 0 ]) taskQueueSize
+]
+
+{ #category : #accessing }
+TKTArchetypeAwarePool >> url [
+	self shouldBeImplemented.
 ]
 
 { #category : #'public - mutexed' }

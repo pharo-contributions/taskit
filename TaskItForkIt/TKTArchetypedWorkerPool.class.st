@@ -27,6 +27,11 @@ TKTArchetypedWorkerPool >> archetype: aTKTArchetype [
 	archetype := aTKTArchetype
 ]
 
+{ #category : #'accessingas yet unclassified' }
+TKTArchetypedWorkerPool >> futuresRegistry: aTKTArchetypeAwarePool [ 
+	futuresRegistry := aTKTArchetypeAwarePool
+]
+
 { #category : #accessing }
 TKTArchetypedWorkerPool >> getOrCreateBackend [
 	^ backend
