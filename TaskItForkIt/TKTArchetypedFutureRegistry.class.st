@@ -10,6 +10,14 @@ Class {
 }
 
 { #category : #registry }
+TKTArchetypedFutureRegistry >> initialize [
+	super initialize.
+	self
+		map: 'registerBackend' to: #registerBackend;
+		map: 'deployFutureResult' to: #deployFutureResult:
+]
+
+{ #category : #registry }
 TKTArchetypedFutureRegistry >> register: aFuture [
 	futures add: aFuture
 ]
