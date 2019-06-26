@@ -1,3 +1,6 @@
+"
+The deployed artifact is a reference to a folder that responds to the bases of a pharo tipical installation. It has pharo / pharoui scripts, a pharo-vm folder and the main image files : image, sources and changes. 
+"
 Class {
 	#name : #TKTDeployed,
 	#superclass : #Object,
@@ -5,41 +8,11 @@ Class {
 	#classTraits : 'TEquality classTrait',
 	#instVars : [
 		'location',
-		'archetype'
+		'archetype',
+		'backend'
 	],
 	#category : #'TaskItForkIt-ImageBuilding'
 }
-
-{ #category : #accessing }
-TKTDeployed class >> pharoScript [
-	^ '
-#!/usr/bin/env bash
-# some magic to find out the real location of this script dealing with symlinks
-DIR=`readlink "$0"` || DIR="$0";
-DIR=`dirname "$DIR"`;
-cd "$DIR"
-DIR=`pwd`
-cd - > /dev/null
-# disable parameter expansion to forward all arguments unprocessed to the VM
-set -f
-# run the VM and pass along all arguments as is
-"$DIR"/"pharo-vm/Pharo.app/Contents/MacOS/Pharo" --headless "$@"'
-]
-
-{ #category : #accessing }
-TKTDeployed class >> pharoUiScript [
-	^ '#!/usr/bin/env bash
-# some magic to find out the real location of this script dealing with symlinks
-DIR=`readlink "$0"` || DIR="$0";
-DIR=`dirname "$DIR"`;
-cd "$DIR"
-DIR=`pwd`
-cd - > /dev/null
-# disable parameter expansion to forward all arguments unprocessed to the VM
-set -f
-# run the VM and pass along all arguments as is
-"$DIR"/"pharo-vm/Pharo.app/Contents/MacOS/Pharo" "$@"'
-]
 
 { #category : #accessing }
 TKTDeployed >> archetype [
@@ -53,29 +26,12 @@ TKTDeployed >> changesFile [
 
 { #category : #accessing }
 TKTDeployed >> command [
-	^ self pharoScript command
-		option: self imageFile fullName;
-		yourself
+	^ backend command: self pharoScript for: self
 ]
 
 { #category : #accessing }
 TKTDeployed >> commandUi [
-	^ self pharoUiScript command
-		option: self imageFile fullName;
-		yourself
-]
-
-{ #category : #accessing }
-TKTDeployed >> createScript: ref with: content [
-	ref ensureCreateFile.
-	(ZnNewLineWriterStream on: ref writeStream)
-		forPlatformLineEnding;
-		nextPutAll: content;
-		close.
-	(TKTSystem chmod
-		option: '+x';
-		argument: ref fullName;
-		future) synchronizeTimeout: 5 seconds
+	^ backend command: self pharoUiScript for: self
 ]
 
 { #category : #accessing }
@@ -108,10 +64,10 @@ TKTDeployed >> imageFile [
 ]
 
 { #category : #accessing }
-TKTDeployed >> initializeWithLocation: aLocation andArchetype: anArquetype [
+TKTDeployed >> initializeWithLocation: aLocation archetype: anArquetype andBackend: aBackend [
 	location := aLocation.
 	archetype := anArquetype.
-
+	backend := aBackend
 ]
 
 { #category : #accessing }
@@ -137,17 +93,11 @@ TKTDeployed >> install: url configurationOrBaselineName: confOrBaseline groups: 
 
 { #category : #accessing }
 TKTDeployed >> pharoScript [
-	(location / 'pharo') exists
-		ifFalse: [ self createScript: location / 'pharo' with: self class pharoScript ].
 	^ location / 'pharo'
 ]
 
 { #category : #accessing }
 TKTDeployed >> pharoUiScript [
-	(location / 'pharo-ui') exists
-		ifFalse: [ self
-				createScript: location / 'pharo-ui'
-				with: self class pharoUiScript ].
 	^ location / 'pharo-ui'
 ]
 

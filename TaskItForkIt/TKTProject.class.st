@@ -1,3 +1,6 @@
+"
+A project refers to a metacello available endpoint. This can be a baseline or a configuration. 
+"
 Class {
 	#name : #TKTProject,
 	#superclass : #Object,

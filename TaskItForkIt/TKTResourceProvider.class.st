@@ -1,3 +1,7 @@
+"
+A resoruce provider is in charge of resolving the selectors into URLs for downloading and installing.
+It works as a hook for resolving differently the dependancies 
+"
 Class {
 	#name : #TKTResourceProvider,
 	#superclass : #Object,

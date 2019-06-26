@@ -1,3 +1,10 @@
+"
+The file oriented deployer is based on th fact that the resource provider will provide URLS and that the installation will be done by downloading already bootstrapped images as well as already compiled VMs.
+
+Since is file based, it integrates as well a cache. that will be nice to extract to other object in the near future. 
+
+This responsibility allows to redefine how to interpret the provided resources realted to an archetype. 
+"
 Class {
 	#name : #TKTFileOrientedDeployer,
 	#superclass : #Object,
@@ -11,9 +18,39 @@ Class {
 { #category : #accessing }
 TKTFileOrientedDeployer class >> default [
 	^ self new
-		provider: TKTResourceProvider new;
 		backend: TKTSystemBackend new;
 		yourself
+]
+
+{ #category : #accessing }
+TKTFileOrientedDeployer class >> pharoScript [
+	^ '
+#!/usr/bin/env bash
+# some magic to find out the real location of this script dealing with symlinks
+DIR=`readlink "$0"` || DIR="$0";
+DIR=`dirname "$DIR"`;
+cd "$DIR"
+DIR=`pwd`
+cd - > /dev/null
+# disable parameter expansion to forward all arguments unprocessed to the VM
+set -f
+# run the VM and pass along all arguments as is
+"$DIR"/"pharo-vm/Pharo.app/Contents/MacOS/Pharo" --headless "$@"'
+]
+
+{ #category : #accessing }
+TKTFileOrientedDeployer class >> pharoUiScript [
+	^ '#!/usr/bin/env bash
+# some magic to find out the real location of this script dealing with symlinks
+DIR=`readlink "$0"` || DIR="$0";
+DIR=`dirname "$DIR"`;
+cd "$DIR"
+DIR=`pwd`
+cd - > /dev/null
+# disable parameter expansion to forward all arguments unprocessed to the VM
+set -f
+# run the VM and pass along all arguments as is
+"$DIR"/"pharo-vm/Pharo.app/Contents/MacOS/Pharo" "$@"'
 ]
 
 { #category : #folder }
@@ -65,7 +102,20 @@ TKTFileOrientedDeployer >> copy: aFileReference to: aDestination [
 
 ]
 
-{ #category : #'deploy destination' }
+{ #category : #accessing }
+TKTFileOrientedDeployer >> createScript: ref with: content [
+	ref ensureCreateFile.
+	(ZnNewLineWriterStream on: ref writeStream)
+		forPlatformLineEnding;
+		nextPutAll: content;
+		close.
+	(TKTSystem chmod
+		option: '+x';
+		argument: ref fullName;
+		future) synchronizeTimeout: 5 seconds
+]
+
+{ #category : #folder }
 TKTFileOrientedDeployer >> currentCacheFolder [
 	^ self baseFolder / #current
 ]
@@ -78,11 +128,17 @@ TKTFileOrientedDeployer >> defaultDeployFolder [
 { #category : #accessing }
 TKTFileOrientedDeployer >> deploy: anArchetype at: location [
 	| deployed |
+	self createScript: location / 'pharo' with: self class pharoScript.
+	self
+		createScript: location / 'pharo-ui'
+		with: self class pharoUiScript.
 	anArchetype parent
 		ifNil: [ self deployFiles: anArchetype at: location ]
 		ifNotNil: [ self deploy: anArchetype parent at: location ].
 	deployed := TKTDeployed new
-		initializeWithLocation: location andArchetype: anArchetype;
+		initializeWithLocation: location
+			archetype: anArchetype
+			andBackend: backend;
 		yourself.
 	self updateDeployed: deployed using: self.
 	^ deployed
@@ -90,10 +146,13 @@ TKTFileOrientedDeployer >> deploy: anArchetype at: location [
 
 { #category : #folder }
 TKTFileOrientedDeployer >> deployAtDefaultLocation: anArchetype [
-	(self defaultDeployFolder / anArchetype name) ensureCreateDirectory.
+	| id |
+	id := UUID new asString.
+	(self defaultDeployFolder / anArchetype name / id)
+		ensureCreateDirectory.
 	^ self
 		deploy: anArchetype
-		at: self defaultDeployFolder / anArchetype name / UUID new asString
+		at: self defaultDeployFolder / anArchetype name / id
 ]
 
 { #category : #accessing }
@@ -117,7 +176,7 @@ TKTFileOrientedDeployer >> deployFiles: anArchetype at: location [
 		at: location
 ]
 
-{ #category : #'deploy destination' }
+{ #category : #folder }
 TKTFileOrientedDeployer >> ensureInstallationDirectoryFor: anArchetype [
 	(self archetypesDestinationFor: anArchetype) exists
 		ifTrue: [ backend rm: (self archetypesDestinationFor: anArchetype) ].
@@ -127,17 +186,12 @@ TKTFileOrientedDeployer >> ensureInstallationDirectoryFor: anArchetype [
 { #category : #getting }
 TKTFileOrientedDeployer >> fetchBundle: aZnUrl [
 	| expectedLocation |
-	expectedLocation := (aZnUrl segments allButFirst
-		inject: self imageFolder 
-		into: [ :acc :each | acc / (each copyReplaceAll: '.zip' with: '') ]).
-	expectedLocation exists ifFalse: [ 
-			expectedLocation ensureCreateDirectory.
-			backend downloadAndUnzip: aZnUrl at: expectedLocation 
-		].
-	expectedLocation children
-		select: [ :c | #(image changes) includes: c extension ]
-		thenDo: [ :child | child renameTo: 'Pharo.' , child extension ].
-		
+	expectedLocation := aZnUrl segments allButFirst
+		inject: self imageFolder
+		into: [ :acc :each | acc / (each copyReplaceAll: '.zip' with: '') ].
+	expectedLocation exists
+		ifFalse:
+			[ self privateDownloadBundle: aZnUrl at: expectedLocation ].
 	^ expectedLocation entries
 ]
 
@@ -151,7 +205,7 @@ TKTFileOrientedDeployer >> fetchVm: aZnUrl [
 	expectedLocation exists
 		ifFalse: [ expectedLocation ensureCreateDirectory.
 			backend downloadAndUnzip: aZnUrl at: expectedLocation ].
-	backend chmod: expectedLocation / #* flag: '+x'.
+	backend chmod: expectedLocation flag: '+x'.
 	^ expectedLocation
 ]
 
@@ -160,10 +214,10 @@ TKTFileOrientedDeployer >> imageFolder [
 	^ self baseFolder / #image
 ]
 
-{ #category : #'system calls' }
-TKTFileOrientedDeployer >> installAllSymlinksTo: aCollection at: aDestination [
-	self assert: aDestination isDirectory.
-	aCollection do: [ :f | self installSymlinkTo: f at: aDestination ]
+{ #category : #getting }
+TKTFileOrientedDeployer >> initialize [
+	super initialize.
+	provider := TKTResourceProvider new
 ]
 
 { #category : #accessing }
@@ -175,18 +229,13 @@ TKTFileOrientedDeployer >> installImageAndSource: bundle at: location [
 	backend copyAll: imageChangesAndSourceFileReferenceArray to: location
 ]
 
-{ #category : #'system calls' }
-TKTFileOrientedDeployer >> installSymlinkTo: aFileReference at: aDestination [
-	^ backend installSymlinkTo: aFileReference at: aDestination
-]
-
 { #category : #accessing }
 TKTFileOrientedDeployer >> installVm: aVm at: location [
 	| vmFolderReference |
 	vmFolderReference := aVm = #current
 		ifTrue: [ self resolveCurrentVM ]
 		ifFalse: [ self fetchVm: aVm ].
-	self installSymlinkTo: vmFolderReference at: location
+	backend installSymlinkTo: vmFolderReference at: location
 ]
 
 { #category : #accessing }
@@ -198,14 +247,15 @@ TKTFileOrientedDeployer >> platformName [
 				ifFalse: [ 'mac' ] ]
 ]
 
-{ #category : #accessing }
-TKTFileOrientedDeployer >> provider [
-	^ provider
-]
-
-{ #category : #accessing }
-TKTFileOrientedDeployer >> provider: aResourceProvider [
-	provider := aResourceProvider
+{ #category : #getting }
+TKTFileOrientedDeployer >> privateDownloadBundle: aZnUrl at: expectedLocation [
+	expectedLocation exists
+		ifTrue: [ backend rm: expectedLocation ].
+	expectedLocation ensureCreateDirectory.
+	backend downloadAndUnzip: aZnUrl at: expectedLocation.
+	expectedLocation children
+		select: [ :c | #(image changes) includes: c extension ]
+		thenDo: [ :child | child renameTo: 'Pharo.' , child extension ]
 ]
 
 { #category : #'image calls' }

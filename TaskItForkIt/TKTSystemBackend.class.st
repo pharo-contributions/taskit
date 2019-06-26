@@ -1,11 +1,33 @@
+"
+The system backend it defines what it means the diferent system calls. This responsibility allows to plug different platforms backends as well as remote or local platforms
+"
 Class {
 	#name : #TKTSystemBackend,
 	#superclass : #Object,
 	#instVars : [
 		'workingDirectory'
 	],
+	#classInstVars : [
+		'local',
+		'remote'
+	],
 	#category : #'TaskItForkIt-ImageBuilding'
 }
+
+{ #category : #accessing }
+TKTSystemBackend class >> fromSymbol: aSymbol [
+	^ self perform: aSymbol
+]
+
+{ #category : #accessing }
+TKTSystemBackend class >> local [
+	^ local ifNil: [ local := self new  ]
+]
+
+{ #category : #accessing }
+TKTSystemBackend class >> remote [
+	^ remote ifNil: [ remote := self new  ]
+]
 
 { #category : #copying }
 TKTSystemBackend >> chmod: aFileReference flag: aString [
@@ -13,6 +35,13 @@ TKTSystemBackend >> chmod: aFileReference flag: aString [
 		option: aString;
 		argument: aFileReference fullName;
 		future) synchronizeTimeout: 5 seconds
+]
+
+{ #category : #folder }
+TKTSystemBackend >> command: aReference for: aDeployed [
+	^ aReference command
+		option: aDeployed imageFile fullName;
+		yourself
 ]
 
 { #category : #copying }
@@ -42,6 +71,12 @@ TKTSystemBackend >> downloadAndUnzip: aZnUrl at: expectedLocation [
 	self assert: zipFile exists.
 	TKTSystem unzip: zipFile into: expectedLocation.
 	zipFile ensureDelete
+]
+
+{ #category : #copying }
+TKTSystemBackend >> installAllSymlinksTo: aCollection at: aDestination [
+	self assert: aDestination isDirectory.
+	aCollection do: [ :f | self installSymlinkTo: f at: aDestination ]
 ]
 
 { #category : #copying }
