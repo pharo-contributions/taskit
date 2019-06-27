@@ -56,7 +56,7 @@ TKTForkedBackend >> isFree [
 ]
 
 { #category : #accessing }
-TKTForkedBackend >> sendTaskAndProcessResponse: aTask [
+TKTForkedBackend >> sendTaskAndProcessResponse: aTask id: aFutureId [
 	| response |
 	response := ZnEasy
 		post: self url / #task
@@ -64,8 +64,9 @@ TKTForkedBackend >> sendTaskAndProcessResponse: aTask [
 			(ZnEntity
 				text:
 					(String
-						streamContents:
-							[ :str | (STONWriter on: str) nextPut: aTask ])).
+						streamContents: [ :str | 
+							(STONWriter on: str)
+								nextPut: {aTask. aFutureId} ])).
 	response := (STONReader on: response entity string readStream) next.
 	(response isKindOf: Exception)
 		ifTrue: [ ^ response signalIn: thisContext ].

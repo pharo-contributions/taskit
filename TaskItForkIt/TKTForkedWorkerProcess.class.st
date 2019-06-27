@@ -21,6 +21,7 @@ TKTForkedWorkerProcess >> backend: aBackend [
 TKTForkedWorkerProcess >> doRemoteExecute: aTaskExecution [
 	^ backend
 		sendTaskAndProcessResponse: (TKTTask valuable: aTaskExecution task valuable)
+		id: aTaskExecution id
 ]
 
 { #category : #accessing }

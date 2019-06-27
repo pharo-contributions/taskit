@@ -142,6 +142,11 @@ TKTForkItService >> task: aRequest [
 	taskAndId := (STONReader on: aRequest entity string readStream) next.
 	future := taskAndId first future: pool.
 	future
-		onSuccessDo: [ :v | self informSuccess: v id: taskAndId second ].
-	future onFailureDo: [ :e | self informError: e id: taskAndId second ].
+		onSuccessDo: [ :v | 
+			self halt.
+			self informSuccess: v id: taskAndId second ].
+	future
+		onFailureDo: [ :e | 
+			self halt.
+			self informError: e id: taskAndId second ]
 ]

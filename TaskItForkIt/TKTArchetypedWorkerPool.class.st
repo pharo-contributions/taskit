@@ -27,6 +27,15 @@ TKTArchetypedWorkerPool >> archetype: aTKTArchetype [
 	archetype := aTKTArchetype
 ]
 
+{ #category : #'as yet unclassified' }
+TKTArchetypedWorkerPool >> future: aTask [
+	| execution |
+	execution := aTask asTask futureTaskExecutionFor: self.
+	futuresRegistry register: execution.
+	self scheduleTaskExecution: execution.
+	^ execution future
+]
+
 { #category : #'accessingas yet unclassified' }
 TKTArchetypedWorkerPool >> futuresRegistry: aTKTArchetypeAwarePool [ 
 	futuresRegistry := aTKTArchetypeAwarePool

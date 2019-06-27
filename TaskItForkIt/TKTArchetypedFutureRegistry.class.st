@@ -14,6 +14,11 @@ TKTArchetypedFutureRegistry >> deployFutureResult: aRequest [
 	self halt.
 ]
 
+{ #category : #accessing }
+TKTArchetypedFutureRegistry >> futures [
+	^ futures ifNil: [ futures := Dictionary new ]
+]
+
 { #category : #registry }
 TKTArchetypedFutureRegistry >> initialize [
 	super initialize.
@@ -23,8 +28,11 @@ TKTArchetypedFutureRegistry >> initialize [
 ]
 
 { #category : #registry }
-TKTArchetypedFutureRegistry >> register: aFuture [
-	futures add: aFuture
+TKTArchetypedFutureRegistry >> register: anArchetypedFuture [
+	| id |
+	id := UUID new asString.
+	self futures at: id put: anArchetypedFuture.
+	anArchetypedFuture id: id
 ]
 
 { #category : #registry }

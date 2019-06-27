@@ -4,6 +4,9 @@ The archetyped task execution relies on the runner as dispatcher to the proper b
 Class {
 	#name : #TKTArchetypedTaskExecution,
 	#superclass : #TKTFutureExecution,
+	#instVars : [
+		'id'
+	],
 	#category : #'TaskItForkIt-Task'
 }
 
@@ -22,6 +25,16 @@ TKTArchetypedTaskExecution >> doExecuteTask [
 	[ runner doRemoteExecute: self ]
 		on: Error
 		do: [ :error | future deployFailure: error freeze ]
+]
+
+{ #category : #evaluating }
+TKTArchetypedTaskExecution >> id [
+	^ id
+]
+
+{ #category : #evaluating }
+TKTArchetypedTaskExecution >> id: anId [
+	id := anId 
 ]
 
 { #category : #evaluating }
