@@ -143,10 +143,8 @@ TKTForkItService >> task: aRequest [
 	future := taskAndId first future: pool.
 	future
 		onSuccessDo: [ :v | 
-			self halt.
 			self informSuccess: v id: taskAndId second ].
 	future
 		onFailureDo: [ :e | 
-			self halt.
 			self informError: e id: taskAndId second ]
 ]
