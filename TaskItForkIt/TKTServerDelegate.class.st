@@ -31,6 +31,7 @@ TKTServerDelegate >> generateHelp [
 { #category : #initialization }
 TKTServerDelegate >> handleRequest: request [
 	| prefix prefixHandler |
+
 	prefix := request uri isSlash
 		ifTrue: [ prefixMap at: '/' ifAbsent: [ nil ] ]
 		ifFalse: [ request uri firstPathSegment ].

@@ -13,7 +13,7 @@ Class {
 TKTArchetypedFutureRegistry >> initialize [
 	super initialize.
 	self
-		map: 'registerBackend' to: #registerBackend;
+		map: 'registerBackend' to: #registerBackend:;
 		map: 'deployFutureResult' to: #deployFutureResult:
 ]
 
@@ -24,23 +24,21 @@ TKTArchetypedFutureRegistry >> register: aFuture [
 
 { #category : #registry }
 TKTArchetypedFutureRegistry >> registerBackend: aRequest [
-	self halt. 
+	| arrayUrlHash |
+	arrayUrlHash := (STONReader on: aRequest entity string readStream) next.
+	top
+		noteRemoteWorkerAt: arrayUrlHash first
+		forBackendHashed: arrayUrlHash second
 ]
 
 { #category : #registry }
 TKTArchetypedFutureRegistry >> start [
-	server ifNotNil: [ ^ self ].
-	server := (ZnServer on: 0)
-		delegate: self;
-		start;
-		yourself
-]
-
-{ #category : #registry }
-TKTArchetypedFutureRegistry >> stop [
-	server
-		ifNotNil: [ server stop.
-			server := nil ]
+	^ server
+		ifNil: [ server := ZnSingleThreadedServer on: 0.
+			server bindingAddress: NetNameResolver loopBackAddress.
+			server delegate: self.
+			server start.
+			self assert: server isRunning & server isListening ]
 ]
 
 { #category : #registry }
@@ -50,5 +48,6 @@ TKTArchetypedFutureRegistry >> top: aMainRunner [
 
 { #category : #registry }
 TKTArchetypedFutureRegistry >> url [
+	self assert: server isRunning & server isListening.
 	^ server localUrl
 ]

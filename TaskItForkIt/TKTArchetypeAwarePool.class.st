@@ -56,12 +56,18 @@ TKTArchetypeAwarePool >> isUIRunner [
 ]
 
 { #category : #'public - mutexed' }
+TKTArchetypeAwarePool >> noteRemoteWorkerAt: anUrl forBackendHashed: aHash [
+	archetypedPools values
+		do: [ :p | p noteRemoteWorkerAt: anUrl forBackendHashed: aHash ]
+]
+
+{ #category : #'public - mutexed' }
 TKTArchetypeAwarePool >> remoteFutureRegistry [
 	^ remoteFutureRegistry
-		ifNil: [ remoteFutureRegistry := TKTArchetypedFutureRegistry new
-				top: self;
-				start;
-				yourself ]
+		ifNil: [ remoteFutureRegistry := TKTArchetypedFutureRegistry new.
+			remoteFutureRegistry top: self.
+			remoteFutureRegistry start.
+			remoteFutureRegistry ]
 ]
 
 { #category : #'public - mutexed' }

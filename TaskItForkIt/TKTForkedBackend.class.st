@@ -15,9 +15,10 @@ Class {
 }
 
 { #category : #accessing }
-TKTForkedBackend >> archetype: aTKTArchetype [  
-	archetype := (aTKTArchetype + TKTProject forkit).
-	
+TKTForkedBackend >> archetype: aTKTArchetype [
+	aTKTArchetype isDeploy
+		ifTrue: [ self deploy: aTKTArchetype ]
+		ifFalse: [ archetype := aTKTArchetype + TKTProject forkit ]
 ]
 
 { #category : #accessing }
@@ -26,6 +27,12 @@ TKTForkedBackend >> deploy [
 		ifNil: [ TKTConfiguration
 				runner: TKTNewProcessTaskRunner new
 				during: [ deploy := archetype deploy ] ]
+]
+
+{ #category : #accessing }
+TKTForkedBackend >> deploy: aDeploy [
+	deploy := aDeploy.
+	archetype := deploy archetype. 
 ]
 
 { #category : #accessing }
@@ -66,6 +73,11 @@ TKTForkedBackend >> sendTaskAndProcessResponse: aTask [
 ]
 
 { #category : #accessing }
+TKTForkedBackend >> setUrl: anUrl [
+	url := anUrl
+]
+
+{ #category : #accessing }
 TKTForkedBackend >> start [
 	| ipPort |
 	imageProcess ifNotNil: [ ^ self ].
@@ -100,6 +112,8 @@ TKTForkedBackend >> startWith: aRegistry [
 						outputFile: deploy hash asString asFileReference , '.start'
 						with: aRegistry) ].
 	10 second wait.
+	UIManager default spawnNewProcess.
+	self halt.
 	self assert: self isAlive
 ]
 
@@ -126,12 +140,12 @@ TKTForkedBackend >> startupCodeIp: anIp outputFile: anOutputFile with: aRegister
 	| service stream |
 	stream := (STONWriter on: ''{2}'' asFileReference writeStream).
 	service := TKTForkItService registeringOn:''{3}'' asZnUrl backend: {4}. 
-	self halt. 
+
 	[service startOn: ''{1}''.
 		stream nextPut:
 			\{service port asString.
 			service ip\};
-		close] on: Error do: [ :e | stream nextPut: e; close].
+		close] on: Error do: [ :e | self halt. stream nextPut: e; close].
 '
 		format:
 			{NetNameResolver localAddressString.

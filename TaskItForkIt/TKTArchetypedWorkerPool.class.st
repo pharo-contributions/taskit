@@ -35,10 +35,16 @@ TKTArchetypedWorkerPool >> futuresRegistry: aTKTArchetypeAwarePool [
 { #category : #accessing }
 TKTArchetypedWorkerPool >> getOrCreateBackend [
 	^ backend
-		ifNil: [ backend := TKTForkedBackend new
-				archetype: archetype;
-				startWith: futuresRegistry;
-				yourself ]
+		ifNil: [ backend := TKTForkedBackend new.
+			backend archetype: archetype.
+			backend startWith: futuresRegistry.
+			backend ]
+]
+
+{ #category : #accessing }
+TKTArchetypedWorkerPool >> noteRemoteWorkerAt: anUrl forBackendHashed: aHash [
+	backend hash = aHash
+		ifTrue: [ backend setUrl: anUrl ]
 ]
 
 { #category : #accessing }
@@ -72,7 +78,7 @@ TKTArchetypedWorkerPool >> privateRemoveIdleWorkerIfNeeded [
 { #category : #'as yet unclassified' }
 TKTArchetypedWorkerPool >> stop [
 	super stop.
-	backend stop
+	backend ifNotNil: [backend stop]
 ]
 
 { #category : #'as yet unclassified' }

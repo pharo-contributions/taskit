@@ -91,6 +91,11 @@ TKTDeployed >> install: url configurationOrBaselineName: confOrBaseline groups: 
 		future
 ]
 
+{ #category : #'evalas yet unclassified' }
+TKTDeployed >> isDeploy [
+	^ true
+]
+
 { #category : #accessing }
 TKTDeployed >> pharoScript [
 	^ location / 'pharo'

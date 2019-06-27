@@ -239,12 +239,18 @@ TKTArchetype >> initialize [
 ]
 
 { #category : #accessing }
+TKTArchetype >> isDeploy [
+	^ false
+]
+
+{ #category : #accessing }
 TKTArchetype >> name [
-	^ name ifNil: [ 
-		parent ifNil: [ name := imageSelector ,'vm', vmSelector ] ifNotNil: [
-			name := dependencies inject: parent name into: [ :bn : each | bn , each name  ]
-		]. 
-		    ]
+	^ name
+		ifNil: [ parent
+				ifNil: [ name := imageSelector , 'vm' , vmSelector ]
+				ifNotNil: [ name := dependencies
+						inject: parent name
+						into: [ :bn :each | bn , each name ] ] ]
 ]
 
 { #category : #accessing }

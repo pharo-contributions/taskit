@@ -8,10 +8,15 @@ Class {
 }
 
 { #category : #running }
+TKTForkItPoolTestCase >> runCaseManaged [
+	^ self runCase
+]
+
+{ #category : #running }
 TKTForkItPoolTestCase >> setUp [
 	super setUp.
 	pool := TKTArchetypeAwarePool createDefault.
-	self timeLimit: 3 minutes.
+
 ]
 
 { #category : #running }
