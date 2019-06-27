@@ -18,6 +18,13 @@ TKTForkedWorkerProcess >> backend: aBackend [
 ]
 
 { #category : #accessing }
+TKTForkedWorkerProcess >> deploy: aValue into: anArchetypedTaskExecution [
+	aValue isException
+		ifTrue: [ anArchetypedTaskExecution deployFailure: aValue ]
+		ifFalse: [ anArchetypedTaskExecution deploySuccess: aValue ]
+]
+
+{ #category : #accessing }
 TKTForkedWorkerProcess >> doRemoteExecute: aTaskExecution [
 	^ backend
 		sendTaskAndProcessResponse: (TKTTask valuable: aTaskExecution task valuable)

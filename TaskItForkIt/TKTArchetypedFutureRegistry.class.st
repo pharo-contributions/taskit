@@ -11,7 +11,9 @@ Class {
 
 { #category : #registry }
 TKTArchetypedFutureRegistry >> deployFutureResult: aRequest [
-	self halt.
+	| valueId |
+	valueId := (STONReader on: aRequest entity string readStream) next.
+	(futures at: valueId second) deployValue: valueId first
 ]
 
 { #category : #accessing }

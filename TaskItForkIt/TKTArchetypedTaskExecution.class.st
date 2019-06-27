@@ -20,6 +20,11 @@ TKTArchetypedTaskExecution >> deploySuccess: aValue [
 	future deploySuccess: aValue
 ]
 
+{ #category : #remoteExtention }
+TKTArchetypedTaskExecution >> deployValue: aValue [
+	runner deploy: aValue into: self
+]
+
 { #category : #evaluating }
 TKTArchetypedTaskExecution >> doExecuteTask [
 	[ runner doRemoteExecute: self ]

@@ -1,6 +1,11 @@
 Extension { #name : #Exception }
 
 { #category : #'*TaskItForkIt' }
+Exception >> isException [
+	^ true
+]
+
+{ #category : #'*TaskItForkIt' }
 Exception >> stonOn: aWriter [
 	| csignalContext chandlerContext couterContext |
 	csignalContext := signalContext.
