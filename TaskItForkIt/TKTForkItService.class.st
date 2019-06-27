@@ -63,7 +63,7 @@ TKTForkItService >> informBinds [
 { #category : #initialization }
 TKTForkItService >> informError: value id: taskId [
 	ZnEasy
-		post: master / #deployFutureResult:
+		post: master / #deployFutureResult
 		data:
 			(ZnEntity
 				text:
@@ -78,7 +78,7 @@ TKTForkItService >> informError: value id: taskId [
 { #category : #initialization }
 TKTForkItService >> informSuccess: value id: taskId [
 	ZnEasy
-		post: master / #deployFutureResult:
+		post: master / #deployFutureResult
 		data:
 			(ZnEntity
 				text:
