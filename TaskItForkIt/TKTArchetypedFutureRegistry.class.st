@@ -10,6 +10,11 @@ Class {
 }
 
 { #category : #registry }
+TKTArchetypedFutureRegistry >> deployFutureResult: aRequest [
+	self halt.
+]
+
+{ #category : #registry }
 TKTArchetypedFutureRegistry >> initialize [
 	super initialize.
 	self
@@ -25,10 +30,13 @@ TKTArchetypedFutureRegistry >> register: aFuture [
 { #category : #registry }
 TKTArchetypedFutureRegistry >> registerBackend: aRequest [
 	| arrayUrlHash |
-	arrayUrlHash := (STONReader on: aRequest entity string readStream) next.
+
+	arrayUrlHash := (STONReader on: aRequest entity string readStream)
+		next.
 	top
 		noteRemoteWorkerAt: arrayUrlHash first
-		forBackendHashed: arrayUrlHash second
+		forBackendHashed: arrayUrlHash second.
+	^ true
 ]
 
 { #category : #registry }

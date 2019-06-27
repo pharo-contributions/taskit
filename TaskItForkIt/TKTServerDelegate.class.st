@@ -9,9 +9,12 @@ Class {
 
 { #category : #initialization }
 TKTServerDelegate >> encodeIntoResponse: anObject [
-	| serial |
+	| serial object |
+	object := anObject = self
+		ifTrue: [ true ]
+		ifFalse: [ anObject ].
 	serial := String
-		streamContents: [ :str | (STONWriter on: str) nextPut: anObject ].
+		streamContents: [ :str | (STONWriter on: str) nextPut: object ].
 	^ ZnResponse ok: (ZnEntity text: serial)
 ]
 

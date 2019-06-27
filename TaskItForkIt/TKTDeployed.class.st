@@ -134,12 +134,6 @@ TKTDeployed >> startImageNoQuit: aString [
 			input}) createOSSubprocess run.
 	return isComplete
 		ifTrue: [ self error: 'Error stargin image ' ].
-	output exists
-		ifTrue: [ | object |
-			object := (STONReader on: output readStream) next.
-			object isError
-				ifTrue: [ object signal ] ].
-	output ensureDelete.
 	^ return
 ]
 

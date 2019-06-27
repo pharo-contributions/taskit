@@ -61,6 +61,36 @@ TKTForkItService >> informBinds [
 ]
 
 { #category : #initialization }
+TKTForkItService >> informError: value id: taskId [
+	ZnEasy
+		post: master / #deployFutureResult:
+		data:
+			(ZnEntity
+				text:
+					(String
+						streamContents: [ :str | 
+							(STONWriter on: str)
+								nextPut:
+									{ value.
+									taskId} ]))
+]
+
+{ #category : #initialization }
+TKTForkItService >> informSuccess: value id: taskId [
+	ZnEasy
+		post: master / #deployFutureResult:
+		data:
+			(ZnEntity
+				text:
+					(String
+						streamContents: [ :str | 
+							(STONWriter on: str)
+								nextPut:
+									{value.
+									taskId} ]))
+]
+
+{ #category : #initialization }
 TKTForkItService >> initialize [
 	super initialize.
 	self
@@ -91,11 +121,6 @@ TKTForkItService >> port [
 ]
 
 { #category : #initialization }
-TKTForkItService >> registeringOn: aZnUrl backend: aBackendHash [
-	
-]
-
-{ #category : #initialization }
 TKTForkItService >> startOn: anAddress [
 	pool := TKTConfiguration runner.
 	server := (ZnServer on: 0)
@@ -113,9 +138,10 @@ TKTForkItService >> stop [
 
 { #category : #initialization }
 TKTForkItService >> task: aRequest [
-	| future timeout |
-	timeout := 1000.
-	future := (STONReader on: aRequest entity string readStream) next
-		future: pool.
-	^ future synchronizeTimeout: timeout seconds
+	| future taskAndId |
+	taskAndId := (STONReader on: aRequest entity string readStream) next.
+	future := taskAndId first future: pool.
+	future
+		onSuccessDo: [ :v | self informSuccess: v id: taskAndId second ].
+	future onFailureDo: [ :e | self informError: e id: taskAndId second ].
 ]

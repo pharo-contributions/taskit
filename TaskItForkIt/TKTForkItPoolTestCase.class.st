@@ -43,6 +43,7 @@ TKTForkItPoolTestCase >> testRemoteWorkerHasAnInstanceOfForkItService [
 		future:
 			((MessageSend receiver: TKTForkItService selector: #allInstancesSize)
 				asArchetypedTaskOn: TKTArchetype pharo70).
+		self halt.
 	self assert: (future synchronizeTimeout: 5 minutes) equals: 1.
 	self assert: TKTForkItService allInstances size equals: 0
 ]

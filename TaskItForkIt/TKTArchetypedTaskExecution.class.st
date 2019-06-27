@@ -23,3 +23,8 @@ TKTArchetypedTaskExecution >> doExecuteTask [
 		on: Error
 		do: [ :error | future deployFailure: error freeze ]
 ]
+
+{ #category : #evaluating }
+TKTArchetypedTaskExecution >> task [
+	^ task
+]

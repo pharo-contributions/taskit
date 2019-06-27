@@ -113,7 +113,6 @@ TKTForkedBackend >> startWith: aRegistry [
 						with: aRegistry) ].
 	10 second wait.
 	UIManager default spawnNewProcess.
-	self halt.
 	self assert: self isAlive
 ]
 
