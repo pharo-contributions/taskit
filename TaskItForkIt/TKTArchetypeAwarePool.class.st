@@ -19,7 +19,7 @@ TKTArchetypeAwarePool class >> createDefault [
 
 { #category : #accessing }
 TKTArchetypeAwarePool >> amountOfTasksAt: aTKTArchetype [
-	^ remoteFutureRegistry amountOfTasksFor: aTKTArchetype
+	^ self remoteFutureRegistry amountOfTasksFor: aTKTArchetype
 ]
 
 { #category : #'public - mutexed' }
@@ -40,7 +40,7 @@ TKTArchetypeAwarePool >> futureArchetypedTask: aTask [
 
 	execution := aTask asTask futureTaskExecutionFor: self.
 	execution backend: (self backendFor: aTask archetype).
-	remoteFutureRegistry register: execution.
+	self remoteFutureRegistry register: execution.
 	pool scheduleTaskExecution: execution.
 	^ execution future
 ]
@@ -101,7 +101,7 @@ TKTArchetypeAwarePool >> scheduleArchetypedTask: aTask [
 	| execution |
 	execution := aTask asTask futureTaskExecutionFor: self.
 	execution backend: (self backendFor: aTask archetype).
-	remoteFutureRegistry registerNotDeployable: execution.
+	self remoteFutureRegistry registerNotDeployable: execution.
 	pool scheduleTaskExecution: execution.
 	
 ]
@@ -117,7 +117,7 @@ TKTArchetypeAwarePool >> spawnNewBackendFor: anArchetype [
 	backend := TKTForkedBackend new.
 	anArchetype configureBackend: backend. 
 	backend archetype: anArchetype.
-	backend startWith: remoteFutureRegistry.
+	backend startWith: self remoteFutureRegistry.
 	^ archetypedBackends add: backend
 ]
 
