@@ -29,6 +29,11 @@ TKTArchetypeAwarePool >> backendFor: anArchetype [
 		ifNone: [ self spawnNewBackendFor: anArchetype ]
 ]
 
+{ #category : #'deploying remote' }
+TKTArchetypeAwarePool >> deployValue: aValue into: aTKTFuture [ 
+	aValue isException 
+]
+
 { #category : #'public - mutexed' }
 TKTArchetypeAwarePool >> future: aTask [
 	^ pool future: aTask

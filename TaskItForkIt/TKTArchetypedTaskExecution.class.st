@@ -28,7 +28,7 @@ TKTArchetypedTaskExecution >> deploySuccess: aValue [
 
 { #category : #remoteExtention }
 TKTArchetypedTaskExecution >> deployValue: aValue [
-	runner deploy: aValue into: self
+	runner deploy: aValue into: future
 ]
 
 { #category : #evaluating }

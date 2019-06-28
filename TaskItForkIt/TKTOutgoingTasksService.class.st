@@ -47,7 +47,7 @@ TKTOutgoingTasksService >> initialize [
 TKTOutgoingTasksService >> register: anArchetypedFuture [
 	| id |
 	id := UUID new asString.
-	self futures at: id put: anArchetypedFuture future.
+	self futures at: id put: anArchetypedFuture.
 	anArchetypedFuture id: id
 ]
 
