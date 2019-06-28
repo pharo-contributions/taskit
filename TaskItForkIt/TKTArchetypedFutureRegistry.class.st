@@ -1,19 +1,30 @@
+"
+This class is here for dealing with the registry of futures, for remote executions 
+"
 Class {
 	#name : #TKTArchetypedFutureRegistry,
 	#superclass : #TKTServerDelegate,
 	#instVars : [
 		'futures',
 		'server',
-		'top'
+		'top',
+		'weakRegistry'
 	],
 	#category : #'TaskItForkIt-Worker'
 }
 
 { #category : #registry }
+TKTArchetypedFutureRegistry >> amountOfTasksFor: anArchetype [
+	^ (weakRegistry , futures collect: [ :t | t archetype = anArchetype ])
+		size
+]
+
+{ #category : #registry }
 TKTArchetypedFutureRegistry >> deployFutureResult: aRequest [
 	| valueId |
 	valueId := (STONReader on: aRequest entity string readStream) next.
-	(futures at: valueId second) deployValue: valueId first
+	(futures at: valueId second) deployValue: valueId first.
+	futures removeKey: valueId second.
 ]
 
 { #category : #accessing }
@@ -26,7 +37,9 @@ TKTArchetypedFutureRegistry >> initialize [
 	super initialize.
 	self
 		map: 'registerBackend' to: #registerBackend:;
-		map: 'deployFutureResult' to: #deployFutureResult:
+		map: 'deployFutureResult' to: #deployFutureResult:.
+	futures := Dictionary new.
+	weakRegistry := WeakSet new
 ]
 
 { #category : #registry }
@@ -40,7 +53,6 @@ TKTArchetypedFutureRegistry >> register: anArchetypedFuture [
 { #category : #registry }
 TKTArchetypedFutureRegistry >> registerBackend: aRequest [
 	| arrayUrlHash |
-
 	arrayUrlHash := (STONReader on: aRequest entity string readStream)
 		next.
 	top
@@ -50,13 +62,21 @@ TKTArchetypedFutureRegistry >> registerBackend: aRequest [
 ]
 
 { #category : #registry }
+TKTArchetypedFutureRegistry >> registerNotDeployable: aTaskExecution [
+	weakRegistry add: aTaskExecution.
+	
+]
+
+{ #category : #registry }
 TKTArchetypedFutureRegistry >> start [
 	^ server
-		ifNil: [ server := ZnSingleThreadedServer on: 0.
+		ifNil: [ 
+			server := ZnSingleThreadedServer on: 0.
 			server bindingAddress: NetNameResolver loopBackAddress.
 			server delegate: self.
 			server start.
-			self assert: server isRunning & server isListening ]
+			self assert: server isRunning & server isListening 
+		]
 ]
 
 { #category : #registry }

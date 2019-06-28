@@ -5,8 +5,9 @@ Class {
 	#name : #TKTArchetypeAwarePool,
 	#superclass : #Object,
 	#instVars : [
-		'archetypedPools',
-		'remoteFutureRegistry'
+		'remoteFutureRegistry',
+		'pool',
+		'archetypedBackends'
 	],
 	#category : #'TaskItForkIt-Worker'
 }
@@ -18,26 +19,40 @@ TKTArchetypeAwarePool class >> createDefault [
 
 { #category : #accessing }
 TKTArchetypeAwarePool >> amountOfTasksAt: aTKTArchetype [
-	^ archetypedPools
-		at: aTKTArchetype
-		ifPresent: [ :q | q taskQueueSize  ]
-		ifAbsent: [ 0 ]
+	^ remoteFutureRegistry amountOfTasksFor: aTKTArchetype
+]
+
+{ #category : #'public - mutexed' }
+TKTArchetypeAwarePool >> backendFor: anArchetype [
+	^ archetypedBackends
+		detect: [ :b | b respondsToArchetype: anArchetype ]
+		ifNone: [ self spawnNewBackendFor: anArchetype ]
 ]
 
 { #category : #'public - mutexed' }
 TKTArchetypeAwarePool >> future: aTask [
-	^ (self workerFor: aTask archetype) future: aTask
+	^ pool future: aTask
+]
+
+{ #category : #'public - mutexed' }
+TKTArchetypeAwarePool >> futureArchetypedTask: aTask [
+	| execution |
+	execution := aTask asTask futureTaskExecutionFor: self.
+	execution backend: (self backendFor: aTask archetype).
+	remoteFutureRegistry register: execution.
+	pool scheduleTaskExecution: execution.
+	^ execution future
 ]
 
 { #category : #testing }
 TKTArchetypeAwarePool >> includesArchetype: aTKTArchetype [
-	^ archetypedPools includesKey: aTKTArchetype
+	^ archetypedBackends detect: [ :be | be respondsToArchetype: aTKTArchetype ]
 ]
 
 { #category : #'public - mutexed' }
 TKTArchetypeAwarePool >> initialize [
 	super initialize.
-	archetypedPools := Dictionary new.
+	pool := TKTCommonQueueWorkerPool createDefault
 ]
 
 { #category : #'public - mutexed' }
@@ -57,8 +72,7 @@ TKTArchetypeAwarePool >> isUIRunner [
 
 { #category : #'public - mutexed' }
 TKTArchetypeAwarePool >> noteRemoteWorkerAt: anUrl forBackendHashed: aHash [
-	archetypedPools values
-		do: [ :p | p noteRemoteWorkerAt: anUrl forBackendHashed: aHash ]
+	(archetypedBackends detect: [ :be | be hash = aHash ]) setUrl: anUrl
 ]
 
 { #category : #'public - mutexed' }
@@ -72,43 +86,38 @@ TKTArchetypeAwarePool >> remoteFutureRegistry [
 
 { #category : #'public - mutexed' }
 TKTArchetypeAwarePool >> schedule: aTask [
-	^ (self workerFor: aTask archetype) schedule: aTask
+	pool schedule: aTask
 ]
 
 { #category : #'public - mutexed' }
 TKTArchetypeAwarePool >> schedule: aTask timeout: aTimeout [
-	^ (self workerFor: aTask archetype) schedule: aTask timeout: aTimeout
+	^ pool schedule: aTask timeout: aTimeout
+]
+
+{ #category : #'public - mutexed' }
+TKTArchetypeAwarePool >> scheduleArchetypedTask: aTask [
+	| execution |
+	execution := aTask asTask futureTaskExecutionFor: self.
+	execution backend: (self backendFor: aTask archetype).
+	remoteFutureRegistry registerNotDeployable: execution.
+	pool scheduleTaskExecution: execution.
+	
 ]
 
 { #category : #'public - mutexed' }
 TKTArchetypeAwarePool >> scheduleTimeout: timeout on: aTaskExecution [
-	^ (self workerFor: aTaskExecution archetype)
-		scheduleTimeout: timeout
-		on: aTaskExecution
+	^ pool scheduleTimeout: timeout on: aTaskExecution
 ]
 
 { #category : #stop }
 TKTArchetypeAwarePool >> stop [
-	archetypedPools valuesDo: #stop
+	archetypedBackends valuesDo: #stop.
+	pool ifNotNil: [ pool stop ].
+	archetypedBackends removeAll.
+	pool := nil
 ]
 
 { #category : #accessing }
 TKTArchetypeAwarePool >> taskQueueSize: aTKTArchetype [
-	^ (archetypedPools at: aTKTArchetype ifAbsent: [ ^ 0 ]) taskQueueSize
-]
-
-{ #category : #accessing }
-TKTArchetypeAwarePool >> url [
-	self shouldBeImplemented.
-]
-
-{ #category : #'public - mutexed' }
-TKTArchetypeAwarePool >> workerFor: anArchetype [
-	^ archetypedPools
-		at: anArchetype
-		ifAbsentPut: [ anArchetype = TKTArchetype thisImage
-				ifTrue: [ TKTCommonQueueWorkerPool createDefault ]
-				ifFalse: [ TKTArchetypedWorkerPool
-						createFor: anArchetype
-						using: self remoteFutureRegistry ] ]
+	^ pool taskQueueSize
 ]

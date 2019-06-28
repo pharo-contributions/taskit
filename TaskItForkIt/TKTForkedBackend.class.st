@@ -56,6 +56,11 @@ TKTForkedBackend >> isFree [
 ]
 
 { #category : #accessing }
+TKTForkedBackend >> respondsToArchetype: anArchetype [
+	^ deploy archetype = anArchetype
+]
+
+{ #category : #accessing }
 TKTForkedBackend >> sendTaskAndProcessResponse: aTask id: aFutureId [
 	| response |
 	response := ZnEasy

@@ -26,6 +26,11 @@ TKTArchetypedTask >> archetype: aTKTArchetype [
 ]
 
 { #category : #accessing }
+TKTArchetypedTask >> future: executor [
+	^ executor futureArchetypedTask: self
+]
+
+{ #category : #accessing }
 TKTArchetypedTask >> futureTaskExecutionFor: aRunner [
 	aRunner supportsArchetyping
 		ifFalse: [ ^ self error: ' The current runner do no support archetyping. ' ].
@@ -35,9 +40,12 @@ TKTArchetypedTask >> futureTaskExecutionFor: aRunner [
 ]
 
 { #category : #accessing }
+TKTArchetypedTask >> schedule: executor [
+	executor scheduleArchetypedTask: self
+]
+
+{ #category : #accessing }
 TKTArchetypedTask >> scheduleTaskExecutionFor: aRunner [
-	aRunner supportsArchetyping
-		ifFalse: [ ^ self error: ' The current runner do no support archetyping. ' ].
 	^ self
 		configureTaskExecution: TKTArchetypedTaskExecution new
 		with: aRunner

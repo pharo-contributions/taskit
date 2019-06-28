@@ -5,10 +5,16 @@ Class {
 	#name : #TKTArchetypedTaskExecution,
 	#superclass : #TKTFutureExecution,
 	#instVars : [
-		'id'
+		'id',
+		'backend'
 	],
 	#category : #'TaskItForkIt-Task'
 }
+
+{ #category : #evaluating }
+TKTArchetypedTaskExecution >> backend: aBackend [
+	backend := aBackend
+]
 
 { #category : #evaluating }
 TKTArchetypedTaskExecution >> deployFailure: error [
@@ -27,7 +33,9 @@ TKTArchetypedTaskExecution >> deployValue: aValue [
 
 { #category : #evaluating }
 TKTArchetypedTaskExecution >> doExecuteTask [
-	[ runner doRemoteExecute: self ]
+	[ backend
+		sendTaskAndProcessResponse: (TKTTask valuable: task valuable)
+		id: id ]
 		on: Error
 		do: [ :error | future deployFailure: error freeze ]
 ]
