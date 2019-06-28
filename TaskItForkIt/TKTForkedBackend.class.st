@@ -16,9 +16,7 @@ Class {
 
 { #category : #accessing }
 TKTForkedBackend >> archetype: aTKTArchetype [
-	aTKTArchetype isDeploy
-		ifTrue: [ self deploy: aTKTArchetype ]
-		ifFalse: [ archetype := aTKTArchetype + TKTProject forkit ]
+	archetype := aTKTArchetype + TKTProject forkit
 ]
 
 { #category : #accessing }

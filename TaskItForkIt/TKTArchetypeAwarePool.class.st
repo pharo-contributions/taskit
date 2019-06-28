@@ -37,6 +37,7 @@ TKTArchetypeAwarePool >> future: aTask [
 { #category : #'public - mutexed' }
 TKTArchetypeAwarePool >> futureArchetypedTask: aTask [
 	| execution |
+
 	execution := aTask asTask futureTaskExecutionFor: self.
 	execution backend: (self backendFor: aTask archetype).
 	remoteFutureRegistry register: execution.
@@ -52,7 +53,8 @@ TKTArchetypeAwarePool >> includesArchetype: aTKTArchetype [
 { #category : #'public - mutexed' }
 TKTArchetypeAwarePool >> initialize [
 	super initialize.
-	pool := TKTCommonQueueWorkerPool createDefault
+	pool := TKTCommonQueueWorkerPool createDefault.
+	archetypedBackends := Set new .
 ]
 
 { #category : #'public - mutexed' }
@@ -107,6 +109,16 @@ TKTArchetypeAwarePool >> scheduleArchetypedTask: aTask [
 { #category : #'public - mutexed' }
 TKTArchetypeAwarePool >> scheduleTimeout: timeout on: aTaskExecution [
 	^ pool scheduleTimeout: timeout on: aTaskExecution
+]
+
+{ #category : #'public - mutexed' }
+TKTArchetypeAwarePool >> spawnNewBackendFor: anArchetype [
+	| backend |
+	backend := TKTForkedBackend new.
+	anArchetype configureBackend: backend. 
+	backend archetype: anArchetype.
+	backend startWith: remoteFutureRegistry.
+	^ archetypedBackends add: backend
 ]
 
 { #category : #stop }

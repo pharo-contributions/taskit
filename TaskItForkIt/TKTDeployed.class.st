@@ -34,6 +34,12 @@ TKTDeployed >> commandUi [
 	^ systemAdapter command: self pharoUiScript for: self
 ]
 
+{ #category : #'evalas yet unclassified' }
+TKTDeployed >> configureBackend: aBackend [
+	aBackend deploy: self.
+	aBackend archetype: archetype
+]
+
 { #category : #accessing }
 TKTDeployed >> eval [
 	^ self command option: 'eval'

@@ -32,8 +32,6 @@ TKTArchetypedTask >> future: executor [
 
 { #category : #accessing }
 TKTArchetypedTask >> futureTaskExecutionFor: aRunner [
-	aRunner supportsArchetyping
-		ifFalse: [ ^ self error: ' The current runner do no support archetyping. ' ].
 	^ self
 		configureTaskExecution: TKTArchetypedTaskExecution new
 		with: aRunner

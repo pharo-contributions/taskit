@@ -184,6 +184,11 @@ TKTArchetype >> architectureSelector: aSelector [
 ]
 
 { #category : #accessing }
+TKTArchetype >> configureBackend: aBackend [
+	aBackend archetype: self.
+]
+
+{ #category : #accessing }
 TKTArchetype >> dependancies [
 	^  dependencies
 ]
