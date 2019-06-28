@@ -33,6 +33,12 @@ TKTOutgoingTasksService >> futures [
 ]
 
 { #category : #registry }
+TKTOutgoingTasksService >> handleRequest: aRequest [
+	self halt.
+	^ super handleRequest: aRequest
+]
+
+{ #category : #registry }
 TKTOutgoingTasksService >> initialize [
 	super initialize.
 	self
