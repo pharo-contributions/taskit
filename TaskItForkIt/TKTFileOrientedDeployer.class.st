@@ -9,8 +9,8 @@ Class {
 	#name : #TKTFileOrientedDeployer,
 	#superclass : #Object,
 	#instVars : [
-		'backend',
-		'provider'
+		'provider',
+		'systemAdapter'
 	],
 	#category : #'TaskItForkIt-ImageBuilding'
 }
@@ -18,7 +18,7 @@ Class {
 { #category : #accessing }
 TKTFileOrientedDeployer class >> default [
 	^ self new
-		backend: TKTSystemBackend new;
+		systemAdapter: TKTSystemAdapter new;
 		yourself
 ]
 
@@ -71,7 +71,7 @@ TKTFileOrientedDeployer >> archetypesStonDestinationFor: anArchetype [
 
 { #category : #accessing }
 TKTFileOrientedDeployer >> backend: aTKTSystemBackend [ 
-	backend := aTKTSystemBackend
+	systemAdapter := aTKTSystemBackend
 ]
 
 { #category : #'deploy destination' }
@@ -94,12 +94,12 @@ TKTFileOrientedDeployer >> backupCurrentImage [
 
 { #category : #folder }
 TKTFileOrientedDeployer >> baseFolder [
-	^ backend workingDirectory / 'pharo-local' / #forking
+	^ systemAdapter workingDirectory / 'pharo-local' / #forking
 ]
 
 { #category : #'system calls' }
 TKTFileOrientedDeployer >> copy: aFileReference to: aDestination [
-	^ backend copy: aFileReference to: aDestination.
+	^ systemAdapter copy: aFileReference to: aDestination.
 
 ]
 
@@ -110,10 +110,7 @@ TKTFileOrientedDeployer >> createScript: ref with: content [
 		forPlatformLineEnding;
 		nextPutAll: content;
 		close.
-	(TKTSystem chmod
-		option: '+x';
-		argument: ref fullName;
-		future) synchronizeTimeout: 5 seconds
+	systemAdapter chmod: ref flag: '+x'
 ]
 
 { #category : #folder }
@@ -139,7 +136,7 @@ TKTFileOrientedDeployer >> deploy: anArchetype at: location [
 	deployed := TKTDeployed new
 		initializeWithLocation: location
 			archetype: anArchetype
-			andBackend: backend;
+			andBackend: systemAdapter;
 		yourself.
 	self updateDeployed: deployed using: self.
 	^ deployed
@@ -180,7 +177,7 @@ TKTFileOrientedDeployer >> deployFiles: anArchetype at: location [
 { #category : #folder }
 TKTFileOrientedDeployer >> ensureInstallationDirectoryFor: anArchetype [
 	(self archetypesDestinationFor: anArchetype) exists
-		ifTrue: [ backend rm: (self archetypesDestinationFor: anArchetype) ].
+		ifTrue: [ systemAdapter rm: (self archetypesDestinationFor: anArchetype) ].
 	(self archetypesDestinationFor: anArchetype) ensureCreateDirectory
 ]
 
@@ -205,8 +202,8 @@ TKTFileOrientedDeployer >> fetchVm: aZnUrl [
 		/ 'pharo-vm'.
 	expectedLocation exists
 		ifFalse: [ expectedLocation ensureCreateDirectory.
-			backend downloadAndUnzip: aZnUrl at: expectedLocation ].
-	backend chmod: expectedLocation flag: '+x'.
+			systemAdapter downloadAndUnzip: aZnUrl at: expectedLocation ].
+	systemAdapter chmod: expectedLocation flag: '+x'.
 	^ expectedLocation
 ]
 
@@ -227,7 +224,7 @@ TKTFileOrientedDeployer >> installImageAndSource: bundle at: location [
 	imageChangesAndSourceFileReferenceArray := bundle = #current
 		ifTrue: [ self resolveCurrentImageAnChangesFile ]
 		ifFalse: [ self fetchBundle: bundle ].
-	backend copyAll: imageChangesAndSourceFileReferenceArray to: location
+	systemAdapter copyAll: imageChangesAndSourceFileReferenceArray to: location
 ]
 
 { #category : #accessing }
@@ -236,7 +233,7 @@ TKTFileOrientedDeployer >> installVm: aVm at: location [
 	vmFolderReference := aVm = #current
 		ifTrue: [ self resolveCurrentVM ]
 		ifFalse: [ self fetchVm: aVm ].
-	backend installSymlinkTo: vmFolderReference at: location
+	systemAdapter installSymlinkTo: vmFolderReference at: location
 ]
 
 { #category : #accessing }
@@ -251,9 +248,9 @@ TKTFileOrientedDeployer >> platformName [
 { #category : #getting }
 TKTFileOrientedDeployer >> privateDownloadBundle: aZnUrl at: expectedLocation [
 	expectedLocation exists
-		ifTrue: [ backend rm: expectedLocation ].
+		ifTrue: [ systemAdapter rm: expectedLocation ].
 	expectedLocation ensureCreateDirectory.
-	backend downloadAndUnzip: aZnUrl at: expectedLocation.
+	systemAdapter downloadAndUnzip: aZnUrl at: expectedLocation.
 	expectedLocation children
 		select: [ :c | #(image changes) includes: c extension ]
 		thenDo: [ :child | child renameTo: 'Pharo.' , child extension ]
@@ -261,7 +258,7 @@ TKTFileOrientedDeployer >> privateDownloadBundle: aZnUrl at: expectedLocation [
 
 { #category : #'image calls' }
 TKTFileOrientedDeployer >> resolveCurrentImageAnChangesFile [
-	backend rm: self currentCacheFolder.
+	systemAdapter rm: self currentCacheFolder.
 	self currentCacheFolder ensureCreateDirectory.
 	^ self backupCurrentImage
 ]
@@ -269,6 +266,11 @@ TKTFileOrientedDeployer >> resolveCurrentImageAnChangesFile [
 { #category : #'deploy destination' }
 TKTFileOrientedDeployer >> resolveCurrentVM [
 	^ Smalltalk vmDirectory asFileReference
+]
+
+{ #category : #accessing }
+TKTFileOrientedDeployer >> systemAdapter: aTKTSystemSystemAdapter [
+	systemAdapter := aTKTSystemSystemAdapter
 ]
 
 { #category : #'image calls' }
@@ -284,5 +286,5 @@ TKTFileOrientedDeployer >> vmFolder [
 
 { #category : #working }
 TKTFileOrientedDeployer >> workingDirectory [
-	^ backend workingDirectory
+	^ systemAdapter workingDirectory
 ]

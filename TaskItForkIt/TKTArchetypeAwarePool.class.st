@@ -78,7 +78,7 @@ TKTArchetypeAwarePool >> noteRemoteWorkerAt: anUrl forBackendHashed: aHash [
 { #category : #'public - mutexed' }
 TKTArchetypeAwarePool >> remoteFutureRegistry [
 	^ remoteFutureRegistry
-		ifNil: [ remoteFutureRegistry := TKTArchetypedFutureRegistry new.
+		ifNil: [ remoteFutureRegistry := TKTOutgoingTasksService new.
 			remoteFutureRegistry top: self.
 			remoteFutureRegistry start.
 			remoteFutureRegistry ]

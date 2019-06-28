@@ -2,7 +2,7 @@
 This class is here for dealing with the registry of futures, for remote executions 
 "
 Class {
-	#name : #TKTArchetypedFutureRegistry,
+	#name : #TKTOutgoingTasksService,
 	#superclass : #TKTServerDelegate,
 	#instVars : [
 		'futures',
@@ -10,17 +10,17 @@ Class {
 		'top',
 		'weakRegistry'
 	],
-	#category : #'TaskItForkIt-Worker'
+	#category : #'TaskItForkIt-Worker-Server'
 }
 
 { #category : #registry }
-TKTArchetypedFutureRegistry >> amountOfTasksFor: anArchetype [
+TKTOutgoingTasksService >> amountOfTasksFor: anArchetype [
 	^ (weakRegistry , futures collect: [ :t | t archetype = anArchetype ])
 		size
 ]
 
 { #category : #registry }
-TKTArchetypedFutureRegistry >> deployFutureResult: aRequest [
+TKTOutgoingTasksService >> deployFutureResult: aRequest [
 	| valueId |
 	valueId := (STONReader on: aRequest entity string readStream) next.
 	(futures at: valueId second) deployValue: valueId first.
@@ -28,12 +28,12 @@ TKTArchetypedFutureRegistry >> deployFutureResult: aRequest [
 ]
 
 { #category : #accessing }
-TKTArchetypedFutureRegistry >> futures [
+TKTOutgoingTasksService >> futures [
 	^ futures ifNil: [ futures := Dictionary new ]
 ]
 
 { #category : #registry }
-TKTArchetypedFutureRegistry >> initialize [
+TKTOutgoingTasksService >> initialize [
 	super initialize.
 	self
 		map: 'registerBackend' to: #registerBackend:;
@@ -43,7 +43,7 @@ TKTArchetypedFutureRegistry >> initialize [
 ]
 
 { #category : #registry }
-TKTArchetypedFutureRegistry >> register: anArchetypedFuture [
+TKTOutgoingTasksService >> register: anArchetypedFuture [
 	| id |
 	id := UUID new asString.
 	self futures at: id put: anArchetypedFuture.
@@ -51,7 +51,7 @@ TKTArchetypedFutureRegistry >> register: anArchetypedFuture [
 ]
 
 { #category : #registry }
-TKTArchetypedFutureRegistry >> registerBackend: aRequest [
+TKTOutgoingTasksService >> registerBackend: aRequest [
 	| arrayUrlHash |
 	arrayUrlHash := (STONReader on: aRequest entity string readStream)
 		next.
@@ -62,13 +62,13 @@ TKTArchetypedFutureRegistry >> registerBackend: aRequest [
 ]
 
 { #category : #registry }
-TKTArchetypedFutureRegistry >> registerNotDeployable: aTaskExecution [
+TKTOutgoingTasksService >> registerNotDeployable: aTaskExecution [
 	weakRegistry add: aTaskExecution.
 	
 ]
 
 { #category : #registry }
-TKTArchetypedFutureRegistry >> start [
+TKTOutgoingTasksService >> start [
 	^ server
 		ifNil: [ 
 			server := ZnSingleThreadedServer on: 0.
@@ -80,12 +80,12 @@ TKTArchetypedFutureRegistry >> start [
 ]
 
 { #category : #registry }
-TKTArchetypedFutureRegistry >> top: aMainRunner [
+TKTOutgoingTasksService >> top: aMainRunner [
 	top := aMainRunner
 ]
 
 { #category : #registry }
-TKTArchetypedFutureRegistry >> url [
+TKTOutgoingTasksService >> url [
 	self assert: server isRunning & server isListening.
 	^ server localUrl
 ]

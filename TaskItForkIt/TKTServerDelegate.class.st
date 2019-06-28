@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'prefixMap'
 	],
-	#category : #'TaskItForkIt-Worker-RemoteExtentions'
+	#category : #'TaskItForkIt-Worker-Server'
 }
 
 { #category : #initialization }

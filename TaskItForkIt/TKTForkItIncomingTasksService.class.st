@@ -2,7 +2,7 @@
 Forkit Service is the base Facade of the remote image, interfacing the incoming calls (ZnServer managed) to a local default Worker pool
 "
 Class {
-	#name : #TKTForkItService,
+	#name : #TKTForkItIncomingTasksService,
 	#superclass : #TKTServerDelegate,
 	#instVars : [
 		'server',
@@ -10,16 +10,16 @@ Class {
 		'master',
 		'backendHash'
 	],
-	#category : #'TaskItForkIt-Worker-RemoteExtentions'
+	#category : #'TaskItForkIt-Worker-Server'
 }
 
 { #category : #'as yet unclassified' }
-TKTForkItService class >> allInstancesSize [
+TKTForkItIncomingTasksService class >> allInstancesSize [
 	^ self allInstances size
 ]
 
 { #category : #'as yet unclassified' }
-TKTForkItService class >> registeringOn: aZnUrl backend: aBackendHash [
+TKTForkItIncomingTasksService class >> registeringOn: aZnUrl backend: aBackendHash [
 	^ self new
 		master: aZnUrl;
 		backendHash: aBackendHash;
@@ -27,17 +27,17 @@ TKTForkItService class >> registeringOn: aZnUrl backend: aBackendHash [
 ]
 
 { #category : #initialization }
-TKTForkItService >> alive [
+TKTForkItIncomingTasksService >> alive [
 	^ server isRunning & server isListening
 ]
 
 { #category : #initialization }
-TKTForkItService >> backendHash: aHashNumber [
+TKTForkItIncomingTasksService >> backendHash: aHashNumber [
 	backendHash := aHashNumber
 ]
 
 { #category : #initialization }
-TKTForkItService >> help: request [
+TKTForkItIncomingTasksService >> help: request [
 	"Reply with a dynamic HTML page containing links to all pages I support"
 
 	^ ZnResponse ok: (ZnEntity html: self generateHelp)
@@ -45,7 +45,7 @@ TKTForkItService >> help: request [
 ]
 
 { #category : #initialization }
-TKTForkItService >> informBinds [
+TKTForkItIncomingTasksService >> informBinds [
 	master ifNil: [ ^ self ].
 	ZnEasy
 		post: master / #registerBackend
@@ -61,7 +61,7 @@ TKTForkItService >> informBinds [
 ]
 
 { #category : #initialization }
-TKTForkItService >> informError: value id: taskId [
+TKTForkItIncomingTasksService >> informError: value id: taskId [
 	ZnEasy
 		post: master / #deployFutureResult
 		data:
@@ -76,7 +76,7 @@ TKTForkItService >> informError: value id: taskId [
 ]
 
 { #category : #initialization }
-TKTForkItService >> informSuccess: value id: taskId [
+TKTForkItIncomingTasksService >> informSuccess: value id: taskId [
 	ZnEasy
 		post: master / #deployFutureResult
 		data:
@@ -91,7 +91,7 @@ TKTForkItService >> informSuccess: value id: taskId [
 ]
 
 { #category : #initialization }
-TKTForkItService >> initialize [
+TKTForkItIncomingTasksService >> initialize [
 	super initialize.
 	self
 		map: 'alive' to: #alive;
@@ -101,27 +101,27 @@ TKTForkItService >> initialize [
 ]
 
 { #category : #initialization }
-TKTForkItService >> ip [
+TKTForkItIncomingTasksService >> ip [
 	^ NetNameResolver stringFromAddress: server bindingAddress
 ]
 
 { #category : #initialization }
-TKTForkItService >> isFree [
+TKTForkItIncomingTasksService >> isFree [
 	^ true
 ]
 
 { #category : #initialization }
-TKTForkItService >> master: anUrl [
+TKTForkItIncomingTasksService >> master: anUrl [
 	master := anUrl
 ]
 
 { #category : #initialization }
-TKTForkItService >> port [
+TKTForkItIncomingTasksService >> port [
 	^ server port 
 ]
 
 { #category : #initialization }
-TKTForkItService >> startOn: anAddress [
+TKTForkItIncomingTasksService >> startOn: anAddress [
 	pool := TKTConfiguration runner.
 	server := (ZnServer on: 0)
 		bindingAddress: (NetNameResolver addressForName: anAddress);
@@ -132,12 +132,12 @@ TKTForkItService >> startOn: anAddress [
 ]
 
 { #category : #initialization }
-TKTForkItService >> stop [
+TKTForkItIncomingTasksService >> stop [
 	^ Smalltalk exit: 0
 ]
 
 { #category : #initialization }
-TKTForkItService >> task: aRequest [
+TKTForkItIncomingTasksService >> task: aRequest [
 	| future taskAndId |
 	taskAndId := (STONReader on: aRequest entity string readStream) next.
 	future := taskAndId first future: pool.
