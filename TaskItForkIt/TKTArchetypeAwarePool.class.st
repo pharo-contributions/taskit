@@ -37,7 +37,6 @@ TKTArchetypeAwarePool >> future: aTask [
 { #category : #'public - mutexed' }
 TKTArchetypeAwarePool >> futureArchetypedTask: aTask [
 	| execution |
-
 	execution := aTask asTask futureTaskExecutionFor: self.
 	execution backend: (self backendFor: aTask archetype).
 	self remoteFutureRegistry register: execution.
