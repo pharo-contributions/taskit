@@ -136,7 +136,7 @@ TKTFileOrientedDeployer >> deploy: anArchetype at: location [
 	deployed := TKTDeployed new
 		initializeWithLocation: location
 			archetype: anArchetype
-			andBackend: systemAdapter;
+			andSystemAdapter: systemAdapter;
 		yourself.
 	self updateDeployed: deployed using: self.
 	^ deployed

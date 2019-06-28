@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'location',
 		'archetype',
-		'backend'
+		'systemAdapter'
 	],
 	#category : #'TaskItForkIt-ImageBuilding'
 }
@@ -26,12 +26,12 @@ TKTDeployed >> changesFile [
 
 { #category : #accessing }
 TKTDeployed >> command [
-	^ backend command: self pharoScript for: self
+	^ systemAdapter command: self pharoScript for: self
 ]
 
 { #category : #accessing }
 TKTDeployed >> commandUi [
-	^ backend command: self pharoUiScript for: self
+	^ systemAdapter command: self pharoUiScript for: self
 ]
 
 { #category : #accessing }
@@ -64,10 +64,10 @@ TKTDeployed >> imageFile [
 ]
 
 { #category : #accessing }
-TKTDeployed >> initializeWithLocation: aLocation archetype: anArquetype andBackend: aBackend [
+TKTDeployed >> initializeWithLocation: aLocation archetype: anArquetype andSystemAdapter: aBackend [
 	location := aLocation.
 	archetype := anArquetype.
-	backend := aBackend
+	systemAdapter := aBackend
 ]
 
 { #category : #accessing }
