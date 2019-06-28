@@ -115,9 +115,7 @@ TKTForkedBackend >> startWith: aRegistry [
 						startupCodeIp: NetNameResolver loopBackAddress
 						outputFile: deploy hash asString asFileReference , '.start'
 						with: aRegistry) ].
-	10 second wait.
-	UIManager default spawnNewProcess.
-	self assert: self isAlive
+
 ]
 
 { #category : #accessing }

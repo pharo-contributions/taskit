@@ -118,12 +118,14 @@ TKTArchetypeAwarePool >> spawnNewBackendFor: anArchetype [
 	anArchetype configureBackend: backend. 
 	backend archetype: anArchetype.
 	backend startWith: self remoteFutureRegistry.
-	^ archetypedBackends add: backend
+	backend isAlive whileFalse: [ 1 seconds wait ].
+	archetypedBackends add: backend.
+	^ backend
 ]
 
 { #category : #stop }
 TKTArchetypeAwarePool >> stop [
-	archetypedBackends valuesDo: #stop.
+	archetypedBackends do: #stop.
 	pool ifNotNil: [ pool stop ].
 	archetypedBackends removeAll.
 	pool := nil
