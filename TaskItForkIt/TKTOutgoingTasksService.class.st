@@ -22,6 +22,7 @@ TKTOutgoingTasksService >> amountOfTasksFor: anArchetype [
 { #category : #registry }
 TKTOutgoingTasksService >> deployFutureResult: aRequest [
 	| valueId |
+	self halt.
 	valueId := (STONReader on: aRequest entity string readStream) next.
 	(futures at: valueId second) deployValue: valueId first.
 	futures removeKey: valueId second.

@@ -100,6 +100,7 @@ TKTForkedBackend >> startupCodeIp: anIp outputFile: anOutputFile with: aRegister
 	^ '
 	| service stream |
 	stream := (STONWriter on: ''{2}'' asFileReference writeStream).
+	self halt.
 	service := TKTForkItIncomingTasksService registeringOn:''{3}'' asZnUrl backend: {4}. 
 	[service startOn: ''{1}''.
 		stream nextPut:

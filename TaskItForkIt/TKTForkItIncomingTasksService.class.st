@@ -140,6 +140,7 @@ TKTForkItIncomingTasksService >> stop [
 { #category : #initialization }
 TKTForkItIncomingTasksService >> task: aRequest [
 	| future taskAndId |
+	self halt.
 	taskAndId := (STONReader on: aRequest entity string readStream) next.
 	future := taskAndId first future: pool.
 	future
