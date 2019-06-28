@@ -62,6 +62,7 @@ TKTForkItIncomingTasksService >> informBinds [
 
 { #category : #initialization }
 TKTForkItIncomingTasksService >> informError: value id: taskId [
+	self halt.
 	ZnEasy
 		post: master / #deployFutureResult
 		data:
@@ -77,6 +78,7 @@ TKTForkItIncomingTasksService >> informError: value id: taskId [
 
 { #category : #initialization }
 TKTForkItIncomingTasksService >> informSuccess: value id: taskId [
+self halt.
 	ZnEasy
 		post: master / #deployFutureResult
 		data:
