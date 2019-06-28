@@ -47,7 +47,7 @@ TKTForkItIncomingTasksService >> help: request [
 { #category : #initialization }
 TKTForkItIncomingTasksService >> informBinds [
 	master ifNil: [ ^ self ].
-	[ ZnEasy
+	ZnEasy
 		post: master / #registerBackend
 		data:
 			(ZnEntity
@@ -57,9 +57,7 @@ TKTForkItIncomingTasksService >> informBinds [
 							(STONWriter on: str)
 								nextPut:
 									{server localUrl.
-									backendHash} ])) ]
-		on: Error
-		do: [ :e | self halt ]
+									backendHash} ]))
 ]
 
 { #category : #initialization }

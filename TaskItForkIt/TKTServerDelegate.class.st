@@ -34,7 +34,6 @@ TKTServerDelegate >> generateHelp [
 { #category : #initialization }
 TKTServerDelegate >> handleRequest: request [
 	| prefix prefixHandler |
-
 	prefix := request uri isSlash
 		ifTrue: [ prefixMap at: '/' ifAbsent: [ nil ] ]
 		ifFalse: [ request uri firstPathSegment ].
@@ -43,7 +42,7 @@ TKTServerDelegate >> handleRequest: request [
 		ifFalse: [ ^ self
 				encodeIntoResponse: ((MessageSend receiver: self selector: prefixHandler) cull: request) ] ]
 		on: Error
-		do: [ :e | ^ self encodeIntoResponse: e ].
+		do: [ :e | ^ ZnResponse serverError: e messageText ].
 	^ ZnResponse notFound: request uri
 ]
 

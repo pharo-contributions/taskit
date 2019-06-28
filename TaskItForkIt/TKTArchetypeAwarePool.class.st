@@ -117,9 +117,11 @@ TKTArchetypeAwarePool >> spawnNewBackendFor: anArchetype [
 	backend := TKTForkedBackend new.
 	anArchetype configureBackend: backend. 
 	backend archetype: anArchetype.
+	archetypedBackends add: backend.
+	
 	backend startWith: self remoteFutureRegistry.
 	
-	archetypedBackends add: backend.
+	
 	^ backend
 ]
 
