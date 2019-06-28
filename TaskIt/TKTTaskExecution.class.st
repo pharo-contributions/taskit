@@ -62,6 +62,11 @@ TKTTaskExecution >> isRunning [
 	^ state isRunning
 ]
 
+{ #category : #testing }
+TKTTaskExecution >> noteRunningOn: aRunner [ 
+	" Some times is needed to know the real runner. By default we do nothing :) "
+]
+
 { #category : #accessing }
 TKTTaskExecution >> runner: aRunner [
 

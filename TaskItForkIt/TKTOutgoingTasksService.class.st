@@ -22,10 +22,18 @@ TKTOutgoingTasksService >> amountOfTasksFor: anArchetype [
 { #category : #registry }
 TKTOutgoingTasksService >> deployFutureResult: aRequest [
 	| valueId |
-	self halt.
-	valueId := (STONReader on: aRequest entity string readStream) next.
+
+	[ valueId := (STONReader on: aRequest entity string readStream) next.
 	(futures at: valueId second) deployValue: valueId first.
-	futures removeKey: valueId second.
+	futures removeKey: valueId second ]
+		on: Error
+		do: [ :e | 
+			(futures at: valueId second) future
+				deployFailure:
+					(Error new
+						messageText:
+							'Error on processing response. TKTOutgoingTasksService >>#deployFutureResult: '
+								, e messageText) ]
 ]
 
 { #category : #accessing }

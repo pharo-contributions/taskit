@@ -19,7 +19,10 @@ TTaskExecutor >> exceptionHandler [
 
 { #category : #executing }
 TTaskExecutor >> executeTask: aTaskExecution [
-	[ self noteBusy. aTaskExecution value. self noteFree ]
+	[ self noteBusy.
+	aTaskExecution noteRunningOn: self.
+	aTaskExecution value.
+	self noteFree ]
 		on: Error
 		do: [ :error | self exceptionHandler handleException: error ]
 ]

@@ -6,7 +6,8 @@ Class {
 	#superclass : #TKTFutureExecution,
 	#instVars : [
 		'id',
-		'backend'
+		'backend',
+		'process'
 	],
 	#category : #'TaskItForkIt-Task'
 }
@@ -16,19 +17,26 @@ TKTArchetypedTaskExecution >> backend: aBackend [
 	backend := aBackend
 ]
 
-{ #category : #evaluating }
-TKTArchetypedTaskExecution >> deployFailure: error [
-	future deployFailure: error
-]
-
-{ #category : #evaluating }
-TKTArchetypedTaskExecution >> deploySuccess: aValue [
-	future deploySuccess: aValue
-]
-
 { #category : #remoteExtention }
 TKTArchetypedTaskExecution >> deployValue: aValue [
-	runner deploy: aValue into: future
+	| deployingTask |
+	deployingTask := (aValue isException
+		ifTrue: [ MessageSend
+				receiver: future
+				selector: #deployFailure:
+				argument: aValue ]
+		ifFalse: [ MessageSend
+				receiver: future
+				selector: #deploySuccess:
+				argument: aValue ]) asTask.
+	(runner future: deployingTask) onFailureDo: [ : e | deployingTask value ].
+	self flag: #Todo
+	"
+	The deployment should be executed in the same process that started. 
+	
+	
+	(deployingTask future: ((process at: 1) ifNil: [ runner ]))
+		onFailureDo: [ deployingTask value ]"
 ]
 
 { #category : #evaluating }
@@ -48,6 +56,17 @@ TKTArchetypedTaskExecution >> id [
 { #category : #evaluating }
 TKTArchetypedTaskExecution >> id: anId [
 	id := anId 
+]
+
+{ #category : #evaluating }
+TKTArchetypedTaskExecution >> initialize [
+	super initialize.
+	process := WeakArray new: 1
+]
+
+{ #category : #evaluating }
+TKTArchetypedTaskExecution >> noteRunningOn: aRunner [ 
+ 	process at:1 put: aRunner.
 ]
 
 { #category : #evaluating }
