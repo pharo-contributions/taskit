@@ -37,6 +37,12 @@ TKTForkItIncomingTasksService >> backendHash: aHashNumber [
 ]
 
 { #category : #initialization }
+TKTForkItIncomingTasksService >> handleRequest: aRequest [
+	self halt.
+	^ super handleRequest: aRequest
+]
+
+{ #category : #initialization }
 TKTForkItIncomingTasksService >> help: request [
 	"Reply with a dynamic HTML page containing links to all pages I support"
 

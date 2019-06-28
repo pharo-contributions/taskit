@@ -82,29 +82,6 @@ TKTForkedBackend >> setUrl: anUrl [
 ]
 
 { #category : #accessing }
-TKTForkedBackend >> start [
-	| ipPort |
-	imageProcess ifNotNil: [ ^ self ].
-	mutex
-		critical: [ imageProcess ifNotNil: [ ^ self ].
-			imageProcess := self deploy
-				startImageNoQuit:
-					(self
-						startupCodeIp: NetNameResolver loopBackAddress
-						outputFile: deploy hash asString asFileReference , '.start').
-			[ (deploy hash asString asFileReference , '.start') exists ]
-				whileFalse: [ 10 seconds wait ].
-			ipPort := (STONReader
-				on: (deploy hash asString asFileReference , '.start') readStream)
-				next.
-			url := ('http://{1}:{2}/'
-				format:
-					{(ipPort at: 2).
-					(ipPort at: 1) asString}) asZnUrl ].
-	self assert: self isAlive
-]
-
-{ #category : #accessing }
 TKTForkedBackend >> startWith: aRegistry [
 	imageProcess ifNotNil: [ ^ self ].
 	mutex
@@ -115,24 +92,7 @@ TKTForkedBackend >> startWith: aRegistry [
 						startupCodeIp: NetNameResolver loopBackAddress
 						outputFile: deploy hash asString asFileReference , '.start'
 						with: aRegistry) ].
-
-]
-
-{ #category : #accessing }
-TKTForkedBackend >> startupCodeIp: anIp outputFile: anOutputFile [
-	^ '
-	| service stream |
-	stream := (STONWriter on: ''{2}'' asFileReference writeStream).
-	service := TKTForkItService new.
-	[service startOn: ''{1}''.
-		stream nextPut:
-			\{service port asString.
-			service ip\};
-		close] on: Error do: [ :e | stream nextPut: e; close].
-'
-		format:
-			{NetNameResolver localAddressString.
-			anOutputFile fullName}
+	[ self isAlive ] whileFalse: [ 1 seconds wait ]
 ]
 
 { #category : #accessing }
@@ -147,6 +107,7 @@ TKTForkedBackend >> startupCodeIp: anIp outputFile: anOutputFile with: aRegister
 			\{service port asString.
 			service ip\};
 		close] on: Error do: [ :e | self halt. stream nextPut: e; close].
+	self halt.
 '
 		format:
 			{NetNameResolver localAddressString.

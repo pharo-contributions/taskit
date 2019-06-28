@@ -118,7 +118,7 @@ TKTArchetypeAwarePool >> spawnNewBackendFor: anArchetype [
 	anArchetype configureBackend: backend. 
 	backend archetype: anArchetype.
 	backend startWith: self remoteFutureRegistry.
-	backend isAlive whileFalse: [ 1 seconds wait ].
+	
 	archetypedBackends add: backend.
 	^ backend
 ]
