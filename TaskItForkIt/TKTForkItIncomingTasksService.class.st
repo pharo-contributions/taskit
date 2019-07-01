@@ -26,17 +26,22 @@ TKTForkItIncomingTasksService class >> registeringOn: aZnUrl backend: aBackendHa
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : #'server commands' }
 TKTForkItIncomingTasksService >> alive [
 	^ server isRunning & server isListening
 ]
 
-{ #category : #initialization }
+{ #category : #accessing }
 TKTForkItIncomingTasksService >> backendHash: aHashNumber [
 	backendHash := aHashNumber
 ]
 
-{ #category : #initialization }
+{ #category : #'server commands' }
+TKTForkItIncomingTasksService >> garbageCollect [
+	^ [ 10 timesRepeat: [ Smalltalk garbageCollect ] ] timeToRun / 10
+]
+
+{ #category : #'server commands' }
 TKTForkItIncomingTasksService >> help: request [
 	"Reply with a dynamic HTML page containing links to all pages I support"
 
@@ -44,8 +49,70 @@ TKTForkItIncomingTasksService >> help: request [
 	
 ]
 
+{ #category : #'server commands' }
+TKTForkItIncomingTasksService >> informError: value id: taskId [
+	ZnEasy
+		post: master / #deployFutureResult
+		data:
+			(ZnEntity
+				bytes:
+					(ByteArray
+						streamContents: [ :str | 
+							FLSerializer
+								serialize:
+									{value.
+									taskId}
+								on: str ]))
+]
+
+{ #category : #'server commands' }
+TKTForkItIncomingTasksService >> informSuccess: value id: taskId [
+	ZnEasy
+		post: master / #deployFutureResult
+		data:
+			(ZnEntity
+				bytes:
+					(ByteArray
+						streamContents: [ :str | 
+							FLSerializer
+								serialize:
+									{value.
+									taskId}
+								on: str ]))
+]
+
 { #category : #initialization }
-TKTForkItIncomingTasksService >> informBinds [
+TKTForkItIncomingTasksService >> initialize [
+	super initialize.
+	self
+		map: 'alive' to: #alive;
+		map: 'isFree' to: #isFree;
+		map: 'task' to: #task:;
+		map: 'stop' to: #stop
+]
+
+{ #category : #accessing }
+TKTForkItIncomingTasksService >> ip [
+	^ NetNameResolver stringFromAddress: server bindingAddress
+]
+
+{ #category : #'server commands' }
+TKTForkItIncomingTasksService >> isFree [
+	^ true
+]
+
+{ #category : #'server commands' }
+TKTForkItIncomingTasksService >> master: anUrl [
+	master := anUrl
+]
+
+{ #category : #accessing }
+TKTForkItIncomingTasksService >> port [
+	^ server port 
+]
+
+{ #category : #protocol }
+TKTForkItIncomingTasksService >> privateInformBinds [
 	master ifNil: [ ^ self ].
 	ZnEasy
 		post: master / #registerBackend
@@ -60,67 +127,7 @@ TKTForkItIncomingTasksService >> informBinds [
 									backendHash} ]))
 ]
 
-{ #category : #initialization }
-TKTForkItIncomingTasksService >> informError: value id: taskId [
-	ZnEasy
-		post: master / #deployFutureResult
-		data:
-			(ZnEntity
-				text:
-					(String
-						streamContents: [ :str | 
-							(STONWriter on: str)
-								nextPut:
-									{ value.
-									taskId} ]))
-]
-
-{ #category : #initialization }
-TKTForkItIncomingTasksService >> informSuccess: value id: taskId [
-	ZnEasy
-		post: master / #deployFutureResult
-		data:
-			(ZnEntity
-				text:
-					(String
-						streamContents: [ :str | 
-							(STONWriter on: str)
-								nextPut:
-									{value.
-									taskId} ]))
-]
-
-{ #category : #initialization }
-TKTForkItIncomingTasksService >> initialize [
-	super initialize.
-	self
-		map: 'alive' to: #alive;
-		map: 'isFree' to: #isFree;
-		map: 'task' to: #task:;
-		map: 'stop' to: #stop
-]
-
-{ #category : #initialization }
-TKTForkItIncomingTasksService >> ip [
-	^ NetNameResolver stringFromAddress: server bindingAddress
-]
-
-{ #category : #initialization }
-TKTForkItIncomingTasksService >> isFree [
-	^ true
-]
-
-{ #category : #initialization }
-TKTForkItIncomingTasksService >> master: anUrl [
-	master := anUrl
-]
-
-{ #category : #initialization }
-TKTForkItIncomingTasksService >> port [
-	^ server port 
-]
-
-{ #category : #initialization }
+{ #category : #protocol }
 TKTForkItIncomingTasksService >> startOn: anAddress [
 	pool := TKTConfiguration runner.
 	server := (ZnServer on: 0)
@@ -128,23 +135,19 @@ TKTForkItIncomingTasksService >> startOn: anAddress [
 		delegate: self;
 		start;
 		yourself.
-	self informBinds.
+	self privateInformBinds.
 ]
 
-{ #category : #initialization }
+{ #category : #protocol }
 TKTForkItIncomingTasksService >> stop [
 	^ Smalltalk exit: 0
 ]
 
-{ #category : #initialization }
+{ #category : #'server commands' }
 TKTForkItIncomingTasksService >> task: aRequest [
 	| future taskAndId |
 	taskAndId := (STONReader on: aRequest entity string readStream) next.
 	future := taskAndId first future: pool.
-	future
-		onSuccessDo: [ :v | 
-			self informSuccess: v id: taskAndId second ].
-	future
-		onFailureDo: [ :e | 
-			self informError: e id: taskAndId second ]
+	future onSuccessDo: [ :v | self informSuccess: v id: taskAndId second ].
+	future onFailureDo: [ :e | self informError: e id: taskAndId second ]
 ]

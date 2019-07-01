@@ -41,7 +41,6 @@ TKTArchetypedTaskExecution >> deployValue: aValue [
 
 { #category : #evaluating }
 TKTArchetypedTaskExecution >> doExecuteTask [
-	backend ifNil: [ 1halt ].
 	[ backend
 		sendTaskAndProcessResponse: (TKTTask valuable: task valuable)
 		id: id ]
