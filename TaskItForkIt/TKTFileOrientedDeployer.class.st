@@ -78,9 +78,11 @@ TKTFileOrientedDeployer >> backend: aTKTSystemBackend [
 TKTFileOrientedDeployer >> backupCurrentImage [
 	| session sources |
 	session := Smalltalk session.
-	sources := (Smalltalk imageDirectory entries
-		detect: [ :f | f basename endsWith: '.sources' ]) asFileReference.
-	sources copyTo: self currentCacheFolder / sources basename.
+	sources := Smalltalk imageDirectory entries
+		select: [ :f | f basename endsWith: '.sources' ].
+	sources isNotEmpty
+		ifTrue: [ sources first
+				copyTo: self currentCacheFolder / sources first basename ].
 	Smalltalk image
 		backupTo: (self currentCacheFolder / 'Pharo') fullName.
 	" in this place this image and the backup will be running it "
