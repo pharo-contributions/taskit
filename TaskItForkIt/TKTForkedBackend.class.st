@@ -85,7 +85,7 @@ TKTForkedBackend >> setUrl: anUrl [
 TKTForkedBackend >> startWith: aRegistry [
 	| output |
 	imageProcess ifNotNil: [ ^ self ].
-	output := deploy hash asString asFileReference , 'start'.
+	output := deploy hash asString asFileReference , 'error'.
 	mutex
 		critical: [ imageProcess ifNotNil: [ ^ self ].
 			imageProcess := self deploy
@@ -113,7 +113,7 @@ TKTForkedBackend >> startupCodeIp: anIp outputFile: anOutputFile with: aRegister
 			service ip\};
 		close] on: Error do: [ :e | 
 		stream := (STONWriter on: ''{2}'' asFileReference writeStream).
-		stream nextPut: e; close].
+		stream nextPut: e messageText; close].
 '
 		format:
 			{NetNameResolver localAddressString.
