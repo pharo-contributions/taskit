@@ -56,6 +56,7 @@ TKTForkedBackend >> isFree [
 { #category : #accessing }
 TKTForkedBackend >> respondsToArchetype: anArchetype [
 	^ deploy archetype = anArchetype
+		or: [ deploy archetype parent = anArchetype ]
 ]
 
 { #category : #accessing }
