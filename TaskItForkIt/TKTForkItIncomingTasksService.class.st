@@ -128,7 +128,6 @@ TKTForkItIncomingTasksService >> startOn: anAddress [
 		delegate: self;
 		start;
 		yourself.
-		Transcript open. 
 	self informBinds.
 ]
 

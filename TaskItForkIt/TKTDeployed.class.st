@@ -124,7 +124,7 @@ TKTDeployed >> sourcesFile [
 TKTDeployed >> startImageNoQuit: aString [
 	| output return input |
 	output := UUID new asString asFileReference.
-	input := '
+	^ [ input := '
 	| ston | 
 	ston := STONWriter on: (''{1}'' asFileReference ensureDelete; writeStream).
 	[ ston nextPut: [{2}] value  ] on:Error do: [ :e |  ston nextPut: e messageText ].
@@ -133,14 +133,15 @@ TKTDeployed >> startImageNoQuit: aString [
 		format:
 			{output fullName.
 			aString}.
-	return := (self commandUi
+	return := (self command
 		option: 'eval';
 		arguments:
 			{'--no-quit'.
 			input}) createOSSubprocess run.
 	return isComplete
 		ifTrue: [ self error: 'Error stargin image ' ].
-	^ return
+	return ]
+		ensure: [ output ensureDelete ]
 ]
 
 { #category : #accessing }
