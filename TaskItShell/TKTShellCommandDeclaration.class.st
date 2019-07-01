@@ -90,6 +90,7 @@ TKTShellCommandDeclaration >> isVerbose [
 { #category : #convenience }
 TKTShellCommandDeclaration >> ls [
 	self command: #ls.
+	self redirectStdoutAsResult.
 	^ self
 ]
 
