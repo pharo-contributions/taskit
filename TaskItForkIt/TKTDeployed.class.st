@@ -133,7 +133,7 @@ TKTDeployed >> startImageNoQuit: aString [
 		format:
 			{output fullName.
 			aString}.
-	return := (self command
+	return := (self commandUi
 		option: 'eval';
 		arguments:
 			{'--no-quit'.
