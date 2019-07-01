@@ -83,29 +83,37 @@ TKTForkedBackend >> setUrl: anUrl [
 
 { #category : #accessing }
 TKTForkedBackend >> startWith: aRegistry [
+	| output |
 	imageProcess ifNotNil: [ ^ self ].
+	output := deploy hash asString asFileReference , 'start'.
 	mutex
 		critical: [ imageProcess ifNotNil: [ ^ self ].
 			imageProcess := self deploy
 				startImageNoQuit:
 					(self
 						startupCodeIp: NetNameResolver loopBackAddress
-						outputFile: deploy hash asString asFileReference , '.start'
+						outputFile: output
 						with: aRegistry) ].
-	[ self isAlive ] whileFalse: [ 1 seconds wait ]
+	[ [ self isAlive ]
+		whileFalse: [ output exists
+				ifTrue: [ self error: output readStream upToEnd ].
+			1 seconds wait ] ]
+		ensure: [ output delete ]
 ]
 
 { #category : #accessing }
 TKTForkedBackend >> startupCodeIp: anIp outputFile: anOutputFile with: aRegister [
 	^ '
 	| service stream |
-	stream := (STONWriter on: ''{2}'' asFileReference writeStream).
+	
 	service := TKTForkItIncomingTasksService registeringOn:''{3}'' asZnUrl backend: {4}. 
 	[service startOn: ''{1}''.
 		stream nextPut:
 			\{service port asString.
 			service ip\};
-		close] on: Error do: [ :e | self halt. stream nextPut: e; close].
+		close] on: Error do: [ :e | 
+		stream := (STONWriter on: ''{2}'' asFileReference writeStream).
+		stream nextPut: e; close].
 '
 		format:
 			{NetNameResolver localAddressString.
