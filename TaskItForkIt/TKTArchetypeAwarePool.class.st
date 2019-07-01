@@ -36,7 +36,7 @@ TKTArchetypeAwarePool >> deployValue: aValue into: aTKTFuture [
 
 { #category : #'public - mutexed' }
 TKTArchetypeAwarePool >> future: aTask [
-	^ pool future: aTask
+	^ aTask future: self
 ]
 
 { #category : #'public - mutexed' }
@@ -79,6 +79,11 @@ TKTArchetypeAwarePool >> isUIRunner [
 { #category : #'public - mutexed' }
 TKTArchetypeAwarePool >> noteRemoteWorkerAt: anUrl forBackendHashed: aHash [
 	(archetypedBackends detect: [ :be | be hash = aHash ]) setUrl: anUrl
+]
+
+{ #category : #'public - mutexed' }
+TKTArchetypeAwarePool >> privateFuture: aTask [
+	^ pool privateFuture: aTask
 ]
 
 { #category : #'public - mutexed' }
