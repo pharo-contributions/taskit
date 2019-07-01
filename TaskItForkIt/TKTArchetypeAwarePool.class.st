@@ -86,6 +86,11 @@ TKTArchetypeAwarePool >> privateFuture: aTask [
 	^ pool privateFuture: aTask
 ]
 
+{ #category : #scheduleing }
+TKTArchetypeAwarePool >> privateSchedule: aTKTGenericTask [
+	pool privateSchedule: aTKTGenericTask
+]
+
 { #category : #'public - mutexed' }
 TKTArchetypeAwarePool >> remoteFutureRegistry [
 	^ remoteFutureRegistry

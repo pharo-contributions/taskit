@@ -81,7 +81,7 @@ TKTFileOrientedDeployer >> backupCurrentImage [
 	sources := Smalltalk imageDirectory entries
 		select: [ :f | f basename endsWith: '.sources' ].
 	sources isNotEmpty
-		ifTrue: [ sources first
+		ifTrue: [ sources first asFileReference 
 				copyTo: self currentCacheFolder / sources first basename ].
 	Smalltalk image
 		backupTo: (self currentCacheFolder / 'Pharo') fullName.
@@ -89,7 +89,7 @@ TKTFileOrientedDeployer >> backupCurrentImage [
 	session ~= Smalltalk session
 		ifTrue: [ UIManager default spawnNewProcess.
 			^ Processor activeProcess terminate ].
-	^ {(self currentCacheFolder / sources basename).
+	^ {(self currentCacheFolder / sources first basename).
 	(self currentCacheFolder / 'Pharo.image').
 	(self currentCacheFolder / 'Pharo.changes')}
 ]
