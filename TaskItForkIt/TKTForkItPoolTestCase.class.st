@@ -87,7 +87,7 @@ TKTForkItPoolTestCase >> testSpecificArchetypeNonInstalledTriggersInstallation [
 
 { #category : #running }
 TKTForkItPoolTestCase >> testSpecificArchetypeQueueOnInstalledArchetype [
-	pool workerFor: TKTArchetype pharo70.
+	pool backendFor: TKTArchetype pharo70.
 	self assert: (pool amountOfTasksAt: TKTArchetype pharo70) equals: 0.
 	pool schedule: ([  ] asArchetypedTaskOn: TKTArchetype pharo70).
 	self assert: (pool amountOfTasksAt: TKTArchetype pharo70) equals: 1

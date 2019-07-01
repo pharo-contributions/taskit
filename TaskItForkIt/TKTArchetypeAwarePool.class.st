@@ -51,7 +51,7 @@ TKTArchetypeAwarePool >> futureArchetypedTask: aTask [
 
 { #category : #testing }
 TKTArchetypeAwarePool >> includesArchetype: aTKTArchetype [
-	^ archetypedBackends detect: [ :be | be respondsToArchetype: aTKTArchetype ]
+	^ archetypedBackends includes: [ :be | be respondsToArchetype: aTKTArchetype ]
 ]
 
 { #category : #'public - mutexed' }
@@ -97,7 +97,7 @@ TKTArchetypeAwarePool >> remoteFutureRegistry [
 
 { #category : #'public - mutexed' }
 TKTArchetypeAwarePool >> schedule: aTask [
-	pool schedule: aTask asTask
+	aTask asTask schedule: self
 ]
 
 { #category : #'public - mutexed' }
