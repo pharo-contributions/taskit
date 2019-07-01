@@ -22,8 +22,8 @@ TKTOutgoingTasksService >> amountOfTasksFor: anArchetype [
 { #category : #registry }
 TKTOutgoingTasksService >> deployFutureResult: aRequest [
 	| valueId |
-
-	[ valueId := (STONReader on: aRequest entity string readStream) next.
+	self halt.
+	[ valueId := FLMaterializer materializeFrom: aRequest entity bytes.
 	(futures at: valueId second) deployValue: valueId first.
 	futures removeKey: valueId second ]
 		on: Error
