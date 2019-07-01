@@ -111,8 +111,7 @@ TKTTask >> schedule [
 
 { #category : #running }
 TKTTask >> schedule: executor [
-	
-	executor privateSchedule: self
+	executor privateSchedule: self 
 ]
 
 { #category : #executing }

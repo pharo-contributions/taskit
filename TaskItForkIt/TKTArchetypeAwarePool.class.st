@@ -36,7 +36,7 @@ TKTArchetypeAwarePool >> deployValue: aValue into: aTKTFuture [
 
 { #category : #'public - mutexed' }
 TKTArchetypeAwarePool >> future: aTask [
-	^ aTask future: self
+	^ aTask asTask future: self
 ]
 
 { #category : #'public - mutexed' }
@@ -97,7 +97,7 @@ TKTArchetypeAwarePool >> remoteFutureRegistry [
 
 { #category : #'public - mutexed' }
 TKTArchetypeAwarePool >> schedule: aTask [
-	pool schedule: aTask
+	pool schedule: aTask asTask
 ]
 
 { #category : #'public - mutexed' }

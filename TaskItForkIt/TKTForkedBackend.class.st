@@ -111,7 +111,7 @@ TKTForkedBackend >> startupCodeIp: anIp outputFile: anOutputFile with: aRegister
 		stream nextPut:
 			\{service port asString.
 			service ip\};
-		close] on: Error do: [ :e | 
+		close] on: Error do: [ :e | self halt. 
 		stream := (STONWriter on: ''{2}'' asFileReference writeStream).
 		stream nextPut: e messageText; close].
 '

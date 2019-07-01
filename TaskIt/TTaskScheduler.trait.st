@@ -13,7 +13,7 @@ TTaskScheduler classSide >> isDebuggingCompatible [
 
 { #category : #schedulling }
 TTaskScheduler >> future: aTask [
-	^ aTask future: self
+	^ aTask asTask future: self
 ]
 
 { #category : #schedulling }
@@ -61,7 +61,7 @@ TTaskScheduler >> privateTimeout: timeout on: aTaskExecution [
 
 { #category : #schedulling }
 TTaskScheduler >> schedule: aTask [
-	aTask schedule: self
+	aTask asTask schedule: self
 ]
 
 { #category : #schedulling }
