@@ -95,8 +95,7 @@ TKTTask >> future [
 
 { #category : #running }
 TKTTask >> future: executor [
-	
-	^ executor future: self
+	^ executor privateFuture: self
 ]
 
 { #category : #executing }
@@ -113,7 +112,7 @@ TKTTask >> schedule [
 { #category : #running }
 TKTTask >> schedule: executor [
 	
-	executor schedule: self
+	executor privateSchedule: self
 ]
 
 { #category : #executing }

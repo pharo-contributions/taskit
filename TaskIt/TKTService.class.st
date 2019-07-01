@@ -147,7 +147,7 @@ TKTService >> scheduleRecursiveTask [
 		ifFalse: [
 			worker schedule: [ 
 				self iterateService.
-				self scheduleRecursiveTask ]]
+				self scheduleRecursiveTask ] asTask ]
 ]
 
 { #category : #stepping }
