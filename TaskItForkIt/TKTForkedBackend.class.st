@@ -114,11 +114,7 @@ TKTForkedBackend >> startupCodeIp: anIp outputFile: anOutputFile with: aRegister
 	| service stream |
 	
 	service := TKTForkItIncomingTasksService registeringOn:''{3}'' asZnUrl backend: {4}. 
-	[service startOn: ''{1}''.
-		stream nextPut:
-			\{service port asString.
-			service ip\};
-		close] on: Error do: [ :e |
+	[service startOn: ''{1}''.] on: Error do: [ :e |
 		stream := (STONWriter on: ''{2}'' asFileReference writeStream).
 		stream nextPut: e messageText; close].
 '

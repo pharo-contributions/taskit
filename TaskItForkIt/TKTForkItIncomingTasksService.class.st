@@ -164,12 +164,16 @@ TKTForkItIncomingTasksService >> stop [
 { #category : #'server commands' }
 TKTForkItIncomingTasksService >> task: aRequest [
 	| future taskAndId serializer |
-	
-
-	taskAndId := TKTSerializationStrategy default readFromZnEntity: aRequest entity.
-	serializer :=	TKTSerializationStrategy default serializerFor: aRequest entity. 
-
-	future := taskAndId first future: pool. 
-	future onSuccessDo: [ :v | self informSuccess: v id: taskAndId second serializer: serializer ].
-	future onFailureDo: [ :e | self informError: e id: taskAndId second serializer: serializer ].
+	self halt.
+	taskAndId := TKTSerializationStrategy default
+		readFromZnEntity: aRequest entity.
+	serializer := TKTSerializationStrategy default
+		serializerFor: aRequest entity.
+	future := taskAndId first future: pool.
+	future
+		onSuccessDo:
+			[ :v | self informSuccess: v id: taskAndId second serializer: serializer ].
+	future
+		onFailureDo:
+			[ :e | self informError: e id: taskAndId second serializer: serializer ]
 ]
