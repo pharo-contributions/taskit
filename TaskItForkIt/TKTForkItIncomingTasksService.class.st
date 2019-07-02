@@ -106,19 +106,25 @@ TKTForkItIncomingTasksService >> port [
 
 { #category : #protocol }
 TKTForkItIncomingTasksService >> privateInformBinds [
-	| response |
+	| response time timesToTry |
 	master ifNil: [ ^ self ].
+	timesToTry := 5.
+	time := 0.
+	[ time := time + 1.
 	response := ZnEasy
 		post: master / #registerBackend
 		data:
 			(TKTSerializationStrategy ston
 				writeZnEntityFor:
 					{server localUrl.
-					backendHash}).
+					backendHash}) ]
+		doWhileTrue: [ time asSeconds wait.
+			response isError and: [ timesToTry - time >= 0 ] ].
+		
 	response isError
 		ifTrue: [ self
 				log: ' Unable to register as valid backend ' , response entity asString.
-			self stop ].
+			self stop ]
 ]
 
 { #category : #protocol }
