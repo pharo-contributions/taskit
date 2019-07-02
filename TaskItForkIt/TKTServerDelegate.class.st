@@ -37,7 +37,7 @@ TKTServerDelegate >> handleRequest: request [
 		ifFalse: [ request uri firstPathSegment ].
 	prefixHandler := prefixMap at: prefix ifAbsent: [ nil ].
 	
-	serializer := TKTSerializationStrategy default serializerFor: request.
+	serializer := TKTSerializationStrategy default serializerFor: request entity.
 	
 	[ prefixHandler isNil
 		ifFalse: [ ^ self

@@ -54,7 +54,8 @@ TKTSerializationStrategy >> readFromZnEntity: aRequestEntity [
 TKTSerializationStrategy >> readFromZnRequest: aRequestEntity [
 	aRequestEntity isError
 		ifTrue: [ self error: aRequestEntity entity string ].
-	^ self readFromZnEntity: aRequestEntity
+	^ aRequestEntity entity
+		ifNotNil: [ self readFromZnEntity: aRequestEntity ]
 ]
 
 { #category : #writing }
@@ -64,8 +65,10 @@ TKTSerializationStrategy >> selector [
 
 { #category : #writing }
 TKTSerializationStrategy >> serializerFor: aRequestEntity [
-	^ self class
-		resolveSerializer: (aRequestEntity partNamed: 'serializer') fieldValue
+	^ aRequestEntity
+		ifNil: [ self class default ]
+		ifNotNil: [ self class
+				resolveSerializer: (aRequestEntity partNamed: 'serializer') fieldValue ]
 ]
 
 { #category : #writing }
