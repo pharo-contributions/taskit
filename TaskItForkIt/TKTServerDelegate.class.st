@@ -38,7 +38,9 @@ TKTServerDelegate >> handleRequest: request [
 		ifFalse: [ request uri firstPathSegment ].
 	prefixHandler := prefixMap at: prefix ifAbsent: [ nil ].
 	[ prefixHandler isNil
-		ifFalse: [ ^ self
+		ifFalse: [
+			request isError ifTrue: [ self error: request entity string ].
+			 ^ self
 				encodeIntoResponse: ((MessageSend receiver: self selector: prefixHandler) cull: request) ] ]
 		on: Error
 		do: [ :e | ^ ZnResponse serverError: e messageText ].

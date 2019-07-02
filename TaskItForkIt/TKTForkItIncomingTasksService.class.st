@@ -53,7 +53,6 @@ TKTForkItIncomingTasksService >> help: request [
 
 { #category : #'server commands' }
 TKTForkItIncomingTasksService >> informError: value id: taskId serializer: aSerializer [
-self halt.
 	ZnEasy
 		post: master / #deployFutureResult
 		data:
@@ -92,6 +91,11 @@ TKTForkItIncomingTasksService >> ip [
 { #category : #'server commands' }
 TKTForkItIncomingTasksService >> isFree [
 	^ true
+]
+
+{ #category : #protocol }
+TKTForkItIncomingTasksService >> log: aString [
+	self logCr: aString
 ]
 
 { #category : #'server commands' }
