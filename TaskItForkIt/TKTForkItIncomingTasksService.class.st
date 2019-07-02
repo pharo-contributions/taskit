@@ -118,7 +118,9 @@ TKTForkItIncomingTasksService >> privateInformBinds [
 				writeZnEntityFor:
 					{server localUrl.
 					backendHash}) ]
-		doWhileTrue: [ time asSeconds wait.
+		doWhileTrue: [ 
+			self log: 'trying ', time asString, ' to connect: ',  master. 
+			time asSeconds wait.
 			response isError and: [ timesToTry - time >= 0 ] ].
 		
 	response isError
