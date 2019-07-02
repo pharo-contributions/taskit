@@ -51,7 +51,7 @@ TKTSerializationStrategy >> readFromZnEntity: aRequestEntity [
 { #category : #writing }
 TKTSerializationStrategy >> readFromZnRequest: aRequestEntity [
 	((aRequestEntity isKindOf: ZnResponse ) and:[aRequestEntity isError])
-		ifTrue: [ self error: aRequestEntity entity string ].
+		ifTrue: [ self error: ' REMOTE ERROR: ' , aRequestEntity entity string ].
 	^ aRequestEntity entity
 		ifNotNil: [ self readFromZnEntity: aRequestEntity entity ]
 ]

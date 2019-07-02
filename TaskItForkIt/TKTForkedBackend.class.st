@@ -77,7 +77,7 @@ TKTForkedBackend >> sendTaskAndProcessResponse: aTask id: aFutureId serializer: 
 					{aTask.
 					aFutureId}).
 	response := TKTSerializationStrategy default
-		readFromZnEntity: response entity.
+		readFromZnRequest: response .
 	(response isKindOf: Exception)
 		ifTrue: [ ^ response signalIn: thisContext ].
 	^ response] on: ConnectionTimedOut do: [ :c | TKTRetryException signal: ' Backend timed out. retry later '.  ]
