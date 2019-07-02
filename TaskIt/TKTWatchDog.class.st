@@ -75,7 +75,9 @@ TKTWatchDog >> watchDog: aParameterPool [
 			self
 				log:
 					'Watch dog is not watching anymore the value: '
-						, (values remove: aParameterPool) printString ]
+						,
+							(values remove: aParameterPool ifAbsent: [ aParameterPool ])
+								printString ]
 ]
 
 { #category : #initialization }
