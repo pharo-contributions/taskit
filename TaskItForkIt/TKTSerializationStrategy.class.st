@@ -43,8 +43,6 @@ TKTSerializationStrategy >> privateEncodeContent: aContent [
 
 { #category : #writing }
 TKTSerializationStrategy >> readFromZnEntity: aRequestEntity [
-	aRequestEntity isError
-		ifTrue: [ self error: aRequestEntity entity string ].
 	^ (self class
 		resolveSerializer: (aRequestEntity partNamed: 'serializer') fieldValue)
 		privateDecodeContent: (aRequestEntity partNamed: 'content') entity
@@ -52,10 +50,10 @@ TKTSerializationStrategy >> readFromZnEntity: aRequestEntity [
 
 { #category : #writing }
 TKTSerializationStrategy >> readFromZnRequest: aRequestEntity [
-	aRequestEntity isError
+	((aRequestEntity isKindOf: ZnResponse ) and:[aRequestEntity isError])
 		ifTrue: [ self error: aRequestEntity entity string ].
 	^ aRequestEntity entity
-		ifNotNil: [ self readFromZnEntity: aRequestEntity ]
+		ifNotNil: [ self readFromZnEntity: aRequestEntity entity ]
 ]
 
 { #category : #writing }
