@@ -18,7 +18,8 @@ Class {
 		'errorHandler',
 		'processProvider',
 		'serviceManager',
-		'debugging'
+		'debugging',
+		'watchDog'
 	],
 	#category : #'TaskIt-Profiles'
 }
@@ -37,6 +38,7 @@ TKTProfile class >> development [
 			(#runner -> TKTCommonQueueWorkerPool createDefault).
 			(#poolWorkerProcess -> TKTDebuggWorkerProcess).
 			(#process -> TKTRawProcess).
+			(#watchDog -> TKTWatchDog onDuty).
 			(#errorHandler -> TKTDebuggerExceptionHandler).
 			(#processProvider -> TKTTaskItProcessProvider new).
 			(#serviceManager -> TKTServiceManager new)} asDictionary
@@ -59,6 +61,7 @@ TKTProfile class >> production [
 			(#runner -> TKTCommonQueueWorkerPool createDefault).
 			(#poolWorkerProcess -> TKTWorkerProcess).
 			(#process -> Process).
+			(#watchDog -> TKTWatchDog onDuty) .
 			(#errorHandler -> TKTExceptionHandler).
 			(#processProvider -> TKTPharoProcessProvider new).
 			(#serviceManager -> TKTServiceManager new)} asDictionary
@@ -80,6 +83,7 @@ TKTProfile class >> test [
 			(#poolWorkerProcess -> TKTWorkerProcess).
 			(#process -> Process).
 			(#errorHandler -> TKTExceptionHandler).
+			(#watchDog -> TKTWatchDog onDuty).
 			(#processProvider -> TKTTaskItProcessProvider new).
 			(#serviceManager -> TKTServiceManager new)} asDictionary
 ]
@@ -197,4 +201,14 @@ TKTProfile >> serviceManager: anObject [
 { #category : #accessing }
 TKTProfile >> values: aDictionary [
 	aDictionary keysAndValuesDo: [ :k :v | self perform: ('{1}:' format: {k}) asSymbol withArguments: {v} ]
+]
+
+{ #category : #accessing }
+TKTProfile >> watchDog [
+	^ watchDog
+]
+
+{ #category : #accessing }
+TKTProfile >> watchDog: aWatchDog [
+	watchDog := aWatchDog
 ]

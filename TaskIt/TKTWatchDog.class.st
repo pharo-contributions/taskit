@@ -5,17 +5,17 @@ Class {
 	#name : #TKTWatchDog,
 	#superclass : #TKTService,
 	#instVars : [
-		'pool'
+		'values'
 	],
-	#category : 'TaskIt-Worker'
+	#classInstVars : [
+		'onDuty'
+	],
+	#category : #'TaskIt-Worker'
 }
 
-{ #category : #'instance creation' }
-TKTWatchDog class >> on: aPool [
-	^ self new
-		initializeWith: aPool;
-		start;
-		yourself
+{ #category : #accessing }
+TKTWatchDog class >> onDuty [
+	^ onDuty ifNil: [ onDuty := self new ]
 ]
 
 { #category : #initialization }
@@ -30,29 +30,56 @@ TKTWatchDog >> ensureIsAwake [
 ]
 
 { #category : #initialization }
-TKTWatchDog >> initializeWith: aPool [
-	pool := aPool asWeakReference
+TKTWatchDog >> ensureIsWatching: aValue [
+	(values includes: aValue)
+		ifFalse: [ self watch: aValue ].
+	self ensureIsAwake
+]
+
+{ #category : #initialization }
+TKTWatchDog >> initialize [
+	super initialize.
+	values := WeakSet new
 ]
 
 { #category : #initialization }
 TKTWatchDog >> name [
-	^ 'WatchDog - ' , self pool printString
-]
-
-{ #category : #initialization }
-TKTWatchDog >> pool [
-	^ pool at: 1
+	^ 'WatchDog - Garden size: ' , values size asString
 ]
 
 { #category : #initialization }
 TKTWatchDog >> stepService [
-	[ self pool ifNil: [ self stop ] ifNotNil: [ :p | self watchDog: p ].
-	self delay wait ]
-		on: Error
-		do: [ :err | self inform: err messageText ]
+	self watchedValues
+		ifEmpty: [ self stop ]
+		ifNotEmpty: [ :values | 
+			values do: [ :v | self watchDog: v ].
+			self delay wait ]
+]
+
+{ #category : #initialization }
+TKTWatchDog >> stopWatching: aValue [
+	values remove: aValue
+]
+
+{ #category : #initialization }
+TKTWatchDog >> watch: aValue [
+	values add: aValue
 ]
 
 { #category : #initialization }
 TKTWatchDog >> watchDog: aParameterPool [
-	aParameterPool ensureIsWorking
+	[ aParameterPool ensureIsWorking ]
+		on: Error
+		do: [ :err | 
+			self log: err messageText.
+			self
+				log:
+					'Watch dog is not watching anymore the value: '
+						, (values remove: aParameterPool) printString ]
+]
+
+{ #category : #initialization }
+TKTWatchDog >> watchedValues [
+	
+	^  values
 ]

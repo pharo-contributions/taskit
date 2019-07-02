@@ -29,9 +29,9 @@ TKTArchetypeAwarePool >> backendFor: anArchetype [
 		ifNone: [ self spawnNewBackendFor: anArchetype ]
 ]
 
-{ #category : #'deploying remote' }
-TKTArchetypeAwarePool >> deployValue: aValue into: aTKTFuture [ 
-	aValue isException 
+{ #category : #'public - mutexed' }
+TKTArchetypeAwarePool >> ensureIsWorking [
+	archetypedBackends do: [ :b | b ensureIsAlive: remoteFutureRegistry ]
 ]
 
 { #category : #'public - mutexed' }
@@ -58,7 +58,8 @@ TKTArchetypeAwarePool >> includesArchetype: aTKTArchetype [
 TKTArchetypeAwarePool >> initialize [
 	super initialize.
 	pool := TKTCommonQueueWorkerPool createDefault.
-	archetypedBackends := Set new .
+	archetypedBackends := Set new.
+	TKTConfiguration watchDog watch: self
 ]
 
 { #category : #'public - mutexed' }
@@ -121,6 +122,11 @@ TKTArchetypeAwarePool >> scheduleArchetypedTask: aTask [
 ]
 
 { #category : #'public - mutexed' }
+TKTArchetypeAwarePool >> scheduleTaskExecution: aTaskExecution [
+	^ pool scheduleTaskExecution: aTaskExecution
+]
+
+{ #category : #'public - mutexed' }
 TKTArchetypeAwarePool >> scheduleTimeout: timeout on: aTaskExecution [
 	^ pool scheduleTimeout: timeout on: aTaskExecution
 ]
@@ -141,6 +147,7 @@ TKTArchetypeAwarePool >> spawnNewBackendFor: anArchetype [
 
 { #category : #stop }
 TKTArchetypeAwarePool >> stop [
+	TKTConfiguration watchDog stopWatching: self.
 	archetypedBackends do: #stop.
 	pool ifNotNil: [ pool stop ].
 	archetypedBackends removeAll.

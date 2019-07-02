@@ -86,6 +86,11 @@ TKTTaskExecution >> setFinishedState [
 ]
 
 { #category : #states }
+TKTTaskExecution >> setReadyState [
+	state := TKTReadyTaskState new
+]
+
+{ #category : #states }
 TKTTaskExecution >> setRunningState [
 
 	state := TKTRunningTaskState new

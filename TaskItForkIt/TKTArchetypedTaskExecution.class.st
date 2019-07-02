@@ -20,6 +20,7 @@ TKTArchetypedTaskExecution >> backend: aBackend [
 { #category : #remoteExtention }
 TKTArchetypedTaskExecution >> deployValue: aValue [
 	| deployingTask |
+	self halt.
 	deployingTask := (aValue isException
 		ifTrue: [ MessageSend
 				receiver: future
@@ -41,9 +42,11 @@ TKTArchetypedTaskExecution >> deployValue: aValue [
 
 { #category : #evaluating }
 TKTArchetypedTaskExecution >> doExecuteTask [
-	[ backend
-		sendTaskAndProcessResponse: (TKTTask valuable: task valuable)
-		id: id ]
+	[ backend isAlive
+		ifTrue: [ backend
+				sendTaskAndProcessResponse: (TKTTask valuable: task valuable)
+				id: id ]
+		ifFalse: [ TKTRetryException signal ] ]
 		on: Error
 		do: [ :error | future deployFailure: error freeze ]
 ]

@@ -12,7 +12,6 @@ Class {
 		'taskQueue',
 		'failedTasks',
 		'name',
-		'dog',
 		'mutex'
 	],
 	#category : #'TaskIt-Worker'
@@ -28,7 +27,7 @@ TKTCommonQueueWorkerPool class >> createDefault [
 
 { #category : #public }
 TKTCommonQueueWorkerPool >> ensureIsBeingWatched [
-	dog ifNotNil: [ dog ensureIsAwake ]
+	TKTConfiguration watchDog ensureIsWatching: self
 ]
 
 { #category : #'public - mutexed' }
@@ -184,17 +183,14 @@ TKTCommonQueueWorkerPool >> size [
 
 { #category : #'public - mutexed' }
 TKTCommonQueueWorkerPool >> start [
-	mutex
-		critical: [ dog
-				ifNil: [ dog := TKTWatchDog on: self ]
-				ifNotNil: [ self error: 'Already started' ] ]
+	self ensureIsBeingWatched
 ]
 
 { #category : #'public - mutexed' }
 TKTCommonQueueWorkerPool >> stop [
+	TKTConfiguration watchDog stopWatching: self.
 	mutex
-		critical: [ dog := nil.
-			workers do: #stop.
+		critical: [ workers do: #stop.
 			workers removeAll ]
 ]
 

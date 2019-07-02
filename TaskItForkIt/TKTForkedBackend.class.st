@@ -34,6 +34,13 @@ TKTForkedBackend >> deploy: aDeploy [
 ]
 
 { #category : #accessing }
+TKTForkedBackend >> ensureIsAlive: aRegistry [
+	self isAlive
+		ifFalse: [ self stop.
+			self startWith: aRegistry ]
+]
+
+{ #category : #accessing }
 TKTForkedBackend >> initialize [
 	super initialize.
 	mutex := Mutex new

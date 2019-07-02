@@ -10,7 +10,7 @@ TKTRetryTest >> testRetryEveryCanRetryAsManyTimesAsLapsesIsInsideTotal [
 	| total lapse retry |
 	total := 10 seconds.
 	lapse := 1 second.
-	retry := TKTRetry every: lapse for: total.
+	retry := TKTFutureRetry every: lapse for: total.
 	
 	total / lapse timesRepeat: [ 
 		self deny: retry isDone.
@@ -23,7 +23,7 @@ TKTRetryTest >> testRetryEveryCannotRetryOverNumberOfLapsesIsInsideTotal [
 	| total lapse retry |
 	total := 10 seconds.
 	lapse := 1 second.
-	retry := TKTRetry every: lapse for: total.
+	retry := TKTFutureRetry every: lapse for: total.
 	
 	total / lapse timesRepeat: [ retry := retry next ].
 	self assert: retry isDone.
@@ -33,11 +33,11 @@ TKTRetryTest >> testRetryEveryCannotRetryOverNumberOfLapsesIsInsideTotal [
 { #category : #tests }
 TKTRetryTest >> testRetryEveryIsDoneIfLapseTimeIsBiggerThanTotalRetryTime [
 
-	self assert: (TKTRetry every: 1 minute for: 10 seconds) isDone
+	self assert: (TKTFutureRetry every: 1 minute for: 10 seconds) isDone
 ]
 
 { #category : #tests }
 TKTRetryTest >> testRetryEveryIsNotDoneIfLapseTimeIsSmallerThanTotalRetryTime [
 
-	self deny: (TKTRetry every: 1 second for: 10 seconds) isDone
+	self deny: (TKTFutureRetry every: 1 second for: 10 seconds) isDone
 ]

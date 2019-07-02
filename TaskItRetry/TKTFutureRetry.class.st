@@ -1,16 +1,16 @@
 Class {
-	#name : #TKTRetry,
+	#name : #TKTFutureRetry,
 	#superclass : #Object,
 	#instVars : [
 		'lapseBetweenRetries',
 		'nextRetryBlock',
 		'doneBlock'
 	],
-	#category : 'TaskItRetry'
+	#category : #TaskItRetry
 }
 
 { #category : #'instance creation' }
-TKTRetry class >> every: lapseDuration for: totalDuration [ 
+TKTFutureRetry class >> every: lapseDuration for: totalDuration [ 
 	
 	^ self new
 		lapseBetweenRetries: lapseDuration;
@@ -20,38 +20,38 @@ TKTRetry class >> every: lapseDuration for: totalDuration [
 ]
 
 { #category : #accessing }
-TKTRetry >> doneBlock: aBlockClosure [
+TKTFutureRetry >> doneBlock: aBlockClosure [
 
 	doneBlock := aBlockClosure
 ]
 
 { #category : #testing }
-TKTRetry >> isDone [
+TKTFutureRetry >> isDone [
 	
 	^ doneBlock value
 ]
 
 { #category : #accessing }
-TKTRetry >> lapseBetweenRetries: aDuration [
+TKTFutureRetry >> lapseBetweenRetries: aDuration [
 
 	lapseBetweenRetries := aDuration 
 ]
 
 { #category : #iterating }
-TKTRetry >> next [
+TKTFutureRetry >> next [
 	
 	self isDone ifTrue: [ self error: 'retries finished' ].
 	^ nextRetryBlock value
 ]
 
 { #category : #accessing }
-TKTRetry >> nextRetryBlock: aBlockClosure [ 
+TKTFutureRetry >> nextRetryBlock: aBlockClosure [ 
 
 	nextRetryBlock := aBlockClosure
 ]
 
 { #category : #iterating }
-TKTRetry >> waitLapse [
+TKTFutureRetry >> waitLapse [
 	
 	^ lapseBetweenRetries wait
 ]

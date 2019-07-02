@@ -13,7 +13,7 @@ TKTReadyTaskState >> cancelTaskExecution: aTaskExecution reason: aReason [
 	aTaskExecution setCancelStateWithReason: aReason
 ]
 
-{ #category : #executing }
+{ #category : #cancelling }
 TKTReadyTaskState >> performTaskExecution: aTaskExecution [
 	aTaskExecution setRunningState.
 	aTaskExecution doExecuteTask.

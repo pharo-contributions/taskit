@@ -160,6 +160,11 @@ TKTConfiguration class >> settingsOn: aBuilder [
 ]
 
 { #category : #accessing }
+TKTConfiguration class >> watchDog [
+	^ self optionAt: #watchDog
+]
+
+{ #category : #accessing }
 TKTConfiguration >> basicValue [ 
 	^ value
 ]
