@@ -20,7 +20,6 @@ TKTArchetypedTaskExecution >> backend: aBackend [
 { #category : #remoteExtention }
 TKTArchetypedTaskExecution >> deployValue: aValue [
 	| deployingTask |
-	self halt.
 	deployingTask := (aValue isException
 		ifTrue: [ MessageSend
 				receiver: future
@@ -30,7 +29,9 @@ TKTArchetypedTaskExecution >> deployValue: aValue [
 				receiver: future
 				selector: #deploySuccess:
 				argument: aValue ]) asTask.
-	(runner future: deployingTask) onFailureDo: [ : e | deployingTask value ].
+			
+	(runner future: deployingTask)
+		onFailureDo: [ :e | deployingTask value ].
 	self flag: #Todo
 	"
 	The deployment should be executed in the same process that started. 
