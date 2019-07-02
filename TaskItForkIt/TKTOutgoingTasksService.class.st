@@ -62,8 +62,8 @@ TKTOutgoingTasksService >> register: anArchetypedFuture [
 { #category : #registry }
 TKTOutgoingTasksService >> registerBackend: aRequest [
 	| arrayUrlHash |
-	arrayUrlHash := (STONReader on: aRequest entity string readStream)
-		next.
+	arrayUrlHash := TKTSerializationStrategy default
+		readFromZnEntity: aRequest entity.
 	top
 		noteRemoteWorkerAt: arrayUrlHash first
 		forBackendHashed: arrayUrlHash second.

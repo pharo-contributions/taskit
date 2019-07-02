@@ -5,7 +5,8 @@ Class {
 	#name : #TKTArchetypedTask,
 	#superclass : #TKTGenericTask,
 	#instVars : [
-		'archetype'
+		'archetype',
+		'serializer'
 	],
 	#category : #'TaskItForkIt-Task'
 }
@@ -38,6 +39,12 @@ TKTArchetypedTask >> futureTaskExecutionFor: aRunner [
 ]
 
 { #category : #accessing }
+TKTArchetypedTask >> initialize [
+	super initialize.
+	self useSton
+]
+
+{ #category : #accessing }
 TKTArchetypedTask >> schedule: executor [
 	executor scheduleArchetypedTask: self
 ]
@@ -47,4 +54,24 @@ TKTArchetypedTask >> scheduleTaskExecutionFor: aRunner [
 	^ self
 		configureTaskExecution: TKTArchetypedTaskExecution new
 		with: aRunner
+]
+
+{ #category : #accessing }
+TKTArchetypedTask >> serializer [
+	^ serializer ifNil: [ #ston ]
+]
+
+{ #category : #accessing }
+TKTArchetypedTask >> useFuel [
+	serializer := #fuel
+]
+
+{ #category : #accessing }
+TKTArchetypedTask >> useSton [
+	serializer := #ston
+]
+
+{ #category : #accessing }
+TKTArchetypedTask >> useXStoned [
+	serializer := #xstoned
 ]

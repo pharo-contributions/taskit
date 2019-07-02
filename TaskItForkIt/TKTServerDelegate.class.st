@@ -13,8 +13,7 @@ TKTServerDelegate >> encodeIntoResponse: anObject [
 	object := anObject = self
 		ifTrue: [ true ]
 		ifFalse: [ anObject ].
-	serial := String
-		streamContents: [ :str | (STONWriter on: str) nextPut: object ].
+	serial := TKTSerializationStrategy default writeZnEntityFor: object.
 	^ ZnResponse ok: (ZnEntity text: serial)
 ]
 

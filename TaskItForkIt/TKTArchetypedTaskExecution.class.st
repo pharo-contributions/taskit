@@ -46,7 +46,8 @@ TKTArchetypedTaskExecution >> doExecuteTask [
 	[ backend isAlive
 		ifTrue: [ backend
 				sendTaskAndProcessResponse: (TKTTask valuable: task valuable)
-				id: id ]
+				id: id
+				serializer: task serializer ]
 		ifFalse: [ TKTRetryException signal ] ]
 		on: Error
 		do: [ :error | future deployFailure: error freeze ]

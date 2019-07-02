@@ -56,8 +56,8 @@ TKTForkedBackend >> isAlive [
 
 { #category : #accessing }
 TKTForkedBackend >> isFree [
-	^ (STONReader
-		on: (ZnEasy get: self url / #isFree) entity string readStream) next
+	^ TKTSerializationStrategy default
+		readFromZnEntity: (ZnEasy get: self url / #isFree) entity
 ]
 
 { #category : #accessing }
@@ -67,18 +67,17 @@ TKTForkedBackend >> respondsToArchetype: anArchetype [
 ]
 
 { #category : #accessing }
-TKTForkedBackend >> sendTaskAndProcessResponse: aTask id: aFutureId [
+TKTForkedBackend >> sendTaskAndProcessResponse: aTask id: aFutureId serializer: aSerializerSelector [
 	| response |
 	response := ZnEasy
 		post: self url / #task
 		data:
-			(ZnEntity
-				text:
-					(String
-						streamContents: [ :str | 
-							(STONWriter on: str)
-								nextPut: {aTask. aFutureId} ])).
-	response := (STONReader on: response entity string readStream) next.
+			((TKTSerializationStrategy resolveSerializer: aSerializerSelector)
+				writeZnEntityFor:
+					{aTask.
+					aFutureId}).
+	response := TKTSerializationStrategy default
+		readFromZnEntity: response entity.
 	(response isKindOf: Exception)
 		ifTrue: [ ^ response signalIn: thisContext ].
 	^ response

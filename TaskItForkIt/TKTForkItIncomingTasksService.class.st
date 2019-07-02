@@ -66,6 +66,17 @@ TKTForkItIncomingTasksService >> informError: value id: taskId [
 ]
 
 { #category : #'server commands' }
+TKTForkItIncomingTasksService >> informError: value id: taskId serializer: aSerializer [
+	ZnEasy
+		post: master / #deployFutureResult
+		data:
+			(aSerializer
+				writeZnEntityFor:
+					{value.
+					taskId})
+]
+
+{ #category : #'server commands' }
 TKTForkItIncomingTasksService >> informSuccess: value id: taskId [
 	ZnEasy
 		post: master / #deployFutureResult
@@ -79,6 +90,17 @@ TKTForkItIncomingTasksService >> informSuccess: value id: taskId [
 									{value.
 									taskId}
 								on: str ]))
+]
+
+{ #category : #'server commands' }
+TKTForkItIncomingTasksService >> informSuccess: value id: taskId serializer: aSerializer [
+	ZnEasy
+		post: master / #deployFutureResult
+		data:
+			(aSerializer
+				writeZnEntityFor:
+					{value.
+					taskId})
 ]
 
 { #category : #initialization }
@@ -117,14 +139,10 @@ TKTForkItIncomingTasksService >> privateInformBinds [
 	ZnEasy
 		post: master / #registerBackend
 		data:
-			(ZnEntity
-				text:
-					(String
-						streamContents: [ :str | 
-							(STONWriter on: str)
-								nextPut:
-									{server localUrl.
-									backendHash} ]))
+			(TKTSerializationStrategy ston
+				writeZnEntityFor:
+					{server localUrl.
+					backendHash})
 ]
 
 { #category : #protocol }
@@ -145,9 +163,13 @@ TKTForkItIncomingTasksService >> stop [
 
 { #category : #'server commands' }
 TKTForkItIncomingTasksService >> task: aRequest [
-	| future taskAndId |
-	taskAndId := (STONReader on: aRequest entity string readStream) next.
-	future := taskAndId first future: pool.
-	future onSuccessDo: [ :v | self informSuccess: v id: taskAndId second ].
-	future onFailureDo: [ :e | self informError: e id: taskAndId second ].
+	| future taskAndId serializer |
+	
+
+	taskAndId := TKTSerializationStrategy default readFromZnEntity: aRequest entity.
+	serializer :=	TKTSerializationStrategy default serializerFor: aRequest entity. 
+
+	future := taskAndId first future: pool. 
+	future onSuccessDo: [ :v | self informSuccess: v id: taskAndId second serializer: serializer ].
+	future onFailureDo: [ :e | self informError: e id: taskAndId second serializer: serializer ].
 ]
