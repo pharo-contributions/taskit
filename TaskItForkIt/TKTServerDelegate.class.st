@@ -9,12 +9,12 @@ Class {
 
 { #category : #initialization }
 TKTServerDelegate >> encodeIntoResponse: anObject [
-	| serial object |
+	| object |
 	object := anObject = self
 		ifTrue: [ true ]
 		ifFalse: [ anObject ].
-	serial := TKTSerializationStrategy default writeZnEntityFor: object.
-	^ ZnResponse ok: (ZnEntity text: serial)
+	^ ZnResponse
+		ok: (TKTSerializationStrategy default writeZnEntityFor: object)
 ]
 
 { #category : #initialization }

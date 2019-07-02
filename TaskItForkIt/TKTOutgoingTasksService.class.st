@@ -62,7 +62,7 @@ TKTOutgoingTasksService >> register: anArchetypedFuture [
 { #category : #registry }
 TKTOutgoingTasksService >> registerBackend: aRequest [
 	| arrayUrlHash |
-	self halt.
+
 	arrayUrlHash := TKTSerializationStrategy default
 		readFromZnEntity: aRequest entity.
 	top

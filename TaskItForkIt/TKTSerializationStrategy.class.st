@@ -45,7 +45,7 @@ TKTSerializationStrategy >> privateEncodeContent: aContent [
 TKTSerializationStrategy >> readFromZnEntity: aRequestEntity [
 	^ (self class
 		resolveSerializer: (aRequestEntity partNamed: 'serializer') fieldValue)
-		privateDecodeContent: (aRequestEntity partNamed: 'content')
+		privateDecodeContent: (aRequestEntity partNamed: 'content') entity 
 ]
 
 { #category : #writing }
