@@ -118,15 +118,13 @@ TKTForkItIncomingTasksService >> privateInformBinds [
 				writeZnEntityFor:
 					{server localUrl.
 					backendHash}) ]
-		doWhileTrue: [ 
-			self log: 'trying ', time asString, ' to connect: ',  master. 
+		doWhileTrue: [ self
+				log: 'trying ' , time asString , ' to connect: ' , master asString.
 			time asSeconds wait.
 			response isError and: [ timesToTry - time >= 0 ] ].
-		
 	response isError
 		ifTrue: [ self
-				log: ' Unable to register as valid backend ' , response entity asString.
-			self stop ]
+				error: ' Unable to register as valid frontend ' , response entity asString ]
 ]
 
 { #category : #protocol }
