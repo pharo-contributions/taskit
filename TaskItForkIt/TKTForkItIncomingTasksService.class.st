@@ -51,6 +51,7 @@ TKTForkItIncomingTasksService >> help: request [
 
 { #category : #'server commands' }
 TKTForkItIncomingTasksService >> informError: value id: taskId serializer: aSerializer [
+self halt.
 	ZnEasy
 		post: master / #deployFutureResult
 		data:
