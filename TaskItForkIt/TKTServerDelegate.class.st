@@ -8,13 +8,12 @@ Class {
 }
 
 { #category : #initialization }
-TKTServerDelegate >> encodeIntoResponse: anObject [
+TKTServerDelegate >> encodeIntoResponse: anObject serializer: serializer [
 	| object |
 	object := anObject = self
 		ifTrue: [ true ]
 		ifFalse: [ anObject ].
-	^ ZnResponse
-		ok: (TKTSerializationStrategy default writeZnEntityFor: object)
+	^ ZnResponse ok: (serializer writeZnEntityFor: object)
 ]
 
 { #category : #initialization }
@@ -32,16 +31,22 @@ TKTServerDelegate >> generateHelp [
 
 { #category : #initialization }
 TKTServerDelegate >> handleRequest: request [
-	| prefix prefixHandler |
+	| prefix prefixHandler serializer |
 	prefix := request uri isSlash
 		ifTrue: [ prefixMap at: '/' ifAbsent: [ nil ] ]
 		ifFalse: [ request uri firstPathSegment ].
 	prefixHandler := prefixMap at: prefix ifAbsent: [ nil ].
+	
+	serializer := TKTSerializationStrategy default serializerFor: request.
+	
 	[ prefixHandler isNil
-		ifFalse: [
-			request isError ifTrue: [ self error: request entity string ].
-			 ^ self
-				encodeIntoResponse: ((MessageSend receiver: self selector: prefixHandler) cull: request) ] ]
+		ifFalse: [ ^ self
+				encodeIntoResponse:
+					((MessageSend receiver: self selector: prefixHandler)
+						cull: (TKTSerializationStrategy default readFromZnRequest: request)
+						cull: serializer
+						cull: request)
+				serializer: serializer ] ]
 		on: Error
 		do: [ :e | ^ ZnResponse serverError: e messageText ].
 	^ ZnResponse notFound: request uri

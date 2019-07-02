@@ -20,11 +20,8 @@ TKTOutgoingTasksService >> amountOfTasksFor: anArchetype [
 ]
 
 { #category : #registry }
-TKTOutgoingTasksService >> deployFutureResult: aRequest [
-	| valueId |
-	[ valueId := TKTSerializationStrategy default
-		readFromZnEntity: aRequest entity.
-	(futures at: valueId second) deployValue: valueId first.
+TKTOutgoingTasksService >> deployFutureResult: valueId [
+	[ (futures at: valueId second) deployValue: valueId first.
 	futures removeKey: valueId second ]
 		on: Error
 		do: [ :e | 
@@ -60,11 +57,7 @@ TKTOutgoingTasksService >> register: anArchetypedFuture [
 ]
 
 { #category : #registry }
-TKTOutgoingTasksService >> registerBackend: aRequest [
-	| arrayUrlHash |
-
-	arrayUrlHash := TKTSerializationStrategy default
-		readFromZnEntity: aRequest entity.
+TKTOutgoingTasksService >> registerBackend: arrayUrlHash [
 	top
 		noteRemoteWorkerAt: arrayUrlHash first
 		forBackendHashed: arrayUrlHash second.

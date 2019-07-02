@@ -51,6 +51,13 @@ TKTSerializationStrategy >> readFromZnEntity: aRequestEntity [
 ]
 
 { #category : #writing }
+TKTSerializationStrategy >> readFromZnRequest: aRequestEntity [
+	aRequestEntity isError
+		ifTrue: [ self error: aRequestEntity entity string ].
+	^ self readFromZnEntity: aRequestEntity
+]
+
+{ #category : #writing }
 TKTSerializationStrategy >> selector [
 	self subclassResponsibility 
 ]

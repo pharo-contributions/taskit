@@ -79,7 +79,7 @@ TKTForkItIncomingTasksService >> initialize [
 	self
 		map: 'alive' to: #alive;
 		map: 'isFree' to: #isFree;
-		map: 'task' to: #task:;
+		map: 'task' to: #task:serializer:;
 		map: 'stop' to: #stop
 ]
 
@@ -148,13 +148,8 @@ TKTForkItIncomingTasksService >> stop [
 ]
 
 { #category : #'server commands' }
-TKTForkItIncomingTasksService >> task: aRequest [
-	| future taskAndId serializer |
-
-	taskAndId := TKTSerializationStrategy default
-		readFromZnEntity: aRequest entity.
-	serializer := TKTSerializationStrategy default
-		serializerFor: aRequest entity.
+TKTForkItIncomingTasksService >> task: taskAndId serializer: serializer [
+	| future |
 	future := taskAndId first future: pool.
 	future
 		onSuccessDo:
