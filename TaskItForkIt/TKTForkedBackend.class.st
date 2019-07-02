@@ -105,14 +105,14 @@ TKTForkedBackend >> startWith: aRegistry [
 		whileFalse: [ output exists
 				ifTrue: [ self error: output readStream upToEnd ].
 			1 seconds wait ] ]
-		ensure: [ output delete ]
+		ensure: [ output ensureDelete ]
 ]
 
 { #category : #accessing }
 TKTForkedBackend >> startupCodeIp: anIp outputFile: anOutputFile with: aRegister [
 	^ '
 	| service stream |
-	self halt.
+
 	service := TKTForkItIncomingTasksService registeringOn:''{3}'' asZnUrl backend: {4}. 
 	[service startOn: ''{1}''.] on: Error do: [ :e |
 		stream := (STONWriter on: ''{2}'' asFileReference writeStream).

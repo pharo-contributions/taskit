@@ -6,6 +6,7 @@ Class {
 
 { #category : #writing }
 TKTFuelSerializationStrategy >> privateDecodeContent: aZnEntity [
+
 	^ FLMaterializer materializeFromByteArray: aZnEntity bytes
 ]
 
@@ -13,10 +14,8 @@ TKTFuelSerializationStrategy >> privateDecodeContent: aZnEntity [
 TKTFuelSerializationStrategy >> privateEncodeContent: aContent [
 	^ ZnEntity
 		bytes:
-			(ZnEntity
-				bytes:
-					(ByteArray
-						streamContents: [ :str | FLSerializer serialize: aContent on: str ]))
+			(ByteArray
+				streamContents: [ :str | FLSerializer serialize: aContent on: str ])
 ]
 
 { #category : #writing }

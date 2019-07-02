@@ -55,9 +55,8 @@ TKTSerializationStrategy >> selector [
 
 { #category : #writing }
 TKTSerializationStrategy >> serializerFor: aRequestEntity [
-	^ (self class
-		resolveSerializer: (aRequestEntity partNamed: 'serializer') fieldValue)
-		privateDecodeContent: (aRequestEntity partNamed: 'content')
+	^ self class
+		resolveSerializer: (aRequestEntity partNamed: 'serializer') fieldValue
 ]
 
 { #category : #writing }

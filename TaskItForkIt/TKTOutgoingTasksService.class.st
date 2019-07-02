@@ -22,8 +22,8 @@ TKTOutgoingTasksService >> amountOfTasksFor: anArchetype [
 { #category : #registry }
 TKTOutgoingTasksService >> deployFutureResult: aRequest [
 	| valueId |
-
-	[ valueId := FLMaterializer materializeFromByteArray: aRequest entity bytes.
+	[ valueId := TKTSerializationStrategy default
+		readFromZnEntity: aRequest entity.
 	(futures at: valueId second) deployValue: valueId first.
 	futures removeKey: valueId second ]
 		on: Error
