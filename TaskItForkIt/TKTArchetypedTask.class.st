@@ -41,7 +41,7 @@ TKTArchetypedTask >> futureTaskExecutionFor: aRunner [
 { #category : #accessing }
 TKTArchetypedTask >> initialize [
 	super initialize.
-	self useSton
+	self useFuel
 ]
 
 { #category : #accessing }
@@ -58,7 +58,7 @@ TKTArchetypedTask >> scheduleTaskExecutionFor: aRunner [
 
 { #category : #accessing }
 TKTArchetypedTask >> serializer [
-	^ serializer ifNil: [ #ston ]
+	^ serializer
 ]
 
 { #category : #accessing }
