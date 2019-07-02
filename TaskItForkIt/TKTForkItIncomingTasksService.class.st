@@ -45,8 +45,10 @@ TKTForkItIncomingTasksService >> garbageCollect [
 TKTForkItIncomingTasksService >> help: request [
 	"Reply with a dynamic HTML page containing links to all pages I support"
 
-	^ ZnResponse ok: (ZnEntity html: self generateHelp)
-	
+	^ ZnResponse
+		ok:
+			((TKTSerializationStrategy resolveSerializer: #ston)
+				writeZnEntityFor: self generateHelp)
 ]
 
 { #category : #'server commands' }
@@ -138,7 +140,7 @@ TKTForkItIncomingTasksService >> stop [
 { #category : #'server commands' }
 TKTForkItIncomingTasksService >> task: aRequest [
 	| future taskAndId serializer |
-	self halt.
+
 	taskAndId := TKTSerializationStrategy default
 		readFromZnEntity: aRequest entity.
 	serializer := TKTSerializationStrategy default

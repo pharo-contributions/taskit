@@ -10,7 +10,7 @@ TKTFuelSerializationStrategy >> privateDecodeContent: aZnEntity [
 	^ FLMaterializer materializeFromByteArray: aZnEntity bytes
 ]
 
-{ #category : #writing }
+{ #category : #'as yet unclassified' }
 TKTFuelSerializationStrategy >> privateEncodeContent: aContent [
 	^ ZnEntity
 		bytes:
