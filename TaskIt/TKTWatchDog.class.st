@@ -58,7 +58,7 @@ TKTWatchDog >> stepService [
 
 { #category : #initialization }
 TKTWatchDog >> stopWatching: aValue [
-	values remove: aValue
+	values remove: aValue ifAbsent: [  ]
 ]
 
 { #category : #initialization }

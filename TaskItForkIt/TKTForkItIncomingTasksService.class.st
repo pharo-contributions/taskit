@@ -50,22 +50,6 @@ TKTForkItIncomingTasksService >> help: request [
 ]
 
 { #category : #'server commands' }
-TKTForkItIncomingTasksService >> informError: value id: taskId [
-	ZnEasy
-		post: master / #deployFutureResult
-		data:
-			(ZnEntity
-				bytes:
-					(ByteArray
-						streamContents: [ :str | 
-							FLSerializer
-								serialize:
-									{value.
-									taskId}
-								on: str ]))
-]
-
-{ #category : #'server commands' }
 TKTForkItIncomingTasksService >> informError: value id: taskId serializer: aSerializer [
 	ZnEasy
 		post: master / #deployFutureResult
@@ -74,22 +58,6 @@ TKTForkItIncomingTasksService >> informError: value id: taskId serializer: aSeri
 				writeZnEntityFor:
 					{value.
 					taskId})
-]
-
-{ #category : #'server commands' }
-TKTForkItIncomingTasksService >> informSuccess: value id: taskId [
-	ZnEasy
-		post: master / #deployFutureResult
-		data:
-			(ZnEntity
-				bytes:
-					(ByteArray
-						streamContents: [ :str | 
-							FLSerializer
-								serialize:
-									{value.
-									taskId}
-								on: str ]))
 ]
 
 { #category : #'server commands' }
@@ -135,14 +103,16 @@ TKTForkItIncomingTasksService >> port [
 
 { #category : #protocol }
 TKTForkItIncomingTasksService >> privateInformBinds [
+	| repsonse |
 	master ifNil: [ ^ self ].
-	ZnEasy
+	repsonse := ZnEasy
 		post: master / #registerBackend
 		data:
 			(TKTSerializationStrategy ston
 				writeZnEntityFor:
 					{server localUrl.
-					backendHash})
+					backendHash}).
+	self halt.
 ]
 
 { #category : #protocol }
