@@ -68,19 +68,16 @@ TKTForkedBackend >> respondsToArchetype: anArchetype [
 
 { #category : #accessing }
 TKTForkedBackend >> sendTaskAndProcessResponse: aTask id: aFutureId serializer: aSerializerSelector [
-	[| response |
-	response := ZnEasy
-		post: self url / #task
-		data:
-			((TKTSerializationStrategy resolveSerializer: aSerializerSelector)
-				writeZnEntityFor:
-					{aTask.
-					aFutureId}).
-	response := TKTSerializationStrategy default
-		readFromZnRequest: response .
-	(response isKindOf: Exception)
-		ifTrue: [ ^ response signalIn: thisContext ].
-	^ response] on: ConnectionTimedOut do: [ :c | TKTRetryException signal: ' Backend timed out. retry later '.  ]
+	[ | response |
+	response := (TKTSerializationStrategy
+		resolveSerializer: aSerializerSelector)
+		writeZnRequestFor:
+			{aTask.
+			aFutureId}
+		to: self url / #task.
+	^ response ]
+		on: ConnectionTimedOut
+		do: [ :c | TKTRetryException signal: ' Backend timed out. retry later ' ]
 ]
 
 { #category : #accessing }

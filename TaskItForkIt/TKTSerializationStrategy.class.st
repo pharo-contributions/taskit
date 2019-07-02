@@ -50,10 +50,16 @@ TKTSerializationStrategy >> readFromZnEntity: aRequestEntity [
 
 { #category : #writing }
 TKTSerializationStrategy >> readFromZnRequest: aRequestEntity [
-	((aRequestEntity isKindOf: ZnResponse ) and:[aRequestEntity isError])
-		ifTrue: [ self error: ' REMOTE ERROR: ' , aRequestEntity entity string ].
 	^ aRequestEntity entity
 		ifNotNil: [ self readFromZnEntity: aRequestEntity entity ]
+]
+
+{ #category : #writing }
+TKTSerializationStrategy >> readFromZnResponse: aResponseEntity [
+	aResponseEntity isError
+		ifTrue: [ self error: ' REMOTE ERROR: ' , aResponseEntity entity string ].
+	^ aResponseEntity entity
+		ifNotNil: [ self readFromZnEntity: aResponseEntity entity ]
 ]
 
 { #category : #writing }
@@ -78,4 +84,11 @@ TKTSerializationStrategy >> writeZnEntityFor: aValue [
 				fieldName: 'content'
 				entity: (self privateEncodeContent: aValue));
 		yourself
+]
+
+{ #category : #writing }
+TKTSerializationStrategy >> writeZnRequestFor: aValue to: anUrl [
+	^ self
+		readFromZnResponse:
+			(ZnEasy post: anUrl data: (self writeZnEntityFor: aValue))
 ]
