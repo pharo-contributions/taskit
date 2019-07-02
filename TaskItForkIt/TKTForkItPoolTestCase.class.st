@@ -46,7 +46,7 @@ TKTForkItPoolTestCase >> testRemoteWorkerHasAnInstanceOfForkItService [
 		asArchetypedTaskOn: TKTArchetype pharo70) future: pool.
 		
 	
-	self assert: (future synchronizeTimeout: 2 minutes) equals: 1.
+	self assert: (future synchronizeTimeout: 20 minutes) equals: 1.
 	self
 		assert: TKTForkItIncomingTasksService allInstances size
 		equals: 0

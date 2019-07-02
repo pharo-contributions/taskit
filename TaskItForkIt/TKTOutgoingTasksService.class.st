@@ -22,6 +22,7 @@ TKTOutgoingTasksService >> amountOfTasksFor: anArchetype [
 { #category : #registry }
 TKTOutgoingTasksService >> deployFutureResult: aRequest [
 	| valueId |
+	self halt.
 	[ valueId := TKTSerializationStrategy default
 		readFromZnEntity: aRequest entity.
 	(futures at: valueId second) deployValue: valueId first.
