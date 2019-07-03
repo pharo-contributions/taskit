@@ -114,10 +114,12 @@ TKTDeployed >> pharoUiScript [
 
 { #category : #accessing }
 TKTDeployed >> sourcesFile [
-	^ location entries
+	^ (location entries
 		detect: [ :f | 
 			(f basename beginsWith: (archetype version readStream upTo: $-))
 				and: [ f basename endsWith: '.sources' ] ]
+		ifNone: [ location entries detect: [ :f | f basename endsWith: '.sources' ] ])
+		asFileReference
 ]
 
 { #category : #'evalas yet unclassified' }
