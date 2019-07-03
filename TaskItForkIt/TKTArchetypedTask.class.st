@@ -41,7 +41,7 @@ TKTArchetypedTask >> futureTaskExecutionFor: aRunner [
 { #category : #accessing }
 TKTArchetypedTask >> initialize [
 	super initialize.
-	self useFuel
+	self useSton
 ]
 
 { #category : #accessing }
