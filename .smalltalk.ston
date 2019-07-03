@@ -1,14 +1,14 @@
 SmalltalkCISpec {
   #loading : [
     SCIMetacelloLoadSpec {
-      #baseline : 'TaskItShell',
+      #baseline : 'ForkIt',
       #directory : '',
       #platforms : [ #pharo ]
     }
   ],
   #testing : {
    #include : {
-      #packages : [ 'TaskIt.*' , 'TaskItShell.*' , 'ActIt.*' ]
+      #packages : [ 'TaskItForkIt.*', 'TaskIt.*' , 'TaskItShell.*' , 'ActIt.*' ]
     }
   }
 }
