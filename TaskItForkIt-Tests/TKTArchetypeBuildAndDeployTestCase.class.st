@@ -1,5 +1,5 @@
 Class {
-	#name : #TKTSameImageArchetypeTestBuilding,
+	#name : #TKTArchetypeBuildAndDeployTestCase,
 	#superclass : #ParametrizedTestCase,
 	#instVars : [
 		'archetype',
@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : #tests }
-TKTSameImageArchetypeTestBuilding class >> testParameters [
+TKTArchetypeBuildAndDeployTestCase class >> testParameters [
 	^ ParametrizedTestMatrix new
 		forSelector: #archetype
 			addOptions:
@@ -21,19 +21,19 @@ TKTSameImageArchetypeTestBuilding class >> testParameters [
 ]
 
 { #category : #tests }
-TKTSameImageArchetypeTestBuilding >> archetype: anArchetype [
+TKTArchetypeBuildAndDeployTestCase >> archetype: anArchetype [
 	archetype := anArchetype 
 ]
 
 { #category : #tests }
-TKTSameImageArchetypeTestBuilding >> setUp [
+TKTArchetypeBuildAndDeployTestCase >> setUp [
 	super setUp.
 	session := Smalltalk session.
 	deployer := TKTFileOrientedDeployer default.
 ]
 
 { #category : #tests }
-TKTSameImageArchetypeTestBuilding >> tearDown [
+TKTArchetypeBuildAndDeployTestCase >> tearDown [
 	session = Smalltalk session
 		ifTrue: [ (TKTSystem rm
 				option: '-rf';
@@ -46,12 +46,12 @@ TKTSameImageArchetypeTestBuilding >> tearDown [
 ]
 
 { #category : #tests }
-TKTSameImageArchetypeTestBuilding >> testCommunicationStonHasNoDependancies [
+TKTArchetypeBuildAndDeployTestCase >> testCommunicationStonHasNoDependancies [
 	self assert: archetype dependancies size equals: 0
 ]
 
 { #category : #tests }
-TKTSameImageArchetypeTestBuilding >> testDeployDeploysAFunctionalEnvironment [
+TKTArchetypeBuildAndDeployTestCase >> testDeployDeploysAFunctionalEnvironment [
 	| destination deployed |
 	destination := (#/ asFileReference / #tmp / archetype name
 		/ UUID new asString)

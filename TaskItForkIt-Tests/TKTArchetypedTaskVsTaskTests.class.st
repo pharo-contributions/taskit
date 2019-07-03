@@ -39,10 +39,10 @@ TKTArchetypedTaskVsTaskTests >> testCanBuildTaskFromCleanMessageSend [
 
 { #category : #tests }
 TKTArchetypedTaskVsTaskTests >> testCannotBuildTaskFromNonCleanBlockClosure [
-	| clean closure |
+	| closure |
 	closure := [ self ].
 	self
-		should: [ clean := closure asArchetypedTaskOn: TKTArchetype pharo80 ]
+		should: [ closure asArchetypedTaskOn: TKTArchetype pharo80 ]
 		raise: Error
 ]
 
