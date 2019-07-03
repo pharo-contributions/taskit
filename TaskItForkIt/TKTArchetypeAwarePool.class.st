@@ -7,14 +7,17 @@ Class {
 	#instVars : [
 		'remoteFutureRegistry',
 		'pool',
-		'archetypedBackends'
+		'archetypedBackends',
+		'defaultSerializerSelector'
 	],
 	#category : #'TaskItForkIt-Worker'
 }
 
 { #category : #creating }
 TKTArchetypeAwarePool class >> createDefault [
-	^ self new 
+	^ self new
+		defaultSerializerSelector: #ston;
+		yourself
 ]
 
 { #category : #accessing }
@@ -27,6 +30,16 @@ TKTArchetypeAwarePool >> backendFor: anArchetype [
 	^ archetypedBackends
 		detect: [ :b | b respondsToArchetype: anArchetype ]
 		ifNone: [ self spawnNewBackendFor: anArchetype ]
+]
+
+{ #category : #'public - mutexed' }
+TKTArchetypeAwarePool >> defaultSerializerSelector [
+	^ defaultSerializerSelector
+]
+
+{ #category : #'public - mutexed' }
+TKTArchetypeAwarePool >> defaultSerializerSelector: aDefaultSerializerSelector [
+	defaultSerializerSelector := aDefaultSerializerSelector
 ]
 
 { #category : #'public - mutexed' }
@@ -135,6 +148,7 @@ TKTArchetypeAwarePool >> scheduleTimeout: timeout on: aTaskExecution [
 TKTArchetypeAwarePool >> spawnNewBackendFor: anArchetype [
 	| backend |
 	backend := TKTForkedBackend new.
+	backend defaultSerializerSelector: self defaultSerializerSelector.
 	anArchetype configureBackend: backend. 
 	backend archetype: anArchetype.
 	archetypedBackends add: backend.

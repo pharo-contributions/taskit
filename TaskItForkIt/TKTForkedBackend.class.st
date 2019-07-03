@@ -9,7 +9,8 @@ Class {
 		'url',
 		'imageProcess',
 		'archetype',
-		'mutex'
+		'mutex',
+		'defaultSerializerSelector'
 	],
 	#category : #'TaskItForkIt-Worker'
 }
@@ -17,6 +18,16 @@ Class {
 { #category : #accessing }
 TKTForkedBackend >> archetype: aTKTArchetype [
 	archetype := aTKTArchetype + TKTProject forkit
+]
+
+{ #category : #accessing }
+TKTForkedBackend >> defaultSerializerSelector [
+	^ defaultSerializerSelector 
+]
+
+{ #category : #accessing }
+TKTForkedBackend >> defaultSerializerSelector: aSelector [
+	defaultSerializerSelector := aSelector
 ]
 
 { #category : #accessing }
@@ -69,8 +80,7 @@ TKTForkedBackend >> respondsToArchetype: anArchetype [
 { #category : #accessing }
 TKTForkedBackend >> sendTaskAndProcessResponse: aTask id: aFutureId serializer: aSerializerSelector [
 	[ | response |
-	response := (TKTSerializationStrategy
-		resolveSerializer: aSerializerSelector)
+	response := (self serializerFor: aSerializerSelector)
 		writeZnRequestFor:
 			{aTask.
 			aFutureId}
@@ -78,6 +88,13 @@ TKTForkedBackend >> sendTaskAndProcessResponse: aTask id: aFutureId serializer: 
 	^ response ]
 		on: ConnectionTimedOut
 		do: [ :c | TKTRetryException signal: ' Backend timed out. retry later ' ]
+]
+
+{ #category : #accessing }
+TKTForkedBackend >> serializerFor: aSerializerSelector [
+	| selector |
+	selector := aSerializerSelector ifNil: [ self defaultSerializerSelector ].
+	TKTSerializationStrategy resolveSerializer: selector
 ]
 
 { #category : #accessing }

@@ -1,11 +1,19 @@
 Class {
 	#name : #TKTForkItPoolTestCase,
-	#superclass : #TestCase,
+	#superclass : #ParametrizedTestCase,
 	#instVars : [
-		'pool'
+		'pool',
+		'serializer'
 	],
 	#category : #'TaskItForkIt-Tests'
 }
+
+{ #category : #'building suites' }
+TKTForkItPoolTestCase class >> testParameters [
+	^ ParametrizedTestMatrix new
+		forSelector: #serializer addOptions: {#ston . #fuel . #xstoned};
+		yourself
+]
 
 { #category : #running }
 TKTForkItPoolTestCase >> runCaseManaged [
@@ -13,27 +21,23 @@ TKTForkItPoolTestCase >> runCaseManaged [
 ]
 
 { #category : #running }
+TKTForkItPoolTestCase >> serializer: aSerializerSelector [
+	serializer := aSerializerSelector
+]
+
+{ #category : #running }
 TKTForkItPoolTestCase >> setUp [
 	super setUp.
 	pool := TKTArchetypeAwarePool createDefault.
-
+	pool defaultSerializerSelector: serializer.
+		
 ]
 
 { #category : #running }
 TKTForkItPoolTestCase >> tearDown [
 	super tearDown.
 	pool stop.
-	"(TKTSystem rm
-		option: '-rf';
-		argument: ('pharo-local' asFileReference / #forking) fullName;
-		future) synchronizeTimeout: 5 seconds"
-]
-
-{ #category : #running }
-TKTForkItPoolTestCase >> testDefaultTaskIsScheduledInSuperClassQueue [
-	self assert: (pool taskQueueSize: TKTArchetype thisImage) equals: 0.
-	pool schedule: [  ] asTask.
-	self assert: (pool taskQueueSize: TKTArchetype thisImage) equals: 1
+	
 ]
 
 { #category : #running }
@@ -98,16 +102,24 @@ TKTForkItPoolTestCase >> testRemoteWorkerIsReusedOnManyCallsAnInstanceOfForkItSe
 ]
 
 { #category : #running }
-TKTForkItPoolTestCase >> testSpecificArchetypeNonInstalledTriggersInstallation [
-	self deny: (pool includesArchetype: TKTArchetype pharo70).
-	pool schedule: ([  ] asArchetypedTaskOn: TKTArchetype pharo70).
-	self assert: (pool amountOfTasksAt: TKTArchetype pharo70) equals: 1
-]
-
-{ #category : #running }
-TKTForkItPoolTestCase >> testSpecificArchetypeQueueOnInstalledArchetype [
-	pool backendFor: TKTArchetype pharo70.
-	self assert: (pool amountOfTasksAt: TKTArchetype pharo70) equals: 0.
-	pool schedule: ([  ] asArchetypedTaskOn: TKTArchetype pharo70).
-	self assert: (pool amountOfTasksAt: TKTArchetype pharo70) equals: 1
+TKTForkItPoolTestCase >> testRemoteWorkerIsReusedOnManyCallsAnInstanceOfForkItServiceBlockVersion [
+	| future future2 future3 slot initialSize |
+	initialSize := TKTForkItIncomingTasksService allInstances size.
+	future := ([ TKTForkItIncomingTasksService allInstancesSize ]
+		asArchetypedTaskOn: TKTArchetype pharo70) future: pool.
+	future2 := ([ TKTForkItIncomingTasksService allInstancesSize ]
+		asArchetypedTaskOn: TKTArchetype pharo70) future: pool.
+	future synchronizeTimeout: 5 minutes.
+	future3 := ([ TKTForkItIncomingTasksService allInstancesSize ]
+		asArchetypedTaskOn: TKTArchetype pharo70) future: pool.
+	{future.
+	future2.
+	future3}
+		do: [ :f | self assert: (f synchronizeTimeout: 5 minutes) equals: 1 ].
+	self
+		assert: TKTForkItIncomingTasksService allInstances size
+		equals: initialSize.
+	slot := future class slotNamed: #runner.
+	self assert: (slot read: future) equals: (slot read: future2).
+	self assert: (slot read: future2) equals: (slot read: future3)
 ]

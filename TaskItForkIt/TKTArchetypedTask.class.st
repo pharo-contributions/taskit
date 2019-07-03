@@ -42,7 +42,7 @@ TKTArchetypedTask >> futureTaskExecutionFor: aRunner [
 { #category : #accessing }
 TKTArchetypedTask >> initialize [
 	super initialize.
-	self useSton
+	
 ]
 
 { #category : #accessing }
