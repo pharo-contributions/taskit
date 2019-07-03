@@ -70,3 +70,18 @@ TKTArchetypedTaskExecution >> noteRunningOn: aRunner [
 TKTArchetypedTaskExecution >> task [
 	^ task
 ]
+
+{ #category : #evaluating }
+TKTArchetypedTaskExecution >> useFuel [
+	task useFuel
+]
+
+{ #category : #evaluating }
+TKTArchetypedTaskExecution >> useSton [
+	task useSton
+]
+
+{ #category : #evaluating }
+TKTArchetypedTaskExecution >> useXStoned [ 
+	task useXStoned
+]

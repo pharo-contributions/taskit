@@ -51,6 +51,18 @@ TKTForkItPoolTestCase >> testRemoteWorkerHasAnInstanceOfForkItService [
 ]
 
 { #category : #running }
+TKTForkItPoolTestCase >> testRemoteWorkerHasAnInstanceOfForkItServiceBlockVersion [
+	| future initialSize |
+	initialSize := TKTForkItIncomingTasksService allInstances size.
+	future := ([ TKTForkItIncomingTasksService allInstancesSize ]
+		asArchetypedTaskOn: TKTArchetype pharo70) future: pool.
+	self assert: (future synchronizeTimeout: 20 minutes) equals: 1.
+	self
+		assert: TKTForkItIncomingTasksService allInstances size
+		equals: initialSize
+]
+
+{ #category : #running }
 TKTForkItPoolTestCase >> testRemoteWorkerIsReusedOnManyCallsAnInstanceOfForkItService [
 	| future future2 future3 slot initialSize |
 	initialSize := TKTForkItIncomingTasksService allInstances size.
