@@ -29,16 +29,8 @@ TKTArchetypedTaskExecution >> deployValue: aValue [
 				receiver: future
 				selector: #deploySuccess:
 				argument: aValue ]) asTask.
-			
 	(runner future: deployingTask)
-		onFailureDo: [ :e | deployingTask value ].
-	self flag: #Todo
-	"
-	The deployment should be executed in the same process that started. 
-	
-	
-	(deployingTask future: ((process at: 1) ifNil: [ runner ]))
-		onFailureDo: [ deployingTask value ]"
+		onFailureDo: [ :e | deployingTask value ]
 ]
 
 { #category : #evaluating }

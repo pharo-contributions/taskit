@@ -1,3 +1,12 @@
+"
+ForkIt protocol of communication runs on top of http. 
+For message passing (via post) using a multipart entity. 
+a request has then two parts: 
+
+A string part that state the serializer to use, and a serialized field ""content"".  
+
+By default, the code proposes to respond messages using the same serializer, but in any case, what ever serializer can be used.
+"
 Class {
 	#name : #TKTSerializationStrategy,
 	#superclass : #Object,

@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'pool'
 	],
-	#category : #'TaskItForkIt-Worker'
+	#category : #'TaskItForkIt-Tests'
 }
 
 { #category : #running }

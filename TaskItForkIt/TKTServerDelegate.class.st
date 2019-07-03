@@ -1,3 +1,7 @@
+"
+Server delegate implements server delegation for a Zn server. 
+It is highly coupled with the serialization strategies. It also alow to map urls to specific methods .
+"
 Class {
 	#name : #TKTServerDelegate,
 	#superclass : #Object,

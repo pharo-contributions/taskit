@@ -41,44 +41,28 @@ TKTArchetype class >> lightweight [
 TKTArchetype class >> moose61 [
 	^ self lightweight
 		at: #moose61
-		ifAbsentPut: [ self pharo61
-				+
-					(TKTProject moose
-						repository: 'github://impetuosa/Moose:development';
-						yourself) ]
+		ifAbsentPut: [ self pharo61 + TKTProject moose ]
 ]
 
 { #category : #moose }
 TKTArchetype class >> moose70 [
 	^ self lightweight
 		at: #moose70
-		ifAbsentPut: [ self pharo70
-				+
-					(TKTProject moose
-						repository: 'github://impetuosa/Moose:development';
-						yourself) ]
+		ifAbsentPut: [ self pharo70 + TKTProject moose ]
 ]
 
 { #category : #moose }
 TKTArchetype class >> moose80 [
 	^ self lightweight
 		at: #moose80
-		ifAbsentPut: [ self pharo80
-				+
-					(TKTProject moose
-						repository: 'github://impetuosa/Moose:development';
-						yourself) ]
+		ifAbsentPut: [ self pharo80 + TKTProject moose ]
 ]
 
 { #category : #moose }
 TKTArchetype class >> mooseCurrent [
 	^ self lightweight
 		at: #mooseCurrent
-		ifAbsentPut: [ self pharoCurrent
-				+
-					(TKTProject moose
-						repository: 'github://impetuosa/Moose:development';
-						yourself) ]
+		ifAbsentPut: [ self pharoCurrent + TKTProject moose ]
 ]
 
 { #category : #instantiating }
