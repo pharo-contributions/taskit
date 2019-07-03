@@ -8,7 +8,8 @@ Class {
 		'server',
 		'pool',
 		'master',
-		'backendHash'
+		'backendHash',
+		'resolver'
 	],
 	#category : #'TaskItForkIt-Worker-Server'
 }
@@ -76,11 +77,13 @@ TKTForkItIncomingTasksService >> informSuccess: value id: taskId serializer: aSe
 { #category : #initialization }
 TKTForkItIncomingTasksService >> initialize [
 	super initialize.
+	resolver := self.
 	self
 		map: 'alive' to: #alive;
 		map: 'isFree' to: #isFree;
 		map: 'task' to: #task:serializer:;
-		map: 'stop' to: #stop
+		map: 'stop' to: #stop.
+	
 ]
 
 { #category : #accessing }
@@ -133,13 +136,13 @@ TKTForkItIncomingTasksService >> privateInformBinds [
 
 { #category : #protocol }
 TKTForkItIncomingTasksService >> startOn: anAddress [
-	pool := TKTConfiguration runner.
+	pool ifNil: [ self usePool: TKTConfiguration runner ].
 	server := (ZnServer on: 0)
 		bindingAddress: (NetNameResolver addressForName: anAddress);
 		delegate: self;
 		start;
 		yourself.
-	self privateInformBinds.
+	self privateInformBinds
 ]
 
 { #category : #protocol }
@@ -153,8 +156,18 @@ TKTForkItIncomingTasksService >> task: taskAndId serializer: serializer [
 	future := taskAndId first future: pool.
 	future
 		onSuccessDo:
-			[ :v | self informSuccess: v id: taskAndId second serializer: serializer ].
+			[ :v | resolver informSuccess: v id: taskAndId second serializer: serializer ].
 	future
 		onFailureDo:
-			[ :e | self informError: e id: taskAndId second serializer: serializer ]
+			[ :e | resolver informError: e id: taskAndId second serializer: serializer ]
+]
+
+{ #category : #accessing }
+TKTForkItIncomingTasksService >> usePool: aPool [
+	pool := aPool
+]
+
+{ #category : #initialization }
+TKTForkItIncomingTasksService >> useResolver: aResolver [
+	resolver := aResolver
 ]

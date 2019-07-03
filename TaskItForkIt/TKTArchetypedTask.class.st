@@ -6,7 +6,8 @@ Class {
 	#superclass : #TKTGenericTask,
 	#instVars : [
 		'archetype',
-		'serializer'
+		'serializer',
+		'serializerSelector'
 	],
 	#category : #'TaskItForkIt-Task'
 }
@@ -57,21 +58,21 @@ TKTArchetypedTask >> scheduleTaskExecutionFor: aRunner [
 ]
 
 { #category : #accessing }
-TKTArchetypedTask >> serializer [
-	^ serializer
+TKTArchetypedTask >> serializerSelector [
+	^ serializerSelector
 ]
 
 { #category : #accessing }
 TKTArchetypedTask >> useFuel [
-	serializer := #fuel
+	serializerSelector := #fuel
 ]
 
 { #category : #accessing }
 TKTArchetypedTask >> useSton [
-	serializer := #ston
+	serializerSelector := #ston
 ]
 
 { #category : #accessing }
 TKTArchetypedTask >> useXStoned [
-	serializer := #xstoned
+	serializerSelector := #xstoned
 ]

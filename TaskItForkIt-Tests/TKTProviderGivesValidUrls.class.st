@@ -15,9 +15,9 @@ Class {
 TKTProviderGivesValidUrls class >> testParameters [
 	^ ParametrizedTestMatrix new
 		forSelector: #vmVersion
-			addOptions: {#stable . #latest . #nightbuild . #whatever};
+			addOptions: {#stable . #latest};
 		forSelector: #imageVersion
-			addOptions: {50 . 60 . 61 . 70 . 80 . 900};
+			addOptions: {61 . 70 . 80 };
 		forSelector: #anArchitecture addOptions: {32 . 64};
 		forSelector: #platformName addOptions: {#linux . #win . #mac};
 		yourself

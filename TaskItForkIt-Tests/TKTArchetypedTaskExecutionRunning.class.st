@@ -50,6 +50,6 @@ TKTArchetypedTaskExecutionRunning >> testDoExecuteUsesBackend [
 	self deny: taskExecution future isFinished.
 	self assert: taskToExecute valuable equals: task valuable.
 	self assert: id equals: taskExecution id.
-	self assert: serializer equals: task serializer.
+	self assert: serializer equals: task serializerSelector.
 	
 ]

@@ -39,7 +39,7 @@ TKTArchetypedTaskExecution >> doExecuteTask [
 		ifTrue: [ backend
 				sendTaskAndProcessResponse: (TKTTask valuable: task valuable)
 				id: id
-				serializer: task serializer ]
+				serializer: task serializerSelector ]
 		ifFalse: [ TKTRetryException signal ] ]
 		on: Error
 		do: [ :error | future deployFailure: error freeze ]
