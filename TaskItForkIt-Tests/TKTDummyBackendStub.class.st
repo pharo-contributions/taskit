@@ -1,3 +1,6 @@
+"
+Just a dummy that ensures the dependance on the backend ,.
+"
 Class {
 	#name : #TKTDummyBackendStub,
 	#superclass : #TKTSystemAdapter,

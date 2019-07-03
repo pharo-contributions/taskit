@@ -71,7 +71,9 @@ TKTProject >> deployIn: aTKTDeployed using: aTKTDeployer [
 ]
 
 { #category : #accessing }
-TKTProject >> kind: aString [ 
+TKTProject >> kind: aString [
+	self
+		assert: ({#BaselineOf . #ConfigurationOf} includes: aString asSymbol).
 	kind := aString
 ]
 
@@ -88,4 +90,9 @@ TKTProject >> name: aString [
 { #category : #accessing }
 TKTProject >> repository: aString [
 	url := aString
+]
+
+{ #category : #accessing }
+TKTProject >> url [
+	^ url
 ]

@@ -98,6 +98,5 @@ TKTSerializationStrategy >> writeZnEntityFor: aValue [
 { #category : #writing }
 TKTSerializationStrategy >> writeZnRequestFor: aValue to: anUrl [
 	^ self
-		readFromZnResponse:
-			(ZnEasy post: anUrl data: (self writeZnEntityFor: aValue))
+		readFromZnResponse: (ZnEasy post: anUrl data: (self writeZnEntityFor: aValue))
 ]
