@@ -52,25 +52,34 @@ TKTForkItPoolTestCase >> testRemoteWorkerHasAnInstanceOfForkItService [
 
 { #category : #running }
 TKTForkItPoolTestCase >> testRemoteWorkerIsReusedOnManyCallsAnInstanceOfForkItService [
-	| future future2 future3 slot |
+	| future future2 future3 slot initialSize |
+	initialSize := TKTForkItIncomingTasksService allInstances size.
 	future := pool
 		future:
-			((MessageSend receiver: TKTForkItIncomingTasksService selector: #allInstancesSize)
+			((MessageSend
+				receiver: TKTForkItIncomingTasksService
+				selector: #allInstancesSize)
 				asArchetypedTaskOn: TKTArchetype pharo70).
 	future2 := pool
 		future:
-			((MessageSend receiver: TKTForkItIncomingTasksService selector: #allInstancesSize)
+			((MessageSend
+				receiver: TKTForkItIncomingTasksService
+				selector: #allInstancesSize)
 				asArchetypedTaskOn: TKTArchetype pharo70).
 	future synchronizeTimeout: 5 minutes.
 	future3 := pool
 		future:
-			((MessageSend receiver: TKTForkItIncomingTasksService selector: #allInstancesSize)
+			((MessageSend
+				receiver: TKTForkItIncomingTasksService
+				selector: #allInstancesSize)
 				asArchetypedTaskOn: TKTArchetype pharo70).
 	{future.
 	future2.
 	future3}
 		do: [ :f | self assert: (f synchronizeTimeout: 5 minutes) equals: 1 ].
-	self assert: TKTForkItIncomingTasksService allInstances size equals: 0.
+	self
+		assert: TKTForkItIncomingTasksService allInstances size
+		equals: initialSize.
 	slot := future class slotNamed: #runner.
 	self assert: (slot read: future) equals: (slot read: future2).
 	self assert: (slot read: future2) equals: (slot read: future3)
