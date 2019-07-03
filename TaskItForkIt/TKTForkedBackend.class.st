@@ -93,8 +93,9 @@ TKTForkedBackend >> sendTaskAndProcessResponse: aTask id: aFutureId serializer: 
 { #category : #accessing }
 TKTForkedBackend >> serializerFor: aSerializerSelector [
 	| selector |
-	selector := aSerializerSelector ifNil: [ self defaultSerializerSelector ].
-	TKTSerializationStrategy resolveSerializer: selector
+	selector := aSerializerSelector
+		ifNil: [ self defaultSerializerSelector ].
+	^ TKTSerializationStrategy resolveSerializer: selector
 ]
 
 { #category : #accessing }
