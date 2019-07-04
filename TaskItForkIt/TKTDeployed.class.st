@@ -40,6 +40,12 @@ TKTDeployed >> configureBackend: aBackend [
 	aBackend archetype: archetype
 ]
 
+{ #category : #'evalas yet unclassified' }
+TKTDeployed >> ensureIcebergRemoteTypeSelector: aSelector [
+	self
+		modifyImageBy: ('Iceberg remoteTypeSelector: ''{1}''' format: {aSelector})
+]
+
 { #category : #accessing }
 TKTDeployed >> eval [
 	^ self command option: 'eval'
@@ -100,6 +106,19 @@ TKTDeployed >> install: url configurationOrBaselineName: confOrBaseline groups: 
 { #category : #'evalas yet unclassified' }
 TKTDeployed >> isDeploy [
 	^ true
+]
+
+{ #category : #'evalas yet unclassified' }
+TKTDeployed >> modifyImageBy: aString [
+	| future |
+	future := (self command
+		option: 'eval';
+		arguments:
+			{'--save'.
+			aString})
+		redirectStdoutAsResult;
+		future.
+	future synchronizeTimeout: 1 minute
 ]
 
 { #category : #accessing }

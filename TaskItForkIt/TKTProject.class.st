@@ -29,7 +29,7 @@ TKTProject class >> forkit [
 	^ TKTProject new
 		name: #ForkIt;
 		kind: #BaselineOf;
-		repository: 'https://github.com/sbragagnolo/taskit:ForkIt';
+		repository: 'github://sbragagnolo/taskit:ForkIt';
 		yourself
 ]
 
@@ -38,7 +38,7 @@ TKTProject class >> moose [
 	^ TKTProject new
 		name: #Moose;
 		kind: #BaselineOf;
-		repository: 'https://github.com/moosetechnology/Moose:development';
+		repository: 'github://moosetechnology/Moose:development';
 		yourself
 ]
 
@@ -58,11 +58,13 @@ TKTProject >> archetypeName [
 
 { #category : #'deployingas yet unclassified' }
 TKTProject >> deployIn: aTKTDeployed [
-	| s future |
+	|  future |
+	aTKTDeployed ensureIcebergRemoteTypeSelector: #httpsUrl.
+	
 	future := aTKTDeployed
 		install: url asString
 		configurationOrBaselineName: kind asString , name.
-	future synchronizeTimeout: 15 minutes.
+	future synchronizeTimeout: 15 minutes
 ]
 
 { #category : #deploy }

@@ -15,8 +15,7 @@ TKTArchetypeBuildAndDeployDependancyTestCase class >> testParameters [
 	^ ParametrizedTestMatrix new
 		forSelector: #archetype
 			addOptions:
-			{TKTArchetype pharoCurrent.
-			TKTArchetype pharo70.
+			{TKTArchetype pharo70.
 			TKTArchetype pharo80};
 		forSelector: #project
 			addOptions:
@@ -33,6 +32,11 @@ TKTArchetypeBuildAndDeployDependancyTestCase >> archetype: anArchetype [
 { #category : #tests }
 TKTArchetypeBuildAndDeployDependancyTestCase >> project: aProject [
 	project := aProject
+]
+
+{ #category : #tests }
+TKTArchetypeBuildAndDeployDependancyTestCase >> runCaseManaged [
+	^ self runCase
 ]
 
 { #category : #tests }
