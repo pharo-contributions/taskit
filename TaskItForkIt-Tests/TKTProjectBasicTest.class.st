@@ -8,6 +8,11 @@ Class {
 	#category : #'TaskItForkIt-Tests'
 }
 
+{ #category : #testing }
+TKTProjectBasicTest >> ensureIcebergRemoteTypeSelector: aString [ 
+
+]
+
 { #category : #tests }
 TKTProjectBasicTest >> install: aURl configurationOrBaselineName: aConfOrBaseline [
 	
