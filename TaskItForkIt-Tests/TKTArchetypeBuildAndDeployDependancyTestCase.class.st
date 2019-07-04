@@ -66,8 +66,5 @@ TKTArchetypeBuildAndDeployDependancyTestCase >> testDeployDeploysAFunctionalEnvi
 	self assert: deployed vmFolder exists.
 	self assert: deployed imageFile exists.
 	self assert: deployed changesFile exists.
-	self assert: deployed sourcesFile exists.
-
-	
-
+	self assert: deployed sourcesFile exists
 ]

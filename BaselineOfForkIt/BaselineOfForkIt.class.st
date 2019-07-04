@@ -15,9 +15,9 @@ BaselineOfForkIt >> baseline: spec [
 		for: #common
 		do: [ spec
 				baseline: 'ParametrizedTests'
-					with: [ spec repository: 'https://github.com/tesonep/ParametrizedTests' ];
+					with: [ spec repository: 'https://github.com/tesonep/ParametrizedTests.git/src' ];
 				baseline: 'Equals'
-					with: [ spec repository: 'https://github.com/bouraqadi/PharoMisc' ];
+					with: [ spec repository: 'https://github.com/bouraqadi/PharoMisc.git/' ];
 				baseline: #TaskItShell with: [ spec repository: repository ];
 				baseline: #TaskIt with: [ spec repository: repository ];
 				package: 'TaskItForkIt-Tests'
