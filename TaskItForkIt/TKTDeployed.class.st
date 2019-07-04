@@ -43,7 +43,7 @@ TKTDeployed >> configureBackend: aBackend [
 { #category : #'evalas yet unclassified' }
 TKTDeployed >> ensureIcebergRemoteTypeSelector: aSelector [
 	self
-		modifyImageBy: ('Iceberg remoteTypeSelector: ''{1}''' format: {aSelector})
+		modifyImageBy: ('Iceberg remoteTypeSelector: ''{1}'' asSymbol' format: {aSelector})
 ]
 
 { #category : #accessing }
@@ -112,10 +112,10 @@ TKTDeployed >> isDeploy [
 TKTDeployed >> modifyImageBy: aString [
 	| future |
 	
-	self logCr: ' PharoScript exists: ', self pharoScript exists.
-	self logCr: ' VMBinary exists: ', self vmBinary  exists.
-	self logCr: ' ImageExists exists: ', self imageFile exists.
-	self logCr: 'Location Exists: ', location exists.
+	self logCr: ' PharoScript exists: ', self pharoScript exists asString.
+	self logCr: ' VMBinary exists: ', self vmBinary  exists asString.
+	self logCr: ' ImageExists exists: ', self imageFile exists asString.
+	self logCr: 'Location Exists: ', location exists asString.
 	
 	location entries do: [ :e |self logCr:  e asFileReference basename ].
 	

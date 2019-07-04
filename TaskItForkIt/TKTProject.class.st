@@ -60,7 +60,6 @@ TKTProject >> archetypeName [
 TKTProject >> deployIn: aTKTDeployed [
 	|  future |
 	aTKTDeployed ensureIcebergRemoteTypeSelector: #httpsUrl.
-	
 	future := aTKTDeployed
 		install: url asString
 		configurationOrBaselineName: kind asString , name.
