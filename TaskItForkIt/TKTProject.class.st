@@ -29,7 +29,7 @@ TKTProject class >> forkit [
 	^ TKTProject new
 		name: #ForkIt;
 		kind: #BaselineOf;
-		repository: 'github://sbragagnolo/taskit:ForkIt';
+		repository: 'https://github.com/sbragagnolo/taskit:ForkIt';
 		yourself
 ]
 
@@ -38,7 +38,7 @@ TKTProject class >> moose [
 	^ TKTProject new
 		name: #Moose;
 		kind: #BaselineOf;
-		repository: 'github://moosetechnology/Moose:development';
+		repository: 'https://github.com/moosetechnology/Moose:development';
 		yourself
 ]
 
@@ -47,7 +47,7 @@ TKTProject class >> taskit [
 	^ TKTProject new
 		name: #TaskIt;
 		kind: #BaselineOf;
-		repository: 'github://sbragagnolo/taskit';
+		repository: 'https://github.com/sbragagnolo/taskit';
 		yourself
 ]
 
