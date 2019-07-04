@@ -42,7 +42,7 @@ TKTDeployed >> configureBackend: aBackend [
 
 { #category : #'evalas yet unclassified' }
 TKTDeployed >> ensureIcebergRemoteTypeSelector: aSelector [
-	self
+	^ self
 		modifyImageBy: ('Iceberg remoteTypeSelector: ''{1}'' asSymbol' format: {aSelector})
 ]
 
@@ -110,18 +110,31 @@ TKTDeployed >> isDeploy [
 
 { #category : #'evalas yet unclassified' }
 TKTDeployed >> modifyImageBy: aString [
-	| future |
-	
-	location entries do: [ :e |self logCr:  e asFileReference basename ].
-	
+	| future output input |
+	output := UUID new asString asFileReference.
+	input := '
+	| stream | 
+	[ [{2}] value  ] on:Error do: [ :e | 
+		stream := ''{1}'' asFileReference ensureDelete; writeStream.
+	 	stream nextPutAll: e messageText.
+		stream close. ]. 
+  '
+		format:
+			{output fullName.
+			aString}.
 	future := (self command
 		option: 'eval';
 		arguments:
 			{'--save'.
-			aString})
-		redirectStdoutAsResult;
-		future.
-	future synchronizeTimeout: 1 minute
+			input}) future.
+	^ future
+		collect: [ :v | 
+			output exists
+				ifTrue: [ | message |
+					message := output readStream upToEnd.
+					output ensureDelete.
+					self error: message ]
+				ifFalse: [ v ] ]
 ]
 
 { #category : #accessing }
@@ -157,7 +170,7 @@ TKTDeployed >> startImageNoQuit: aString [
 		format:
 			{output fullName.
 			aString}.
-	return := (self command
+	return := (self commandUi
 		option: 'eval';
 		arguments:
 			{'--no-quit'.

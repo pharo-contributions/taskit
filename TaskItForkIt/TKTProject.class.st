@@ -58,12 +58,14 @@ TKTProject >> archetypeName [
 
 { #category : #'deployingas yet unclassified' }
 TKTProject >> deployIn: aTKTDeployed [
-	|  future |
-	aTKTDeployed ensureIcebergRemoteTypeSelector: #httpsUrl.
-	future := aTKTDeployed
-		install: url asString
-		configurationOrBaselineName: kind asString , name.
-	future synchronizeTimeout: 15 minutes
+	| future value |
+	future := (aTKTDeployed ensureIcebergRemoteTypeSelector: #httpsUrl)
+		collect: [ :v | 
+			aTKTDeployed
+				install: url asString
+				configurationOrBaselineName: kind asString , name ].
+	[ future := future synchronizeTimeout: 15 minutes ]
+		doWhileTrue: [ future isKindOf: TKTFuture ]
 ]
 
 { #category : #deploy }

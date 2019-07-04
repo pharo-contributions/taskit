@@ -117,7 +117,9 @@ TKTForkedBackend >> startWith: aRegistry [
 						outputFile: output
 						with: aRegistry) ].
 	[ [ self isAlive ]
-		whileFalse: [ output exists
+		whileFalse: [ 
+			imageProcess isComplete ifTrue: [ self error: 'Remote image has died' ].
+			output exists
 				ifTrue: [ self error: output readStream upToEnd ].
 			1 seconds wait ] ]
 		ensure: [ output ensureDelete ]

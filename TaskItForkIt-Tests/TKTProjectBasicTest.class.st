@@ -9,6 +9,11 @@ Class {
 }
 
 { #category : #testing }
+TKTProjectBasicTest >> collect: aBlockClosure [ 
+	^ aBlockClosure value: self
+]
+
+{ #category : #testing }
 TKTProjectBasicTest >> ensureIcebergRemoteTypeSelector: aString [ 
 
 ]

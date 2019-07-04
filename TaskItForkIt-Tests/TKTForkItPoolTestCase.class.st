@@ -40,7 +40,7 @@ TKTForkItPoolTestCase >> tearDown [
 	(TKTSystem rm
 		option: '-rf';
 		argument: ('pharo-local' asFileReference / #forking) fullName;
-		future) synchronizeTimeout: 5 seconds
+		future) .
 ]
 
 { #category : #running }
