@@ -111,6 +111,14 @@ TKTDeployed >> isDeploy [
 { #category : #'evalas yet unclassified' }
 TKTDeployed >> modifyImageBy: aString [
 	| future |
+	
+	self logCr: ' PharoScript exists: ', self pharoScript exists.
+	self logCr: ' VMBinary exists: ', self vmBinary  exists.
+	self logCr: ' ImageExists exists: ', self imageFile exists.
+	self logCr: 'Location Exists: ', location exists.
+	
+	location entries do: [ :e |self logCr:  e asFileReference basename ].
+	
 	future := (self command
 		option: 'eval';
 		arguments:

@@ -71,7 +71,7 @@ TKTWatchDog >> watchDog: aParameterPool [
 	[ aParameterPool ensureIsWorking ]
 		on: Error
 		do: [ :err | 
-			self log: err messageText.
+			self log: err printString.
 			self
 				log:
 					'Watch dog is not watching anymore the value: '
