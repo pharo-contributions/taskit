@@ -103,7 +103,7 @@ TKTSystemAdapter >> rm: aFileOrFolder [
 { #category : #folder }
 TKTSystemAdapter >> workingDirectory [
 	^ workingDirectory
-		ifNil: [ workingDirectory := FileLocator workingDirectory ]
+		ifNil: [ workingDirectory := Smalltalk imageDirectory ]
 ]
 
 { #category : #folder }
