@@ -36,11 +36,13 @@ TKTCommonQueueWorkerPool >> ensureIsWorking [
 		critical: [ failedTasks
 				addAll: (self workers reject: #isRunning thenCollect: #currentTaskExecution).
 			failedTasks
-				ifNotEmpty:
-					[ self logCr: failedTasks size asString , ' Failed tasks encountered' ].
+				ifNotEmpty: [ self logCr: failedTasks size asString , ' Failed tasks encountered'.
+					failedTasks do: [ :t | self logCr: t ] ].
 			(workers reject: #isRunning)
 				do: [ :w | 
-					w stop.
+					[ w stop ]
+						on: Error
+						do: [  ].
 					workers remove: w ].
 			self privateManageWorkersBefore.
 			self privateManageWorkersAfter ]

@@ -11,15 +11,13 @@ Class {
 BaselineOfForkIt >> baseline: spec [
 	<baseline>
 	repository := self packageRepositoryURL.
-	
-	self logCr: 'USING REPOSITORY: ', repository .
 	spec
 		for: #common
 		do: [ spec
 				baseline: 'ParametrizedTests'
-					with: [ spec repository: 'github://tesonep/ParametrizedTests' ];
+					with: [ spec repository: 'https://github.com/tesonep/ParametrizedTests' ];
 				baseline: 'Equals'
-					with: [ spec repository: 'github://bouraqadi/PharoMisc' ];
+					with: [ spec repository: 'https://github.com/bouraqadi/PharoMisc' ];
 				baseline: #TaskItShell with: [ spec repository: repository ];
 				baseline: #TaskIt with: [ spec repository: repository ];
 				package: 'TaskItForkIt-Tests'
