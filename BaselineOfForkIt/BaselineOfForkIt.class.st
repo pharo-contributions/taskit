@@ -30,13 +30,29 @@ BaselineOfForkIt >> baseline: spec [
 ]
 
 { #category : #baselines }
+BaselineOfForkIt >> packageRepository [
+
+	" Tries to determine a repository from which the baseline is being loaded. Useful for 
+	refering other baselines in the same repository. "
+	
+	^ (self class package mcWorkingCopy repositoryGroup repositories reject: [:each | each = MCCacheRepository uniqueInstance]) 
+		ifNotEmpty: [ :repositories | repositories anyOne ]
+		ifEmpty: [ nil ]
+
+
+	
+]
+
+{ #category : #baselines }
 BaselineOfForkIt >> packageRepositoryURL [
 	| packageName |
-	packageName := self class package name.
-	^ 'tonel://'
-		,
-			(IceRepository registry
-				detect: [ :repo | repo workingCopy packageNames includes: packageName ]
-				ifFound: [ :repo | repo location pathString , '/' , repo subdirectory ]
-				ifNone: [ '' ])
+	^ self packageRepository
+		ifNotNil: [ :aRepository | aRepository description ]
+		ifNil: [ packageName := self class package name.
+			'tonel://'
+				,
+					(IceRepository registry
+						detect: [ :repo | repo workingCopy packageNames includes: packageName ]
+						ifFound: [ :repo | repo location pathString , '/' , repo subdirectory ]
+						ifNone: [ '' ]) ]
 ]
