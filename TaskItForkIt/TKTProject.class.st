@@ -47,7 +47,7 @@ TKTProject class >> taskit [
 	^ TKTProject new
 		name: #TaskIt;
 		kind: #BaselineOf;
-		repository: 'https://github.com/sbragagnolo/taskit';
+		repository: 'github://sbragagnolo/taskit';
 		yourself
 ]
 
