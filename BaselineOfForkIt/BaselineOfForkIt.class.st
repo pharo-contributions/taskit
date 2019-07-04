@@ -11,6 +11,8 @@ Class {
 BaselineOfForkIt >> baseline: spec [
 	<baseline>
 	repository := self packageRepositoryURL.
+	
+	self logCr: 'USING REPOSITORY: ', repository .
 	spec
 		for: #common
 		do: [ spec
@@ -29,13 +31,12 @@ BaselineOfForkIt >> baseline: spec [
 
 { #category : #baselines }
 BaselineOfForkIt >> packageRepositoryURL [
-	^ super packageRepositoryURL
-		ifEmpty: [ | packageName |
-			packageName := self class package name.
-			'tonel://'
-				,
-					(IceRepository registry
-						detect: [ :repo | repo workingCopy packageNames includes: packageName ]
-						ifFound: [ :repo | repo location pathString , '/' , repo subdirectory ]
-						ifNone: [ '' ]) ]
+	| packageName |
+	packageName := self class package name.
+	^ 'tonel://'
+		,
+			(IceRepository registry
+				detect: [ :repo | repo workingCopy packageNames includes: packageName ]
+				ifFound: [ :repo | repo location pathString , '/' , repo subdirectory ]
+				ifNone: [ '' ])
 ]
