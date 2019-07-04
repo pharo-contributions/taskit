@@ -112,11 +112,6 @@ TKTDeployed >> isDeploy [
 TKTDeployed >> modifyImageBy: aString [
 	| future |
 	
-	self logCr: ' PharoScript exists: ', self pharoScript exists asString.
-	self logCr: ' VMBinary exists: ', self vmBinary  exists asString.
-	self logCr: ' ImageExists exists: ', self imageFile exists asString.
-	self logCr: 'Location Exists: ', location exists asString.
-	
 	location entries do: [ :e |self logCr:  e asFileReference basename ].
 	
 	future := (self command
