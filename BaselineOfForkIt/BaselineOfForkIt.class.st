@@ -10,14 +10,16 @@ Class {
 { #category : #baselines }
 BaselineOfForkIt >> baseline: spec [
 	<baseline>
+	self logCr: 'RemoteIs: ' , Iceberg remoteTypeSelector.
+	Iceberg remoteTypeSelector: #httpsUrl.
 	repository := self packageRepositoryURL.
 	spec
 		for: #common
 		do: [ spec
 				baseline: 'ParametrizedTests'
-					with: [ spec repository: 'https://github.com/tesonep/ParametrizedTests.git/src' ];
+					with: [ spec repository: 'github://tesonep/ParametrizedTests' ];
 				baseline: 'Equals'
-					with: [ spec repository: 'https://github.com/bouraqadi/PharoMisc.git/' ];
+					with: [ spec repository: 'github://bouraqadi/PharoMisc' ];
 				baseline: #TaskItShell with: [ spec repository: repository ];
 				baseline: #TaskIt with: [ spec repository: repository ];
 				package: 'TaskItForkIt-Tests'
