@@ -16,9 +16,11 @@ BaselineOfForkIt >> baseline: spec [
 					with: [ spec repository: 'github://bouraqadi/PharoMisc' ];
 				baseline: #TaskItShell
 					with: [ spec repository: 'github://sbragagnolo/taskit' ];
+				baseline: #TaskIt
+					with: [ spec repository: 'github://sbragagnolo/taskit' ];
 				package: 'TaskItForkIt-Tests'
 					with: [ spec requires: #(TaskItForkIt) ];
 				package: #TaskItForkIt
-					with: [ spec requires: #(TaskItShell 'Equals' ParametrizedTests) ].
+					with: [ spec requires: #(TaskIt TaskItShell Equals ParametrizedTests) ].
 			spec group: 'minimal' with: #(#TaskItForkIt 'TaskItForkIt-Tests') ]
 ]

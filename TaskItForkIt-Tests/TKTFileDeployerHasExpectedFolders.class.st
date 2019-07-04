@@ -21,30 +21,30 @@ TKTFileDeployerHasExpectedFolders >> setUp [
 
 { #category : #running }
 TKTFileDeployerHasExpectedFolders >> testBaseFolder [
-	self assert: deployer baseFolder equals: self baseFolder
+	self assert: deployer baseFolder fullName asFileReference  equals: self baseFolder
 ]
 
 { #category : #running }
 TKTFileDeployerHasExpectedFolders >> testCurrentFolder [
-	self assert: deployer currentCacheFolder equals: self baseFolder /#current
+	self assert: deployer currentCacheFolder fullName asFileReference  equals: self baseFolder /#current
 ]
 
 { #category : #running }
 TKTFileDeployerHasExpectedFolders >> testDeployCache [
-	self assert: deployer defaultDeployFolder  equals: self baseFolder /#deployCache
+	self assert: deployer defaultDeployFolder fullName asFileReference   equals: self baseFolder /#deployCache
 ]
 
 { #category : #running }
 TKTFileDeployerHasExpectedFolders >> testImageFolder [
-	self assert: deployer imageFolder  equals: self baseFolder /#image
+	self assert: deployer imageFolder  fullName asFileReference equals: self baseFolder /#image
 ]
 
 { #category : #running }
 TKTFileDeployerHasExpectedFolders >> testVmFolder [
-	self assert: deployer vmFolder equals: self baseFolder / #vm
+	self assert: deployer vmFolder fullName asFileReference  equals: self baseFolder / #vm
 ]
 
 { #category : #running }
 TKTFileDeployerHasExpectedFolders >> testWorkingDirectory [ 
-	self assert: deployer workingDirectory equals: Smalltalk imageFile parent resolve
+	self assert: deployer workingDirectory fullName asFileReference  equals: Smalltalk imageFile parent resolve
 ]
