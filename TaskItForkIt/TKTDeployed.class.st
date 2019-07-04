@@ -84,7 +84,7 @@ TKTDeployed >> initializeWithLocation: aLocation archetype: anArquetype andSyste
 
 { #category : #accessing }
 TKTDeployed >> install: url configurationOrBaselineName: confOrBaseline [
-	^ self command
+	^ self commandUi
 		option: 'metacello';
 		option: 'install';
 		option: url asString;

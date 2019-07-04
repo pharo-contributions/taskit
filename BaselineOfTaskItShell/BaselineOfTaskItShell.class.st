@@ -46,6 +46,6 @@ BaselineOfTaskItShell >> packageRepositoryURL [
 				,
 					(IceRepository registry
 						detect: [ :repo | repo workingCopy packageNames includes: packageName ]
-						ifFound: [ :repo | repo location pathString , '/' , repo subdirectory ]
+						ifFound: [ :repo | repo location pathString ]
 						ifNone: [ '' ]) ]
 ]
