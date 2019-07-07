@@ -80,9 +80,10 @@ TKTDeployedCommands >> testEvalCommandPointsToCommandAndHasOptions [
 ]
 
 { #category : #tests }
-TKTDeployedCommands >> testImageDirectory [ 
-
-	self assert: deployed imageFile equals: Smalltalk imageDirectory / 'Pharo.image'
+TKTDeployedCommands >> testImageDirectory [
+	self
+		assert: deployed imageFile
+		equals: Smalltalk imageDirectory / 'Pharo.image'
 ]
 
 { #category : #tests }

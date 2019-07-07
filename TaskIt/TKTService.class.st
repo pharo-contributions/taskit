@@ -86,6 +86,7 @@ TKTService >> initialize [
 	stopRequested := false.
 	stopCallbacks := Set new.
 	worker := TKTWorker new.
+	worker taskQueue: AtomicSharedQueue new.
 	self stepDelay: 500 milliSeconds.
 	recursiveTask := [ self iterateService.
 	self scheduleRecursiveTask ] asTask

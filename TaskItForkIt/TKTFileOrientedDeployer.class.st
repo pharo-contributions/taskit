@@ -253,9 +253,7 @@ TKTFileOrientedDeployer >> privateDownloadBundle: aZnUrl at: expectedLocation [
 		ifTrue: [ systemAdapter rm: expectedLocation ].
 	expectedLocation ensureCreateDirectory.
 	systemAdapter downloadAndUnzip: aZnUrl at: expectedLocation.
-	expectedLocation children
-		select: [ :c | #(image changes) includes: c extension ]
-		thenDo: [ :child | child renameTo: 'Pharo.' , child extension ]
+	
 ]
 
 { #category : #'image calls' }

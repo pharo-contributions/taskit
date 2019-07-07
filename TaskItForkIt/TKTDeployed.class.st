@@ -9,6 +9,7 @@ Class {
 	#instVars : [
 		'location',
 		'archetype',
+		'version',
 		'systemAdapter'
 	],
 	#category : #'TaskItForkIt-ImageBuilding'
@@ -21,7 +22,7 @@ TKTDeployed >> archetype [
 
 { #category : #accessing }
 TKTDeployed >> changesFile [
-	^ location / 'Pharo.changes'
+	^ location / (#'Pharo{1}.changes' format: {self version})
 ]
 
 { #category : #accessing }
@@ -72,7 +73,7 @@ TKTDeployed >> evalSerialized: aString [
 
 { #category : #accessing }
 TKTDeployed >> imageFile [
-	^ location / #'Pharo.image'
+	^ location / (#'Pharo{1}.image' format: {self version})
 ]
 
 { #category : #accessing }
@@ -159,26 +160,41 @@ TKTDeployed >> sourcesFile [
 
 { #category : #'evalas yet unclassified' }
 TKTDeployed >> startImageNoQuit: aString [
-	| output return input |
-	output := UUID new asString asFileReference.
-	^ [ input := '
-	| ston | 
-	ston := STONWriter on: (''{1}'' asFileReference ensureDelete; writeStream).
-	[ ston nextPut: [{2}] value  ] on:Error do: [ :e |  ston nextPut: e messageText ].
-	ston close. 
-  '
-		format:
-			{output fullName.
-			aString}.
+	| return |
 	return := (self command
 		option: 'eval';
 		arguments:
 			{'--no-quit'.
-			input}) createOSSubprocess run.
-	return isComplete
-		ifTrue: [ self error: 'Error stargin image ' ].
-	return ]
-		ensure: [ output ensureDelete ]
+			aString}) createOSSubprocess run.
+	^ return
+]
+
+{ #category : #accessing }
+TKTDeployed >> version [
+	^ version
+		ifNil: [ | image changes |
+			image := (location entries
+				detect:
+					[ :e | (e basename beginsWith: 'Pharo') and: [ e basename endsWith: 'image' ] ])
+				basename.
+			changes := (location entries
+				detect: [ :e | 
+					(e basename beginsWith: 'Pharo')
+						and: [ e basename endsWith: 'changes' ] ]) basename.
+			version := image
+				copyFrom: 'Pharo' size + 1
+				to: image size - '.image' size.
+			self
+				assert:
+					version
+						=
+							(changes copyFrom: 'Pharo' size + 1 to: changes size - '.changes' size).
+			version ]
+]
+
+{ #category : #'evalas yet unclassified' }
+TKTDeployed >> version: aVersion [
+	version := aVersion 
 ]
 
 { #category : #accessing }
