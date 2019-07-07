@@ -11,7 +11,7 @@ Class {
 { #category : #'building suites' }
 TKTForkItPoolTestCase class >> testParameters [
 	^ ParametrizedTestMatrix new
-		forSelector: #serializer addOptions: {#ston . #fuel . #xstoned};
+		forSelector: #serializer addOptions: {#ston . #xstoned};
 		yourself
 ]
 
