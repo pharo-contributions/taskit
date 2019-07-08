@@ -137,7 +137,7 @@ TKTFileOrientedDeployer >> deploy: anArchetype at: location [
 		createScript: location / 'pharo-ui'
 		with: self class pharoUiScript.
 	anArchetype parent
-		ifNil: [ self deployFiles: anArchetype at: location ]
+		ifNil: [( self deployFiles: anArchetype at: location ) do: [ : f | f synchronizeTimeout: 5 minutes ] ]
 		ifNotNil: [ self deploy: anArchetype parent at: location ].
 	deployed := TKTDeployed new
 		initializeWithLocation: location
@@ -161,8 +161,9 @@ TKTFileOrientedDeployer >> deployAtDefaultLocation: anArchetype [
 
 { #category : #accessing }
 TKTFileOrientedDeployer >> deployFiles: anArchetype at: location [
+	| vmFuture imageFutures |
 	self ensureInstallationDirectoryFor: anArchetype.
-	self
+	vmFuture := self
 		installVm:
 			(provider
 				resolveVM: anArchetype vmSelector
@@ -170,14 +171,16 @@ TKTFileOrientedDeployer >> deployFiles: anArchetype at: location [
 				architecture: anArchetype architectureSelector
 				using: self)
 		at: location.
-	self
+	imageFutures := self
 		installImageAndSource:
 			(provider
 				resolvePharoBundle: anArchetype vmSelector
 				forImage: anArchetype imageSelector
 				architecture: anArchetype architectureSelector
 				using: self)
-		at: location
+		at: location.
+	imageFutures add: vmFuture.
+	^ imageFutures
 ]
 
 { #category : #folder }
@@ -230,7 +233,9 @@ TKTFileOrientedDeployer >> installImageAndSource: bundle at: location [
 	imageChangesAndSourceFileReferenceArray := bundle = #current
 		ifTrue: [ self resolveCurrentImageAnChangesFile ]
 		ifFalse: [ self fetchBundle: bundle ].
-	systemAdapter copyAll: imageChangesAndSourceFileReferenceArray to: location
+	^ systemAdapter
+		copyAll: imageChangesAndSourceFileReferenceArray
+		to: location
 ]
 
 { #category : #accessing }
@@ -239,7 +244,7 @@ TKTFileOrientedDeployer >> installVm: aVm at: location [
 	vmFolderReference := aVm = #current
 		ifTrue: [ self resolveCurrentVM ]
 		ifFalse: [ self fetchVm: aVm ].
-	systemAdapter installSymlinkTo: vmFolderReference at: location
+	^ systemAdapter installSymlinkTo: vmFolderReference at: location
 ]
 
 { #category : #accessing }

@@ -46,19 +46,19 @@ TKTSystemAdapter >> command: aReference for: aDeployed [
 
 { #category : #copying }
 TKTSystemAdapter >> copy: aFileReference to: aDestination [
-	TKTSystem cp
+	^ TKTSystem cp
 		option: '-r';
 		arguments:
 			{aFileReference asFileReference fullName.
 			aDestination asFileReference fullName};
-		future.
-	^ aDestination
+		future
 ]
 
 { #category : #folder }
 TKTSystemAdapter >> copyAll: aCollection to: aFileReference [
 	self assert: aFileReference isDirectory.
-	aCollection do: [ :f | self copy: f to: aFileReference / f basename ]
+	^ aCollection
+		collect: [ :f | self copy: f to: aFileReference / f basename ]
 ]
 
 { #category : #folder }
@@ -76,7 +76,8 @@ TKTSystemAdapter >> downloadAndUnzip: aZnUrl at: expectedLocation [
 { #category : #copying }
 TKTSystemAdapter >> installAllSymlinksTo: aCollection at: aDestination [
 	self assert: aDestination isDirectory.
-	aCollection do: [ :f | self installSymlinkTo: f at: aDestination ]
+	^ aCollection
+		collect: [ :f | self installSymlinkTo: f at: aDestination ]
 ]
 
 { #category : #copying }
