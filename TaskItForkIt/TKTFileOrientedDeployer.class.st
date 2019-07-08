@@ -107,11 +107,15 @@ TKTFileOrientedDeployer >> copy: aFileReference to: aDestination [
 
 { #category : #accessing }
 TKTFileOrientedDeployer >> createScript: ref with: content [
+	| stream |
+	ref parent ensureCreateDirectory.
 	ref ensureCreateFile.
-	(ZnNewLineWriterStream on: ref writeStream)
+	stream := ref writeStream.
+	(ZnNewLineWriterStream on: stream)
 		forPlatformLineEnding;
 		nextPutAll: content;
 		close.
+	stream close.
 	systemAdapter chmod: ref flag: '+x'
 ]
 

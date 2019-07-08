@@ -31,10 +31,10 @@ TKTSystemAdapter class >> remote [
 
 { #category : #copying }
 TKTSystemAdapter >> chmod: aFileReference flag: aString [
-	(TKTSystem chmod
+	TKTSystem chmod
 		option: aString;
 		argument: aFileReference fullName;
-		future) synchronizeTimeout: 5 seconds
+		future
 ]
 
 { #category : #folder }
@@ -46,12 +46,12 @@ TKTSystemAdapter >> command: aReference for: aDeployed [
 
 { #category : #copying }
 TKTSystemAdapter >> copy: aFileReference to: aDestination [
-	(TKTSystem cp
+	TKTSystem cp
 		option: '-r';
 		arguments:
 			{aFileReference asFileReference fullName.
 			aDestination asFileReference fullName};
-		future) synchronizeTimeout: 1 minute.
+		future.
 	^ aDestination
 ]
 
@@ -84,12 +84,12 @@ TKTSystemAdapter >> installSymlinkTo: aFileReference at: aDestination [
 	| destination |
 	destination := aDestination isDirectory
 		ifTrue: [ aDestination / aFileReference basename ].
-	^ (TKTSystem ln
+	^ TKTSystem ln
 		option: '-s';
 		arguments:
 			{aFileReference fullName.
 			destination fullName};
-		future) synchronizeTimeout: 2 seconds
+		future
 ]
 
 { #category : #copying }
@@ -97,7 +97,7 @@ TKTSystemAdapter >> rm: aFileOrFolder [
 	^ (TKTSystem rm
 		option: '-rf';
 		argument: aFileOrFolder fullName) future
-		synchronizeTimeout: 1 minute
+		
 ]
 
 { #category : #folder }

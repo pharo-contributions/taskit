@@ -49,6 +49,8 @@ TKTDeployedCommands >> testChangesFiles [
 { #category : #tests }
 TKTDeployedCommands >> testCommandPointsToPharoScript [
 	| command |
+	self isTravisBuild
+		ifTrue: [ ^ self skip ].
 	command := deployed command.
 	self assert: command isCommandDeclaration.
 	self assert: ((self commandFor: command) endsWith: 'pharo').
@@ -62,6 +64,8 @@ TKTDeployedCommands >> testCommandPointsToPharoScript [
 { #category : #tests }
 TKTDeployedCommands >> testCommandUiPointsToPharoUiScript [
 	| command |
+	self isTravisBuild
+		ifTrue: [ ^ self skip ].
 	command := deployed commandUi.
 	self assert: command isCommandDeclaration.
 	self assert: ((self commandFor: command) endsWith: 'pharo-ui').
@@ -75,6 +79,8 @@ TKTDeployedCommands >> testCommandUiPointsToPharoUiScript [
 { #category : #tests }
 TKTDeployedCommands >> testEvalCommandPointsToCommandAndHasOptions [
 	| command |
+	self isTravisBuild
+		ifTrue: [ ^ self skip ].
 	command := deployed eval.
 	self assert: command isCommandDeclaration.
 	self assert: ((self commandFor: command) endsWith: 'pharo').
