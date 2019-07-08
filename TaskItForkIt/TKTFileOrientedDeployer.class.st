@@ -161,26 +161,30 @@ TKTFileOrientedDeployer >> deployAtDefaultLocation: anArchetype [
 
 { #category : #accessing }
 TKTFileOrientedDeployer >> deployFiles: anArchetype at: location [
-	| vmFuture imageFutures |
+	| collection |
+	collection := Set new.
 	self ensureInstallationDirectoryFor: anArchetype.
-	vmFuture := self
-		installVm:
-			(provider
-				resolveVM: anArchetype vmSelector
-				forImage: anArchetype imageSelector
-				architecture: anArchetype architectureSelector
-				using: self)
-		at: location.
-	imageFutures := self
-		installImageAndSource:
-			(provider
-				resolvePharoBundle: anArchetype vmSelector
-				forImage: anArchetype imageSelector
-				architecture: anArchetype architectureSelector
-				using: self)
-		at: location.
-	imageFutures add: vmFuture.
-	^ imageFutures
+	collection
+		add:
+			(self
+				installVm:
+					(provider
+						resolveVM: anArchetype vmSelector
+						forImage: anArchetype imageSelector
+						architecture: anArchetype architectureSelector
+						using: self)
+				at: location).
+	collection
+		addAll:
+			(self
+				installImageAndSource:
+					(provider
+						resolvePharoBundle: anArchetype vmSelector
+						forImage: anArchetype imageSelector
+						architecture: anArchetype architectureSelector
+						using: self)
+				at: location).
+	^ collection
 ]
 
 { #category : #folder }
