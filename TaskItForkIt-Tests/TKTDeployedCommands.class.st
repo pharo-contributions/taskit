@@ -19,6 +19,11 @@ TKTDeployedCommands >> commandFor: aCommand [
 ]
 
 { #category : #tests }
+TKTDeployedCommands >> isTravisBuild [
+	^ FileLocator changes resolve basename = 'TravisCI.changes'
+]
+
+{ #category : #tests }
 TKTDeployedCommands >> optionsFor: aCommand [
 	^ (TKTShellCommandDeclaration slotNamed: 'options') read: aCommand
 ]
@@ -36,6 +41,8 @@ TKTDeployedCommands >> setUp [
 
 { #category : #tests }
 TKTDeployedCommands >> testChangesFiles [
+	self isTravisBuild
+		ifTrue: [ ^ self skip ].
 	self assert: deployed changesFile equals: FileLocator changes resolve
 ]
 
@@ -81,6 +88,8 @@ TKTDeployedCommands >> testEvalCommandPointsToCommandAndHasOptions [
 
 { #category : #tests }
 TKTDeployedCommands >> testImageDirectory [
+	self isTravisBuild
+		ifTrue: [ ^ self skip ].
 	self
 		assert: deployed imageFile
 		equals: Smalltalk imageDirectory / 'Pharo.image'
@@ -95,6 +104,8 @@ TKTDeployedCommands >> testSourceFiles [
 
 { #category : #tests }
 TKTDeployedCommands >> testVmBinary [
+	self isTravisBuild
+		ifTrue: [ ^ self skip ].
 	self
 		assert: deployed vmBinary
 		equals:
