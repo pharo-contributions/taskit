@@ -263,6 +263,11 @@ TKTArchetype >> postCopy [
 ]
 
 { #category : #accessing }
+TKTArchetype >> printOn: stream [
+	stream nextPutAll: 'Archetype(' , self version , ')'
+]
+
+{ #category : #accessing }
 TKTArchetype >> version [
 	| selector |
 	selector := imageSelector asString.

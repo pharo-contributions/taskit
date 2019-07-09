@@ -91,6 +91,11 @@ TKTProject >> name: aString [
 ]
 
 { #category : #accessing }
+TKTProject >> printOn: stream [
+	stream nextPutAll: 'Project(' , self name , ', ' , self url , ')'
+]
+
+{ #category : #accessing }
 TKTProject >> repository: aString [
 	url := aString
 ]

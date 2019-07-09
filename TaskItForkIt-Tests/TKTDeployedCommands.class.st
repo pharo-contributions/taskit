@@ -103,9 +103,9 @@ TKTDeployedCommands >> testImageDirectory [
 
 { #category : #tests }
 TKTDeployedCommands >> testSourceFiles [
-	self
-		assert: deployed sourcesFile 
-		equals: Smalltalk sourcesFile .
+	self isTravisBuild
+		ifTrue: [ ^ self skip ].
+	self assert: deployed sourcesFile equals: Smalltalk sourcesFile
 ]
 
 { #category : #tests }
