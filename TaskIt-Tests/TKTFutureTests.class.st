@@ -683,25 +683,6 @@ TKTFutureTests >> testFutureZipSuccessIfBothSuccess [
 	self assert: got equals: #(2 5)
 ]
 
-{ #category : #'tests-combinators' }
-TKTFutureTests >> testFutureZipThreeSuccessIfBothSuccess [
-
-	| future zipFuture zipTwo  zipThree got |
-	future := TKTFuture new.
-	zipFuture := TKTFuture new.
-	zipTwo := TKTFuture new.
-	zipThree := TKTFuture new .
-	(((future zip: zipFuture) zip: zipTwo ) zip: zipThree )onSuccessDo: [ :tuple | got := tuple ].
-
-	future deploySuccess: 2.
-	zipTwo deploySuccess: 3.
-	zipFuture deploySuccess: 5.
-	zipThree deploySuccess: 34.
-	50 milliSecond wait.
-	
-	self assert: got equals: #(2 5 3 34)
-]
-
 { #category : #'tests-termination' }
 TKTFutureTests >> testNewFutureIsNotFinished [
 
