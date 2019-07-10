@@ -57,17 +57,10 @@ TKTArchetypeBuildAndDeployTestCase >> testCommunicationStonHasNoDependancies [
 
 { #category : #tests }
 TKTArchetypeBuildAndDeployTestCase >> testDeployDeploysAFunctionalEnvironment [
-	| destination deployed |
-	destination := (#/ asFileReference / #tmp / archetype name
-		/ UUID new asString)
-		ensureCreateDirectory;
-		yourself.
-	deployed := deployer deploy: archetype at: destination.
+	| deployed |
+	deployed := deployer deployAtDefaultLocation: archetype.
 	self assert: deployed vmFolder exists.
 	self assert: deployed imageFile exists.
 	self assert: deployed changesFile exists.
-	self assert: deployed sourcesFile exists.
-
-	
-
+	self assert: deployed sourcesFile exists
 ]

@@ -61,12 +61,8 @@ TKTArchetypeBuildAndDeployDependancyTestCase >> tearDown [
 
 { #category : #tests }
 TKTArchetypeBuildAndDeployDependancyTestCase >> testDeployDeploysAFunctionalEnvironment [
-	| destination deployed |
-	destination := (#/ asFileReference / #tmp / archetype name
-		/ UUID new asString)
-		ensureCreateDirectory;
-		yourself.
-	deployed := deployer deploy: archetype + project at: destination.
+	| deployed |
+	deployed := deployer deployAtDefaultLocation: archetype + project.
 	self assert: deployed vmFolder exists.
 	self assert: deployed imageFile exists.
 	self assert: deployed changesFile exists.
