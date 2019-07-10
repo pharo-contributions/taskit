@@ -184,7 +184,6 @@ TKTArchetypeAwarePool >> scheduleTimeout: timeout on: aTaskExecution [
 { #category : #'public - mutexed' }
 TKTArchetypeAwarePool >> spawnNewBackendFor: anArchetype [
 	| backend |
-	self halt.
 	backend := TKTForkedBackend new.
 	backend defaultSerializerSelector: self defaultSerializerSelector.
 	anArchetype configureBackend: backend. 
