@@ -26,6 +26,11 @@ TKTArchetypeBuildAndDeployTestCase >> archetype: anArchetype [
 ]
 
 { #category : #tests }
+TKTArchetypeBuildAndDeployTestCase >> runCaseManaged [ 
+	^ self runCase
+]
+
+{ #category : #tests }
 TKTArchetypeBuildAndDeployTestCase >> setUp [
 	super setUp.
 	session := Smalltalk session.
