@@ -58,7 +58,7 @@ TKTProject >> archetypeName [
 
 { #category : #'deployingas yet unclassified' }
 TKTProject >> deployIn: aTKTDeployed [
-	| future value |
+	| future  |
 	future := (aTKTDeployed ensureIcebergRemoteTypeSelector: #httpsUrl)
 		collect: [ :v | 
 			aTKTDeployed

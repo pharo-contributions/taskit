@@ -20,6 +20,22 @@ TKTArchetypeAwarePool class >> createDefault [
 		yourself
 ]
 
+{ #category : #'public - mutexed' }
+TKTArchetypeAwarePool >> allBackendsCollect: anArchetypedTask [
+	| backendsFor |
+	backendsFor := self backendsFor: anArchetypedTask archetype.
+	^ backendsFor
+		collect: [ :b | self futureArchetypedTask: anArchetypedTask backend: b ]
+]
+
+{ #category : #'public - mutexed' }
+TKTArchetypeAwarePool >> allBackendsDo: anArchetypedTask [
+	| backendsFor |
+	backendsFor := self backendsFor: anArchetypedTask archetype.
+	backendsFor
+		do: [ :b | self scheduleArchetypedTask: anArchetypedTask backend: b ]
+]
+
 { #category : #accessing }
 TKTArchetypeAwarePool >> amountOfTasksAt: aTKTArchetype [
 	^ self remoteFutureRegistry amountOfTasksFor: aTKTArchetype
@@ -30,6 +46,12 @@ TKTArchetypeAwarePool >> backendFor: anArchetype [
 	^ archetypedBackends
 		detect: [ :b | b respondsToArchetype: anArchetype ]
 		ifNone: [ self spawnNewBackendFor: anArchetype ]
+]
+
+{ #category : #'public - mutexed' }
+TKTArchetypeAwarePool >> backendsFor: anArchetype [
+	^ archetypedBackends
+		select: [ :b | b respondsToArchetype: anArchetype ]
 ]
 
 { #category : #'public - mutexed' }
@@ -54,9 +76,17 @@ TKTArchetypeAwarePool >> future: aTask [
 
 { #category : #'public - mutexed' }
 TKTArchetypeAwarePool >> futureArchetypedTask: aTask [
+	^ self
+		futureArchetypedTask: aTask
+		backend: (self backendFor: aTask archetype)
+]
+
+{ #category : #'public - mutexed' }
+TKTArchetypeAwarePool >> futureArchetypedTask: aTask backend: aBackend [
 	| execution |
+	self assert: (aBackend respondsToArchetype: aTask archetype).
 	execution := aTask asTask futureTaskExecutionFor: self.
-	execution backend: (self backendFor: aTask archetype).
+	execution backend: aBackend.
 	self remoteFutureRegistry register: execution.
 	pool scheduleTaskExecution: execution.
 	^ execution future
@@ -126,12 +156,19 @@ TKTArchetypeAwarePool >> schedule: aTask timeout: aTimeout [
 
 { #category : #'public - mutexed' }
 TKTArchetypeAwarePool >> scheduleArchetypedTask: aTask [
+	^ self
+		scheduleArchetypedTask: aTask
+		backend: (self backendFor: aTask)
+]
+
+{ #category : #'public - mutexed' }
+TKTArchetypeAwarePool >> scheduleArchetypedTask: aTask backend: aBackend [
 	| execution |
+	self assert: (aBackend respondsToArchetype: aTask archetype).
 	execution := aTask asTask futureTaskExecutionFor: self.
-	execution backend: (self backendFor: aTask archetype).
+	execution backend: aBackend.
 	self remoteFutureRegistry registerNotDeployable: execution.
-	pool scheduleTaskExecution: execution.
-	
+	pool scheduleTaskExecution: execution
 ]
 
 { #category : #'public - mutexed' }
