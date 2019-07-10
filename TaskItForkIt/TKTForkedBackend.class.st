@@ -73,8 +73,7 @@ TKTForkedBackend >> isFree [
 
 { #category : #accessing }
 TKTForkedBackend >> respondsToArchetype: anArchetype [
-	^ deploy archetype = anArchetype
-		or: [ deploy archetype parent = anArchetype ]
+	^ deploy archetype compatibleWith: anArchetype
 ]
 
 { #category : #accessing }
@@ -155,6 +154,12 @@ TKTForkedBackend >> stop [
 						ifFalse: [ imageProcess terminate ] ] ifError: [  ].
 					url := nil.
 					imageProcess := nil ] ]
+]
+
+{ #category : #accessing }
+TKTForkedBackend >> stopAndDelete [
+	self stop. 
+	deploy delete.
 ]
 
 { #category : #accessing }

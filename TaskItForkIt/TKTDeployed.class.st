@@ -42,6 +42,11 @@ TKTDeployed >> configureBackend: aBackend [
 ]
 
 { #category : #'evalas yet unclassified' }
+TKTDeployed >> delete [
+	systemAdapter rm: location
+]
+
+{ #category : #'evalas yet unclassified' }
 TKTDeployed >> ensureIcebergRemoteTypeSelector: aSelector [
 	^ self
 		modifyImageBy: ('Iceberg remoteTypeSelector: ''{1}'' asSymbol' format: {aSelector})

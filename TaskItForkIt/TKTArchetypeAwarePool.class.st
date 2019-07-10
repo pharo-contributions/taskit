@@ -184,6 +184,7 @@ TKTArchetypeAwarePool >> scheduleTimeout: timeout on: aTaskExecution [
 { #category : #'public - mutexed' }
 TKTArchetypeAwarePool >> spawnNewBackendFor: anArchetype [
 	| backend |
+	self halt.
 	backend := TKTForkedBackend new.
 	backend defaultSerializerSelector: self defaultSerializerSelector.
 	anArchetype configureBackend: backend. 
@@ -200,6 +201,15 @@ TKTArchetypeAwarePool >> spawnNewBackendFor: anArchetype [
 TKTArchetypeAwarePool >> stop [
 	TKTConfiguration watchDog stopWatching: self.
 	archetypedBackends do: #stop.
+	pool ifNotNil: [ pool stop ].
+	archetypedBackends removeAll.
+	pool := nil
+]
+
+{ #category : #stop }
+TKTArchetypeAwarePool >> stopAndDelete [
+	TKTConfiguration watchDog stopWatching: self.
+	archetypedBackends do: #stopAndDelete.
 	pool ifNotNil: [ pool stop ].
 	archetypedBackends removeAll.
 	pool := nil

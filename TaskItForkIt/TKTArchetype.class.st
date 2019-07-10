@@ -33,6 +33,13 @@ TKTArchetype class >> currentArchitecture [
 ]
 
 { #category : #accessing }
+TKTArchetype class >> instVarNamesForEqualityComparison [
+	^ self instVarNames asOrderedCollection
+		remove: #name;
+		yourself
+]
+
+{ #category : #accessing }
 TKTArchetype class >> lightweight [
 	^ lightweight ifNil: [ lightweight := Dictionary new ]
 ]
@@ -165,6 +172,11 @@ TKTArchetype >> architectureSelector [
 { #category : #accessing }
 TKTArchetype >> architectureSelector: aSelector [
 	 architectureSelector := aSelector
+]
+
+{ #category : #accessing }
+TKTArchetype >> compatibleWith: anArchetype [
+	^ self = anArchetype or: [ self parent = anArchetype ]
 ]
 
 { #category : #accessing }
