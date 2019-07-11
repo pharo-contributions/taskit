@@ -83,6 +83,13 @@ TKTOutgoingTasksService >> start [
 ]
 
 { #category : #registry }
+TKTOutgoingTasksService >> stop [
+	^ server
+		ifNotNil: [ server stop.
+			server := nil ]
+]
+
+{ #category : #registry }
 TKTOutgoingTasksService >> top: aMainRunner [
 	top := aMainRunner
 ]

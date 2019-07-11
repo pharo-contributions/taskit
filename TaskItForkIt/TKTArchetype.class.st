@@ -240,6 +240,11 @@ TKTArchetype >> initialize [
 ]
 
 { #category : #accessing }
+TKTArchetype >> isCurrentPharo [
+	^ imageSelector = #current
+]
+
+{ #category : #accessing }
 TKTArchetype >> isDeploy [
 	^ false
 ]

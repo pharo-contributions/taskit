@@ -78,11 +78,13 @@ TKTFileOrientedDeployer >> backend: aTKTSystemBackend [
 TKTFileOrientedDeployer >> backupCurrentImage [
 	| session sources |
 	session := Smalltalk session.
+	self currentCacheFolder ensureCreateDirectory.
 	sources := Smalltalk imageDirectory entries
 		select: [ :f | f basename endsWith: '.sources' ].
 	sources isNotEmpty
-		ifTrue: [ sources first asFileReference 
-				copyTo: self currentCacheFolder / sources first basename ].
+		ifTrue: [ systemAdapter
+				copy: sources first asFileReference
+				to: self currentCacheFolder / sources first basename ].
 	Smalltalk image
 		backupTo: (self currentCacheFolder / 'Pharo') fullName.
 	" in this place this image and the backup will be running it "
@@ -271,7 +273,7 @@ TKTFileOrientedDeployer >> privateDownloadBundle: aZnUrl at: expectedLocation [
 
 { #category : #'image calls' }
 TKTFileOrientedDeployer >> resolveCurrentImageAnChangesFile [
-	systemAdapter rm: self currentCacheFolder.
+	(systemAdapter rm: self currentCacheFolder) synchronizeTimeout: 10 seconds .
 	self currentCacheFolder ensureCreateDirectory.
 	^ self backupCurrentImage
 ]

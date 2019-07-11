@@ -16,8 +16,15 @@ Class {
 }
 
 { #category : #accessing }
+TKTForkedBackend >> archetype [
+	^ archetype
+]
+
+{ #category : #accessing }
 TKTForkedBackend >> archetype: aTKTArchetype [
-	archetype := aTKTArchetype + TKTProject forkit
+	archetype := aTKTArchetype isCurrentPharo
+		ifTrue: [ aTKTArchetype ]
+		ifFalse: [ aTKTArchetype + TKTProject forkit ]
 ]
 
 { #category : #accessing }
@@ -158,8 +165,8 @@ TKTForkedBackend >> stop [
 
 { #category : #accessing }
 TKTForkedBackend >> stopAndDelete [
-	self stop. 
-	deploy delete.
+	self stop.
+	deploy ifNotNil: [ deploy delete ]
 ]
 
 { #category : #accessing }

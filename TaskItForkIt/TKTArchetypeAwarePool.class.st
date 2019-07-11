@@ -15,7 +15,13 @@ Class {
 
 { #category : #creating }
 TKTArchetypeAwarePool class >> createDefault [
+	^ self createDefaultWithPool: TKTCommonQueueWorkerPool createDefault
+]
+
+{ #category : #creating }
+TKTArchetypeAwarePool class >> createDefaultWithPool: aPool [
 	^ self new
+		initializeWithPool: aPool;
 		defaultSerializerSelector: #ston;
 		yourself
 ]
@@ -98,9 +104,8 @@ TKTArchetypeAwarePool >> includesArchetype: aTKTArchetype [
 ]
 
 { #category : #'public - mutexed' }
-TKTArchetypeAwarePool >> initialize [
-	super initialize.
-	pool := TKTCommonQueueWorkerPool createDefault.
+TKTArchetypeAwarePool >> initializeWithPool: aPool [
+	pool := aPool.
 	archetypedBackends := Set new.
 	TKTConfiguration watchDog watch: self
 ]
@@ -123,6 +128,11 @@ TKTArchetypeAwarePool >> isUIRunner [
 { #category : #'public - mutexed' }
 TKTArchetypeAwarePool >> noteRemoteWorkerAt: anUrl forBackendHashed: aHash [
 	(archetypedBackends detect: [ :be | be hash = aHash ]) setUrl: anUrl
+]
+
+{ #category : #accessing }
+TKTArchetypeAwarePool >> pool: aTKTCommonQueueWorkerPool [ 
+	pool := aTKTCommonQueueWorkerPool
 ]
 
 { #category : #'public - mutexed' }
@@ -200,7 +210,11 @@ TKTArchetypeAwarePool >> spawnNewBackendFor: anArchetype [
 TKTArchetypeAwarePool >> stop [
 	TKTConfiguration watchDog stopWatching: self.
 	archetypedBackends do: #stop.
-	pool ifNotNil: [ pool stop ].
+	remoteFutureRegistry ifNotNil: [ :r | r stop ].
+	remoteFutureRegistry := nil.
+	pool
+		ifNotNil: [ pool = TKTConfiguration runner
+				ifFalse: [ pool stop ] ].
 	archetypedBackends removeAll.
 	pool := nil
 ]
@@ -209,9 +223,19 @@ TKTArchetypeAwarePool >> stop [
 TKTArchetypeAwarePool >> stopAndDelete [
 	TKTConfiguration watchDog stopWatching: self.
 	archetypedBackends do: #stopAndDelete.
-	pool ifNotNil: [ pool stop ].
+	remoteFutureRegistry ifNotNil: [ :r | r stop ].
+	remoteFutureRegistry := nil.
+	pool
+		ifNotNil: [ pool = TKTConfiguration runner
+				ifFalse: [ pool stop ] ].
 	archetypedBackends removeAll.
 	pool := nil
+]
+
+{ #category : #'forcing backend' }
+TKTArchetypeAwarePool >> stopAndDeleteBackend: aTKTForkedBackend [
+	archetypedBackends remove: aTKTForkedBackend ifAbsent: [  ].
+	aTKTForkedBackend stopAndDelete
 ]
 
 { #category : #accessing }
