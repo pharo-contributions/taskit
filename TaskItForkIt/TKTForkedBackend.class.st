@@ -85,6 +85,13 @@ TKTForkedBackend >> respondsToArchetype: anArchetype [
 
 { #category : #accessing }
 TKTForkedBackend >> sendTaskAndProcessResponse: aTask id: aFutureId serializer: aSerializerSelector [
+	^ self sendTaskAndProcessResponse: aTask id: aFutureId serializer: aSerializerSelector time: 5
+]
+
+{ #category : #accessing }
+TKTForkedBackend >> sendTaskAndProcessResponse: aTask id: aFutureId serializer: aSerializerSelector time: aTime [
+	aTime = 0
+		ifTrue: [ TKTRetryException signal: ' Backend timed out. retry later ' ].
 	[ | response |
 	response := (self serializerFor: aSerializerSelector)
 		writeZnRequestFor:
@@ -92,8 +99,13 @@ TKTForkedBackend >> sendTaskAndProcessResponse: aTask id: aFutureId serializer: 
 			aFutureId}
 		to: self url / #task.
 	^ response ]
-		on: ConnectionTimedOut
-		do: [ :c | TKTRetryException signal: ' Backend timed out. retry later ' ]
+		on: ConnectionTimedOut , ZnUnknownHttpMethod
+		do: [ :c | 
+			self
+				sendTaskAndProcessResponse: aTask
+				id: aFutureId
+				serializer: aSerializerSelector
+				time: aTime - 1 ]
 ]
 
 { #category : #accessing }
