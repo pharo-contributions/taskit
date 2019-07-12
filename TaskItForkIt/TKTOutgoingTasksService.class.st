@@ -21,6 +21,7 @@ TKTOutgoingTasksService >> amountOfTasksFor: anArchetype [
 
 { #category : #registry }
 TKTOutgoingTasksService >> deployFutureResult: valueId [
+
 	[ (futures at: valueId second) deployValue: valueId first.
 	futures removeKey: valueId second ]
 		on: Error
@@ -73,13 +74,11 @@ TKTOutgoingTasksService >> registerNotDeployable: aTaskExecution [
 { #category : #registry }
 TKTOutgoingTasksService >> start [
 	^ server
-		ifNil: [ 
-			server := ZnSingleThreadedServer on: 0.
+		ifNil: [ server := ZnServer on: 0.
 			server bindingAddress: NetNameResolver loopBackAddress.
 			server delegate: self.
 			server start.
-			self assert: server isRunning & server isListening 
-		]
+			self assert: server isRunning & server isListening ]
 ]
 
 { #category : #registry }

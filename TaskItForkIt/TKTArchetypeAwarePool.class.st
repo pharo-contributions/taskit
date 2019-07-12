@@ -22,7 +22,7 @@ TKTArchetypeAwarePool class >> createDefault [
 TKTArchetypeAwarePool class >> createDefaultWithPool: aPool [
 	^ self new
 		initializeWithPool: aPool;
-		defaultSerializerSelector: #ston;
+		defaultSerializerSelector: #xstoned;
 		yourself
 ]
 

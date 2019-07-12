@@ -15,7 +15,7 @@ Class {
 
 { #category : #'as yet unclassified' }
 TKTSerializationStrategy class >> default [ 
-	^ self ston
+	^ self xstoned
 ]
 
 { #category : #'as yet unclassified' }

@@ -89,8 +89,7 @@ TKTFileOrientedDeployer >> backupCurrentImage [
 		backupTo: (self currentCacheFolder / 'Pharo') fullName.
 	" in this place this image and the backup will be running it "
 	session ~= Smalltalk session
-		ifTrue: [ UIManager default spawnNewProcess.
-			^ Processor activeProcess terminate ].
+		ifTrue: [ self cleanUpImageToStart ].
 	^ {(self currentCacheFolder / sources first basename).
 	(self currentCacheFolder / 'Pharo.image').
 	(self currentCacheFolder / 'Pharo.changes')}
@@ -99,6 +98,13 @@ TKTFileOrientedDeployer >> backupCurrentImage [
 { #category : #folder }
 TKTFileOrientedDeployer >> baseFolder [
 	^ systemAdapter workingDirectory / 'pharo-local' / #forking
+]
+
+{ #category : #'deploy destination' }
+TKTFileOrientedDeployer >> cleanUpImageToStart [
+	UIManager default spawnNewProcess.
+	TKTConfiguration runner cleanUpImageToStart.
+	^ Processor activeProcess terminate
 ]
 
 { #category : #'system calls' }

@@ -25,6 +25,14 @@ TKTCommonQueueWorkerPool class >> createDefault [
 		yourself
 ]
 
+{ #category : #'public - mutexed' }
+TKTCommonQueueWorkerPool >> cleanUpImageToStart [
+	self stop.
+	taskQueue removeAll.
+	failedTasks removeAll.
+	self start.
+]
+
 { #category : #public }
 TKTCommonQueueWorkerPool >> ensureIsBeingWatched [
 	TKTConfiguration watchDog ensureIsWatching: self

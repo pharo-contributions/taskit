@@ -12,11 +12,6 @@ Class {
 	#category : #'TaskItForkIt-Task'
 }
 
-{ #category : #'ston persistence' }
-TKTArchetypedTask class >> stonOn: aStonWriter [
-	
-]
-
 { #category : #accessing }
 TKTArchetypedTask >> archetype [
 	^ archetype

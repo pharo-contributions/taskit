@@ -166,7 +166,7 @@ TKTDeployed >> sourcesFile [
 { #category : #'evalas yet unclassified' }
 TKTDeployed >> startImageNoQuit: aString [
 	| return |
-	return := (self command
+	return := (self commandUi
 		option: 'eval';
 		arguments:
 			{'--no-quit'.
