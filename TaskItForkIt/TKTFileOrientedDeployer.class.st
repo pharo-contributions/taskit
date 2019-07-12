@@ -103,7 +103,7 @@ TKTFileOrientedDeployer >> baseFolder [
 { #category : #'deploy destination' }
 TKTFileOrientedDeployer >> cleanUpImageToStart [
 	UIManager default spawnNewProcess.
-	TKTConfiguration runner cleanUpImageToStart.
+	TKTConfiguration cleanUpImageToStart.
 	^ Processor activeProcess terminate
 ]
 

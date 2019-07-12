@@ -21,6 +21,12 @@ Class {
 }
 
 { #category : #accessing }
+TKTConfiguration class >> cleanUpImageToStart [
+	TKTCommonQueueWorkerPool allInstancesDo:#cleanUpImageToStart.
+	self profileNamed: self profileNamed 
+]
+
+{ #category : #accessing }
 TKTConfiguration class >> errorHandler [
 	^ self optionAt: #errorHandler
 ]
