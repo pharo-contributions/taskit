@@ -40,7 +40,7 @@ TKTArchetypedTaskExecution >> doExecuteTask [
 				sendTaskAndProcessResponse: (TKTTask valuable: task valuable)
 				id: id
 				serializer: task serializerSelector ]
-		ifFalse: [self halt. TKTRetryException signal: 'Image is dead!' ] ]
+		ifFalse: [ TKTRetryException signal: 'Image is dead!' ] ]
 		on: Error
 		do: [ :error | future deployFailure: error freeze ]
 ]
