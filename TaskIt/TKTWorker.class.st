@@ -114,7 +114,7 @@ TKTWorker >> privatePrepareProcess: aWorkerProcess [
 ]
 
 { #category : #starting }
-TKTWorker >> privateStart. [
+TKTWorker >> privateStart [
 	process start
 ]
 

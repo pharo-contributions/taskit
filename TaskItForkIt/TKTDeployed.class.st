@@ -26,6 +26,31 @@ TKTDeployed >> changesFile [
 ]
 
 { #category : #accessing }
+TKTDeployed >> clone [
+	| newLocation |
+	newLocation := location parent / UUID new asString.
+	newLocation ensureCreateDirectory.
+	^ self cloneAt: location parent / newLocation
+]
+
+{ #category : #accessing }
+TKTDeployed >> cloneAt: aLocation [ 
+	^ self cloneAt: aLocation using: systemAdapter
+]
+
+{ #category : #accessing }
+TKTDeployed >> cloneAt: aLocation using: aSystemAdapter [
+	| clone |
+	clone := TKTDeployed new.
+	clone
+		initializeWithLocation: aLocation
+		archetype: archetype
+		andSystemAdapter: aSystemAdapter.
+	aSystemAdapter copy: location to: aLocation.
+	^ clone
+]
+
+{ #category : #accessing }
 TKTDeployed >> command [
 	^ systemAdapter command: self pharoScript for: self
 ]
