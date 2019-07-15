@@ -15,7 +15,10 @@ Class {
 
 { #category : #accessing }
 TKTWatchDog class >> onDuty [
-	^ onDuty ifNil: [ onDuty := self new ]
+	^ onDuty
+		ifNil: [ onDuty := self new.
+			onDuty start.
+			onDuty ]
 ]
 
 { #category : #initialization }

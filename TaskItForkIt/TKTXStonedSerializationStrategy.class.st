@@ -17,7 +17,7 @@ TKTXStonedSerializationStrategy >> privateEncodeContent: aContent [
 	^ ZnEntity
 		text:
 			(String
-				streamContents: [ :str | (STONWriter on: str) nextPut: aContent ])
+				streamContents: [ :str | (TKTXSTONedWriter on: str) nextPut: aContent ])
 ]
 
 { #category : #writing }
