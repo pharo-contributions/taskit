@@ -16,12 +16,12 @@ TKTBlockClosureWriter class >> fromSton: stonReader [
 ]
 
 { #category : #'instance creation' }
-TKTBlockClosureWriter class >> on: aBlockClosure [
+TKTBlockClosureWriter class >> ston: aBlockClosure on: stonWriter [
 	aBlockClosure isClean
-		ifFalse: [ ^ self error: 'Only clean closures are supported ' ].
-	^ self new
-		string: aBlockClosure asString;
-		yourself
+		ifFalse: [ stonWriter writeNull ]
+		ifTrue: [ self new
+				string: aBlockClosure asString;
+				stonOn: stonWriter ]
 ]
 
 { #category : #'instance creation' }

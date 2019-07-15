@@ -12,5 +12,5 @@ BlockClosure >> asArchetypedTaskOn: aTKTArchetype [
 
 { #category : #'*TaskItForkIt' }
 BlockClosure >> stonOn: stonWriter [
-	(TKTBlockClosureWriter on: self) stonOn: stonWriter
+	TKTBlockClosureWriter ston: self on: stonWriter
 ]
