@@ -56,3 +56,13 @@ TKTAbstractExecutor >> noteFree [
 
 	busy := false
 ]
+
+{ #category : #polimorfism }
+TKTAbstractExecutor >> start [
+ " nothing to do "
+]
+
+{ #category : #polimorfsms }
+TKTAbstractExecutor >> stop [
+
+]

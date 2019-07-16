@@ -45,6 +45,21 @@ TKTProfile class >> development [
 ]
 
 { #category : #'instance creation' }
+TKTProfile class >> lightweight [
+	<profile: #lightweight>
+	^ TKTProfile
+		on:
+			{(#debugging -> false).
+			(#runner -> TKTNewProcessTaskRunner new ).
+			(#poolWorkerProcess -> TKTWorkerProcess).
+			(#process -> Process).
+			(#errorHandler -> TKTExceptionHandler).
+			(#watchDog -> TKTWatchDog onDuty).
+			(#processProvider -> TKTTaskItProcessProvider new).
+			(#serviceManager -> TKTServiceManager new)} asDictionary
+]
+
+{ #category : #'instance creation' }
 TKTProfile class >> on: aDictionary [
 	^ self new
 		values: aDictionary;
