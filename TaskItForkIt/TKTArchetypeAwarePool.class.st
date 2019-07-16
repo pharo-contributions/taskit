@@ -197,7 +197,7 @@ TKTArchetypeAwarePool >> spawnNewBackendFor: anArchetype [
 	backend := TKTForkedBackend new.
 	backend defaultSerializerSelector: self defaultSerializerSelector.
 	anArchetype configureBackend: backend. 
-	backend archetype: anArchetype.
+
 	archetypedBackends add: backend.
 	
 	backend startWith: self remoteFutureRegistry.

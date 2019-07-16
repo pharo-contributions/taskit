@@ -74,7 +74,7 @@ TKTOutgoingTasksService >> registerNotDeployable: aTaskExecution [
 { #category : #registry }
 TKTOutgoingTasksService >> start [
 	^ server
-		ifNil: [ server := ZnServer on: 0.
+		ifNil: [ server := ZnSingleThreadedServer on: 0.
 			server bindingAddress: NetNameResolver loopBackAddress.
 			server delegate: self.
 			server start.

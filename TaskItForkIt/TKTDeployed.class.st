@@ -29,8 +29,7 @@ TKTDeployed >> changesFile [
 TKTDeployed >> clone [
 	| newLocation |
 	newLocation := location parent / UUID new asString.
-	newLocation ensureCreateDirectory.
-	^ self cloneAt: location parent / newLocation
+	^ self cloneAt: newLocation
 ]
 
 { #category : #accessing }
@@ -46,7 +45,7 @@ TKTDeployed >> cloneAt: aLocation using: aSystemAdapter [
 		initializeWithLocation: aLocation
 		archetype: archetype
 		andSystemAdapter: aSystemAdapter.
-	aSystemAdapter copy: location to: aLocation.
+	(aSystemAdapter copy: location to: aLocation) synchronizeTimeout: 1 minute.
 	^ clone
 ]
 
@@ -191,7 +190,7 @@ TKTDeployed >> sourcesFile [
 { #category : #'evalas yet unclassified' }
 TKTDeployed >> startImageNoQuit: aString [
 	| return |
-	return := (self commandUi
+	return := (self command
 		option: 'eval';
 		arguments:
 			{'--no-quit'.

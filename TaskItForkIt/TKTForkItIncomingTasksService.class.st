@@ -137,7 +137,8 @@ TKTForkItIncomingTasksService >> privateInformBinds [
 { #category : #protocol }
 TKTForkItIncomingTasksService >> startOn: anAddress [
 	
-	TKTConfiguration runner poolMaxSize: 3.
+	TKTConfiguration runner poolMaxSize: 1.
+	TKTConfiguration runner inspect.
 	pool ifNil: [ self usePool: TKTConfiguration runner ].
 	server := (ZnServer on: 0)
 		bindingAddress: (NetNameResolver addressForName: anAddress);
