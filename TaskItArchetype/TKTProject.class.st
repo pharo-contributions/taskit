@@ -12,7 +12,7 @@ Class {
 		'version',
 		'kind'
 	],
-	#category : #TaskItArchetype
+	#category : #'TaskItArchetype-Archetype'
 }
 
 { #category : #'as yet unclassified' }

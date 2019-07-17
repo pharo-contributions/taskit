@@ -12,7 +12,7 @@ Class {
 		'version',
 		'systemAdapter'
 	],
-	#category : #TaskItArchetype
+	#category : #'TaskItArchetype-Archetype'
 }
 
 { #category : #accessing }

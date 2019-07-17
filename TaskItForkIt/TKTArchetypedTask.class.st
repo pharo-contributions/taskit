@@ -9,7 +9,7 @@ Class {
 		'serializer',
 		'serializerSelector'
 	],
-	#category : #TaskItArchetype
+	#category : #'TaskItForkIt-Task'
 }
 
 { #category : #accessing }

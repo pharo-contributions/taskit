@@ -12,7 +12,7 @@ Class {
 		'provider',
 		'systemAdapter'
 	],
-	#category : #TaskItArchetype
+	#category : #'TaskItArchetype-Deployer'
 }
 
 { #category : #accessing }

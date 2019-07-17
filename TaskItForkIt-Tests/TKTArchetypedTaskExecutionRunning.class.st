@@ -9,7 +9,7 @@ Class {
 		'task',
 		'isAlive'
 	],
-	#category : #'TaskItArchetype-Tests'
+	#category : #'TaskItForkIt-Tests'
 }
 
 { #category : #running }

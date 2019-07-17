@@ -11,7 +11,7 @@ Class {
 		'local',
 		'remote'
 	],
-	#category : #TaskItArchetype
+	#category : #'TaskItArchetype-Deployer'
 }
 
 { #category : #accessing }

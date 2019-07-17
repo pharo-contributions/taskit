@@ -21,7 +21,7 @@ Class {
 	#classInstVars : [
 		'lightweight'
 	],
-	#category : #TaskItArchetype
+	#category : #'TaskItArchetype-Archetype'
 }
 
 { #category : #accessing }

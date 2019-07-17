@@ -5,7 +5,7 @@ It works as a hook for resolving differently the dependancies
 Class {
 	#name : #TKTResourceProvider,
 	#superclass : #Object,
-	#category : #TaskItArchetype
+	#category : #'TaskItArchetype-Deployer'
 }
 
 { #category : #intalling }

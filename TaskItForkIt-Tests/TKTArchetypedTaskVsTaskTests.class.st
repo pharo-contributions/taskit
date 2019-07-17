@@ -1,7 +1,7 @@
 Class {
 	#name : #TKTArchetypedTaskVsTaskTests,
 	#superclass : #TestCase,
-	#category : #'TaskItArchetype-Tests'
+	#category : #'TaskItForkIt-Tests'
 }
 
 { #category : #tests }
