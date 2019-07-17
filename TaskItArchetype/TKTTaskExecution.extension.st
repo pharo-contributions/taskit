@@ -1,6 +1,6 @@
 Extension { #name : #TKTTaskExecution }
 
-{ #category : #'*TaskItForkIt' }
+{ #category : #'*TaskItArchetype' }
 TKTTaskExecution >> archetype [
 	^ task archetype
 ]

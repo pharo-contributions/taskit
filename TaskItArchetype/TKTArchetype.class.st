@@ -21,7 +21,7 @@ Class {
 	#classInstVars : [
 		'lightweight'
 	],
-	#category : #'TaskItForkIt-ImageBuilding'
+	#category : #TaskItArchetype
 }
 
 { #category : #accessing }

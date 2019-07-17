@@ -1,6 +1,6 @@
 Extension { #name : #MessageSend }
 
-{ #category : #'*TaskItForkIt' }
+{ #category : #'*TaskItArchetype' }
 MessageSend >> asArchetypedTaskOn: aTKTArchetype [ 
 
 	^ TKTArchetypedTask new

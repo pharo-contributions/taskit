@@ -1,6 +1,6 @@
 Extension { #name : #TKTTask }
 
-{ #category : #'*TaskItForkIt' }
+{ #category : #'*TaskItArchetype' }
 TKTTask >> archetype [
 	^ TKTArchetype thisImage
 ]

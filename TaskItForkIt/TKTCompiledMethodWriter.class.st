@@ -5,7 +5,7 @@ Class {
 		'methodClassName',
 		'selector'
 	],
-	#category : #TaskItForkIt
+	#category : #'TaskItForkIt-Xstoned'
 }
 
 { #category : #'instance creation' }

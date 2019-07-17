@@ -1,14 +1,14 @@
 Class {
-	#name : #BaselineOfForkIt,
+	#name : #BaselineOfTaskItArchetype,
 	#superclass : #BaselineOf,
 	#instVars : [
 		'repository'
 	],
-	#category : #BaselineOfForkIt
+	#category : #BaselineOfTaskItArchetype
 }
 
 { #category : #baselines }
-BaselineOfForkIt >> baseline: spec [
+BaselineOfTaskItArchetype >> baseline: spec [
 	<baseline>
 	Iceberg remoteTypeSelector: #httpsUrl.
 	repository := self packageRepositoryURL.
@@ -19,17 +19,17 @@ BaselineOfForkIt >> baseline: spec [
 					with: [ spec repository: 'github://tesonep/ParametrizedTests' ];
 				baseline: 'Equals'
 					with: [ spec repository: 'github://bouraqadi/PharoMisc' ];
-				baseline: #TaskItArchetype with: [ spec repository: repository ];
+				baseline: #TaskItShell with: [ spec repository: repository ];
 				baseline: #TaskIt with: [ spec repository: repository ];
-				package: 'TaskItForkIt-Tests'
-					with: [ spec requires: #(TaskItForkIt) ];
-				package: #TaskItForkIt
-					with: [ spec requires: #(TaskIt TaskItArchetype Equals ParametrizedTests) ].
-			spec group: 'minimal' with: #(#TaskItForkIt 'TaskItForkIt-Tests') ]
+				package: 'TaskItArchetype-Tests'
+					with: [ spec requires: #(TaskItArchetype) ];
+				package: #TaskItArchetype
+					with: [ spec requires: #(TaskIt TaskItShell Equals ParametrizedTests) ].
+			spec group: 'minimal' with: #(#TaskItArchetype 'TaskItArchetype-Tests') ]
 ]
 
 { #category : #baselines }
-BaselineOfForkIt >> packageRepository [
+BaselineOfTaskItArchetype >> packageRepository [
 
 	" Tries to determine a repository from which the baseline is being loaded. Useful for 
 	refering other baselines in the same repository. "
@@ -43,7 +43,7 @@ BaselineOfForkIt >> packageRepository [
 ]
 
 { #category : #baselines }
-BaselineOfForkIt >> packageRepositoryURL [
+BaselineOfTaskItArchetype >> packageRepositoryURL [
 	| packageName |
 	^ self packageRepository
 		ifNotNil: [ :aRepository | aRepository description ]

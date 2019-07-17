@@ -12,7 +12,7 @@ Class {
 		'version',
 		'kind'
 	],
-	#category : #'TaskItForkIt-ImageBuilding'
+	#category : #TaskItArchetype
 }
 
 { #category : #'as yet unclassified' }

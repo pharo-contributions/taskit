@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'commandCalled'
 	],
-	#category : #'TaskItForkIt-Tests'
+	#category : #'TaskItArchetype-Tests'
 }
 
 { #category : #folder }

@@ -11,7 +11,7 @@ Class {
 		'local',
 		'remote'
 	],
-	#category : #'TaskItForkIt-ImageBuilding'
+	#category : #TaskItArchetype
 }
 
 { #category : #accessing }

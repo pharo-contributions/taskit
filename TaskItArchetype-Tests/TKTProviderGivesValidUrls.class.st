@@ -8,7 +8,7 @@ Class {
 		'anArchitecture',
 		'platformName'
 	],
-	#category : #'TaskItForkIt-Tests'
+	#category : #'TaskItArchetype-Tests'
 }
 
 { #category : #'building suites' }

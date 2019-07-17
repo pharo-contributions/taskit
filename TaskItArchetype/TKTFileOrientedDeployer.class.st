@@ -12,7 +12,7 @@ Class {
 		'provider',
 		'systemAdapter'
 	],
-	#category : #'TaskItForkIt-ImageBuilding'
+	#category : #TaskItArchetype
 }
 
 { #category : #accessing }

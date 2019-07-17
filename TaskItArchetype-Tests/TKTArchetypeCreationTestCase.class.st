@@ -1,7 +1,7 @@
 Class {
 	#name : #TKTArchetypeCreationTestCase,
 	#superclass : #TestCase,
-	#category : #'TaskItForkIt-Tests'
+	#category : #'TaskItArchetype-Tests'
 }
 
 { #category : #'test defaults' }

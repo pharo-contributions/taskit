@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'string'
 	],
-	#category : #TaskItForkIt
+	#category : #'TaskItForkIt-Xstoned'
 }
 
 { #category : #'instance creation' }

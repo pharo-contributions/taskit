@@ -4,7 +4,7 @@ Class {
 	#instVars : [
 		'deployer'
 	],
-	#category : #'TaskItForkIt-Tests'
+	#category : #'TaskItArchetype-Tests'
 }
 
 { #category : #running }

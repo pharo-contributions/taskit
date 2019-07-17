@@ -5,7 +5,7 @@ Class {
 		'url',
 		'installing'
 	],
-	#category : #'TaskItForkIt-Tests'
+	#category : #'TaskItArchetype-Tests'
 }
 
 { #category : #testing }

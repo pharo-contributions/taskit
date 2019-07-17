@@ -9,7 +9,7 @@ Class {
 		'backend',
 		'process'
 	],
-	#category : #'TaskItForkIt-Task'
+	#category : #TaskItArchetype
 }
 
 { #category : #evaluating }

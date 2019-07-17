@@ -5,7 +5,7 @@ Class {
 		'deployed',
 		'systemAdapter'
 	],
-	#category : #'TaskItForkIt-Tests'
+	#category : #'TaskItArchetype-Tests'
 }
 
 { #category : #tests }

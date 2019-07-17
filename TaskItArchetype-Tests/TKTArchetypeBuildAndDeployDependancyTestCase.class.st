@@ -1,44 +1,53 @@
 Class {
-	#name : #TKTArchetypeBuildAndDeployTestCase,
+	#name : #TKTArchetypeBuildAndDeployDependancyTestCase,
 	#superclass : #ParametrizedTestCase,
 	#instVars : [
 		'archetype',
 		'deployer',
-		'session'
+		'session',
+		'project'
 	],
-	#category : #'TaskItForkIt-Tests'
+	#category : #'TaskItArchetype-Tests'
 }
 
-{ #category : #tests }
-TKTArchetypeBuildAndDeployTestCase class >> testParameters [
+{ #category : #'building suites' }
+TKTArchetypeBuildAndDeployDependancyTestCase class >> testParameters [
 	^ ParametrizedTestMatrix new
 		forSelector: #archetype
 			addOptions:
-			{TKTArchetype pharoCurrent.
-			TKTArchetype pharo70.
+			{TKTArchetype pharo70.
 			TKTArchetype pharo80};
+		forSelector: #project
+			addOptions:
+			{TKTProject taskit.
+			TKTProject baselineTests};
 		yourself
 ]
 
 { #category : #tests }
-TKTArchetypeBuildAndDeployTestCase >> archetype: anArchetype [
+TKTArchetypeBuildAndDeployDependancyTestCase >> archetype: anArchetype [
 	archetype := anArchetype 
 ]
 
 { #category : #tests }
-TKTArchetypeBuildAndDeployTestCase >> runCaseManaged [ 
+TKTArchetypeBuildAndDeployDependancyTestCase >> project: aProject [
+	project := aProject
+]
+
+{ #category : #tests }
+TKTArchetypeBuildAndDeployDependancyTestCase >> runCaseManaged [
 	^ self runCase
 ]
 
 { #category : #tests }
-TKTArchetypeBuildAndDeployTestCase >> setUp [
+TKTArchetypeBuildAndDeployDependancyTestCase >> setUp [
 	super setUp.
 	session := Smalltalk session.
 	deployer := TKTFileOrientedDeployer default.
 ]
 
 { #category : #tests }
-TKTArchetypeBuildAndDeployTestCase >> tearDown [
+TKTArchetypeBuildAndDeployDependancyTestCase >> tearDown [
 	session = Smalltalk session
 		ifTrue: [ TKTSystem rm
 				option: '-rf';
@@ -51,14 +60,9 @@ TKTArchetypeBuildAndDeployTestCase >> tearDown [
 ]
 
 { #category : #tests }
-TKTArchetypeBuildAndDeployTestCase >> testCommunicationStonHasNoDependancies [
-	self assert: archetype dependancies size equals: 0
-]
-
-{ #category : #tests }
-TKTArchetypeBuildAndDeployTestCase >> testDeployDeploysAFunctionalEnvironment [
+TKTArchetypeBuildAndDeployDependancyTestCase >> testDeployDeploysAFunctionalEnvironment [
 	| deployed |
-	deployed := deployer deployAtDefaultLocation: archetype.
+	deployed := deployer deployAtDefaultLocation: archetype + project.
 	self assert: deployed vmFolder exists.
 	self assert: deployed imageFile exists.
 	self assert: deployed changesFile exists.
