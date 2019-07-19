@@ -12,7 +12,7 @@ Class {
 		'cancelled',
 		'state'
 	],
-	#category : 'TaskIt-Kernel'
+	#category : #'TaskIt-Kernel'
 }
 
 { #category : #evaluating }
@@ -29,7 +29,7 @@ TKTTaskExecution >> cancelWithReason: reason [
 
 { #category : #evaluating }
 TKTTaskExecution >> doExecuteTask [
-	^ task value 
+	^ task evaluateOn: self
 ]
 
 { #category : #evaluating }

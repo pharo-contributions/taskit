@@ -4,7 +4,7 @@ I am a process provider that creates Pharo processes using the standard #fork me
 Class {
 	#name : #TKTPharoProcessProvider,
 	#superclass : #TKTProcessProvider,
-	#category : 'TaskIt-Kernel'
+	#category : #'TaskIt-Kernel'
 }
 
 { #category : #'instance-creation' }

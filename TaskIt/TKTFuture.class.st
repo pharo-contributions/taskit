@@ -154,7 +154,7 @@ Class {
 		'exceptionCallbacks',
 		'runner'
 	],
-	#category : 'TaskIt-Futures'
+	#category : #'TaskIt-Futures'
 }
 
 { #category : #'instance-creation' }

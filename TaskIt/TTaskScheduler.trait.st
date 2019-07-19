@@ -3,7 +3,7 @@ I am a trait implementing the main behavior of a task scheduler. That is, I defi
 "
 Trait {
 	#name : #TTaskScheduler,
-	#category : 'TaskIt-Kernel'
+	#category : #'TaskIt-Kernel'
 }
 
 { #category : #testing }

@@ -4,7 +4,7 @@ I represent the state of a scheduled task. A task can be either be ready to be r
 Class {
 	#name : #TKTTaskState,
 	#superclass : #Object,
-	#category : 'TaskIt-Kernel'
+	#category : #'TaskIt-Kernel'
 }
 
 { #category : #cancelling }

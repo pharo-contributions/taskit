@@ -22,7 +22,7 @@ Class {
 		'startUpTask',
 		'tearDownTask'
 	],
-	#category : 'TaskIt-Services'
+	#category : #'TaskIt-Services'
 }
 
 { #category : #initialization }

@@ -1,7 +1,7 @@
 Class {
 	#name : #TKTTaskItOsSubrprocessBuilderTests,
 	#superclass : #TKTTestCase,
-	#category : 'TaskItShell-Tests'
+	#category : #'TaskItShell-Tests'
 }
 
 { #category : #'as yet unclassified' }
@@ -24,9 +24,9 @@ TKTTaskItOsSubrprocessBuilderTests >> testTaskBlockShouldReturnACommandDeclarati
 	worker := TKTWorker new.
 	worker exceptionHandler: TKTTestExceptionHandler new.
 	worker start.
-	future := [ :spec | self ] asOSTask future: worker.
-	future waitForCompletion: 1 second.
-	self assert: future isFailure description: ' Future should fail! '
+	self
+		should: [ future := [ :spec | self ] asOSTask future: worker ]
+		raise: Error
 ]
 
 { #category : #'as yet unclassified' }

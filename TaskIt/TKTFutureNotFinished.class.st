@@ -4,7 +4,7 @@ I represent a not yet finished future. Not yet finished futures cannot really sc
 Class {
 	#name : #TKTFutureNotFinished,
 	#superclass : #TKTFutureState,
-	#category : 'TaskIt-Futures'
+	#category : #'TaskIt-Futures'
 }
 
 { #category : #testing }

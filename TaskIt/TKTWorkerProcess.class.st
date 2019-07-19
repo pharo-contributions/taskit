@@ -16,7 +16,7 @@ Class {
 		'process',
 		'currentTaskExecution'
 	],
-	#category : 'TaskIt-Worker'
+	#category : #'TaskIt-Worker'
 }
 
 { #category : #'start-stop' }

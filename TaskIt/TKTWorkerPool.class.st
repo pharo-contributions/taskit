@@ -37,7 +37,7 @@ Class {
 		'poolWorker',
 		'workers'
 	],
-	#category : 'TaskIt-Worker'
+	#category : #'TaskIt-Worker'
 }
 
 { #category : #schedulling }

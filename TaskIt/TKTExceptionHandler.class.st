@@ -6,7 +6,7 @@ Subclasses of me are meant to define different exception handling behaviours suc
 Class {
 	#name : #TKTExceptionHandler,
 	#superclass : #Object,
-	#category : 'TaskIt-Kernel'
+	#category : #'TaskIt-Kernel'
 }
 
 { #category : #handling }

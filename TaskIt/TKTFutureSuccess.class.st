@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'value'
 	],
-	#category : 'TaskIt-Futures'
+	#category : #'TaskIt-Futures'
 }
 
 { #category : #accessing }

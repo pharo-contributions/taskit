@@ -3,7 +3,7 @@ I am a trait implementing the main behavior of a task executor. That is, an obje
 "
 Trait {
 	#name : #TTaskExecutor,
-	#category : 'TaskIt-Kernel'
+	#category : #'TaskIt-Kernel'
 }
 
 { #category : #testing }

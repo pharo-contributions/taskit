@@ -55,7 +55,7 @@ TKTShellCommandDeclaration >> createOSSubprocess [
 
 { #category : #convenience }
 TKTShellCommandDeclaration >> fixedTask [
-	^ TKTFixedCommandTask new
+	^ TKTShellCommandTask new
 		command: self;
 		yourself
 ]

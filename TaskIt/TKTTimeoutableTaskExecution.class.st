@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'timeout'
 	],
-	#category : 'TaskIt-Kernel'
+	#category : #'TaskIt-Kernel'
 }
 
 { #category : #evaluating }

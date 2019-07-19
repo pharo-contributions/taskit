@@ -28,7 +28,7 @@ Class {
 	#instVars : [
 		'process'
 	],
-	#category : 'TaskIt-Kernel'
+	#category : #'TaskIt-Kernel'
 }
 
 { #category : #schedulling }

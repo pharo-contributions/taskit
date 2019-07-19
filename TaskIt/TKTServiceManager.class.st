@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'services'
 	],
-	#category : 'TaskIt-Services'
+	#category : #'TaskIt-Services'
 }
 
 { #category : #initialization }

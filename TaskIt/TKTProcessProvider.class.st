@@ -4,7 +4,7 @@ I am a process provider. I define how processes are created and provide a hook f
 Class {
 	#name : #TKTProcessProvider,
 	#superclass : #Object,
-	#category : 'TaskIt-Kernel'
+	#category : #'TaskIt-Kernel'
 }
 
 { #category : #'instance-creation' }

@@ -1,3 +1,6 @@
+"
+System facade for unix systems.
+"
 Class {
 	#name : #TKTSystem,
 	#superclass : #Object,

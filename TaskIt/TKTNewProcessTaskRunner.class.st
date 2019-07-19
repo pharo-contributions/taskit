@@ -48,7 +48,7 @@ First, you'll see that a different processes is being used to execute each task.
 Class {
 	#name : #TKTNewProcessTaskRunner,
 	#superclass : #TKTRunner,
-	#category : 'TaskIt-Kernel'
+	#category : #'TaskIt-Kernel'
 }
 
 { #category : #schedulling }

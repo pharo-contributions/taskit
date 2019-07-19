@@ -43,5 +43,5 @@ Class {
 	#superclass : #TKTAbstractExecutor,
 	#traits : 'TTaskScheduler',
 	#classTraits : 'TTaskScheduler classTrait',
-	#category : 'TaskIt-Kernel'
+	#category : #'TaskIt-Kernel'
 }

@@ -12,7 +12,7 @@ Class {
 		'exceptionHandler',
 		'busy'
 	],
-	#category : 'TaskIt-Kernel'
+	#category : #'TaskIt-Kernel'
 }
 
 { #category : #accessing }
