@@ -104,7 +104,7 @@ TKTForkItIncomingTasksService >> master: anUrl [
 
 { #category : #'server commands' }
 TKTForkItIncomingTasksService >> noteTaskScheduled [
-	[ self requestAndProcessTask ] schedule: pool.
+	[ self requestAndProcessTask ]  asTask schedule: pool.
 	^ true
 ]
 
@@ -153,7 +153,6 @@ TKTForkItIncomingTasksService >> requestAndProcessTask [
 
 { #category : #protocol }
 TKTForkItIncomingTasksService >> startOn: anAddress [
-self halt.
 	TKTConfiguration profileNamed: #lightweight.
 	pool ifNil: [ self usePool: TKTCommonQueueWorkerPool createDefault ].
 	server := (ZnServer on: 0)

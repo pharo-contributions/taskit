@@ -13,6 +13,11 @@ Class {
 	#category : #'TaskItForkIt-Worker'
 }
 
+{ #category : #accessing }
+TKTArchetypedQueueController >> archetype [
+	^ archetype
+]
+
 { #category : #schedulling }
 TKTArchetypedQueueController >> archetype: anArchetype registry: aRegistry backends: anAmount [
 	archetype := anArchetype.
@@ -39,7 +44,6 @@ TKTArchetypedQueueController >> managesBackendId: aHash [
 
 { #category : #schedulling }
 TKTArchetypedQueueController >> noteRemoteWorkerAt: anUrl forBackendHashed: aHash [
-self halt.
 	backends
 		select: [ :b | b hash = aHash ]
 		thenDo: [ :b | b setUrl: anUrl ]
@@ -64,6 +68,7 @@ TKTArchetypedQueueController >> requestTaskOrNilForBackend: aHash [
 { #category : #schedulling }
 TKTArchetypedQueueController >> scheduleTaskExecution: aTaskExecution [
 	registry register: aTaskExecution.
+	queue nextPut: aTaskExecution.
 	self noteTaskHasBeenScheduled
 ]
 
