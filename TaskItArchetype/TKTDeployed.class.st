@@ -152,7 +152,7 @@ TKTDeployed >> modifyImageBy: aString [
 		format:
 			{output fullName.
 			aString}.
-	future := (self command
+	future := (self commandUi
 		option: 'eval';
 		arguments:
 			{'--save'.

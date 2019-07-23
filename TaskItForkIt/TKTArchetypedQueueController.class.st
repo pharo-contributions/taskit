@@ -29,6 +29,7 @@ TKTArchetypedQueueController >> findBackendById: aHash [
 TKTArchetypedQueueController >> initialize [
 	super initialize.
 	queue := AtomicSharedQueue new.
+	backends := OrderedCollection new
 ]
 
 { #category : #schedulling }
@@ -66,10 +67,16 @@ TKTArchetypedQueueController >> scheduleTaskExecution: aTaskExecution [
 ]
 
 { #category : #schedulling }
+TKTArchetypedQueueController >> scheduleTaskExecutionNotDeployable: aTaskExecution [
+	registry registerNotDeployable: aTaskExecution.
+	self noteTaskHasBeenScheduled
+]
+
+{ #category : #schedulling }
 TKTArchetypedQueueController >> spawnNewBackend [
 	| backend |
 	backend := TKTForkedBackend new.
-	backend defaultSerializerSelector: self defaultSerializerSelector.
+	backend defaultSerializerSelector: #xstoned.
 	archetype configureBackend: backend.
 	backends add: backend.
 	backend startWith: registry

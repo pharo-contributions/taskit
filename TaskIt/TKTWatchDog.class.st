@@ -5,7 +5,8 @@ Class {
 	#name : #TKTWatchDog,
 	#superclass : #TKTService,
 	#instVars : [
-		'values'
+		'values',
+		'id'
 	],
 	#classInstVars : [
 		'onDuty'
@@ -42,12 +43,13 @@ TKTWatchDog >> ensureIsWatching: aValue [
 { #category : #initialization }
 TKTWatchDog >> initialize [
 	super initialize.
-	values := WeakSet new
+	values := WeakSet new.
+	id := UUID new.
 ]
 
 { #category : #initialization }
 TKTWatchDog >> name [
-	^ 'WatchDog - Garden size: ' , values size asString
+	^ 'WatchDog (' , id asString , ')'
 ]
 
 { #category : #initialization }

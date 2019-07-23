@@ -102,6 +102,20 @@ TKTArchetypeAwarePool >> pool: aTKTCommonQueueWorkerPool [
 ]
 
 { #category : #'public - mutexed' }
+TKTArchetypeAwarePool >> privateArchetypedControllerFor: archetype [
+	^ archetypedControllers
+		detect: [ :a | a archetype = archetype ]
+		ifNone: [ | new |
+			new := TKTArchetypedQueueController new
+				archetype: archetype
+					registry: self remoteFutureRegistry
+					backends: 2;
+				yourself.
+			archetypedControllers add: new.
+			new ]
+]
+
+{ #category : #'public - mutexed' }
 TKTArchetypeAwarePool >> privateFuture: aTask [
 	^ pool privateFuture: aTask
 ]
