@@ -30,7 +30,7 @@ TKTArchetypedTask >> future: executor [
 { #category : #accessing }
 TKTArchetypedTask >> futureTaskExecutionFor: aRunner [
 	^ self
-		configureTaskExecution: TKTArchetypedTaskExecution new
+		configureTaskExecution: TKTRemoteTaskExecution new
 		with: aRunner
 ]
 
@@ -48,7 +48,7 @@ TKTArchetypedTask >> schedule: executor [
 { #category : #accessing }
 TKTArchetypedTask >> scheduleTaskExecutionFor: aRunner [
 	^ self
-		configureTaskExecution: TKTArchetypedTaskExecution new
+		configureTaskExecution: TKTRemoteTaskExecution new
 		with: aRunner
 ]
 

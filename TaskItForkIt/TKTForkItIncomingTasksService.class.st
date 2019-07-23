@@ -54,24 +54,20 @@ TKTForkItIncomingTasksService >> help: request [
 
 { #category : #'server commands' }
 TKTForkItIncomingTasksService >> informError: value id: taskId serializer: aSerializer [
-	ZnEasy
-		post: master / #deployFutureResult
-		data:
-			(aSerializer
-				writeZnEntityFor:
-					{value.
-					taskId})
+	aSerializer
+		writeZnRequestFor:
+			{value.
+			taskId}
+		to: master / #deployFutureResult
 ]
 
 { #category : #'server commands' }
 TKTForkItIncomingTasksService >> informSuccess: value id: taskId serializer: aSerializer [
-	ZnEasy
-		post: master / #deployFutureResult
-		data:
-			(aSerializer
-				writeZnEntityFor:
-					{value.
-					taskId})
+	aSerializer
+		writeZnRequestFor:
+			{value.
+			taskId}
+		to: master / #deployFutureResult
 ]
 
 { #category : #initialization }
@@ -82,8 +78,8 @@ TKTForkItIncomingTasksService >> initialize [
 		map: 'alive' to: #alive;
 		map: 'isFree' to: #isFree;
 		map: 'task' to: #task:serializer:;
-		map: 'stop' to: #stop.
-	
+		map: 'stop' to: #stop;
+		map: 'noteTaskScheduled' to: #noteTaskScheduled
 ]
 
 { #category : #accessing }
@@ -106,6 +102,12 @@ TKTForkItIncomingTasksService >> master: anUrl [
 	master := anUrl
 ]
 
+{ #category : #'server commands' }
+TKTForkItIncomingTasksService >> noteTaskScheduled [
+	[ self requestAndProcessTask ] schedule: pool.
+	^ true
+]
+
 { #category : #accessing }
 TKTForkItIncomingTasksService >> port [
 	^ server port 
@@ -117,26 +119,29 @@ TKTForkItIncomingTasksService >> privateInformBinds [
 	master ifNil: [ ^ self ].
 	timesToTry := 5.
 	time := 0.
-	[ time := time + 1.
-	response := ZnEasy
-		post: master / #registerBackend
-		data:
-			(TKTSerializationStrategy ston
-				writeZnEntityFor:
-					{server localUrl.
-					backendHash}) ]
-		doWhileTrue: [ self
-				log: 'trying ' , time asString , ' to connect: ' , master asString.
-			time asSeconds wait.
-			response isError and: [ timesToTry - time >= 0 ] ].
+	[ 
+		time := time + 1.
+		response := TKTSerializationStrategy ston 
+							writeZnRequestFor: {server localUrl . backendHash} to: master / #registerBackend 
+	] doWhileTrue: [ 
+		self log: 'trying ' , time asString , ' to connect: ' , master asString.
+		time asSeconds wait.
+		response isError and: [ timesToTry - time >= 0 ] 
+	].
 	response isError
-		ifTrue: [ self
-				error: ' Unable to register as valid frontend ' , response entity asString ]
+		ifTrue: [ 
+			self error: ' Unable to register as valid frontend ' , response entity asString. ]
+]
+
+{ #category : #'server commands' }
+TKTForkItIncomingTasksService >> requestAndProcessTask [
+	TKTSerializationStrategy default
+		writeZnRequestFor: backendHash
+		to: master / #requestTask
 ]
 
 { #category : #protocol }
 TKTForkItIncomingTasksService >> startOn: anAddress [
-	
 	TKTConfiguration profileNamed: #lightweight.
 	pool ifNil: [ self usePool: TKTCommonQueueWorkerPool createDefault ].
 	server := (ZnServer on: 0)

@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'remoteFutureRegistry',
 		'pool',
-		'archetypedBackends',
+		'archetypedControllers',
 		'defaultSerializerSelector'
 	],
 	#category : #'TaskItForkIt-Worker'
@@ -26,38 +26,9 @@ TKTArchetypeAwarePool class >> createDefaultWithPool: aPool [
 		yourself
 ]
 
-{ #category : #'public - mutexed' }
-TKTArchetypeAwarePool >> allBackendsCollect: anArchetypedTask [
-	| backendsFor |
-	backendsFor := self backendsFor: anArchetypedTask archetype.
-	^ backendsFor
-		collect: [ :b | self futureArchetypedTask: anArchetypedTask backend: b ]
-]
-
-{ #category : #'public - mutexed' }
-TKTArchetypeAwarePool >> allBackendsDo: anArchetypedTask [
-	| backendsFor |
-	backendsFor := self backendsFor: anArchetypedTask archetype.
-	backendsFor
-		do: [ :b | self scheduleArchetypedTask: anArchetypedTask backend: b ]
-]
-
 { #category : #accessing }
 TKTArchetypeAwarePool >> amountOfTasksAt: aTKTArchetype [
 	^ self remoteFutureRegistry amountOfTasksFor: aTKTArchetype
-]
-
-{ #category : #'public - mutexed' }
-TKTArchetypeAwarePool >> backendFor: anArchetype [
-	^ archetypedBackends
-		detect: [ :b | b respondsToArchetype: anArchetype ]
-		ifNone: [ self spawnNewBackendFor: anArchetype ]
-]
-
-{ #category : #'public - mutexed' }
-TKTArchetypeAwarePool >> backendsFor: anArchetype [
-	^ archetypedBackends
-		select: [ :b | b respondsToArchetype: anArchetype ]
 ]
 
 { #category : #'public - mutexed' }
@@ -72,7 +43,8 @@ TKTArchetypeAwarePool >> defaultSerializerSelector: aDefaultSerializerSelector [
 
 { #category : #'public - mutexed' }
 TKTArchetypeAwarePool >> ensureIsWorking [
-	archetypedBackends do: [ :b | b ensureIsAlive: remoteFutureRegistry ]
+	archetypedControllers
+		do: [ :controller | controller ensureIsWorking ]
 ]
 
 { #category : #'public - mutexed' }
@@ -82,31 +54,23 @@ TKTArchetypeAwarePool >> future: aTask [
 
 { #category : #'public - mutexed' }
 TKTArchetypeAwarePool >> futureArchetypedTask: aTask [
-	^ self
-		futureArchetypedTask: aTask
-		backend: (self backendFor: aTask archetype)
-]
-
-{ #category : #'public - mutexed' }
-TKTArchetypeAwarePool >> futureArchetypedTask: aTask backend: aBackend [
 	| execution |
-	self assert: (aBackend respondsToArchetype: aTask archetype).
 	execution := aTask asTask futureTaskExecutionFor: self.
-	execution backend: aBackend.
-	self remoteFutureRegistry register: execution.
-	pool scheduleTaskExecution: execution.
+	(self privateArchetypedControllerFor: aTask archetype)
+		scheduleTaskExecution: execution.
 	^ execution future
 ]
 
 { #category : #testing }
 TKTArchetypeAwarePool >> includesArchetype: aTKTArchetype [
-	^ archetypedBackends includes: [ :be | be respondsToArchetype: aTKTArchetype ]
+	^ archetypedControllers
+		includes: [ :controller | controller respondsToArchetype: aTKTArchetype ]
 ]
 
 { #category : #'public - mutexed' }
 TKTArchetypeAwarePool >> initializeWithPool: aPool [
 	pool := aPool.
-	archetypedBackends := Set new.
+	archetypedControllers := Set new.
 	TKTConfiguration watchDog watch: self
 ]
 
@@ -127,7 +91,9 @@ TKTArchetypeAwarePool >> isUIRunner [
 
 { #category : #'public - mutexed' }
 TKTArchetypeAwarePool >> noteRemoteWorkerAt: anUrl forBackendHashed: aHash [
-	(archetypedBackends detect: [ :be | be hash = aHash ]) setUrl: anUrl
+	archetypedControllers
+		detect:
+			[ :controller | controller noteRemoteWorkerAt: anUrl forBackendHashed: aHash ]
 ]
 
 { #category : #accessing }
@@ -155,6 +121,13 @@ TKTArchetypeAwarePool >> remoteFutureRegistry [
 ]
 
 { #category : #'public - mutexed' }
+TKTArchetypeAwarePool >> requestTaskForBackend: aHash [
+	^ (archetypedControllers
+		detect: [ :controller | controller managesBackendId: aHash ])
+		requestTaskOrNilForBackend: aHash
+]
+
+{ #category : #'public - mutexed' }
 TKTArchetypeAwarePool >> schedule: aTask [
 	aTask asTask schedule: self
 ]
@@ -166,19 +139,11 @@ TKTArchetypeAwarePool >> schedule: aTask timeout: aTimeout [
 
 { #category : #'public - mutexed' }
 TKTArchetypeAwarePool >> scheduleArchetypedTask: aTask [
-	^ self
-		scheduleArchetypedTask: aTask
-		backend: (self backendFor: aTask)
-]
-
-{ #category : #'public - mutexed' }
-TKTArchetypeAwarePool >> scheduleArchetypedTask: aTask backend: aBackend [
 	| execution |
-	self assert: (aBackend respondsToArchetype: aTask archetype).
 	execution := aTask asTask futureTaskExecutionFor: self.
-	execution backend: aBackend.
-	self remoteFutureRegistry registerNotDeployable: execution.
-	pool scheduleTaskExecution: execution
+	(self privateArchetypedControllerFor: aTask archetype)
+		scheduleTaskExecutionNotDeployable: execution.
+		
 ]
 
 { #category : #'public - mutexed' }
@@ -191,51 +156,30 @@ TKTArchetypeAwarePool >> scheduleTimeout: timeout on: aTaskExecution [
 	^ pool scheduleTimeout: timeout on: aTaskExecution
 ]
 
-{ #category : #'public - mutexed' }
-TKTArchetypeAwarePool >> spawnNewBackendFor: anArchetype [
-	| backend |
-	backend := TKTForkedBackend new.
-	backend defaultSerializerSelector: self defaultSerializerSelector.
-	anArchetype configureBackend: backend. 
-
-	archetypedBackends add: backend.
-	
-	backend startWith: self remoteFutureRegistry.
-	
-	
-	^ backend
-]
-
 { #category : #stop }
 TKTArchetypeAwarePool >> stop [
 	TKTConfiguration watchDog stopWatching: self.
-	archetypedBackends do: #stop.
+	archetypedControllers do: #stop.
 	remoteFutureRegistry ifNotNil: [ :r | r stop ].
 	remoteFutureRegistry := nil.
 	pool
 		ifNotNil: [ pool = TKTConfiguration runner
 				ifFalse: [ pool stop ] ].
-	archetypedBackends removeAll.
+	archetypedControllers removeAll.
 	pool := nil
 ]
 
 { #category : #stop }
 TKTArchetypeAwarePool >> stopAndDelete [
 	TKTConfiguration watchDog stopWatching: self.
-	archetypedBackends do: #stopAndDelete.
+	archetypedControllers do: #stopAndDelete.
 	remoteFutureRegistry ifNotNil: [ :r | r stop ].
 	remoteFutureRegistry := nil.
 	pool
 		ifNotNil: [ pool = TKTConfiguration runner
 				ifFalse: [ pool stop ] ].
-	archetypedBackends removeAll.
+	archetypedControllers removeAll.
 	pool := nil
-]
-
-{ #category : #'forcing backend' }
-TKTArchetypeAwarePool >> stopAndDeleteBackend: aTKTForkedBackend [
-	archetypedBackends remove: aTKTForkedBackend ifAbsent: [  ].
-	aTKTForkedBackend stopAndDelete
 ]
 
 { #category : #accessing }

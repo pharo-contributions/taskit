@@ -44,7 +44,8 @@ TKTOutgoingTasksService >> initialize [
 	super initialize.
 	self
 		map: 'registerBackend' to: #registerBackend:;
-		map: 'deployFutureResult' to: #deployFutureResult:.
+		map: 'deployFutureResult' to: #deployFutureResult:;
+		map: 'requestTask' to: #requestTask:.
 	futures := Dictionary new.
 	weakRegistry := WeakSet new
 ]
@@ -69,6 +70,12 @@ TKTOutgoingTasksService >> registerBackend: arrayUrlHash [
 TKTOutgoingTasksService >> registerNotDeployable: aTaskExecution [
 	weakRegistry add: aTaskExecution.
 	
+]
+
+{ #category : #registry }
+TKTOutgoingTasksService >> requestTask: aBackendHash [
+	top requestTaskForBackend: aBackendHash.
+	^ true.
 ]
 
 { #category : #registry }

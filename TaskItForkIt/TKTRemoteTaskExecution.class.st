@@ -2,7 +2,7 @@
 The archetyped task execution relies on the runner as dispatcher to the proper backend to the remote process
 "
 Class {
-	#name : #TKTArchetypedTaskExecution,
+	#name : #TKTRemoteTaskExecution,
 	#superclass : #TKTFutureExecution,
 	#instVars : [
 		'id',
@@ -13,12 +13,12 @@ Class {
 }
 
 { #category : #evaluating }
-TKTArchetypedTaskExecution >> backend: aBackend [
+TKTRemoteTaskExecution >> backend: aBackend [
 	backend := aBackend
 ]
 
 { #category : #remoteExtention }
-TKTArchetypedTaskExecution >> deployValue: aValue [
+TKTRemoteTaskExecution >> deployValue: aValue [
 	| deployingTask |
 	deployingTask := (aValue isException
 		ifTrue: [ MessageSend
@@ -34,54 +34,52 @@ TKTArchetypedTaskExecution >> deployValue: aValue [
 ]
 
 { #category : #evaluating }
-TKTArchetypedTaskExecution >> doExecuteTask [
-	[ backend isAlive
-		ifTrue: [ backend
-				sendTaskAndProcessResponse: (TKTTask valuable: task valuable)
-				id: id
-				serializer: task serializerSelector ]
-		ifFalse: [ TKTRetryException signal: 'Image is dead!' ] ]
+TKTRemoteTaskExecution >> doExecuteTask [
+	[ backend
+		sendTaskAndProcessResponse: (TKTTask valuable: task valuable)
+		id: id
+		serializer: task serializerSelector ]
 		on: Error
 		do: [ :error | future deployFailure: error freeze ]
 ]
 
 { #category : #evaluating }
-TKTArchetypedTaskExecution >> id [
+TKTRemoteTaskExecution >> id [
 	^ id
 ]
 
 { #category : #evaluating }
-TKTArchetypedTaskExecution >> id: anId [
+TKTRemoteTaskExecution >> id: anId [
 	id := anId 
 ]
 
 { #category : #evaluating }
-TKTArchetypedTaskExecution >> initialize [
+TKTRemoteTaskExecution >> initialize [
 	super initialize.
 	process := WeakArray new: 1
 ]
 
 { #category : #evaluating }
-TKTArchetypedTaskExecution >> noteRunningOn: aRunner [ 
+TKTRemoteTaskExecution >> noteRunningOn: aRunner [ 
  	process at:1 put: aRunner.
 ]
 
 { #category : #evaluating }
-TKTArchetypedTaskExecution >> task [
+TKTRemoteTaskExecution >> task [
 	^ task
 ]
 
 { #category : #evaluating }
-TKTArchetypedTaskExecution >> useFuel [
+TKTRemoteTaskExecution >> useFuel [
 	task useFuel
 ]
 
 { #category : #evaluating }
-TKTArchetypedTaskExecution >> useSton [
+TKTRemoteTaskExecution >> useSton [
 	task useSton
 ]
 
 { #category : #evaluating }
-TKTArchetypedTaskExecution >> useXStoned [ 
+TKTRemoteTaskExecution >> useXStoned [ 
 	task useXStoned
 ]

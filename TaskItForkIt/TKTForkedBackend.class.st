@@ -79,6 +79,14 @@ TKTForkedBackend >> isFree [
 ]
 
 { #category : #accessing }
+TKTForkedBackend >> noteTaskScheduled [
+	[ ZnEasy get: self url / #noteTaskScheduled.
+	^ true ]
+		on: Error
+		do: [ ^ false ]
+]
+
+{ #category : #accessing }
 TKTForkedBackend >> respondsToArchetype: anArchetype [
 	^ deploy archetype compatibleWith: anArchetype
 ]

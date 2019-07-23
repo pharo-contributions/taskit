@@ -1,7 +1,7 @@
 Class {
 	#name : #TKTXSTONedWriter,
 	#superclass : #STONWriter,
-	#category : #'TaskItForkIt-Worker-Server'
+	#category : #'TaskItForkIt-Xstoned'
 }
 
 { #category : #writing }

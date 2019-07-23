@@ -29,7 +29,7 @@ TKTArchetypedTaskExecutionRunning >> setUp [
 	super setUp.
 	task := [  ] asArchetypedTaskOn: TKTArchetype pharo80.
 	taskExecution := task
-		configureTaskExecution: TKTArchetypedTaskExecution new
+		configureTaskExecution: TKTRemoteTaskExecution new
 		with: nil.
 	taskExecution backend: self.
 	taskExecution id: #something.
