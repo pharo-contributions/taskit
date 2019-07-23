@@ -119,18 +119,21 @@ TKTForkItIncomingTasksService >> privateInformBinds [
 	master ifNil: [ ^ self ].
 	timesToTry := 5.
 	time := 0.
-	[ 
-		time := time + 1.
-		response := TKTSerializationStrategy ston 
-							writeZnRequestFor: {server localUrl . backendHash} to: master / #registerBackend 
-	] doWhileTrue: [ 
-		self log: 'trying ' , time asString , ' to connect: ' , master asString.
-		time asSeconds wait.
-		response isError and: [ timesToTry - time >= 0 ] 
-	].
-	response isError
-		ifTrue: [ 
-			self error: ' Unable to register as valid frontend ' , response entity asString. ]
+	[ time := time + 1.
+	[ response := TKTSerializationStrategy ston
+		writeZnRequestFor:
+			{server localUrl.
+			backendHash}
+		to: master / #registerBackend ]
+		on: Error
+		do: [ :e | response := false ] ]
+		doWhileTrue: [ self
+				log: 'trying ' , time asString , ' to connect: ' , master asString.
+			time asSeconds wait.
+			response not and: [ timesToTry - time >= 0 ] ].
+	response
+		ifFalse: [ self
+				error: ' Unable to register as valid frontend ' , response entity asString ]
 ]
 
 { #category : #'server commands' }
