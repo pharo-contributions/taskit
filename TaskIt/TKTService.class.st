@@ -152,6 +152,7 @@ TKTService >> setUp [
 
 { #category : #starting }
 TKTService >> start [
+self halt.
 	stopRequested := false.
 	stopCallbacks := Set new.
 	worker := TKTWorker new.
