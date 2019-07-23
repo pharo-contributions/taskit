@@ -57,8 +57,8 @@ TKTWatchDog >> name [
 { #category : #initialization }
 TKTWatchDog >> start [
 	started
-		ifFalse: [ super start ].
-	started := true
+		ifFalse: [ started := true.
+			super start ]
 ]
 
 { #category : #initialization }
