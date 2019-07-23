@@ -92,7 +92,7 @@ TKTArchetypeAwarePool >> isUIRunner [
 { #category : #'public - mutexed' }
 TKTArchetypeAwarePool >> noteRemoteWorkerAt: anUrl forBackendHashed: aHash [
 	archetypedControllers
-		detect:
+		do:
 			[ :controller | controller noteRemoteWorkerAt: anUrl forBackendHashed: aHash ]
 ]
 
