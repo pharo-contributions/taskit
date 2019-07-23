@@ -88,9 +88,9 @@ TKTTask >> configureTaskExecution: execution with: aRunner [
 	^ execution
 ]
 
-{ #category : #executing }
-TKTTask >> evaluateOn: aTaskExecution [
-	^ self value
+{ #category : #running }
+TKTTask >> evaluateOn: anExecution [
+	self subclassResponsibility
 ]
 
 { #category : #running }

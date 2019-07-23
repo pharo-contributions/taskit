@@ -12,7 +12,7 @@ Class {
 
 { #category : #executing }
 TKTGenericTask >> evaluateOn: aTaskExecution [
-	valuable value
+	^ valuable value
 ]
 
 { #category : #accessing }
