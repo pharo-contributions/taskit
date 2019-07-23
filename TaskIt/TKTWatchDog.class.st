@@ -6,7 +6,8 @@ Class {
 	#superclass : #TKTService,
 	#instVars : [
 		'values',
-		'id'
+		'id',
+		'started'
 	],
 	#classInstVars : [
 		'onDuty'
@@ -45,11 +46,19 @@ TKTWatchDog >> initialize [
 	super initialize.
 	values := WeakSet new.
 	id := UUID new.
+	started := false
 ]
 
 { #category : #initialization }
 TKTWatchDog >> name [
 	^ 'WatchDog (' , id asString , ')'
+]
+
+{ #category : #initialization }
+TKTWatchDog >> start [
+	started
+		ifFalse: [ super start ].
+	started := true
 ]
 
 { #category : #initialization }
