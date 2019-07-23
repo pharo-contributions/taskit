@@ -106,12 +106,13 @@ TKTArchetypeAwarePool >> privateArchetypedControllerFor: archetype [
 	^ archetypedControllers
 		detect: [ :a | a archetype = archetype ]
 		ifNone: [ | new |
-			new := TKTArchetypedQueueController new
+			new := TKTArchetypedQueueController new.
+			archetypedControllers add: new.
+			new
 				archetype: archetype
 					registry: self remoteFutureRegistry
 					backends: 2;
 				yourself.
-			archetypedControllers add: new.
 			new ]
 ]
 

@@ -39,6 +39,7 @@ TKTArchetypedQueueController >> managesBackendId: aHash [
 
 { #category : #schedulling }
 TKTArchetypedQueueController >> noteRemoteWorkerAt: anUrl forBackendHashed: aHash [
+self halt.
 	backends
 		select: [ :b | b hash = aHash ]
 		thenDo: [ :b | b setUrl: anUrl ]
