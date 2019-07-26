@@ -40,7 +40,7 @@ TKTArchetypedQueueController >> cleanUpImageToStart [
 { #category : #schedulling }
 TKTArchetypedQueueController >> deploy [
 	^ deploy
-		ifFalse: [ deploy := archetype deploy ]
+		ifNil: [ deploy := archetype deploy ]
 ]
 
 { #category : #schedulling }
