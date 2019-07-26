@@ -236,7 +236,8 @@ TKTFuture >> deployFailure: aValue [
 
 { #category : #deployment }
 TKTFuture >> deploySuccess: aValue [
-
+aValue isNumber ifTrue:[ self halt ].
+ 
 	self installFutureResult: (TKTFutureSuccess new value: aValue).
 	resultCallbacks do: [ :each | 
 		self scheduleCallbackTask: [ each value: aValue ] ].

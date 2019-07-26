@@ -118,7 +118,7 @@ TKTArchetypeAwarePool >> privateArchetypedControllerFor: archetype [
 			new
 				archetype: archetype
 					registry: self remoteFutureRegistry
-					backends: 1;
+					backends: 5;
 				yourself.
 			new ]
 ]

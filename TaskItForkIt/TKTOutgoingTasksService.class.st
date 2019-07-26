@@ -34,6 +34,13 @@ TKTOutgoingTasksService >> deployFutureResult: valueId [
 								, e messageText) ]
 ]
 
+{ #category : #registry }
+TKTOutgoingTasksService >> ensureIsWorking [
+	( server isRunning & server isListening )
+		ifFalse: [ server start ].
+	self assert: server isRunning & server isListening
+]
+
 { #category : #accessing }
 TKTOutgoingTasksService >> futures [
 	^ futures ifNil: [ futures := Dictionary new ]
@@ -80,7 +87,8 @@ TKTOutgoingTasksService >> requestTask: aBackendHash [
 { #category : #registry }
 TKTOutgoingTasksService >> start [
 	^ server
-		ifNil: [ server := ZnSingleThreadedServer on: 0.
+		ifNil: [ server := ZnServer on: 0.
+			server maximumEntitySize: (30 *1024*1024).  "30Mb"
 			server bindingAddress: NetNameResolver loopBackAddress.
 			server delegate: self.
 			server start.
@@ -101,6 +109,6 @@ TKTOutgoingTasksService >> top: aMainRunner [
 
 { #category : #registry }
 TKTOutgoingTasksService >> url [
-	self assert: server isRunning & server isListening.
+	self ensureIsWorking. 
 	^ server localUrl
 ]

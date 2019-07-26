@@ -154,11 +154,13 @@ TKTForkItIncomingTasksService >> requestAndProcessTask [
 { #category : #protocol }
 TKTForkItIncomingTasksService >> startOn: anAddress [
 	TKTConfiguration profileNamed: #lightweight.
-	pool ifNil: [ self usePool: TKTCommonQueueWorkerPool createDefault ].
+	pool ifNil: [ self usePool: TKTConfiguration runner ].
 	server := (ZnServer on: 0)
 		bindingAddress: (NetNameResolver addressForName: anAddress);
 		delegate: self;
-		start;
+		maximumEntitySize: 30 * 1024 * 1024;
+		"30Mb"
+			start;
 		yourself.
 	self privateInformBinds
 ]

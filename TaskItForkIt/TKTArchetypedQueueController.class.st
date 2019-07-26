@@ -45,7 +45,9 @@ TKTArchetypedQueueController >> deploy [
 
 { #category : #schedulling }
 TKTArchetypedQueueController >> ensureEnoughBackends [
-	self maxBackends < queue size
+	(backends reject: #isAlive) do: #stopAndDelete.
+	backends removeAll: (backends reject: #isAlive).
+	(backends size < queue size and: [ backends size < maxBackeds ])
 		ifTrue: [ self spawnNewBackend ]
 ]
 
@@ -112,9 +114,9 @@ TKTArchetypedQueueController >> scheduleTaskExecutionNotDeployable: aTaskExecuti
 TKTArchetypedQueueController >> spawnNewBackend [
 	| backend |
 	backend := TKTForkedBackend new.
+	backends add: backend.
 	backend defaultSerializerSelector: #xstoned.
 	self deploy clone configureBackend: backend.
-	backends add: backend.
 	backend startWith: registry
 ]
 
