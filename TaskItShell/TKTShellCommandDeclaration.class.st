@@ -34,9 +34,12 @@ TKTShellCommandDeclaration >> command: aCommandName [
 
 { #category : #building }
 TKTShellCommandDeclaration >> commandPath [
+	| paths |
 	command asFileReference exists
 		ifTrue: [ ^ command ].
-	^ ((':' split: (OSEnvironment current at: 'PATH')) collect: [ :p | p asFileReference / command  ] thenSelect: #exists) first fullName
+	paths := ((':' split: (OSEnvironment current at: 'PATH')) collect: [ :p | p asFileReference / command  ] thenSelect: #exists) .
+	paths isEmpty ifTrue: [ self error: 'UNKNOWN command ', command  ].
+	^ paths first fullName
 ]
 
 { #category : #accessing }

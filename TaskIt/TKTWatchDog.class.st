@@ -24,6 +24,11 @@ TKTWatchDog class >> onDuty [
 ]
 
 { #category : #initialization }
+TKTWatchDog >> cleanUpImageToStart [
+	values removeAll
+]
+
+{ #category : #initialization }
 TKTWatchDog >> delay [
 	^ 10 seconds
 ]
@@ -68,6 +73,12 @@ TKTWatchDog >> stepService [
 		ifNotEmpty: [ :values | 
 			values do: [ :v | self watchDog: v ].
 			self delay wait ]
+]
+
+{ #category : #initialization }
+TKTWatchDog >> stop [
+	started := false.
+	super stop
 ]
 
 { #category : #initialization }

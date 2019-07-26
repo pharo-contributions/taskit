@@ -68,8 +68,7 @@ TKTOutgoingTasksService >> registerBackend: arrayUrlHash [
 
 { #category : #registry }
 TKTOutgoingTasksService >> registerNotDeployable: aTaskExecution [
-	weakRegistry add: aTaskExecution.
-	
+	weakRegistry add: aTaskExecution
 ]
 
 { #category : #registry }

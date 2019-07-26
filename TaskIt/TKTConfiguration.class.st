@@ -22,8 +22,10 @@ Class {
 
 { #category : #accessing }
 TKTConfiguration class >> cleanUpImageToStart [
-	TKTCommonQueueWorkerPool allInstancesDo:#cleanUpImageToStart.
-	self profileNamed: self profileNamed 
+	TKTCommonQueueWorkerPool allInstancesDo: #cleanUpImageToStart.
+	TKTArchetypeAwarePool allInstancesDo: #cleanUpImageToStart.
+	TKTConfiguration watchDog cleanUpImageToStart.
+	self profileNamed: self profileNamed
 ]
 
 { #category : #accessing }

@@ -31,10 +31,10 @@ TKTSystemAdapter class >> remote [
 
 { #category : #copying }
 TKTSystemAdapter >> chmod: aFileReference flag: aString [
-	TKTSystem chmod
+	(TKTSystem chmod
 		option: aString;
 		argument: aFileReference fullName;
-		future
+		future) synchronizeTimeout: 1 minute.
 ]
 
 { #category : #folder }
@@ -98,7 +98,7 @@ TKTSystemAdapter >> rm: aFileOrFolder [
 	^ (TKTSystem rm
 		option: '-rf';
 		argument: aFileOrFolder fullName) future
-		
+		synchronizeTimeout: 1 minute
 ]
 
 { #category : #folder }

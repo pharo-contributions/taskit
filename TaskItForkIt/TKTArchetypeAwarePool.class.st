@@ -32,6 +32,13 @@ TKTArchetypeAwarePool >> amountOfTasksAt: aTKTArchetype [
 ]
 
 { #category : #'public - mutexed' }
+TKTArchetypeAwarePool >> cleanUpImageToStart [
+	pool cleanUpImageToStart.
+	archetypedControllers do: #cleanUpImageToStart.
+
+]
+
+{ #category : #'public - mutexed' }
 TKTArchetypeAwarePool >> defaultSerializerSelector [
 	^ defaultSerializerSelector
 ]

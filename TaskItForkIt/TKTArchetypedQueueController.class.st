@@ -7,8 +7,10 @@ Class {
 	#instVars : [
 		'queue',
 		'archetype',
+		'deploy',
 		'backends',
-		'registry'
+		'registry',
+		'maxBackeds'
 	],
 	#category : #'TaskItForkIt-Worker'
 }
@@ -22,7 +24,29 @@ TKTArchetypedQueueController >> archetype [
 TKTArchetypedQueueController >> archetype: anArchetype registry: aRegistry backends: anAmount [
 	archetype := anArchetype.
 	registry := aRegistry.
-	anAmount timesRepeat: [ self spawnNewBackend ]
+	maxBackeds := anAmount.
+	deploy := archetype deploy.
+]
+
+{ #category : #schedulling }
+TKTArchetypedQueueController >> cleanUpImageToStart [
+	queue removeAll. 
+	backends removeAll. 
+	registry stop.
+
+	
+]
+
+{ #category : #schedulling }
+TKTArchetypedQueueController >> deploy [
+	^ deploy
+		ifFalse: [ deploy := archetype deploy ]
+]
+
+{ #category : #schedulling }
+TKTArchetypedQueueController >> ensureEnoughBackends [
+	self maxBackends < queue size
+		ifTrue: [ self spawnNewBackend ]
 ]
 
 { #category : #schedulling }
@@ -43,6 +67,11 @@ TKTArchetypedQueueController >> managesBackendId: aHash [
 ]
 
 { #category : #schedulling }
+TKTArchetypedQueueController >> maxBackends [
+	^ maxBackeds ifNil: [ maxBackeds := 1 ]
+]
+
+{ #category : #schedulling }
 TKTArchetypedQueueController >> noteRemoteWorkerAt: anUrl forBackendHashed: aHash [
 	backends
 		select: [ :b | b hash = aHash ]
@@ -51,6 +80,7 @@ TKTArchetypedQueueController >> noteRemoteWorkerAt: anUrl forBackendHashed: aHas
 
 { #category : #schedulling }
 TKTArchetypedQueueController >> noteTaskHasBeenScheduled [
+	self ensureEnoughBackends.
 	backends do: [ :b | b noteTaskScheduled ]
 ]
 
@@ -83,7 +113,7 @@ TKTArchetypedQueueController >> spawnNewBackend [
 	| backend |
 	backend := TKTForkedBackend new.
 	backend defaultSerializerSelector: #xstoned.
-	archetype configureBackend: backend.
+	self deploy clone configureBackend: backend.
 	backends add: backend.
 	backend startWith: registry
 ]

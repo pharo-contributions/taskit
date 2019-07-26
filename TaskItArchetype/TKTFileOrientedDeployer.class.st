@@ -140,13 +140,16 @@ TKTFileOrientedDeployer >> defaultDeployFolder [
 { #category : #accessing }
 TKTFileOrientedDeployer >> deploy: anArchetype at: location [
 	| deployed |
+	anArchetype parent
+		ifNil: [ (self deployFiles: anArchetype at: location)
+				do: [ :f | f synchronizeTimeout: 5 minutes ] ]
+		ifNotNil: [ self deploy: anArchetype parent at: location ].
+		
 	self createScript: location / 'pharo' with: self class pharoScript.
 	self
 		createScript: location / 'pharo-ui'
 		with: self class pharoUiScript.
-	anArchetype parent
-		ifNil: [( self deployFiles: anArchetype at: location ) do: [ : f | f synchronizeTimeout: 5 minutes ] ]
-		ifNotNil: [ self deploy: anArchetype parent at: location ].
+		
 	deployed := TKTDeployed new
 		initializeWithLocation: location
 			archetype: anArchetype
@@ -279,7 +282,7 @@ TKTFileOrientedDeployer >> privateDownloadBundle: aZnUrl at: expectedLocation [
 
 { #category : #'image calls' }
 TKTFileOrientedDeployer >> resolveCurrentImageAnChangesFile [
-	(systemAdapter rm: self currentCacheFolder) synchronizeTimeout: 10 seconds .
+	(systemAdapter rm: self currentCacheFolder).
 	self currentCacheFolder ensureCreateDirectory.
 	^ self backupCurrentImage
 ]
