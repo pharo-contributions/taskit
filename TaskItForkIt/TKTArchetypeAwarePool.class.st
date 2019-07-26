@@ -33,9 +33,9 @@ TKTArchetypeAwarePool >> amountOfTasksAt: aTKTArchetype [
 
 { #category : #'public - mutexed' }
 TKTArchetypeAwarePool >> cleanUpImageToStart [
-	pool cleanUpImageToStart.
-	archetypedControllers do: #cleanUpImageToStart.
-
+	pool ifNotNil: [ pool cleanUpImageToStart ].
+	archetypedControllers
+		ifNotNil: [ archetypedControllers do: #cleanUpImageToStart ]
 ]
 
 { #category : #'public - mutexed' }
