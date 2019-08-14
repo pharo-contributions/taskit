@@ -82,6 +82,7 @@ TKTForkItIncomingTasksService >> initialize [
 		map: 'task' to: #task:serializer:;
 		map: 'stop' to: #stop;
 		map: 'noteTaskScheduled' to: #noteTaskScheduled;
+		map: 'resetWorker' to: #resetWorker;
 		map: 'logStatus' to: #logStatus
 ]
 
@@ -169,6 +170,11 @@ TKTForkItIncomingTasksService >> requestAndProcessTask [
 	TKTSerializationStrategy default
 		writeZnRequestFor: backendHash
 		to: master / #requestTask
+]
+
+{ #category : #'server commands' }
+TKTForkItIncomingTasksService >> resetWorker [
+	self pool taskQueue removeAll.
 ]
 
 { #category : #protocol }

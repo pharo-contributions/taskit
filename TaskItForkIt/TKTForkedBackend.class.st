@@ -79,8 +79,24 @@ TKTForkedBackend >> isFree [
 ]
 
 { #category : #accessing }
+TKTForkedBackend >> logStatus [
+	[ ZnEasy get: self url / #logStatus.
+	^ true ]
+		on: Error
+		do: [ ^ false ]
+]
+
+{ #category : #accessing }
 TKTForkedBackend >> noteTaskScheduled [
 	[ ZnEasy get: self url / #noteTaskScheduled.
+	^ true ]
+		on: Error
+		do: [ ^ false ]
+]
+
+{ #category : #accessing }
+TKTForkedBackend >> resetWorker [
+	[ ZnEasy get: self url / #resetWorker.
 	^ true ]
 		on: Error
 		do: [ ^ false ]
@@ -156,6 +172,7 @@ TKTForkedBackend >> startupCodeIp: anIp outputFile: anOutputFile with: aRegister
 	^ '
 	| service stream |
 	Author fullName: ''Forkit''.
+	TKTArchetypeAwarePool allInstances do: [: p | p becomeForward:nil].
 	service := TKTForkItIncomingTasksService registeringOn:''{3}'' asZnUrl backend: {4}. 
 	[service startOn: ''{1}''.] on: Error do: [ :e |
 		stream := (STONWriter on: ''{2}'' asFileReference writeStream).
