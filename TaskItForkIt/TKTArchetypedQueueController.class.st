@@ -26,6 +26,7 @@ TKTArchetypedQueueController >> archetype: anArchetype registry: aRegistry backe
 	registry := aRegistry.
 	maxBackeds := anAmount.
 	deploy := archetype deploy.
+	anAmount timesRepeat: [ self ensureEnoughBackends ].
 ]
 
 { #category : #schedulling }

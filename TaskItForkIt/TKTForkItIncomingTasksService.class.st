@@ -54,6 +54,7 @@ TKTForkItIncomingTasksService >> help: request [
 
 { #category : #'server commands' }
 TKTForkItIncomingTasksService >> informError: value id: taskId serializer: aSerializer [
+	self logCr: ' Task finished with errors . Informing result '.
 	aSerializer
 		writeZnRequestFor:
 			{value.
@@ -63,6 +64,7 @@ TKTForkItIncomingTasksService >> informError: value id: taskId serializer: aSeri
 
 { #category : #'server commands' }
 TKTForkItIncomingTasksService >> informSuccess: value id: taskId serializer: aSerializer [
+	self logCr:' Task finished successfully. Informing result '. 
 	aSerializer
 		writeZnRequestFor:
 			{value.
@@ -79,7 +81,8 @@ TKTForkItIncomingTasksService >> initialize [
 		map: 'isFree' to: #isFree;
 		map: 'task' to: #task:serializer:;
 		map: 'stop' to: #stop;
-		map: 'noteTaskScheduled' to: #noteTaskScheduled
+		map: 'noteTaskScheduled' to: #noteTaskScheduled;
+		map: 'logStatus' to: #logStatus
 ]
 
 { #category : #accessing }
@@ -97,6 +100,17 @@ TKTForkItIncomingTasksService >> log: aString [
 	self logCr: aString
 ]
 
+{ #category : #accessing }
+TKTForkItIncomingTasksService >> logCr: anObject [
+	super logCr: anObject printString
+]
+
+{ #category : #'server commands' }
+TKTForkItIncomingTasksService >> logStatus [
+	self logCr: self pool. 
+	self logCr: self pool taskQueue
+]
+
 { #category : #'server commands' }
 TKTForkItIncomingTasksService >> master: anUrl [
 	master := anUrl
@@ -104,8 +118,14 @@ TKTForkItIncomingTasksService >> master: anUrl [
 
 { #category : #'server commands' }
 TKTForkItIncomingTasksService >> noteTaskScheduled [
-	[ self requestAndProcessTask ]  asTask schedule: pool.
+	self logCr: ' a task has being scheduled! '.
+	self logCr: ([ self requestAndProcessTask ] asTask schedule: self pool).
 	^ true
+]
+
+{ #category : #'as yet unclassified' }
+TKTForkItIncomingTasksService >> pool [
+	^ pool ifNil: [ TKTConfiguration runner ]
 ]
 
 { #category : #accessing }
@@ -154,7 +174,6 @@ TKTForkItIncomingTasksService >> requestAndProcessTask [
 { #category : #protocol }
 TKTForkItIncomingTasksService >> startOn: anAddress [
 	TKTConfiguration profileNamed: #lightweight.
-	pool ifNil: [ self usePool: TKTConfiguration runner ].
 	server := (ZnServer on: 0)
 		bindingAddress: (NetNameResolver addressForName: anAddress);
 		delegate: self;
@@ -173,7 +192,10 @@ TKTForkItIncomingTasksService >> stop [
 { #category : #'server commands' }
 TKTForkItIncomingTasksService >> task: taskAndId serializer: serializer [
 	| future |
-	future := taskAndId first future: pool.
+	
+	self logCr:' received task to execute'. 
+	self logCr: taskAndId .
+	future := taskAndId first future: self pool.
 	future
 		onSuccessDo:
 			[ :v | resolver informSuccess: v id: taskAndId second serializer: serializer ].
@@ -182,9 +204,9 @@ TKTForkItIncomingTasksService >> task: taskAndId serializer: serializer [
 			[ :e | resolver informError: e id: taskAndId second serializer: serializer ]
 ]
 
-{ #category : #accessing }
+{ #category : #'as yet unclassified' }
 TKTForkItIncomingTasksService >> usePool: aPool [
-	pool := aPool
+	pool := aPool 
 ]
 
 { #category : #initialization }
