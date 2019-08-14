@@ -50,7 +50,7 @@ TKTProfile class >> lightweight [
 	^ TKTProfile
 		on:
 			{(#debugging -> false).
-			(#runner -> TKTWorker new).
+			(#runner -> TKTWorker createDefault ).
 			(#poolWorkerProcess -> TKTWorkerProcess).
 			(#process -> Process).
 			(#errorHandler -> TKTExceptionHandler).

@@ -47,7 +47,7 @@ TKTArchetypedQueueController >> deploy [
 TKTArchetypedQueueController >> ensureEnoughBackends [
 	(backends reject: #isAlive) do: #stopAndDelete.
 	backends removeAll: (backends reject: #isAlive).
-	(backends size < queue size and: [ backends size < maxBackeds ])
+	backends size < maxBackeds
 		ifTrue: [ self spawnNewBackend ]
 ]
 

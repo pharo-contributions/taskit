@@ -114,7 +114,7 @@ TKTDeployed >> initializeWithLocation: aLocation archetype: anArquetype andSyste
 
 { #category : #accessing }
 TKTDeployed >> install: url configurationOrBaselineName: confOrBaseline [
-	^ self commandUi
+	^ self command
 		option: 'metacello';
 		option: 'install';
 		option: url asString;
@@ -190,7 +190,7 @@ TKTDeployed >> sourcesFile [
 { #category : #'evalas yet unclassified' }
 TKTDeployed >> startImageNoQuit: aString [
 	| return |
-	return := (self commandUi
+	return := (self command
 		option: 'eval';
 		arguments:
 			{'--no-quit'.

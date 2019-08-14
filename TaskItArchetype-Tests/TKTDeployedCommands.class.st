@@ -66,7 +66,7 @@ TKTDeployedCommands >> testCommandUiPointsToPharoUiScript [
 	| command |
 	self isTravisBuild
 		ifTrue: [ ^ self skip ].
-	command := deployed commandUi.
+	command := deployed command.
 	self assert: command isCommandDeclaration.
 	self assert: ((self commandFor: command) endsWith: 'pharo-ui').
 	self assert: systemAdapter commandCalled equals: 1.

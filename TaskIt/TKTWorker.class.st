@@ -36,6 +36,13 @@ Class {
 	#category : #'TaskIt-Worker'
 }
 
+{ #category : #current }
+TKTWorker class >> createDefault [
+	^ self new
+		queue: AtomicSharedQueue new;
+		yourself
+]
+
 { #category : #'start-stop' }
 TKTWorker >> currentTaskExecution [
 	^ process ifNotNil: [ process currentTaskExecution ] ifNil: [ nil ]

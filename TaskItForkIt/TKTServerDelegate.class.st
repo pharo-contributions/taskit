@@ -42,7 +42,7 @@ TKTServerDelegate >> handleRequest: request [
 	prefixHandler := prefixMap at: prefix ifAbsent: [ nil ].
 	
 	serializer := TKTSerializationStrategy default serializerFor: request entity.
-	
+
 	[ prefixHandler isNil
 		ifFalse: [ ^ self
 				encodeIntoResponse:
