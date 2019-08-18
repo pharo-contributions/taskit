@@ -10,7 +10,8 @@ Class {
 		'imageProcess',
 		'archetype',
 		'mutex',
-		'defaultSerializerSelector'
+		'defaultSerializerSelector',
+		'sent'
 	],
 	#category : #'TaskItForkIt-Worker'
 }
@@ -174,11 +175,13 @@ TKTForkedBackend >> startupCodeIp: anIp outputFile: anOutputFile with: aRegister
 	Author fullName: ''Forkit''.
 	TKTArchetypeAwarePool allInstances do: [: p | p becomeForward:nil].
 	service := TKTForkItIncomingTasksService registeringOn:''{3}'' asZnUrl backend: {4}. 
+
 	[service startOn: ''{1}''.] on: Error do: [ :e |
 		stream := (STONWriter on: ''{2}'' asFileReference writeStream).
 		stream nextPut: e messageText; close.
 		Smalltalk exit:1 .
 		].
+
 '
 		format:
 			{NetNameResolver localAddressString.
@@ -194,7 +197,7 @@ TKTForkedBackend >> stop [
 				ifNotNil: [ [ ZnEasy get: url / #stop.
 					1 second wait.
 					imageProcess isComplete
-						ifFalse: [ imageProcess terminate ] ] ifError: [  ].
+						ifFalse: [ imageProcess kill ] ] ifError: [  ].
 					url := nil.
 					imageProcess := nil ] ]
 ]

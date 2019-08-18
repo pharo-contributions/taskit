@@ -36,13 +36,13 @@ TKTServerDelegate >> generateHelp [
 { #category : #initialization }
 TKTServerDelegate >> handleRequest: request [
 	| prefix prefixHandler serializer |
+	
 	prefix := request uri isSlash
 		ifTrue: [ prefixMap at: '/' ifAbsent: [ nil ] ]
 		ifFalse: [ request uri firstPathSegment ].
 	prefixHandler := prefixMap at: prefix ifAbsent: [ nil ].
 	
 	serializer := TKTSerializationStrategy default serializerFor: request entity.
-
 	[ prefixHandler isNil
 		ifFalse: [ ^ self
 				encodeIntoResponse:

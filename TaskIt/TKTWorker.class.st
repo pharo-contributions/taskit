@@ -48,6 +48,17 @@ TKTWorker >> currentTaskExecution [
 	^ process ifNotNil: [ process currentTaskExecution ] ifNil: [ nil ]
 ]
 
+{ #category : #initialization }
+TKTWorker >> ensureIsBeingWatched [
+	TKTConfiguration watchDog ensureIsWatching: self
+]
+
+{ #category : #starting }
+TKTWorker >> ensureIsWorking [
+	self isRunning
+		ifFalse: [ self restart ]
+]
+
 { #category : #accessing }
 TKTWorker >> exceptionHandler [
 	
@@ -74,6 +85,7 @@ TKTWorker >> finalize [
 TKTWorker >> initialize [
 	super initialize.
 	self name: ('Worker-{ID}' format: {(#ID -> UUID new)} asDictionary).
+	self ensureIsBeingWatched
 	
 ]
 

@@ -10,7 +10,8 @@ Class {
 		'deploy',
 		'backends',
 		'registry',
-		'maxBackeds'
+		'maxBackeds',
+		'lastCheck'
 	],
 	#category : #'TaskItForkIt-Worker'
 }
@@ -53,6 +54,19 @@ TKTArchetypedQueueController >> ensureEnoughBackends [
 ]
 
 { #category : #schedulling }
+TKTArchetypedQueueController >> ensureIsWorking [
+
+	queue isEmpty
+		ifTrue: [ ^ self ].
+	lastCheck ifNil: [ lastCheck := DateAndTime now ].
+	DateAndTime now - lastCheck > 1 minute
+		ifTrue: [ queue isEmpty
+				ifFalse: [ backends do: #noteTaskScheduled ].
+			lastCheck := DateAndTime now ].
+	backends do: [ :b | b ensureIsAlive: registry ]
+]
+
+{ #category : #schedulling }
 TKTArchetypedQueueController >> findBackendById: aHash [
 	^ backends detect: [ :b | b hash = aHash ]
 ]
@@ -84,7 +98,7 @@ TKTArchetypedQueueController >> noteRemoteWorkerAt: anUrl forBackendHashed: aHas
 { #category : #schedulling }
 TKTArchetypedQueueController >> noteTaskHasBeenScheduled [
 	self ensureEnoughBackends.
-	backends do: [ :b | b noteTaskScheduled ]
+"	backends do: [ :b | b noteTaskScheduled ]"
 ]
 
 { #category : #schedulling }

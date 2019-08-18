@@ -118,7 +118,7 @@ TKTArchetypeAwarePool >> privateArchetypedControllerFor: archetype [
 			new
 				archetype: archetype
 					registry: self remoteFutureRegistry
-					backends: 5;
+					backends: 1;
 				yourself.
 			new ]
 ]
@@ -144,6 +144,7 @@ TKTArchetypeAwarePool >> remoteFutureRegistry [
 
 { #category : #'public - mutexed' }
 TKTArchetypeAwarePool >> requestTaskForBackend: aHash [
+	self logCr: aHash asString , ' requested a task'.
 	^ (archetypedControllers
 		detect: [ :controller | controller managesBackendId: aHash ])
 		requestTaskOrNilForBackend: aHash

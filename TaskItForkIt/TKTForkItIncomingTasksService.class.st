@@ -9,7 +9,8 @@ Class {
 		'pool',
 		'master',
 		'backendHash',
-		'resolver'
+		'resolver',
+		'taskScheduledAlreadyRequested'
 	],
 	#category : #'TaskItForkIt-Worker-Server'
 }
@@ -76,6 +77,7 @@ TKTForkItIncomingTasksService >> informSuccess: value id: taskId serializer: aSe
 TKTForkItIncomingTasksService >> initialize [
 	super initialize.
 	resolver := self.
+	taskScheduledAlreadyRequested := false.
 	self
 		map: 'alive' to: #alive;
 		map: 'isFree' to: #isFree;
@@ -120,7 +122,11 @@ TKTForkItIncomingTasksService >> master: anUrl [
 { #category : #'server commands' }
 TKTForkItIncomingTasksService >> noteTaskScheduled [
 	self logCr: ' a task has being scheduled! '.
-	self logCr: ([ self requestAndProcessTask ] asTask schedule: self pool).
+	taskScheduledAlreadyRequested
+		ifFalse: [ taskScheduledAlreadyRequested := true.
+			[ [ self requestAndProcessTask ] asTask schedule: self pool ]
+				on: Error
+				do: [ :e | self logCr: e messageText ] ].
 	^ true
 ]
 
@@ -169,7 +175,9 @@ TKTForkItIncomingTasksService >> privateInformBinds [
 TKTForkItIncomingTasksService >> requestAndProcessTask [
 	TKTSerializationStrategy default
 		writeZnRequestFor: backendHash
-		to: master / #requestTask
+		to: master / #requestTask.
+	taskScheduledAlreadyRequested := false.
+	
 ]
 
 { #category : #'server commands' }
@@ -198,16 +206,20 @@ TKTForkItIncomingTasksService >> stop [
 { #category : #'server commands' }
 TKTForkItIncomingTasksService >> task: taskAndId serializer: serializer [
 	| future |
-	
-	self logCr:' received task to execute'. 
-	self logCr: taskAndId .
+	self logCr: ' received task to execute'.
+	self logCr: taskAndId.
 	future := taskAndId first future: self pool.
 	future
-		onSuccessDo:
-			[ :v | resolver informSuccess: v id: taskAndId second serializer: serializer ].
+		onSuccessDo: [ :v | 
+			[ resolver
+				informSuccess: v
+				id: taskAndId second
+				serializer: serializer ]
+				ensure: [ self requestAndProcessTask ] ].
 	future
-		onFailureDo:
-			[ :e | resolver informError: e id: taskAndId second serializer: serializer ]
+		onFailureDo: [ :e | 
+			[ resolver informError: e id: taskAndId second serializer: serializer ]
+				ensure: [ self requestAndProcessTask ] ]
 ]
 
 { #category : #'as yet unclassified' }
