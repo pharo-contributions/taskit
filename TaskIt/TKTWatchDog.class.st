@@ -41,6 +41,7 @@ TKTWatchDog >> ensureIsAwake [
 
 { #category : #initialization }
 TKTWatchDog >> ensureIsWatching: aValue [
+	worker = aValue ifTrue: [ ^ self ].
 	(values includes: aValue)
 		ifFalse: [ self watch: aValue ].
 	self ensureIsAwake
@@ -60,10 +61,25 @@ TKTWatchDog >> name [
 ]
 
 { #category : #initialization }
+TKTWatchDog >> privateStart [
+	stopRequested := false.
+	stopCallbacks := Set new.
+	" A worker normally needs to be watched. But the watchdog process cannot be watched, because the watchdog do not yet exists. 
+	 This is a hacky workaround. Think a better solution.
+	"
+	worker := TKTWorker basicNew.
+	worker initialize.
+	worker taskQueue: AtomicSharedQueue new.
+	recursiveTask := [ self iterateService.
+	self scheduleRecursiveTask ] asTask.
+	TKTConfiguration serviceManager startService: self
+]
+
+{ #category : #initialization }
 TKTWatchDog >> start [
 	started
 		ifFalse: [ started := true.
-			super start ]
+			self privateStart ]
 ]
 
 { #category : #initialization }
