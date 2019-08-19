@@ -11,7 +11,8 @@ Class {
 		'archetype',
 		'mutex',
 		'defaultSerializerSelector',
-		'sent'
+		'sent',
+		'assignedTasks'
 	],
 	#category : #'TaskItForkIt-Worker'
 }
@@ -26,6 +27,11 @@ TKTForkedBackend >> archetype: aTKTArchetype [
 	archetype := aTKTArchetype isCurrentPharo
 		ifTrue: [ aTKTArchetype ]
 		ifFalse: [ aTKTArchetype + TKTProject forkit ]
+]
+
+{ #category : #public }
+TKTForkedBackend >> assignTask: aTaskExecution [
+	assignedTasks add: aTaskExecution.
 ]
 
 { #category : #accessing }
@@ -52,20 +58,21 @@ TKTForkedBackend >> deploy: aDeploy [
 	archetype := deploy archetype. 
 ]
 
-{ #category : #accessing }
+{ #category : #service }
 TKTForkedBackend >> ensureIsAlive: aRegistry [
 	self isAlive
 		ifFalse: [ self stop.
 			self startWith: aRegistry ]
 ]
 
-{ #category : #accessing }
+{ #category : #initialize }
 TKTForkedBackend >> initialize [
 	super initialize.
-	mutex := Mutex new
+	mutex := Mutex new.
+	assignedTasks := OrderedCollection new.
 ]
 
-{ #category : #accessing }
+{ #category : #'remote-call' }
 TKTForkedBackend >> isAlive [
 	[ ZnEasy get: self url / #alive.
 	^ true ]
@@ -73,13 +80,18 @@ TKTForkedBackend >> isAlive [
 		do: [ ^ false ]
 ]
 
-{ #category : #accessing }
+{ #category : #'remote-call' }
 TKTForkedBackend >> isFree [
 	^ TKTSerializationStrategy default
 		readFromZnEntity: (ZnEasy get: self url / #isFree) entity
 ]
 
-{ #category : #accessing }
+{ #category : #'remote-call' }
+TKTForkedBackend >> isTooBusy [
+	^ assignedTasks isNotEmpty
+]
+
+{ #category : #'remote-call' }
 TKTForkedBackend >> logStatus [
 	[ ZnEasy get: self url / #logStatus.
 	^ true ]
@@ -87,15 +99,21 @@ TKTForkedBackend >> logStatus [
 		do: [ ^ false ]
 ]
 
-{ #category : #accessing }
-TKTForkedBackend >> noteTaskScheduled [
-	[ ZnEasy get: self url / #noteTaskScheduled.
-	^ true ]
-		on: Error
-		do: [ ^ false ]
+{ #category : #'remote-call' }
+TKTForkedBackend >> noteTaskHasFinished: aTaskExecution [
+	assignedTasks remove: aTaskExecution ifAbsent: [ "nothing to do " ]
 ]
 
-{ #category : #accessing }
+{ #category : #'remote-call' }
+TKTForkedBackend >> noteTaskScheduled [
+	self isTooBusy
+		ifFalse: [ [ ZnEasy get: self url / #noteTaskScheduled.
+			^ true ]
+				on: Error
+				do: [ ^ false ] ]
+]
+
+{ #category : #'remote-call' }
 TKTForkedBackend >> resetWorker [
 	[ ZnEasy get: self url / #resetWorker.
 	^ true ]
@@ -103,17 +121,17 @@ TKTForkedBackend >> resetWorker [
 		do: [ ^ false ]
 ]
 
-{ #category : #accessing }
+{ #category : #testing }
 TKTForkedBackend >> respondsToArchetype: anArchetype [
 	^ deploy archetype compatibleWith: anArchetype
 ]
 
-{ #category : #accessing }
+{ #category : #'remote-call' }
 TKTForkedBackend >> sendTaskAndProcessResponse: aTask id: aFutureId serializer: aSerializerSelector [
 	^ self sendTaskAndProcessResponse: aTask id: aFutureId serializer: aSerializerSelector time: 5
 ]
 
-{ #category : #accessing }
+{ #category : #'remote-call' }
 TKTForkedBackend >> sendTaskAndProcessResponse: aTask id: aFutureId serializer: aSerializerSelector time: aTime [
 	aTime = 0
 		ifTrue: [ TKTRetryException signal: ' Backend timed out. retry later ' ].
@@ -146,7 +164,7 @@ TKTForkedBackend >> setUrl: anUrl [
 	url := anUrl
 ]
 
-{ #category : #accessing }
+{ #category : #service }
 TKTForkedBackend >> startWith: aRegistry [
 	| output |
 	imageProcess ifNotNil: [ ^ self ].
@@ -168,7 +186,7 @@ TKTForkedBackend >> startWith: aRegistry [
 		ensure: [ output ensureDelete ]
 ]
 
-{ #category : #accessing }
+{ #category : #private }
 TKTForkedBackend >> startupCodeIp: anIp outputFile: anOutputFile with: aRegister [
 	^ '
 	| service stream |
@@ -190,7 +208,7 @@ TKTForkedBackend >> startupCodeIp: anIp outputFile: anOutputFile with: aRegister
 			self hash asString}
 ]
 
-{ #category : #accessing }
+{ #category : #service }
 TKTForkedBackend >> stop [
 	mutex
 		critical: [ url
@@ -202,7 +220,7 @@ TKTForkedBackend >> stop [
 					imageProcess := nil ] ]
 ]
 
-{ #category : #accessing }
+{ #category : #service }
 TKTForkedBackend >> stopAndDelete [
 	self stop.
 	deploy ifNotNil: [ deploy delete ]

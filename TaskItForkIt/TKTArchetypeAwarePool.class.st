@@ -31,35 +31,35 @@ TKTArchetypeAwarePool >> amountOfTasksAt: aTKTArchetype [
 	^ self remoteFutureRegistry amountOfTasksFor: aTKTArchetype
 ]
 
-{ #category : #'public - mutexed' }
+{ #category : #initialization }
 TKTArchetypeAwarePool >> cleanUpImageToStart [
 	pool ifNotNil: [ pool cleanUpImageToStart ].
 	archetypedControllers
 		ifNotNil: [ archetypedControllers do: #cleanUpImageToStart ]
 ]
 
-{ #category : #'public - mutexed' }
+{ #category : #accessing }
 TKTArchetypeAwarePool >> defaultSerializerSelector [
 	^ defaultSerializerSelector
 ]
 
-{ #category : #'public - mutexed' }
+{ #category : #accessing }
 TKTArchetypeAwarePool >> defaultSerializerSelector: aDefaultSerializerSelector [
 	defaultSerializerSelector := aDefaultSerializerSelector
 ]
 
-{ #category : #'public - mutexed' }
+{ #category : #service }
 TKTArchetypeAwarePool >> ensureIsWorking [
 	archetypedControllers
 		do: [ :controller | controller ensureIsWorking ]
 ]
 
-{ #category : #'public - mutexed' }
+{ #category : #scheduling }
 TKTArchetypeAwarePool >> future: aTask [
 	^ aTask asTask future: self
 ]
 
-{ #category : #'public - mutexed' }
+{ #category : #scheduling }
 TKTArchetypeAwarePool >> futureArchetypedTask: aTask [
 	| execution |
 	execution := aTask asTask futureTaskExecutionFor: self.
@@ -74,33 +74,39 @@ TKTArchetypeAwarePool >> includesArchetype: aTKTArchetype [
 		includes: [ :controller | controller respondsToArchetype: aTKTArchetype ]
 ]
 
-{ #category : #'public - mutexed' }
+{ #category : #initialization }
 TKTArchetypeAwarePool >> initializeWithPool: aPool [
 	pool := aPool.
 	archetypedControllers := Set new.
 	TKTConfiguration watchDog watch: self
 ]
 
-{ #category : #'public - mutexed' }
+{ #category : #testing }
 TKTArchetypeAwarePool >> isDebuggingCompatible [
 	^ true
 ]
 
-{ #category : #'public - mutexed' }
+{ #category : #testing }
 TKTArchetypeAwarePool >> isLocalThreadRunner [
 	^ false 
 ]
 
-{ #category : #'public - mutexed' }
+{ #category : #testing }
 TKTArchetypeAwarePool >> isUIRunner [
 	^ false 
 ]
 
-{ #category : #'public - mutexed' }
+{ #category : #notifications }
 TKTArchetypeAwarePool >> noteRemoteWorkerAt: anUrl forBackendHashed: aHash [
 	archetypedControllers
 		do:
 			[ :controller | controller noteRemoteWorkerAt: anUrl forBackendHashed: aHash ]
+]
+
+{ #category : #notifications }
+TKTArchetypeAwarePool >> noteTaskHasFinished: futureExecution [
+	archetypedControllers
+		do: [ :a | a noteTaskHasFinished: futureExecution ]
 ]
 
 { #category : #accessing }
@@ -108,7 +114,7 @@ TKTArchetypeAwarePool >> pool: aTKTCommonQueueWorkerPool [
 	pool := aTKTCommonQueueWorkerPool
 ]
 
-{ #category : #'public - mutexed' }
+{ #category : #accessing }
 TKTArchetypeAwarePool >> privateArchetypedControllerFor: archetype [
 	^ archetypedControllers
 		detect: [ :a | a archetype = archetype ]
@@ -123,17 +129,17 @@ TKTArchetypeAwarePool >> privateArchetypedControllerFor: archetype [
 			new ]
 ]
 
-{ #category : #'public - mutexed' }
+{ #category : #scheduling }
 TKTArchetypeAwarePool >> privateFuture: aTask [
 	^ pool privateFuture: aTask
 ]
 
-{ #category : #scheduleing }
+{ #category : #scheduling }
 TKTArchetypeAwarePool >> privateSchedule: aTKTGenericTask [
 	pool privateSchedule: aTKTGenericTask
 ]
 
-{ #category : #'public - mutexed' }
+{ #category : #accessing }
 TKTArchetypeAwarePool >> remoteFutureRegistry [
 	^ remoteFutureRegistry
 		ifNil: [ remoteFutureRegistry := TKTOutgoingTasksService new.
@@ -142,7 +148,7 @@ TKTArchetypeAwarePool >> remoteFutureRegistry [
 			remoteFutureRegistry ]
 ]
 
-{ #category : #'public - mutexed' }
+{ #category : #service }
 TKTArchetypeAwarePool >> requestTaskForBackend: aHash [
 	self logCr: aHash asString , ' requested a task'.
 	^ (archetypedControllers
@@ -150,17 +156,17 @@ TKTArchetypeAwarePool >> requestTaskForBackend: aHash [
 		requestTaskOrNilForBackend: aHash
 ]
 
-{ #category : #'public - mutexed' }
+{ #category : #scheduling }
 TKTArchetypeAwarePool >> schedule: aTask [
 	aTask asTask schedule: self
 ]
 
-{ #category : #'public - mutexed' }
+{ #category : #scheduling }
 TKTArchetypeAwarePool >> schedule: aTask timeout: aTimeout [
 	^ pool schedule: aTask timeout: aTimeout
 ]
 
-{ #category : #'public - mutexed' }
+{ #category : #scheduling }
 TKTArchetypeAwarePool >> scheduleArchetypedTask: aTask [
 	| execution |
 	execution := aTask asTask futureTaskExecutionFor: self.
@@ -169,12 +175,12 @@ TKTArchetypeAwarePool >> scheduleArchetypedTask: aTask [
 		
 ]
 
-{ #category : #'public - mutexed' }
+{ #category : #scheduling }
 TKTArchetypeAwarePool >> scheduleTaskExecution: aTaskExecution [
 	^ pool scheduleTaskExecution: aTaskExecution
 ]
 
-{ #category : #'public - mutexed' }
+{ #category : #scheduling }
 TKTArchetypeAwarePool >> scheduleTimeout: timeout on: aTaskExecution [
 	^ pool scheduleTimeout: timeout on: aTaskExecution
 ]

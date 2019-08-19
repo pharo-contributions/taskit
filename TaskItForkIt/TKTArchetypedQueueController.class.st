@@ -10,8 +10,7 @@ Class {
 		'deploy',
 		'backends',
 		'registry',
-		'maxBackeds',
-		'lastCheck'
+		'maxBackeds'
 	],
 	#category : #'TaskItForkIt-Worker'
 }
@@ -21,16 +20,16 @@ TKTArchetypedQueueController >> archetype [
 	^ archetype
 ]
 
-{ #category : #schedulling }
+{ #category : #initialization }
 TKTArchetypedQueueController >> archetype: anArchetype registry: aRegistry backends: anAmount [
 	archetype := anArchetype.
 	registry := aRegistry.
 	maxBackeds := anAmount.
 	deploy := archetype deploy.
-	anAmount timesRepeat: [ self ensureEnoughBackends ].
+
 ]
 
-{ #category : #schedulling }
+{ #category : #service }
 TKTArchetypedQueueController >> cleanUpImageToStart [
 	queue removeAll. 
 	backends removeAll. 
@@ -39,13 +38,13 @@ TKTArchetypedQueueController >> cleanUpImageToStart [
 	
 ]
 
-{ #category : #schedulling }
+{ #category : #accessing }
 TKTArchetypedQueueController >> deploy [
 	^ deploy
 		ifNil: [ deploy := archetype deploy ]
 ]
 
-{ #category : #schedulling }
+{ #category : #health }
 TKTArchetypedQueueController >> ensureEnoughBackends [
 	(backends reject: #isAlive) do: #stopAndDelete.
 	backends removeAll: (backends reject: #isAlive).
@@ -53,55 +52,54 @@ TKTArchetypedQueueController >> ensureEnoughBackends [
 		ifTrue: [ self spawnNewBackend ]
 ]
 
-{ #category : #schedulling }
+{ #category : #health }
 TKTArchetypedQueueController >> ensureIsWorking [
-
 	queue isEmpty
 		ifTrue: [ ^ self ].
-	lastCheck ifNil: [ lastCheck := DateAndTime now ].
-	DateAndTime now - lastCheck > 1 minute
-		ifTrue: [ queue isEmpty
-				ifFalse: [ backends do: #noteTaskScheduled ].
-			lastCheck := DateAndTime now ].
 	backends do: [ :b | b ensureIsAlive: registry ]
 ]
 
-{ #category : #schedulling }
+{ #category : #accessing }
 TKTArchetypedQueueController >> findBackendById: aHash [
 	^ backends detect: [ :b | b hash = aHash ]
 ]
 
-{ #category : #schedulling }
+{ #category : #initialization }
 TKTArchetypedQueueController >> initialize [
 	super initialize.
 	queue := AtomicSharedQueue new.
 	backends := OrderedCollection new
 ]
 
-{ #category : #schedulling }
+{ #category : #testing }
 TKTArchetypedQueueController >> managesBackendId: aHash [
 	^ backends anySatisfy: [ :b | b hash = aHash ]
 ]
 
-{ #category : #schedulling }
+{ #category : #accessing }
 TKTArchetypedQueueController >> maxBackends [
 	^ maxBackeds ifNil: [ maxBackeds := 1 ]
 ]
 
-{ #category : #schedulling }
+{ #category : #notifications }
 TKTArchetypedQueueController >> noteRemoteWorkerAt: anUrl forBackendHashed: aHash [
 	backends
 		select: [ :b | b hash = aHash ]
 		thenDo: [ :b | b setUrl: anUrl ]
 ]
 
-{ #category : #schedulling }
+{ #category : #notifications }
 TKTArchetypedQueueController >> noteTaskHasBeenScheduled [
 	self ensureEnoughBackends.
-"	backends do: [ :b | b noteTaskScheduled ]"
+	backends do: [ :b | b noteTaskScheduled ]
 ]
 
-{ #category : #schedulling }
+{ #category : #notifications }
+TKTArchetypedQueueController >> noteTaskHasFinished: aTaskExecution [
+	backends do: [ :b | b noteTaskHasFinished: aTaskExecution ]
+]
+
+{ #category : #service }
 TKTArchetypedQueueController >> requestTaskOrNilForBackend: aHash [
 	| backend taskExecution | 
 	backend := self findBackendById: aHash. 
@@ -125,7 +123,7 @@ TKTArchetypedQueueController >> scheduleTaskExecutionNotDeployable: aTaskExecuti
 	self noteTaskHasBeenScheduled
 ]
 
-{ #category : #schedulling }
+{ #category : #service }
 TKTArchetypedQueueController >> spawnNewBackend [
 	| backend |
 	backend := TKTForkedBackend new.
@@ -135,12 +133,12 @@ TKTArchetypedQueueController >> spawnNewBackend [
 	backend startWith: registry
 ]
 
-{ #category : #schedulling }
+{ #category : #service }
 TKTArchetypedQueueController >> stop [
 	backends do: #stop
 ]
 
-{ #category : #schedulling }
+{ #category : #service }
 TKTArchetypedQueueController >> stopAndDelete [
 	backends do: #stopAndDelete
 ]

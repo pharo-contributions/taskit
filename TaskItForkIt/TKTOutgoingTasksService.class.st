@@ -21,17 +21,19 @@ TKTOutgoingTasksService >> amountOfTasksFor: anArchetype [
 
 { #category : #registry }
 TKTOutgoingTasksService >> deployFutureResult: valueId [
-
-	[ (futures at: valueId second) deployValue: valueId first.
+	| futureExecution |
+	futureExecution := futures at: valueId second.
+	[ [ futureExecution deployValue: valueId first.
 	futures removeKey: valueId second ]
 		on: Error
 		do: [ :e | 
-			(futures at: valueId second) future
+			futureExecution future
 				deployFailure:
 					(Error new
 						messageText:
 							'Error on processing response. TKTOutgoingTasksService >>#deployFutureResult: '
-								, e messageText) ]
+								, e messageText) ] ]
+		ensure: [ top noteTaskHasFinished: futureExecution ]
 ]
 
 { #category : #registry }
