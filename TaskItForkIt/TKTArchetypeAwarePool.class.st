@@ -125,8 +125,7 @@ TKTArchetypeAwarePool >> privateArchetypedControllerFor: archetype [
 				archetype: archetype
 					registry: self remoteFutureRegistry
 					backends: 1;
-				yourself.
-			new ]
+				yourself ]
 ]
 
 { #category : #scheduling }

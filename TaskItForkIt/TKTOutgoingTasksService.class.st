@@ -43,6 +43,12 @@ TKTOutgoingTasksService >> ensureIsWorking [
 	self assert: server isRunning & server isListening
 ]
 
+{ #category : #registry }
+TKTOutgoingTasksService >> filterToStillNeededTasks: aCollectionOfTaskExecutions [
+	^ aCollectionOfTaskExecutions
+		select: [ :rte | futures includesKey: rte id ]
+]
+
 { #category : #accessing }
 TKTOutgoingTasksService >> futures [
 	^ futures ifNil: [ futures := Dictionary new ]

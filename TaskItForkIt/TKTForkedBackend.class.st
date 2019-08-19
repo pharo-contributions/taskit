@@ -61,8 +61,10 @@ TKTForkedBackend >> deploy: aDeploy [
 { #category : #service }
 TKTForkedBackend >> ensureIsAlive: aRegistry [
 	self isAlive
-		ifFalse: [ self stop.
-			self startWith: aRegistry ]
+		ifTrue: [ ^ self ].
+	self stop.
+	self startWith: aRegistry.
+	self recoverOngoingTasks: aRegistry
 ]
 
 { #category : #initialize }
@@ -111,6 +113,23 @@ TKTForkedBackend >> noteTaskScheduled [
 			^ true ]
 				on: Error
 				do: [ ^ false ] ]
+]
+
+{ #category : #service }
+TKTForkedBackend >> recoverOngoingTasks [
+	assignedTasks
+		do: [ :t | 
+			t backend: self.
+			t doExecuteTask ]
+]
+
+{ #category : #service }
+TKTForkedBackend >> recoverOngoingTasks: aRegistry [
+	assignedTasks := aRegistry filterToStillNeededTasks: assignedTasks.
+	assignedTasks
+		do: [ :t | 
+			t backend: self.
+			t doExecuteTask ]
 ]
 
 { #category : #'remote-call' }
