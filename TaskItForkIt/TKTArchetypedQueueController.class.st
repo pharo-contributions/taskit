@@ -105,6 +105,7 @@ TKTArchetypedQueueController >> requestTaskOrNilForBackend: aHash [
 	backend := self findBackendById: aHash. 
 	taskExecution := queue nextIfNone: [ ^ nil ].
 	backend isAlive ifFalse: [ ^ nil ].
+	backend assignTask: taskExecution.
 	taskExecution backend: backend.
 	taskExecution doExecuteTask.  " informs the task to the backend "
 	

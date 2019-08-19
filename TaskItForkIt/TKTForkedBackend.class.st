@@ -62,6 +62,7 @@ TKTForkedBackend >> deploy: aDeploy [
 TKTForkedBackend >> ensureIsAlive: aRegistry [
 	self isAlive
 		ifTrue: [ ^ self ].
+	self logCr: 'Awakening backend : ' , self hash asString.
 	self stop.
 	self startWith: aRegistry.
 	self recoverOngoingTasks: aRegistry
