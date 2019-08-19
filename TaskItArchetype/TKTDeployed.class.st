@@ -65,6 +65,16 @@ TKTDeployed >> configureBackend: aBackend [
 	aBackend archetype: archetype
 ]
 
+{ #category : #accessing }
+TKTDeployed >> crashDump [
+	^ location / 'crash.dmp'
+]
+
+{ #category : #accessing }
+TKTDeployed >> debugLog [ 
+	^ location / 'PharoDebug.log'
+]
+
 { #category : #'evalas yet unclassified' }
 TKTDeployed >> delete [
 	systemAdapter rm: location
@@ -190,7 +200,7 @@ TKTDeployed >> sourcesFile [
 { #category : #'evalas yet unclassified' }
 TKTDeployed >> startImageNoQuit: aString [
 	| return |
-	return := (self command
+	return := (self commandUi
 		option: 'eval';
 		arguments:
 			{'--no-quit'.

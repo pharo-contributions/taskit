@@ -7,10 +7,22 @@ Class {
 	#instVars : [
 		'id',
 		'backend',
-		'process'
+		'process',
+		'trials',
+		'recoveries'
 	],
 	#category : #'TaskItForkIt-Task'
 }
+
+{ #category : #evaluating }
+TKTRemoteTaskExecution class >> trials [
+	^ 1 
+]
+
+{ #category : #evaluating }
+TKTRemoteTaskExecution >> backend [
+	^ backend
+]
 
 { #category : #evaluating }
 TKTRemoteTaskExecution >> backend: aBackend [
@@ -56,7 +68,13 @@ TKTRemoteTaskExecution >> id: anId [
 { #category : #evaluating }
 TKTRemoteTaskExecution >> initialize [
 	super initialize.
-	process := WeakArray new: 1
+	process := WeakArray new: 1.
+	recoveries := 0.
+]
+
+{ #category : #evaluating }
+TKTRemoteTaskExecution >> markAsRecovered [
+	recoveries := recoveries + 1 .
 ]
 
 { #category : #evaluating }
@@ -65,8 +83,23 @@ TKTRemoteTaskExecution >> noteRunningOn: aRunner [
 ]
 
 { #category : #evaluating }
+TKTRemoteTaskExecution >> shouldRetry [
+	^ recoveries < self trials
+]
+
+{ #category : #evaluating }
 TKTRemoteTaskExecution >> task [
 	^ task
+]
+
+{ #category : #evaluating }
+TKTRemoteTaskExecution >> trials [
+	^ trials ifNil: [ self class trials  ]
+]
+
+{ #category : #evaluating }
+TKTRemoteTaskExecution >> trials: anAmount [ 
+	^ trials := anAmount
 ]
 
 { #category : #evaluating }

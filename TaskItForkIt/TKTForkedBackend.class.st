@@ -59,13 +59,24 @@ TKTForkedBackend >> deploy: aDeploy [
 ]
 
 { #category : #service }
-TKTForkedBackend >> ensureIsAlive: aRegistry [
+TKTForkedBackend >> ensureIsAlive: anInverseProxyOrPool [
 	self isAlive
 		ifTrue: [ ^ self ].
 	self logCr: 'Awakening backend : ' , self hash asString.
 	self stop.
-	self startWith: aRegistry.
-	self recoverOngoingTasks: aRegistry
+	self startWith: anInverseProxyOrPool.
+	anInverseProxyOrPool recoverOngoingTasks: assignedTasks.
+	assignedTasks removeAll.
+]
+
+{ #category : #private }
+TKTForkedBackend >> errorMessage [
+	deploy ifNil: [ ^ 'Deploy not found' ].
+	deploy crashDump exists
+		ifTrue: [ ^ deploy crashDump readStream upToEnd ].
+	deploy debugLog exists
+		ifTrue: [ ^ deploy debugLog readStream upToEnd ].
+	^ 'Unknown error'
 ]
 
 { #category : #initialize }
@@ -119,24 +130,6 @@ TKTForkedBackend >> noteTaskScheduled [
 			^ true ]
 				on: Error
 				do: [ ^ false ] ]
-]
-
-{ #category : #service }
-TKTForkedBackend >> recoverOngoingTasks [
-	assignedTasks
-		do: [ :t | 
-			t backend: self.
-			t doExecuteTask ]
-]
-
-{ #category : #service }
-TKTForkedBackend >> recoverOngoingTasks: aRegistry [
-	assignedTasks := aRegistry filterToStillNeededTasks: assignedTasks.
-	self logCr: ('Recovering {1} tasks. ' format: {assignedTasks size}).
-	assignedTasks
-		do: [ :t | 
-			t backend: self.
-			t doExecuteTask ]
 ]
 
 { #category : #service }
@@ -202,7 +195,7 @@ TKTForkedBackend >> setUrl: anUrl [
 ]
 
 { #category : #service }
-TKTForkedBackend >> startWith: aRegistry [
+TKTForkedBackend >> startWith: anInverseProxyOrPool [
 	| output |
 	imageProcess ifNotNil: [ ^ self ].
 	output := deploy hash asString asFileReference , 'error'.
@@ -213,7 +206,7 @@ TKTForkedBackend >> startWith: aRegistry [
 					(self
 						startupCodeIp: NetNameResolver loopBackAddress
 						outputFile: output
-						with: aRegistry) ].
+						with: anInverseProxyOrPool) ].
 	[ [ self isAlive ]
 		whileFalse: [ 
 			imageProcess isComplete ifTrue: [ self error: 'Remote image has died' ].
@@ -224,11 +217,11 @@ TKTForkedBackend >> startWith: aRegistry [
 ]
 
 { #category : #private }
-TKTForkedBackend >> startupCodeIp: anIp outputFile: anOutputFile with: aRegister [
+TKTForkedBackend >> startupCodeIp: anIp outputFile: anOutputFile with: anInverseProxyOrPool [
 	^ '
 	| service stream |
 	Author fullName: ''Forkit''.
-	TKTArchetypeAwarePool allInstances do: [: p | p becomeForward:nil].
+	TKTArchetypeAwarePool allInstances do: [: p | p becomeForward:nil ].
 	service := TKTForkItIncomingTasksService registeringOn:''{3}'' asZnUrl backend: {4}. 
 
 	[service startOn: ''{1}''.] on: Error do: [ :e |
@@ -236,12 +229,11 @@ TKTForkedBackend >> startupCodeIp: anIp outputFile: anOutputFile with: aRegister
 		stream nextPut: e messageText; close.
 		Smalltalk exit:1 .
 		].
-
 '
 		format:
 			{NetNameResolver localAddressString.
 			anOutputFile fullName.
-			aRegister url.
+			anInverseProxyOrPool url.
 			self hash asString}
 ]
 

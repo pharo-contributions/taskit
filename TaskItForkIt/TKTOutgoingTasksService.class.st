@@ -20,6 +20,11 @@ TKTOutgoingTasksService >> amountOfTasksFor: anArchetype [
 ]
 
 { #category : #registry }
+TKTOutgoingTasksService >> cleanUpImageToStart [
+	self stop.
+]
+
+{ #category : #registry }
 TKTOutgoingTasksService >> deployFutureResult: valueId [
 	| futureExecution |
 	futureExecution := futures at: valueId second.

@@ -9,8 +9,8 @@ Class {
 		'archetype',
 		'deploy',
 		'backends',
-		'registry',
-		'maxBackeds'
+		'maxBackeds',
+		'pool'
 	],
 	#category : #'TaskItForkIt-Worker'
 }
@@ -21,9 +21,9 @@ TKTArchetypedQueueController >> archetype [
 ]
 
 { #category : #initialization }
-TKTArchetypedQueueController >> archetype: anArchetype registry: aRegistry backends: anAmount [
+TKTArchetypedQueueController >> archetype: anArchetype pool: aPool backends: anAmount [
 	archetype := anArchetype.
-	registry := aRegistry.
+	pool := aPool.
 	maxBackeds := anAmount.
 	deploy := archetype deploy.
 
@@ -33,7 +33,6 @@ TKTArchetypedQueueController >> archetype: anArchetype registry: aRegistry backe
 TKTArchetypedQueueController >> cleanUpImageToStart [
 	queue removeAll. 
 	backends removeAll. 
-	registry stop.
 
 	
 ]
@@ -56,7 +55,7 @@ TKTArchetypedQueueController >> ensureEnoughBackends [
 TKTArchetypedQueueController >> ensureIsWorking [
 	queue isEmpty
 		ifTrue: [ ^ self ].
-	backends do: [ :b | b ensureIsAlive: registry ]
+	backends do: [ :b | b ensureIsAlive: pool ]
 ]
 
 { #category : #accessing }
@@ -113,14 +112,14 @@ TKTArchetypedQueueController >> requestTaskOrNilForBackend: aHash [
 
 { #category : #schedulling }
 TKTArchetypedQueueController >> scheduleTaskExecution: aTaskExecution [
-	registry register: aTaskExecution.
+	pool registerTaskExecution: aTaskExecution.
 	queue nextPut: aTaskExecution.
 	self noteTaskHasBeenScheduled
 ]
 
 { #category : #schedulling }
 TKTArchetypedQueueController >> scheduleTaskExecutionNotDeployable: aTaskExecution [
-	registry registerNotDeployable: aTaskExecution.
+	pool registerNotDeployableTaskExecution: aTaskExecution.
 	self noteTaskHasBeenScheduled
 ]
 
@@ -131,7 +130,7 @@ TKTArchetypedQueueController >> spawnNewBackend [
 	backends add: backend.
 	backend defaultSerializerSelector: #xstoned.
 	self deploy clone configureBackend: backend.
-	backend startWith: registry
+	backend startWith: pool
 ]
 
 { #category : #service }

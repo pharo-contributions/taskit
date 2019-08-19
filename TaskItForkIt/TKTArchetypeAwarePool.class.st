@@ -5,7 +5,7 @@ Class {
 	#name : #TKTArchetypeAwarePool,
 	#superclass : #Object,
 	#instVars : [
-		'remoteFutureRegistry',
+		'inverseProxy',
 		'pool',
 		'archetypedControllers',
 		'defaultSerializerSelector'
@@ -28,14 +28,21 @@ TKTArchetypeAwarePool class >> createDefaultWithPool: aPool [
 
 { #category : #accessing }
 TKTArchetypeAwarePool >> amountOfTasksAt: aTKTArchetype [
-	^ self remoteFutureRegistry amountOfTasksFor: aTKTArchetype
+	^ self inverseProxy amountOfTasksFor: aTKTArchetype
 ]
 
 { #category : #initialization }
 TKTArchetypeAwarePool >> cleanUpImageToStart [
-	pool ifNotNil: [ pool cleanUpImageToStart ].
+	TKTConfiguration watchDog stopWatching: self.
+	pool
+		ifNotNil: [ pool cleanUpImageToStart.
+			pool = TKTConfiguration runner
+				ifFalse: [ pool stop ] ].
 	archetypedControllers
-		ifNotNil: [ archetypedControllers do: #cleanUpImageToStart ]
+		ifNotNil: [ archetypedControllers do: #cleanUpImageToStart ].
+	inverseProxy ifNotNil: [ :r | r cleanUpImageToStart ].
+	archetypedControllers removeAll.
+	pool := nil
 ]
 
 { #category : #accessing }
@@ -52,6 +59,17 @@ TKTArchetypeAwarePool >> defaultSerializerSelector: aDefaultSerializerSelector [
 TKTArchetypeAwarePool >> ensureIsWorking [
 	archetypedControllers
 		do: [ :controller | controller ensureIsWorking ]
+]
+
+{ #category : #scheduling }
+TKTArchetypeAwarePool >> failTaskExecution: aTaskExecution [
+	[ self error: aTaskExecution backend errorMessage ]
+		on: Error
+		do: [ :e | 
+			inverseProxy
+				deployFutureResult:
+					{aTaskExecution id.
+					e} ]
 ]
 
 { #category : #scheduling }
@@ -81,6 +99,15 @@ TKTArchetypeAwarePool >> initializeWithPool: aPool [
 	TKTConfiguration watchDog watch: self
 ]
 
+{ #category : #accessing }
+TKTArchetypeAwarePool >> inverseProxy [
+	^ inverseProxy
+		ifNil: [ inverseProxy := TKTOutgoingTasksService new.
+			inverseProxy top: self.
+			inverseProxy start.
+			inverseProxy ]
+]
+
 { #category : #testing }
 TKTArchetypeAwarePool >> isDebuggingCompatible [
 	^ true
@@ -94,6 +121,11 @@ TKTArchetypeAwarePool >> isLocalThreadRunner [
 { #category : #testing }
 TKTArchetypeAwarePool >> isUIRunner [
 	^ false 
+]
+
+{ #category : #scheduling }
+TKTArchetypeAwarePool >> maxBackends [
+	^ 1 
 ]
 
 { #category : #notifications }
@@ -122,9 +154,7 @@ TKTArchetypeAwarePool >> privateArchetypedControllerFor: archetype [
 			new := TKTArchetypedQueueController new.
 			archetypedControllers add: new.
 			new
-				archetype: archetype
-					registry: self remoteFutureRegistry
-					backends: 1;
+				archetype: archetype pool: self backends: self maxBackends;
 				yourself ]
 ]
 
@@ -138,13 +168,32 @@ TKTArchetypeAwarePool >> privateSchedule: aTKTGenericTask [
 	pool privateSchedule: aTKTGenericTask
 ]
 
-{ #category : #accessing }
-TKTArchetypeAwarePool >> remoteFutureRegistry [
-	^ remoteFutureRegistry
-		ifNil: [ remoteFutureRegistry := TKTOutgoingTasksService new.
-			remoteFutureRegistry top: self.
-			remoteFutureRegistry start.
-			remoteFutureRegistry ]
+{ #category : #scheduling }
+TKTArchetypeAwarePool >> recoverOngoingTasks: aCollectionOfTaskExecutions [
+	aCollectionOfTaskExecutions ifEmpty: [ ^ self ].
+	aCollectionOfTaskExecutions
+		reject: [ :t | t shouldRetry ]
+		thenDo: [ :t | self failTaskExecution: t ].
+		
+	aCollectionOfTaskExecutions 
+		select: [ :t | t shouldRetry ]
+		thenDo: [ :aTaskExecution | 
+			
+			(self privateArchetypedControllerFor: aTaskExecution archetype)
+				scheduleTaskExecution: aTaskExecution.
+			aTaskExecution markAsRecovered.	
+			 ].
+	
+]
+
+{ #category : #scheduling }
+TKTArchetypeAwarePool >> registerNotDeployableTaskExecution: aTaskExecution [
+	inverseProxy registerNotDeployable: aTaskExecution
+]
+
+{ #category : #scheduling }
+TKTArchetypeAwarePool >> registerTaskExecution: aTaskExecution [
+	inverseProxy register: aTaskExecution
 ]
 
 { #category : #service }
@@ -188,8 +237,8 @@ TKTArchetypeAwarePool >> scheduleTimeout: timeout on: aTaskExecution [
 TKTArchetypeAwarePool >> stop [
 	TKTConfiguration watchDog stopWatching: self.
 	archetypedControllers do: #stop.
-	remoteFutureRegistry ifNotNil: [ :r | r stop ].
-	remoteFutureRegistry := nil.
+	inverseProxy ifNotNil: [ :r | r stop ].
+	inverseProxy := nil.
 	pool
 		ifNotNil: [ pool = TKTConfiguration runner
 				ifFalse: [ pool stop ] ].
@@ -201,8 +250,8 @@ TKTArchetypeAwarePool >> stop [
 TKTArchetypeAwarePool >> stopAndDelete [
 	TKTConfiguration watchDog stopWatching: self.
 	archetypedControllers do: #stopAndDelete.
-	remoteFutureRegistry ifNotNil: [ :r | r stop ].
-	remoteFutureRegistry := nil.
+	inverseProxy ifNotNil: [ :r | r stop ].
+	inverseProxy := nil.
 	pool
 		ifNotNil: [ pool = TKTConfiguration runner
 				ifFalse: [ pool stop ] ].
@@ -213,4 +262,9 @@ TKTArchetypeAwarePool >> stopAndDelete [
 { #category : #accessing }
 TKTArchetypeAwarePool >> taskQueueSize: aTKTArchetype [
 	^ pool taskQueueSize
+]
+
+{ #category : #scheduling }
+TKTArchetypeAwarePool >> url [
+	^ inverseProxy url
 ]
