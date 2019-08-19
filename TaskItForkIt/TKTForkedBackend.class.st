@@ -77,7 +77,12 @@ TKTForkedBackend >> initialize [
 
 { #category : #'remote-call' }
 TKTForkedBackend >> isAlive [
-	[ ZnEasy get: self url / #alive.
+	[ ZnClient new
+		beOneShot;
+		url: self url / #alive;
+		timeout: 2 ;
+		get;
+		response.
 	^ true ]
 		on: Error
 		do: [ ^ false ]
@@ -127,10 +132,22 @@ TKTForkedBackend >> recoverOngoingTasks [
 { #category : #service }
 TKTForkedBackend >> recoverOngoingTasks: aRegistry [
 	assignedTasks := aRegistry filterToStillNeededTasks: assignedTasks.
+	self logCr: ('Recovering {1} tasks. ' format: {assignedTasks size}).
 	assignedTasks
 		do: [ :t | 
 			t backend: self.
 			t doExecuteTask ]
+]
+
+{ #category : #service }
+TKTForkedBackend >> remoteStop [
+	url
+		ifNotNil: [ [ ZnClient new
+				beOneShot;
+				url: self url / #stop;
+				timeout: 2 seconds;
+				get;
+				response ] ]
 ]
 
 { #category : #'remote-call' }
@@ -231,13 +248,15 @@ TKTForkedBackend >> startupCodeIp: anIp outputFile: anOutputFile with: aRegister
 { #category : #service }
 TKTForkedBackend >> stop [
 	mutex
-		critical: [ url
-				ifNotNil: [ [ ZnEasy get: url / #stop.
-					1 second wait.
-					imageProcess isComplete
-						ifFalse: [ imageProcess kill ] ] ifError: [  ].
-					url := nil.
-					imageProcess := nil ] ]
+		critical: [ self remoteStop.
+			imageProcess
+				ifNotNil: [ 
+					imageProcess isComplete ifFalse: [ imageProcess kill ].
+					imageProcess := nil.
+					url := nil 
+				] 
+		]
+		
 ]
 
 { #category : #service }

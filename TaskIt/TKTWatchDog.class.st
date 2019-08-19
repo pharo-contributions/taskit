@@ -86,8 +86,7 @@ TKTWatchDog >> start [
 TKTWatchDog >> stepService [
 	self watchedValues
 		ifEmpty: [ self stop ]
-		ifNotEmpty: [ :values | 
-			values do: [ :v | self watchDog: v ].
+		ifNotEmpty: [ values do: [ :v | self watchDog: v ].
 			self delay wait ]
 ]
 
