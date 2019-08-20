@@ -89,7 +89,7 @@ TKTService >> initialize [
 
 { #category : #testing }
 TKTService >> isRunning [
-	
+	worker ifNil: [ ^ false ].
 	^ worker isRunning
 ]
 

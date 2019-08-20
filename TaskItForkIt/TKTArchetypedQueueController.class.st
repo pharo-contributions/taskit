@@ -45,8 +45,6 @@ TKTArchetypedQueueController >> deploy [
 
 { #category : #health }
 TKTArchetypedQueueController >> ensureEnoughBackends [
-	(backends reject: #isAlive) do: #stopAndDelete.
-	backends removeAll: (backends reject: #isAlive).
 	backends size < maxBackeds
 		ifTrue: [ self spawnNewBackend ]
 ]
@@ -77,7 +75,7 @@ TKTArchetypedQueueController >> managesBackendId: aHash [
 
 { #category : #accessing }
 TKTArchetypedQueueController >> maxBackends [
-	^ maxBackeds ifNil: [ maxBackeds := 1 ]
+	^ maxBackeds
 ]
 
 { #category : #notifications }

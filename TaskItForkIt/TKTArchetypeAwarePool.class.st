@@ -123,9 +123,37 @@ TKTArchetypeAwarePool >> isUIRunner [
 	^ false 
 ]
 
+{ #category : #testing }
+TKTArchetypeAwarePool >> kkc [
+
+		
+		[ |  result errors  suite |
+	errors := OrderedCollection new. 
+	result := TestResult new.
+	suite := TestSuite new.
+	 #(#testPackageOfMethodFromTraits #testPackageOfMethodFromTraitsAfterCreation #testPackageOfMethodFromTraitsAfterCreationOverriden #testPackageOfMethodFromTraitsOverriden #testPackageOfMethodFromTraitsOverridenAndRemoved #testPackageOfMethodFromTraitsOverridenModifiedKeepPackage #testPackageOfMethodFromTraitsRemoved #testPackageOfRemovedTrait #testTraitMethodPackage #testTraitPackage) do: [ : testSelector | suite addTest: (T2TraitWithPackagesTest selector: testSelector) ].
+ #(#testGivenAMethodNodeWhenSourceAvailableThenSourceReturnedAsResultOfFormatting #testGivenAMethodNodeWhenSourceNotAvailableThenSelectorWithWarningMessageReturnedAsResultOfFormatting) do: [ : testSelector | suite addTest: (RBNullFormatterTest selector: testSelector) ].
+ #(#testRefactoring #testRemoveClassWithBadName #testRemoveClassWithReferences #testRemoveClassWithSubclasses #testTransform) do: [ : testSelector | suite addTest: (RBRemoveClassTransformationTest selector: testSelector) ].
+ #(#testIssue7368) do: [ : testSelector | suite addTest: (MCSubDirectoryRepositoryTest selector: testSelector) ].
+ #(#testChangingHelpAffectTheWidget #testEnabledAffectWidget #testHidePresenterHidesWidget #testRightClickShowsMenu #testSelectManyIndexesKeepsAllSelected #testSelectPresenterIndexOutsideRangeUnsetsSelectedIndexInWidget #testSelectPresenterIndexSetsSelectedIndexInWidget #testSelectPresenterItemSetsSelectedIndexInWidget #testSelectWidgetIndexRaisesSelectionIndexChangeEventOnce #testSelectWidgetIndexRaisesSelectionIndexChangeEventWithSelectedIndex #testShowPresenterShowsWidget #testSubscribeToEventDoesNotRaiseEvent #testUnselectAllInWidgetRaisesEmptySelectionChangeEvent #testUnselectAllInWidgetRaisesSelectionIndexChangeEventOnce #testVisibilityWithBlock #testVisibilityWithBlock2) do: [ : testSelector | suite addTest: (SpListAdapterMultipleSelectionTest selector: testSelector) ].
+ #(#testShouldGetDirectDependencies #testShouldGetUnresolvedDependencies) do: [ : testSelector | suite addTest: (DADependencyCheckerTest selector: testSelector) ].
+ #(#testAbstractInstanceVariable #testAbstractWithAssignmentUsed #testAbstractWithDefaultNamesUsed #testInheritedName #testMetaclassInstanceVariables #testNonExistantName) do: [ : testSelector | suite addTest: (RBAbstractInstanceVariableTest selector: testSelector) ].
+ #(#testAssertionEqualsDetected #testSuccessfullTestWithHalt) do: [ : testSelector | suite addTest: (GTSUnitDebuggerSmokeTest selector: testSelector) ].
+ #(#testExample #testOpenWithSpec) do: [ : testSelector | suite addTest: (SearchableTreeTest selector: testSelector) ].
+ #(#test0CopyTest #test0FixtureAsStringCommaAndDelimiterTest #test0FixtureCloneTest #test0FixtureConverAsSortedTest #test0FixtureDictionaryAddingTest #test0FixtureDictionaryAssocitionAccess #test0FixtureDictionaryCopyingTest #test0FixtureDictionaryElementAccess #test0FixtureDictionaryEnumeratingTest #test0FixtureDictionaryIncludes #test0FixtureDictionaryIncludesIdentity #test0FixtureDictionaryKeyAccess #test0FixtureDictionaryKeysValuesAssociationsAccess #test0FixtureDictionaryRemovingTest #test0FixtureEmptyTest #test0FixtureIncludeTest #test0FixtureIterateTest #test0FixtureOccurrencesForMultiplinessTest #test0FixtureOccurrencesTest #test0FixturePrintTest #test0FixturePutTest #test0FixtureSetAritmeticTest #test0FixtureTConvertTest #test0TSizeTest #test0TStructuralEqualityTest #testAdd #testAddAll #testAddWithKeyAlreadyIn #testAddWithKeyNotIn #testAllSatisfy #testAllSatisfyEmpty #testAnySastify #testAsArray #testAsBag #testAsByteArray #testAsCommaStringEmpty #testAsCommaStringMore #testAsCommaStringOne #testAsIdentitySet #testAsOrderedCollection #testAsSet #testAsSortedArray #testAsSortedCollection #testAsSortedCollectionWithSortBlock #testAsStringOnDelimiterEmpty #testAsStringOnDelimiterLastEmpty #testAsStringOnDelimiterLastMore #testAsStringOnDelimiterLastOne #testAsStringOnDelimiterMore #testAsStringOnDelimiterOne #testAssociationAt #testAssociationAtError #testAssociationAtIfAbsent #testAssociationAtIfPresent #testAssociationAtIfPresentifAbsent #testAssociations #testAssociationsDo #testAssociationsSelect #testAt #testAtIfAbsent #testAtIfAbsentPut #testAtIfPresent #testAtIfPresentIfAbsent #testAtIfPresentIfAbsentPut #testAtPut #testAtPutDict #testAtPutNil #testAtPutTwoValues #testBasicCollect #testBasicCollectEmpty #testBasicCollectThenDo #testCollect #testCollectOnEmpty #testCollectThenDoOnEmpty #testCollectThenSelectOnEmpty #testCopyCreatesNewObject #testCopyEmpty #testCopyEmptyWith #testCopyEmptyWithoutAll #testCopyEquals #testCopyNonEmpty #testCopyNonEmptyWith #testCopyNonEmptyWithoutAll #testCopyNonEmptyWithoutAllNotIncluded #testCopyNotSame #testCopySameClass #testCoverage #testDeclareFrom #testDetect #testDetectIfFoundIfNoneWhenNobodyIsFound #testDetectIfFoundIfNoneWhenSomethingIsFound #testDetectIfFoundIfNoneWhenSomethingIsFoundIgnoringTheFoundObject #testDetectIfFoundWhenNobodyIsFound #testDetectIfFoundWhenSomethingIsFound #testDetectIfFoundWhenSomethingIsFoundIgnoringTheFoundObject #testDetectIfNone #testDictionaryConcatenationWithCommonKeys #testDictionaryConcatenationWithCommonKeysDifferentValues #testDictionaryConcatenationWithoutCommonKeys #testDictionaryPublicProtocolCompatibility #testDifference #testDifferenceWithNonNullIntersection #testDifferenceWithSeparateCollection #testDo #testDo2 #testDoSeparatedBy #testDoWithout #testEqualSign #testEqualSignIsTrueForNonIdenticalButEqualCollections #testEqualSignOfIdenticalCollectionObjects #testEquality #testFlatCollect #testFlatCollect2 #testFlatCollect3 #testHasBindingThatBeginsWith #testIdentityIncludesNonSpecificComportement #testIfEmpty #testIfEmptyifNotEmpty #testIfNotEmpty #testIfNotEmptyifEmpty #testIncludeAssociation #testIncludes #testIncludesAllNoneThere #testIncludesAnyAllThere #testIncludesAnyNoneThere #testIncludesAssociation #testIncludesAssociationNoValue #testIncludesAssociationWithValue #testIncludesComportementForDictionnary #testIncludesElementIsNotThere #testIncludesElementIsThere #testIncludesIdentityBasicComportement #testIncludesIdentitySpecificComportement #testIncludesKey #testInjectInto #testIntersectionBasic #testIntersectionEmpty #testIntersectionItself #testIntersectionTwoSimilarElementsInIntersection #testIsDictionary #testIsEmpty #testIsEmptyOrNil #testIsHealthy #testKeyAtIdentityValue #testKeyAtIdentityValueIfAbsent #testKeyAtValue #testKeyAtValueIfAbsent #testKeyForIdentity #testKeys #testKeysAndValuesDo #testKeysAndValuesRemove #testKeysDo #testKeysSortedSafely #testMethodsOfTheClassShouldNotBeRepeatedInItsSuperclasses #testNew #testNewFrom #testNewFromKeysAndValues #testNewFromKeysAndValues2 #testNewFromPairs #testNilHashCollision #testNoneSatisfy #testNoneSatisfyEmpty #testNotEmpty #testOccurrencesOf #testOccurrencesOfEmpty #testOccurrencesOfForMultipliness #testOccurrencesOfNotIn #testOtherDictionaryEquality #testPrintElementsOn #testPrintNameOn #testPrintOn #testPrintOnDelimiter #testPrintOnDelimiterLast #testReject #testRejectAllThenCollect #testRejectAllThenDo #testRejectEmpty #testRejectNoReject #testRejectThenCollect #testRejectThenCollectEmpty #testRejectThenDo #testRejectThenDoOnEmpty #testRemove #testRemoveAll #testRemoveKey #testRemoveKeyIfAbsent #testSelect #testSelectIsNotShallowCopy #testSelectNoneThenCollect #testSelectNoneThenDo #testSelectOnEmpty #testSelectThenCollect #testSelectThenCollectOnEmpty #testSelectThenDo #testSelectThenDoOnEmpty #testSize #testStoreOn #testStoreOnRoundTrip #testStoreOnWithNegativeInteger #testSumNumbers #testTraitExplicitRequirementMethodsMustBeImplementedInTheClassOrInASuperclass #testUnCategorizedMethods #testUnion #testUnionOfEmpties #testValues #testValuesDo) do: [ : testSelector | suite addTest: (SmallDictionaryTest selector: testSelector) ].
+ #(#testApplicationUrlEncodingAddAll #testMultiPartFormDataWriteRead #testMultiPartFormDataWriteReadBinary #testReading #testReadingApplicationFormUrlEncoding #testReadingApplicationFormUrlEncodingNoLength #testReadingBinary #testReadingLimited #testStringEntityEncoderInitialization #testUTF8ReadingDetermined #testUTF8ReadingUndetermined #testUTF8Writing #testUnspecifiedEncoding #testWritingApplicationUrlEncoding #testWritingApplicationUrlEncodingWithTextEncodingLatin1 #testWritingApplicationUrlEncodingWithTextEncodingUtf8) do: [ : testSelector | suite addTest: (ZnEntityTest selector: testSelector) ].
+ #(#testLocation #testProjectTagsUrlFor #testSelfHostedLocation #testSelfHostedLocationWithNonDefaultSSHPort) do: [ : testSelector | suite addTest: (MCGitlabRepositoryTest selector: testSelector) ].
+ #(#testStartForReplacement #testStartForReplacement02) do: [ : testSelector | suite addTest: (RBVariableNodeTest selector: testSelector) ].
+ #(#testClassVariable #testMetaclassFailure #testRefactoring #testTransform #testVariableAlreadyExists #testVariableDoesNotExist) do: [ : testSelector | suite addTest: (RBRenameVariableTransformationTest selector: testSelector) ].
+ #(#testDynamicVariable #testDynamicVariableAccessFromDifferentProcess #testDynamicVariableBlockReturnValue #testDynamicVariableRemovedAfterUse #testExecutionEnvironment #testInheritableVariable #testInheritingExecutionEnvironment #testLocalVariable) do: [ : testSelector | suite addTest: (ProcessSpecificTest selector: testSelector) ].
+ #(#testRenamePackage #testRenamePackageToOwnTagName #testRenamePackageToOwnTagNameWithClassesInRoot #testRenamePackageUppercase #testUnregisterPackage) do: [ : testSelector | suite addTest: (RPackageRenameTest selector: testSelector) ].
+ #(#testChangingHelpAffectTheWidget #testEnabledAffectWidget #testHidePresenterHidesWidget) do: [ : testSelector | suite addTest: (SpAthensStaticPresenterTest selector: testSelector) ]..
+	[ result registerPartialResult: suite run ] on: Error do: [ : e | errors add:{  e messageText } .e resume ]]
+]
+
 { #category : #scheduling }
 TKTArchetypeAwarePool >> maxBackends [
-	^ 1 
+	^ 2
 ]
 
 { #category : #notifications }
@@ -170,6 +198,7 @@ TKTArchetypeAwarePool >> privateSchedule: aTKTGenericTask [
 
 { #category : #scheduling }
 TKTArchetypeAwarePool >> recoverOngoingTasks: aCollectionOfTaskExecutions [
+	self logCr: 'Recovering tasks: ', aCollectionOfTaskExecutions size asString.  
 	aCollectionOfTaskExecutions ifEmpty: [ ^ self ].
 	aCollectionOfTaskExecutions
 		reject: [ :t | t shouldRetry ]
@@ -193,7 +222,7 @@ TKTArchetypeAwarePool >> registerNotDeployableTaskExecution: aTaskExecution [
 
 { #category : #scheduling }
 TKTArchetypeAwarePool >> registerTaskExecution: aTaskExecution [
-	inverseProxy register: aTaskExecution
+	self inverseProxy register: aTaskExecution
 ]
 
 { #category : #service }

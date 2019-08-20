@@ -73,6 +73,7 @@ TKTWorker >> exceptionHandler: aHandler [
 
 { #category : #initialization }
 TKTWorker >> finalize [
+	TKTConfiguration watchDog stopWatching: self.
 	self
 		schedule: [ | theProcess |
 			queue := nil.
@@ -165,6 +166,7 @@ TKTWorker >> stop [
 	process
 		ifNotNil: [ process stop.
 			process := nil ].
+	TKTConfiguration watchDog stopWatching: self.
 	self noteDoesNotNeedToBeFinalized.
 ]
 

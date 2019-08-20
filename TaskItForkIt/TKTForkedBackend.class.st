@@ -35,6 +35,11 @@ TKTForkedBackend >> assignTask: aTaskExecution [
 ]
 
 { #category : #accessing }
+TKTForkedBackend >> assignedTasks [
+	^ assignedTasks
+]
+
+{ #category : #accessing }
 TKTForkedBackend >> defaultSerializerSelector [
 	^ defaultSerializerSelector 
 ]
@@ -46,6 +51,9 @@ TKTForkedBackend >> defaultSerializerSelector: aSelector [
 
 { #category : #accessing }
 TKTForkedBackend >> deploy [
+	deploy
+		ifNotNil: [ deploy exists
+				ifFalse: [ deploy := nil ] ].
 	^ deploy
 		ifNil: [ TKTConfiguration
 				runner: TKTNewProcessTaskRunner new
@@ -67,6 +75,7 @@ TKTForkedBackend >> ensureIsAlive: anInverseProxyOrPool [
 	self startWith: anInverseProxyOrPool.
 	anInverseProxyOrPool recoverOngoingTasks: assignedTasks.
 	assignedTasks removeAll.
+	self noteTaskScheduled
 ]
 
 { #category : #private }
@@ -91,7 +100,7 @@ TKTForkedBackend >> isAlive [
 	[ ZnClient new
 		beOneShot;
 		url: self url / #alive;
-		timeout: 2 ;
+		timeout: 30 ;
 		get;
 		response.
 	^ true ]
@@ -242,13 +251,11 @@ TKTForkedBackend >> stop [
 	mutex
 		critical: [ self remoteStop.
 			imageProcess
-				ifNotNil: [ 
-					imageProcess isComplete ifFalse: [ imageProcess kill ].
+				ifNotNil: [ imageProcess isComplete
+						ifFalse: [ (#kill command arguments: {imageProcess pid asString}) future
+								synchronizeTimeout: 1 minute ].
 					imageProcess := nil.
-					url := nil 
-				] 
-		]
-		
+					url := nil ] ]
 ]
 
 { #category : #service }

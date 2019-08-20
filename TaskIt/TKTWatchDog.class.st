@@ -109,9 +109,9 @@ TKTWatchDog >> watch: aValue [
 { #category : #initialization }
 TKTWatchDog >> watchDog: aParameterPool [
 	[ aParameterPool ensureIsWorking ]
-		on: Error
+		on: UnhandledError 
 		do: [ :err | 
-			self log: err printString.
+			self logCr: err printString.
 			self
 				log:
 					'Watch dog is not watching anymore the value: '

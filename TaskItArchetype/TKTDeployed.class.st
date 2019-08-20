@@ -77,7 +77,8 @@ TKTDeployed >> debugLog [
 
 { #category : #'evalas yet unclassified' }
 TKTDeployed >> delete [
-	systemAdapter rm: location
+	location exists
+		ifTrue: [ systemAdapter rm: location ]
 ]
 
 { #category : #'evalas yet unclassified' }
@@ -108,6 +109,11 @@ TKTDeployed >> evalSerialized: aString [
 	return := (STONReader on: output readStream) next.
 	output ensureDelete.
 	^ return 
+]
+
+{ #category : #testing }
+TKTDeployed >> exists [
+	^ location exists
 ]
 
 { #category : #accessing }
@@ -200,7 +206,7 @@ TKTDeployed >> sourcesFile [
 { #category : #'evalas yet unclassified' }
 TKTDeployed >> startImageNoQuit: aString [
 	| return |
-	return := (self commandUi
+	return := (self command
 		option: 'eval';
 		arguments:
 			{'--no-quit'.
