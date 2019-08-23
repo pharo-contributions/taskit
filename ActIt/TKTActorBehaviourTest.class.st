@@ -6,5 +6,5 @@ Class {
 	#superclass : #Object,
 	#traits : 'TKTActorBehaviour',
 	#classTraits : 'TKTActorBehaviour classTrait',
-	#category : 'ActIt-Tests'
+	#category : #'ActIt-Tests'
 }

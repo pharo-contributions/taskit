@@ -4,7 +4,7 @@ Tests
 Class {
 	#name : #TKTActItTestBuilding,
 	#superclass : #TestCase,
-	#category : 'ActIt-Tests'
+	#category : #'ActIt-Tests'
 }
 
 { #category : #tests }

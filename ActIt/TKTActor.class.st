@@ -9,7 +9,7 @@ Class {
 		'runner',
 		'actorModificationMutex'
 	],
-	#category : 'ActIt-Kernel'
+	#category : #'ActIt-Kernel'
 }
 
 { #category : #accessing }
