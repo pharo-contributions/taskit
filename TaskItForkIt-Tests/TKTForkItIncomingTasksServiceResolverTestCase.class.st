@@ -46,10 +46,16 @@ TKTForkItIncomingTasksServiceResolverTestCase >> schedule: aBlockClosure [
 TKTForkItIncomingTasksServiceResolverTestCase >> setUp [
 	super setUp.
 	service := TKTForkItIncomingTasksService new.
+	TKTSerializationStrategy default: self.
+	service master: 'error' asZnUrl.
 	service usePool: self.
-	service useResolver: self .
+	service useResolver: self.
 	informSuccessCalled := false.
-	informErrorCalled := false.
+	informErrorCalled := false
+]
+
+{ #category : #running }
+TKTForkItIncomingTasksServiceResolverTestCase >> tearDown [ 	
 ]
 
 { #category : #running }
@@ -84,4 +90,9 @@ TKTForkItIncomingTasksServiceResolverTestCase >> testResolverIsUsedForInformSucc
 	self
 		assert: serializer selector
 		equals: TKTSerializationStrategy default selector
+]
+
+{ #category : #running }
+TKTForkItIncomingTasksServiceResolverTestCase >> writeZnRequestFor: backendHash to: master [
+	
 ]

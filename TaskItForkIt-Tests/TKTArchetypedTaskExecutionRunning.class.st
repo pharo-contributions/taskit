@@ -21,7 +21,9 @@ TKTArchetypedTaskExecutionRunning >> isAlive [
 TKTArchetypedTaskExecutionRunning >> sendTaskAndProcessResponse: aTask id: anId serializer: aSerializer [
 	taskToExecute := aTask.
 	serializer := aSerializer.
-	id := anId
+	id := anId.
+	isAlive
+		ifFalse: [ TKTRetryException signal: 'Error' ]
 ]
 
 { #category : #running }

@@ -10,12 +10,20 @@ By default, the code proposes to respond messages using the same serializer, but
 Class {
 	#name : #TKTSerializationStrategy,
 	#superclass : #Object,
+	#classInstVars : [
+		'default'
+	],
 	#category : #'TaskItForkIt-Worker-Server'
 }
 
 { #category : #'as yet unclassified' }
-TKTSerializationStrategy class >> default [ 
-	^ self xstoned
+TKTSerializationStrategy class >> default [
+	^ default ifNil: [ ^ self xstoned ] .
+]
+
+{ #category : #'as yet unclassified' }
+TKTSerializationStrategy class >> default: aDefault [
+	default := aDefault
 ]
 
 { #category : #'as yet unclassified' }
