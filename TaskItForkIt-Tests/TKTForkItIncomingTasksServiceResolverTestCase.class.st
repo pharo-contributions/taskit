@@ -55,7 +55,8 @@ TKTForkItIncomingTasksServiceResolverTestCase >> setUp [
 ]
 
 { #category : #running }
-TKTForkItIncomingTasksServiceResolverTestCase >> tearDown [ 	
+TKTForkItIncomingTasksServiceResolverTestCase >> tearDown [
+	TKTSerializationStrategy default: nil
 ]
 
 { #category : #running }
