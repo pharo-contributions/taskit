@@ -51,12 +51,12 @@ TKTDeployed >> cloneAt: aLocation using: aSystemAdapter [
 
 { #category : #accessing }
 TKTDeployed >> command [
-	^ systemAdapter command: self pharoScript for: self
+	^ systemAdapter command: self vmBinary for: self
 ]
 
 { #category : #accessing }
 TKTDeployed >> commandUi [
-	^ systemAdapter command: self pharoUiScript for: self
+	^ systemAdapter commandUi: self vmBinary for: self
 ]
 
 { #category : #'evalas yet unclassified' }

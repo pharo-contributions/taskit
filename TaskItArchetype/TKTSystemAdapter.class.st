@@ -40,6 +40,14 @@ TKTSystemAdapter >> chmod: aFileReference flag: aString [
 { #category : #folder }
 TKTSystemAdapter >> command: aReference for: aDeployed [
 	^ aReference command
+		option: '--headless';
+		option: aDeployed imageFile fullName;
+		yourself
+]
+
+{ #category : #folder }
+TKTSystemAdapter >> commandUi: aReference for: aDeployed [
+	^ aReference command
 		option: aDeployed imageFile fullName;
 		yourself
 ]

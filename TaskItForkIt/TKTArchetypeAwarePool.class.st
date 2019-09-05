@@ -66,7 +66,7 @@ TKTArchetypeAwarePool >> failTaskExecution: aTaskExecution [
 	[ self error: aTaskExecution backend errorMessage ]
 		on: Error
 		do: [ :e | 
-			inverseProxy
+			self inverseProxy
 				deployFutureResult:
 					{aTaskExecution id.
 					e} ]
@@ -175,14 +175,17 @@ TKTArchetypeAwarePool >> pool: aTKTCommonQueueWorkerPool [
 ]
 
 { #category : #accessing }
-TKTArchetypeAwarePool >> privateArchetypedControllerFor: archetype [
+TKTArchetypeAwarePool >> privateArchetypedControllerFor: anArchetype [
+	| archetypeWithForkit |
+	archetypeWithForkit := anArchetype + TKTProject forkit .
+
 	^ archetypedControllers
-		detect: [ :a | a archetype = archetype ]
+		detect: [ :a | a archetype = archetypeWithForkit ]
 		ifNone: [ | new |
 			new := TKTArchetypedQueueController new.
 			archetypedControllers add: new.
 			new
-				archetype: archetype pool: self backends: self maxBackends;
+				archetype: archetypeWithForkit pool: self backends: self maxBackends;
 				yourself ]
 ]
 
@@ -217,7 +220,7 @@ TKTArchetypeAwarePool >> recoverOngoingTasks: aCollectionOfTaskExecutions [
 
 { #category : #scheduling }
 TKTArchetypeAwarePool >> registerNotDeployableTaskExecution: aTaskExecution [
-	inverseProxy registerNotDeployable: aTaskExecution
+	self inverseProxy registerNotDeployable: aTaskExecution
 ]
 
 { #category : #scheduling }
@@ -248,8 +251,7 @@ TKTArchetypeAwarePool >> scheduleArchetypedTask: aTask [
 	| execution |
 	execution := aTask asTask futureTaskExecutionFor: self.
 	(self privateArchetypedControllerFor: aTask archetype)
-		scheduleTaskExecutionNotDeployable: execution.
-		
+		scheduleTaskExecutionNotDeployable: execution
 ]
 
 { #category : #scheduling }

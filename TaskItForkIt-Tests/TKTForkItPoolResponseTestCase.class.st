@@ -22,7 +22,7 @@ TKTForkItPoolResponseTestCase >> setUp [
 { #category : #running }
 TKTForkItPoolResponseTestCase >> tearDown [
 	super tearDown.
-	pool stop.
+	pool stopAndDelete.
 	
 ]
 
@@ -42,7 +42,7 @@ TKTForkItPoolResponseTestCase >> testSpecificArchetypeNonInstalledTriggersInstal
 
 { #category : #running }
 TKTForkItPoolResponseTestCase >> testSpecificArchetypeQueueOnInstalledArchetype [
-	pool backendFor: TKTArchetype pharo70.
+	pool privateArchetypedControllerFor: TKTArchetype pharo70.
 	self assert: (pool amountOfTasksAt: TKTArchetype pharo70) equals: 0.
 	pool schedule: ([  ] asArchetypedTaskOn: TKTArchetype pharo70).
 	self assert: (pool amountOfTasksAt: TKTArchetype pharo70) equals: 1

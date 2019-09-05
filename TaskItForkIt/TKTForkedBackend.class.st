@@ -24,9 +24,7 @@ TKTForkedBackend >> archetype [
 
 { #category : #accessing }
 TKTForkedBackend >> archetype: aTKTArchetype [
-	archetype := aTKTArchetype isCurrentPharo
-		ifTrue: [ aTKTArchetype ]
-		ifFalse: [ aTKTArchetype + TKTProject forkit ]
+	archetype := aTKTArchetype
 ]
 
 { #category : #public }
