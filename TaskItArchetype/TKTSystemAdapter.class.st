@@ -54,12 +54,12 @@ TKTSystemAdapter >> commandUi: aReference for: aDeployed [
 
 { #category : #copying }
 TKTSystemAdapter >> copy: aFileReference to: aDestination [
-	^ TKTSystem cp
+	^ (TKTSystem cp
 		option: '-r';
 		arguments:
 			{aFileReference asFileReference fullName.
 			aDestination asFileReference fullName};
-		future
+		future) synchronizeTimeout: 1 minute
 ]
 
 { #category : #folder }
@@ -91,14 +91,18 @@ TKTSystemAdapter >> installAllSymlinksTo: aCollection at: aDestination [
 { #category : #copying }
 TKTSystemAdapter >> installSymlinkTo: aFileReference at: aDestination [
 	| destination |
-	destination := aDestination isDirectory
-		ifTrue: [ aDestination / aFileReference basename ].
-	^ TKTSystem ln
+	aFileReference basename = aDestination basename
+		ifTrue: [ self halt ].
+	destination := aDestination / aFileReference basename.
+	self
+		assert: aFileReference exists
+		description: 'Trying to link a non existing reference '.
+	^ (TKTSystem ln
 		option: '-s';
 		arguments:
 			{aFileReference fullName.
 			destination fullName};
-		future
+		future) synchronizeTimeout: 1 minute
 ]
 
 { #category : #copying }

@@ -141,15 +141,12 @@ TKTFileOrientedDeployer >> defaultDeployFolder [
 TKTFileOrientedDeployer >> deploy: anArchetype at: location [
 	| deployed |
 	anArchetype parent
-		ifNil: [ (self deployFiles: anArchetype at: location)
-				do: [ :f | f synchronizeTimeout: 5 minutes ] ]
+		ifNil: [ self deployFiles: anArchetype at: location ]
 		ifNotNil: [ self deploy: anArchetype parent at: location ].
-		
 	self createScript: location / 'pharo' with: self class pharoScript.
 	self
 		createScript: location / 'pharo-ui'
 		with: self class pharoUiScript.
-		
 	deployed := TKTDeployed new
 		initializeWithLocation: location
 			archetype: anArchetype
@@ -163,11 +160,12 @@ TKTFileOrientedDeployer >> deploy: anArchetype at: location [
 TKTFileOrientedDeployer >> deployAtDefaultLocation: anArchetype [
 	| id |
 	id := UUID new asString.
-	(self defaultDeployFolder / anArchetype name / id)
-		ensureCreateDirectory.
 	^ self
 		deploy: anArchetype
-		at: self defaultDeployFolder / anArchetype name / id
+		at:
+			((self defaultDeployFolder / anArchetype name / id)
+				ensureCreateDirectory;
+				yourself)
 ]
 
 { #category : #accessing }

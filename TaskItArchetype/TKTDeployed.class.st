@@ -45,7 +45,7 @@ TKTDeployed >> cloneAt: aLocation using: aSystemAdapter [
 		initializeWithLocation: aLocation
 		archetype: archetype
 		andSystemAdapter: aSystemAdapter.
-	(aSystemAdapter copy: location to: aLocation) synchronizeTimeout: 1 minute.
+	aSystemAdapter copy: location to: aLocation.
 	^ clone
 ]
 

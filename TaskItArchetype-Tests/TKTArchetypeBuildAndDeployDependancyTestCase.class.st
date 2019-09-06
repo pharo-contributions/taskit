@@ -49,14 +49,14 @@ TKTArchetypeBuildAndDeployDependancyTestCase >> setUp [
 { #category : #tests }
 TKTArchetypeBuildAndDeployDependancyTestCase >> tearDown [
 	session = Smalltalk session
-		ifTrue: [ TKTSystem rm
+		ifTrue: [ (TKTSystem rm
 				option: '-rf';
 				argument: (#/ asFileReference / #tmp / archetype name) fullName;
-				future.
-			TKTSystem rm
+				future) synchronizeTimeout: 1 minute.
+			(TKTSystem rm
 				option: '-rf';
 				argument: ('pharo-local' asFileReference / #forking) fullName;
-				future ]
+				future) synchronizeTimeout: 1 minute ]
 ]
 
 { #category : #tests }
