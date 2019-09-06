@@ -22,6 +22,12 @@ TKTDummyBackendStub >> commandCalled [
 ]
 
 { #category : #folder }
+TKTDummyBackendStub >> commandUi: aCommand for: aDeployed [
+	commandCalled := commandCalled + 1 .
+	^ super commandUi: aCommand for: aDeployed
+]
+
+{ #category : #folder }
 TKTDummyBackendStub >> initialize [
 	super initialize.
 	commandCalled := 0

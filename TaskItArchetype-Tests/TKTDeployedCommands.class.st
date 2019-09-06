@@ -53,11 +53,13 @@ TKTDeployedCommands >> testCommandPointsToPharoScript [
 		ifTrue: [ ^ self skip ].
 	command := deployed command.
 	self assert: command isCommandDeclaration.
-	self assert: ((self commandFor: command) endsWith: 'pharo').
+	self assert: ((self commandFor: command) endsWith: 'haro').
 	self assert: systemAdapter commandCalled equals: 1.
-	self assert: (self optionsFor: command) size equals: 1.
+	self assert: (self optionsFor: command) size equals: 2.
+		self
+		assert: ((self optionsFor: command) first endsWith: '--headless').
 	self
-		assert: ((self optionsFor: command) first endsWith: 'Pharo.image').
+		assert: ((self optionsFor: command) second endsWith: 'Pharo.image').
 	self assert: (self argumentsFor: command) isEmpty
 ]
 
@@ -66,9 +68,9 @@ TKTDeployedCommands >> testCommandUiPointsToPharoUiScript [
 	| command |
 	self isTravisBuild
 		ifTrue: [ ^ self skip ].
-	command := deployed command.
+	command := deployed commandUi.
 	self assert: command isCommandDeclaration.
-	self assert: ((self commandFor: command) endsWith: 'pharo-ui').
+	self assert: ((self commandFor: command) endsWith: 'haro').
 	self assert: systemAdapter commandCalled equals: 1.
 	self assert: (self optionsFor: command) size equals: 1.
 	self
@@ -83,12 +85,12 @@ TKTDeployedCommands >> testEvalCommandPointsToCommandAndHasOptions [
 		ifTrue: [ ^ self skip ].
 	command := deployed eval.
 	self assert: command isCommandDeclaration.
-	self assert: ((self commandFor: command) endsWith: 'pharo').
+	self assert: ((self commandFor: command) endsWith: 'haro').
 	self assert: systemAdapter commandCalled equals: 1.
-	self assert: (self optionsFor: command) size equals: 2.
+	self assert: (self optionsFor: command) size equals: 3.
 	self
-		assert: ((self optionsFor: command) first endsWith: 'Pharo.image').
-	self assert: (self optionsFor: command) second equals: 'eval'.
+		assert: ((self optionsFor: command) second endsWith: 'Pharo.image').
+	self assert: (self optionsFor: command) third equals: 'eval'.
 	self assert: (self argumentsFor: command) isEmpty
 ]
 

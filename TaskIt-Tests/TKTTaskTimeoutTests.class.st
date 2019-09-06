@@ -13,7 +13,7 @@ TKTTaskTimeoutTests >> testTaskDoesNotTimeoutIfTaskExecutionIsShorter [
 	runner := TKTLocalProcessTaskRunner new.
 	runner exceptionHandler: (TKTTestExceptionHandler new).
 	
-	runner schedule: [ 10 milliSeconds wait. finished := true ] timeout: 50 milliSeconds.
+	runner schedule: [ 10 milliSeconds wait. finished := true ] asTask timeout: 50 milliSeconds.
 	
 	self assert: runner exceptionHandler error equals: nil.
 	self assert: finished
@@ -24,6 +24,6 @@ TKTTaskTimeoutTests >> testTaskTimeoutIfTaskExecutionIsLonger [
 	| runner |
 	runner := TKTLocalProcessTaskRunner new.
 	runner exceptionHandler: TKTTestExceptionHandler new.
-	runner schedule: [ 50 milliSeconds wait ] timeout: 10 milliSeconds.
+	runner schedule: [ 50 milliSeconds wait ] asTask timeout: 10 milliSeconds.
 	self assert: (runner exceptionHandler error isKindOf: TKTCancelledTaskException)
 ]
