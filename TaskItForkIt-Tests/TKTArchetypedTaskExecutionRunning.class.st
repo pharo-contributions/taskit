@@ -12,9 +12,19 @@ Class {
 	#category : #'TaskItForkIt-Tests'
 }
 
+{ #category : #tests }
+TKTArchetypedTaskExecutionRunning >> futureArchetypedTask: task [
+	^ #futureArchetypedTask:
+]
+
 { #category : #running }
 TKTArchetypedTaskExecutionRunning >> isAlive [
 	^ isAlive
+]
+
+{ #category : #tests }
+TKTArchetypedTaskExecutionRunning >> privateFuture: aTask [
+	^ #privateFuture:
 ]
 
 { #category : #running }
@@ -38,6 +48,13 @@ TKTArchetypedTaskExecutionRunning >> setUp [
 	isAlive := true.
 ]
 
+{ #category : #tests }
+TKTArchetypedTaskExecutionRunning >> testArchetypedTaskBuildsOnRunnerWithPrivateFutureMessage [
+	self
+		assert: (TKTArchetypedTask new future: self)
+		equals: #futureArchetypedTask:
+]
+
 { #category : #running }
 TKTArchetypedTaskExecutionRunning >> testDoExecuteNonAliveBackendExplodes [
 	isAlive := false.
@@ -54,4 +71,14 @@ TKTArchetypedTaskExecutionRunning >> testDoExecuteUsesBackend [
 	self assert: id equals: taskExecution id.
 	self assert: serializer equals: task serializerSelector.
 	
+]
+
+{ #category : #tests }
+TKTArchetypedTaskExecutionRunning >> testGenericTaskBuildsOnRunnerWithPrivateFutureMessage [
+	self assert: (TKTGenericTask new future: self) equals: #privateFuture:
+]
+
+{ #category : #tests }
+TKTArchetypedTaskExecutionRunning >> testGenericTaskResolvesThisImageAsArchetype [
+	self assert: [  ] asTask archetype equals: TKTArchetype thisImage 
 ]

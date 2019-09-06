@@ -1,11 +1,23 @@
 Class {
 	#name : #TKTForkItPoolResponseTestCase,
-	#superclass : #TestCase,
+	#superclass : #TKTForkItArchetypedTest,
 	#instVars : [
 		'pool'
 	],
 	#category : #'TaskItForkIt-Tests'
 }
+
+{ #category : #tests }
+TKTForkItPoolResponseTestCase class >> testParameters [
+	^ ParametrizedTestMatrix new
+		forSelector: #archetype
+			addOptions:
+			{TKTArchetype pharo80.
+			TKTArchetype pharo70.
+			TKTArchetype thisImage.
+			TKTArchetype pharoCurrent};
+		yourself
+]
 
 { #category : #running }
 TKTForkItPoolResponseTestCase >> runCaseManaged [
@@ -28,22 +40,22 @@ TKTForkItPoolResponseTestCase >> tearDown [
 
 { #category : #running }
 TKTForkItPoolResponseTestCase >> testDefaultTaskIsScheduledInSuperClassQueue [
-	self assert: (pool taskQueueSize: TKTArchetype thisImage) equals: 0.
+	self assert: (pool taskQueueSize: archetype) equals: 0.
 	pool schedule: [  ] asTask.
-	self assert: (pool taskQueueSize: TKTArchetype thisImage) equals: 1
+	self assert: (pool taskQueueSize: archetype) equals: 1
 ]
 
 { #category : #running }
 TKTForkItPoolResponseTestCase >> testSpecificArchetypeNonInstalledTriggersInstallation [
-	self deny: (pool includesArchetype: TKTArchetype pharo70).
-	pool schedule: ([  ] asArchetypedTaskOn: TKTArchetype pharo70).
-	self assert: (pool amountOfTasksAt: TKTArchetype pharo70) equals: 1
+	self deny: (pool includesArchetype: archetype).
+	pool schedule: ([  ] asArchetypedTaskOn: archetype).
+	self assert: (pool amountOfTasksAt: archetype) equals: 1
 ]
 
 { #category : #running }
 TKTForkItPoolResponseTestCase >> testSpecificArchetypeQueueOnInstalledArchetype [
-	pool privateArchetypedControllerFor: TKTArchetype pharo70.
-	self assert: (pool amountOfTasksAt: TKTArchetype pharo70) equals: 0.
-	pool schedule: ([  ] asArchetypedTaskOn: TKTArchetype pharo70).
-	self assert: (pool amountOfTasksAt: TKTArchetype pharo70) equals: 1
+	pool privateArchetypedControllerFor: archetype.
+	self assert: (pool amountOfTasksAt: archetype) equals: 0.
+	pool schedule: ([  ] asArchetypedTaskOn: archetype).
+	self assert: (pool amountOfTasksAt: archetype) equals: 1
 ]

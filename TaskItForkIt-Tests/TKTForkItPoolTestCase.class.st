@@ -1,6 +1,6 @@
 Class {
 	#name : #TKTForkItPoolTestCase,
-	#superclass : #ParametrizedTestCase,
+	#superclass : #TKTForkItArchetypedTest,
 	#instVars : [
 		'pool',
 		'serializer'
@@ -49,8 +49,8 @@ TKTForkItPoolTestCase >> testRemoteWorkerHasAnInstanceOfForkItService [
 	initialSize := TKTForkItIncomingTasksService allInstances size.
 	future := ((MessageSend
 		receiver: TKTForkItIncomingTasksService
-		selector: #allInstancesSize)
-		asArchetypedTaskOn: TKTArchetype pharo70) future: pool.
+		selector: #allInstancesSize) asArchetypedTaskOn: archetype)
+		future: pool.
 	self assert: (future synchronizeTimeout: 20 minutes) equals: 1.
 	self
 		assert: TKTForkItIncomingTasksService allInstances size
@@ -62,7 +62,7 @@ TKTForkItPoolTestCase >> testRemoteWorkerHasAnInstanceOfForkItServiceBlockVersio
 	| future initialSize |
 	initialSize := TKTForkItIncomingTasksService allInstances size.
 	future := ([ TKTForkItIncomingTasksService allInstancesSize ]
-		asArchetypedTaskOn: TKTArchetype pharo70) future: pool.
+		asArchetypedTaskOn: archetype) future: pool.
 	self assert: (future synchronizeTimeout: 20 minutes) equals: 1.
 	self
 		assert: TKTForkItIncomingTasksService allInstances size
@@ -77,21 +77,18 @@ TKTForkItPoolTestCase >> testRemoteWorkerIsReusedOnManyCallsAnInstanceOfForkItSe
 		future:
 			((MessageSend
 				receiver: TKTForkItIncomingTasksService
-				selector: #allInstancesSize)
-				asArchetypedTaskOn: TKTArchetype pharo70).
+				selector: #allInstancesSize) asArchetypedTaskOn: archetype).
 	future2 := pool
 		future:
 			((MessageSend
 				receiver: TKTForkItIncomingTasksService
-				selector: #allInstancesSize)
-				asArchetypedTaskOn: TKTArchetype pharo70).
+				selector: #allInstancesSize) asArchetypedTaskOn: archetype).
 	future synchronizeTimeout: 5 minutes.
 	future3 := pool
 		future:
 			((MessageSend
 				receiver: TKTForkItIncomingTasksService
-				selector: #allInstancesSize)
-				asArchetypedTaskOn: TKTArchetype pharo70).
+				selector: #allInstancesSize) asArchetypedTaskOn: archetype).
 	{future.
 	future2.
 	future3}
@@ -109,12 +106,12 @@ TKTForkItPoolTestCase >> testRemoteWorkerIsReusedOnManyCallsAnInstanceOfForkItSe
 	| future future2 future3 slot initialSize |
 	initialSize := TKTForkItIncomingTasksService allInstances size.
 	future := ([ TKTForkItIncomingTasksService allInstancesSize ]
-		asArchetypedTaskOn: TKTArchetype pharo70) future: pool.
+		asArchetypedTaskOn: archetype) future: pool.
 	future2 := ([ TKTForkItIncomingTasksService allInstancesSize ]
-		asArchetypedTaskOn: TKTArchetype pharo70) future: pool.
+		asArchetypedTaskOn: archetype) future: pool.
 	future synchronizeTimeout: 5 minutes.
 	future3 := ([ TKTForkItIncomingTasksService allInstancesSize ]
-		asArchetypedTaskOn: TKTArchetype pharo70) future: pool.
+		asArchetypedTaskOn: archetype) future: pool.
 	{future.
 	future2.
 	future3}
