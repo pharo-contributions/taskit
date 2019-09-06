@@ -4,7 +4,7 @@ I represent an already finished task state.  Both cancelling and performing a ta
 Class {
 	#name : #TKTFinishedTaskState,
 	#superclass : #TKTTaskState,
-	#category : 'TaskIt-Kernel'
+	#category : #'TaskIt-Kernel'
 }
 
 { #category : #cancelling }

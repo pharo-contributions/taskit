@@ -154,7 +154,7 @@ Class {
 		'exceptionCallbacks',
 		'runner'
 	],
-	#category : 'TaskIt-Futures'
+	#category : #'TaskIt-Futures'
 }
 
 { #category : #'instance-creation' }
@@ -212,14 +212,15 @@ TKTFuture >> andThen: aBlockClosure [
 ]
 
 { #category : #combinators }
-TKTFuture >> collect: aBlockClosure [ 
-	
+TKTFuture >> collect: aBlockClosure [
 	| future |
 	future := TKTFuture new.
 	future runner: runner.
-	self onSuccessDo: [ :got | 
-		[ future deploySuccess: (aBlockClosure value: got) ]
-			on: Error do: [ :e | future deployFailure: e freeze ] ].
+	self
+		onSuccessDo: [ :got | 
+			[ future deploySuccess: (aBlockClosure value: got) ]
+				on: Error
+				do: [ :e | future deployFailure: e freeze ] ].
 	self onFailureDo: [ :error | future deployFailure: error freeze ].
 	^ future
 ]
@@ -235,11 +236,10 @@ TKTFuture >> deployFailure: aValue [
 
 { #category : #deployment }
 TKTFuture >> deploySuccess: aValue [
-
 	self installFutureResult: (TKTFutureSuccess new value: aValue).
-	resultCallbacks do: [ :each | 
-		self scheduleCallbackTask: [ each value: aValue ] ].
-	valueSemaphore signal.
+	resultCallbacks
+		do: [ :each | self scheduleCallbackTask: [ each value: aValue ] ].
+	valueSemaphore signal
 ]
 
 { #category : #combinators }

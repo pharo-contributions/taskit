@@ -12,7 +12,6 @@ Class {
 		'taskQueue',
 		'failedTasks',
 		'name',
-		'dog',
 		'mutex'
 	],
 	#category : #'TaskIt-Worker'
@@ -26,22 +25,31 @@ TKTCommonQueueWorkerPool class >> createDefault [
 		yourself
 ]
 
+{ #category : #'public - mutexed' }
+TKTCommonQueueWorkerPool >> cleanUpImageToStart [
+	self stop.
+	taskQueue removeAll.
+	failedTasks removeAll.
+	self start.
+]
+
 { #category : #public }
 TKTCommonQueueWorkerPool >> ensureIsBeingWatched [
-	dog ifNotNil: [ dog ensureIsAwake ]
+	TKTConfiguration watchDog ensureIsWatching: self
 ]
 
 { #category : #'public - mutexed' }
 TKTCommonQueueWorkerPool >> ensureIsWorking [
 	mutex
 		critical: [ failedTasks
-				addAll: (self workers reject: #isRunning thenCollect: #currentTaskExecution).
-			failedTasks
-				ifNotEmpty:
-					[ self logCr: failedTasks size asString , ' Failed tasks encountered' ].
+				addAll:
+					((self workers reject: #isRunning thenCollect: #currentTaskExecution)
+						reject: #isNil).
 			(workers reject: #isRunning)
 				do: [ :w | 
-					w stop.
+					[ w stop ]
+						on: Error
+						do: [  ].
 					workers remove: w ].
 			self privateManageWorkersBefore.
 			self privateManageWorkersAfter ]
@@ -145,6 +153,11 @@ TKTCommonQueueWorkerPool >> privateRemoveIdleWorkerIfNeeded [
 	
 ]
 
+{ #category : #'public - mutexed' }
+TKTCommonQueueWorkerPool >> privateScheduleTaskExecutionFromCriticalArea: aTaskExecution [
+	taskQueue nextPut: aTaskExecution
+]
+
 { #category : #private }
 TKTCommonQueueWorkerPool >> privateSpawnWorkerIfNeeded [
 	workers size < poolMaxSize
@@ -168,7 +181,7 @@ TKTCommonQueueWorkerPool >> scheduleTaskExecution: aTaskExecution [
 	mutex
 		critical: [ self ensureIsBeingWatched.
 			self privateManageWorkersBefore.
-			taskQueue nextPut: aTaskExecution.
+			self privateScheduleTaskExecutionFromCriticalArea: aTaskExecution.
 			self privateManageWorkersAfter ]
 ]
 
@@ -179,22 +192,23 @@ TKTCommonQueueWorkerPool >> size [
 
 { #category : #'public - mutexed' }
 TKTCommonQueueWorkerPool >> start [
-	mutex
-		critical: [ dog
-				ifNil: [ dog := TKTWatchDog on: self ]
-				ifNotNil: [ self error: 'Already started' ] ]
+	self ensureIsBeingWatched
 ]
 
 { #category : #'public - mutexed' }
 TKTCommonQueueWorkerPool >> stop [
+	TKTConfiguration watchDog stopWatching: self.
 	mutex
-		critical: [ dog := nil.
-			workers do: #stop.
+		critical: [ workers do: #stop.
 			workers removeAll ]
+]
+
+{ #category : #accessing }
+TKTCommonQueueWorkerPool >> taskQueueSize [
+	^ taskQueue size
 ]
 
 { #category : #public }
 TKTCommonQueueWorkerPool >> workers [
-	
 	^ workers copy
 ]

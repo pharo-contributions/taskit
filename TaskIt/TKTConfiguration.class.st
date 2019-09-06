@@ -21,6 +21,14 @@ Class {
 }
 
 { #category : #accessing }
+TKTConfiguration class >> cleanUpImageToStart [
+	TKTCommonQueueWorkerPool allInstancesDo: #cleanUpImageToStart.
+	TKTArchetypeAwarePool allInstancesDo: #cleanUpImageToStart.
+	TKTConfiguration watchDog cleanUpImageToStart.
+	self profileNamed: self profileNamed
+]
+
+{ #category : #accessing }
 TKTConfiguration class >> errorHandler [
 	^ self optionAt: #errorHandler
 ]
@@ -157,6 +165,11 @@ TKTConfiguration class >> settingsOn: aBuilder [
 				default: #development;
 				order: 1;
 				domainValues: (self profiles collect: #key) ]
+]
+
+{ #category : #accessing }
+TKTConfiguration class >> watchDog [
+	^ self optionAt: #watchDog
 ]
 
 { #category : #accessing }

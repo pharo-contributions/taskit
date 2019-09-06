@@ -4,7 +4,7 @@ I represent a running task. A running task cannot be asked to be executed while 
 Class {
 	#name : #TKTRunningTaskState,
 	#superclass : #TKTTaskState,
-	#category : 'TaskIt-Kernel'
+	#category : #'TaskIt-Kernel'
 }
 
 { #category : #cancelling }

@@ -20,7 +20,7 @@ My main messages are:
 Class {
 	#name : #TKTFutureState,
 	#superclass : #Object,
-	#category : 'TaskIt-Futures'
+	#category : #'TaskIt-Futures'
 }
 
 { #category : #testing }

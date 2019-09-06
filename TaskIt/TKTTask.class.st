@@ -65,7 +65,7 @@ TKTTask valuable: MyTask new.
 Class {
 	#name : #TKTTask,
 	#superclass : #Object,
-	#category : 'TaskIt-Kernel'
+	#category : #'TaskIt-Kernel'
 }
 
 { #category : #'instance-creation' }
@@ -89,14 +89,18 @@ TKTTask >> configureTaskExecution: execution with: aRunner [
 ]
 
 { #category : #running }
+TKTTask >> evaluateOn: anExecution [
+	self subclassResponsibility
+]
+
+{ #category : #running }
 TKTTask >> future [
 	^ self future: TKTConfiguration runner
 ]
 
 { #category : #running }
 TKTTask >> future: executor [
-	
-	^ executor future: self
+	^ executor privateFuture: self
 ]
 
 { #category : #executing }
@@ -112,17 +116,10 @@ TKTTask >> schedule [
 
 { #category : #running }
 TKTTask >> schedule: executor [
-	
-	executor schedule: self
+	executor privateSchedule: self 
 ]
 
 { #category : #executing }
 TKTTask >> scheduleTaskExecutionFor: aRunner [
 	^ self configureTaskExecution: TKTTaskExecution new with: aRunner
-]
-
-{ #category : #executing }
-TKTTask >> value [
-
-	self subclassResponsibility 
 ]

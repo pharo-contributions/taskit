@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'future'
 	],
-	#category : 'TaskIt-Futures'
+	#category : #'TaskIt-Futures'
 }
 
 { #category : #evaluating }

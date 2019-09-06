@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'reason'
 	],
-	#category : 'TaskIt-Kernel'
+	#category : #'TaskIt-Kernel'
 }
 
 { #category : #'instance-creation' }

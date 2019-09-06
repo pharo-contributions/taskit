@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'services'
 	],
-	#category : 'TaskIt-Services'
+	#category : #'TaskIt-Services'
 }
 
 { #category : #initialization }
@@ -41,11 +41,16 @@ TKTServiceManager >> services [
 
 { #category : #'start-stop' }
 TKTServiceManager >> startService: aService [
-	(services anySatisfy: [ :any | any name = aService name ])
-		ifTrue: [ self
-				error: ('A service named "{name}" is already registered' format: {('name' -> aService name)} asDictionary) ].
-	aService launch.
-	services add: aService
+	services
+		detect: [ :any | any name = aService name ]
+		ifFound: [ :s | 
+			s = aService
+				ifFalse: [ self
+						error:
+							('A service named "{name}" is already registered'
+								format: {('name' -> aService name)} asDictionary) ] ]
+		ifNone: [ aService launch.
+			services add: aService ]
 ]
 
 { #category : #'start-stop' }

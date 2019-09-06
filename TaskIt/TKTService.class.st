@@ -68,9 +68,10 @@ Class {
 		'stopRequested',
 		'stopCallback',
 		'stopCallbacks',
-		'stepDelay'
+		'stepDelay',
+		'recursiveTask'
 	],
-	#category : 'TaskIt-Services'
+	#category : #'TaskIt-Services'
 }
 
 { #category : #starting }
@@ -81,17 +82,14 @@ TKTService >> doStop [
 
 { #category : #initialization }
 TKTService >> initialize [
-
 	super initialize.
-	stopRequested := false.
-	stopCallbacks := Set new.	
-	worker := TKTWorker new.
-	self stepDelay: 500 milliSeconds 
+	self stepDelay: 500 milliSeconds.
+
 ]
 
 { #category : #testing }
 TKTService >> isRunning [
-	
+	worker ifNil: [ ^ false ].
 	^ worker isRunning
 ]
 
@@ -140,14 +138,10 @@ TKTService >> restart [
 ]
 
 { #category : #starting }
-TKTService >> scheduleRecursiveTask [ 
-
+TKTService >> scheduleRecursiveTask [
 	stopRequested
 		ifTrue: [ worker schedule: [ self doStop ] ]
-		ifFalse: [
-			worker schedule: [ 
-				self iterateService.
-				self scheduleRecursiveTask ]]
+		ifFalse: [ worker schedule: recursiveTask ]
 ]
 
 { #category : #stepping }
@@ -159,8 +153,12 @@ TKTService >> setUp [
 { #category : #starting }
 TKTService >> start [
 	stopRequested := false.
-	TKTConfiguration serviceManager startService: self.
-	
+	stopCallbacks := Set new.
+	worker := TKTWorker new.
+	worker taskQueue: AtomicSharedQueue new.
+	recursiveTask := [ self iterateService.
+	self scheduleRecursiveTask ] asTask.
+	TKTConfiguration serviceManager startService: self
 ]
 
 { #category : #accessing }

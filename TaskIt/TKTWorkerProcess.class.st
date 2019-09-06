@@ -16,7 +16,7 @@ Class {
 		'process',
 		'currentTaskExecution'
 	],
-	#category : 'TaskIt-Worker'
+	#category : #'TaskIt-Worker'
 }
 
 { #category : #'start-stop' }
@@ -44,9 +44,8 @@ TKTWorkerProcess >> isRunning [
 
 { #category : #'start-stop' }
 TKTWorkerProcess >> kill [
-
-	taskQueue := nil. 
 	self stop.
+	taskQueue := nil. 
 ]
 
 { #category : #accessing }
@@ -59,6 +58,11 @@ TKTWorkerProcess >> name [
 TKTWorkerProcess >> name: aString [ 
 	
 	name := aString
+]
+
+{ #category : #'start-stop' }
+TKTWorkerProcess >> privateNextTask [
+	^ taskQueue next
 ]
 
 { #category : #testing }
@@ -93,5 +97,5 @@ TKTWorkerProcess >> taskQueue: aQueue [
 
 { #category : #'start-stop' }
 TKTWorkerProcess >> workerLoop [
-	[ self executeTask: taskQueue next ] repeat
+	[ self executeTask: self privateNextTask ] repeat
 ]

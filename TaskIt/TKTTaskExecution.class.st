@@ -12,7 +12,7 @@ Class {
 		'cancelled',
 		'state'
 	],
-	#category : 'TaskIt-Kernel'
+	#category : #'TaskIt-Kernel'
 }
 
 { #category : #evaluating }
@@ -29,7 +29,7 @@ TKTTaskExecution >> cancelWithReason: reason [
 
 { #category : #evaluating }
 TKTTaskExecution >> doExecuteTask [
-	^ task value 
+	^ task evaluateOn: self
 ]
 
 { #category : #evaluating }
@@ -62,6 +62,11 @@ TKTTaskExecution >> isRunning [
 	^ state isRunning
 ]
 
+{ #category : #testing }
+TKTTaskExecution >> noteRunningOn: aRunner [ 
+	" Some times is needed to know the real runner. By default we do nothing :) "
+]
+
 { #category : #accessing }
 TKTTaskExecution >> runner: aRunner [
 
@@ -78,6 +83,11 @@ TKTTaskExecution >> setCancelStateWithReason: aReason [
 TKTTaskExecution >> setFinishedState [
 
 	state := TKTFinishedTaskState new
+]
+
+{ #category : #states }
+TKTTaskExecution >> setReadyState [
+	state := TKTReadyTaskState new
 ]
 
 { #category : #states }

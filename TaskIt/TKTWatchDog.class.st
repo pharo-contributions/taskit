@@ -5,17 +5,27 @@ Class {
 	#name : #TKTWatchDog,
 	#superclass : #TKTService,
 	#instVars : [
-		'pool'
+		'values',
+		'id',
+		'started'
 	],
-	#category : 'TaskIt-Worker'
+	#classInstVars : [
+		'onDuty'
+	],
+	#category : #'TaskIt-Worker'
 }
 
-{ #category : #'instance creation' }
-TKTWatchDog class >> on: aPool [
-	^ self new
-		initializeWith: aPool;
-		start;
-		yourself
+{ #category : #accessing }
+TKTWatchDog class >> onDuty [
+	^ onDuty
+		ifNil: [ onDuty := self new.
+			onDuty start.
+			onDuty ]
+]
+
+{ #category : #initialization }
+TKTWatchDog >> cleanUpImageToStart [
+	values removeAll
 ]
 
 { #category : #initialization }
@@ -30,29 +40,88 @@ TKTWatchDog >> ensureIsAwake [
 ]
 
 { #category : #initialization }
-TKTWatchDog >> initializeWith: aPool [
-	pool := aPool asWeakReference
+TKTWatchDog >> ensureIsWatching: aValue [
+	worker = aValue ifTrue: [ ^ self ].
+	(values includes: aValue)
+		ifFalse: [ self watch: aValue ].
+	self ensureIsAwake
+]
+
+{ #category : #initialization }
+TKTWatchDog >> initialize [
+	super initialize.
+	values := WeakSet new.
+	id := UUID new.
+	started := false
 ]
 
 { #category : #initialization }
 TKTWatchDog >> name [
-	^ 'WatchDog - ' , self pool printString
+	^ 'WatchDog (' , id asString , ')'
 ]
 
 { #category : #initialization }
-TKTWatchDog >> pool [
-	^ pool at: 1
+TKTWatchDog >> privateStart [
+	stopRequested := false.
+	stopCallbacks := Set new.
+	" A worker normally needs to be watched. But the watchdog process cannot be watched, because the watchdog do not yet exists. 
+	 This is a hacky workaround. Think a better solution.
+	"
+	worker := TKTWorker basicNew.
+	worker initialize.
+	worker taskQueue: AtomicSharedQueue new.
+	recursiveTask := [ self iterateService.
+	self scheduleRecursiveTask ] asTask.
+	TKTConfiguration serviceManager startService: self
+]
+
+{ #category : #initialization }
+TKTWatchDog >> start [
+	started
+		ifFalse: [ started := true.
+			self privateStart ]
 ]
 
 { #category : #initialization }
 TKTWatchDog >> stepService [
-	[ self pool ifNil: [ self stop ] ifNotNil: [ :p | self watchDog: p ].
-	self delay wait ]
-		on: Error
-		do: [ :err | self inform: err messageText ]
+	self watchedValues
+		ifEmpty: [ self stop ]
+		ifNotEmpty: [ values do: [ :v | self watchDog: v ].
+			self delay wait ]
+]
+
+{ #category : #initialization }
+TKTWatchDog >> stop [
+	started := false.
+	super stop
+]
+
+{ #category : #initialization }
+TKTWatchDog >> stopWatching: aValue [
+	values remove: aValue ifAbsent: [  ]
+]
+
+{ #category : #initialization }
+TKTWatchDog >> watch: aValue [
+	values add: aValue
 ]
 
 { #category : #initialization }
 TKTWatchDog >> watchDog: aParameterPool [
-	aParameterPool ensureIsWorking
+	[ aParameterPool ensureIsWorking ]
+		on: UnhandledError 
+		do: [ :err | 
+			self logCr: err printString.
+			self
+				log:
+					'Watch dog is not watching anymore the value: '
+						,
+							(values remove: aParameterPool ifAbsent: [ aParameterPool ])
+								printString ]
+]
+
+{ #category : #initialization }
+TKTWatchDog >> watchedValues [
+	
+	^  values
 ]

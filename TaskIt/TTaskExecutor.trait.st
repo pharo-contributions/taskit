@@ -3,7 +3,7 @@ I am a trait implementing the main behavior of a task executor. That is, an obje
 "
 Trait {
 	#name : #TTaskExecutor,
-	#category : 'TaskIt-Kernel'
+	#category : #'TaskIt-Kernel'
 }
 
 { #category : #testing }
@@ -19,7 +19,10 @@ TTaskExecutor >> exceptionHandler [
 
 { #category : #executing }
 TTaskExecutor >> executeTask: aTaskExecution [
-	[ self noteBusy. aTaskExecution value. self noteFree ]
+	[ self noteBusy.
+	aTaskExecution noteRunningOn: self.
+	aTaskExecution value.
+	self noteFree ]
 		on: Error
 		do: [ :error | self exceptionHandler handleException: error ]
 ]

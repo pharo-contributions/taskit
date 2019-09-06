@@ -3,7 +3,7 @@ Trait {
 	#instVars : [
 		'aself'
 	],
-	#category : 'ActIt-Kernel'
+	#category : #'ActIt-Kernel'
 }
 
 { #category : #accessing }

@@ -36,9 +36,27 @@ Class {
 	#category : #'TaskIt-Worker'
 }
 
+{ #category : #current }
+TKTWorker class >> createDefault [
+	^ self new
+		queue: AtomicSharedQueue new;
+		yourself
+]
+
 { #category : #'start-stop' }
 TKTWorker >> currentTaskExecution [
-	^ process currentTaskExecution
+	^ process ifNotNil: [ process currentTaskExecution ] ifNil: [ nil ]
+]
+
+{ #category : #initialization }
+TKTWorker >> ensureIsBeingWatched [
+	TKTConfiguration watchDog ensureIsWatching: self
+]
+
+{ #category : #starting }
+TKTWorker >> ensureIsWorking [
+	self isRunning
+		ifFalse: [ self restart ]
 ]
 
 { #category : #accessing }
@@ -55,6 +73,7 @@ TKTWorker >> exceptionHandler: aHandler [
 
 { #category : #initialization }
 TKTWorker >> finalize [
+	TKTConfiguration watchDog stopWatching: self.
 	self
 		schedule: [ | theProcess |
 			queue := nil.
@@ -67,6 +86,7 @@ TKTWorker >> finalize [
 TKTWorker >> initialize [
 	super initialize.
 	self name: ('Worker-{ID}' format: {(#ID -> UUID new)} asDictionary).
+	self ensureIsBeingWatched
 	
 ]
 
@@ -101,6 +121,23 @@ TKTWorker >> name: aString [
 	process ifNotNil: [ process name: aString ]
 ]
 
+{ #category : #starting }
+TKTWorker >> privatePrepareProcess: aWorkerProcess [
+	process := aWorkerProcess.
+	process
+		taskQueue: queue;
+		name: name;
+		yourself.
+	exceptionHandler
+		ifNotNil: [ process exceptionHandler: exceptionHandler ].
+	self noteNeedsToBeFinalized
+]
+
+{ #category : #starting }
+TKTWorker >> privateStart [
+	process start
+]
+
 { #category : #accessing }
 TKTWorker >> process [
 
@@ -120,14 +157,8 @@ TKTWorker >> restart [
 
 { #category : #starting }
 TKTWorker >> start [
-	process := TKTConfiguration poolWorkerProcess new
-		taskQueue: queue;
-		name: name;
-		yourself.
-	exceptionHandler ifNotNil: [ process exceptionHandler: exceptionHandler ].
-	process start.
-	self noteNeedsToBeFinalized.
-	
+	self privatePrepareProcess: TKTConfiguration poolWorkerProcess new.
+	self privateStart
 ]
 
 { #category : #starting }
@@ -135,6 +166,7 @@ TKTWorker >> stop [
 	process
 		ifNotNil: [ process stop.
 			process := nil ].
+	TKTConfiguration watchDog stopWatching: self.
 	self noteDoesNotNeedToBeFinalized.
 ]
 

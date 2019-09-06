@@ -12,7 +12,7 @@ Class {
 		'exceptionHandler',
 		'busy'
 	],
-	#category : 'TaskIt-Kernel'
+	#category : #'TaskIt-Kernel'
 }
 
 { #category : #accessing }
@@ -55,4 +55,14 @@ TKTAbstractExecutor >> noteBusy [
 TKTAbstractExecutor >> noteFree [
 
 	busy := false
+]
+
+{ #category : #polimorfism }
+TKTAbstractExecutor >> start [
+ " nothing to do "
+]
+
+{ #category : #polimorfsms }
+TKTAbstractExecutor >> stop [
+
 ]

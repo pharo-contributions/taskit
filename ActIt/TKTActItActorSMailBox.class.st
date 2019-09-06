@@ -7,7 +7,7 @@ Class {
 	#instVars : [
 		'actor'
 	],
-	#category : 'ActIt-Tests'
+	#category : #'ActIt-Tests'
 }
 
 { #category : #running }

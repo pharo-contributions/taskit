@@ -3,7 +3,7 @@ I am a trait implementing the main behavior of a task scheduler. That is, I defi
 "
 Trait {
 	#name : #TTaskScheduler,
-	#category : 'TaskIt-Kernel'
+	#category : #'TaskIt-Kernel'
 }
 
 { #category : #testing }
@@ -13,10 +13,7 @@ TTaskScheduler classSide >> isDebuggingCompatible [
 
 { #category : #schedulling }
 TTaskScheduler >> future: aTask [
-	| execution |
-	execution := aTask asTask futureTaskExecutionFor: self.
-	self scheduleTaskExecution: execution.
-	^ execution future
+	^ aTask asTask future: self
 ]
 
 { #category : #schedulling }
@@ -40,6 +37,22 @@ TTaskScheduler >> isWorker [
 ]
 
 { #category : #schedulling }
+TTaskScheduler >> privateFuture: aTask [
+	| execution |
+	execution := aTask asTask futureTaskExecutionFor: self.
+	self scheduleTaskExecution: execution.
+	^ execution future
+]
+
+{ #category : #schedulling }
+TTaskScheduler >> privateSchedule: aTask [
+	| execution |
+	execution := aTask asTask scheduleTaskExecutionFor: self.
+	self scheduleTaskExecution: execution
+	
+]
+
+{ #category : #schedulling }
 TTaskScheduler >> privateTimeout: timeout on: aTaskExecution [
 	timeout wait.
 	aTaskExecution isFinished
@@ -48,10 +61,7 @@ TTaskScheduler >> privateTimeout: timeout on: aTaskExecution [
 
 { #category : #schedulling }
 TTaskScheduler >> schedule: aTask [
-	| execution |
-	execution := aTask asTask scheduleTaskExecutionFor: self.
-	self scheduleTaskExecution: execution
-	
+	aTask asTask schedule: self
 ]
 
 { #category : #schedulling }

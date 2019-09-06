@@ -2,10 +2,9 @@ Extension { #name : #BlockClosure }
 
 { #category : #'*TaskItShell' }
 BlockClosure >> asOSTask [
-	^ TKTOSTask buildingCommandWith:  self.
-]
-
-{ #category : #'*TaskItShell' }
-BlockClosure >> asOSVerboseTask [
-	^ TKTOSVerboseTask buildingCommandWith:  self.
+	| declaration |
+	self deprecated: 'Use FileReference>>command instead. '.
+	declaration := self value: TKTShellCommandDeclaration new.
+	self assert: declaration isCommandDeclaration.
+	^ declaration
 ]

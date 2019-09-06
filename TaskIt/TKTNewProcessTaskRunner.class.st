@@ -48,10 +48,15 @@ First, you'll see that a different processes is being used to execute each task.
 Class {
 	#name : #TKTNewProcessTaskRunner,
 	#superclass : #TKTRunner,
-	#category : 'TaskIt-Kernel'
+	#category : #'TaskIt-Kernel'
 }
 
 { #category : #schedulling }
 TKTNewProcessTaskRunner >> scheduleTaskExecution: aTaskExecution [
-	TKTConfiguration processProvider createProcessDoing: (MessageSend receiver: self selector: #executeTask: arguments: {aTaskExecution})
+	TKTConfiguration processProvider
+		createProcessDoing:
+			(MessageSend
+				receiver: self
+				selector: #executeTask:
+				arguments: {aTaskExecution})
 ]

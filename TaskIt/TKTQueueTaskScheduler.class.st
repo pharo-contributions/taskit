@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'queue'
 	],
-	#category : 'TaskIt-Worker'
+	#category : #'TaskIt-Worker'
 }
 
 { #category : #initialization }

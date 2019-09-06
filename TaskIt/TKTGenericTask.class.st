@@ -7,8 +7,13 @@ Class {
 	#instVars : [
 		'valuable'
 	],
-	#category : 'TaskIt-Kernel'
+	#category : #'TaskIt-Kernel'
 }
+
+{ #category : #executing }
+TKTGenericTask >> evaluateOn: aTaskExecution [
+	^ valuable value
+]
 
 { #category : #accessing }
 TKTGenericTask >> valuable [
@@ -18,10 +23,4 @@ TKTGenericTask >> valuable [
 { #category : #accessing }
 TKTGenericTask >> valuable: aValuable [
 	valuable := aValuable
-]
-
-{ #category : #executing }
-TKTGenericTask >> value [
-
-	^ valuable value
 ]
