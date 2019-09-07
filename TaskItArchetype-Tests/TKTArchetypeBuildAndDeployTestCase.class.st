@@ -12,11 +12,7 @@ Class {
 { #category : #tests }
 TKTArchetypeBuildAndDeployTestCase class >> testParameters [
 	^ ParametrizedTestMatrix new
-		forSelector: #archetype
-			addOptions:
-			{TKTArchetype pharoCurrent.
-			TKTArchetype pharo70.
-			TKTArchetype pharo80};
+		forSelector: #archetype addOptions: {TKTArchetype pharoCurrent};
 		yourself
 ]
 
