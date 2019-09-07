@@ -23,12 +23,16 @@ TKTTestCase >> garbageCollectAndWait [
 ]
 
 { #category : #running }
+TKTTestCase >> runCaseManaged [
+	^ self runCase
+]
+
+{ #category : #running }
 TKTTestCase >> setUp [
 	super setUp.
 	TKTConfiguration
 		resetSoleInstance;
 		profileNamed: #test.
-	self timeLimit: 60 seconds
 ]
 
 { #category : #running }

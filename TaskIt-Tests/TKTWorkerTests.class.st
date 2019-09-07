@@ -72,7 +72,6 @@ TKTWorkerTests >> testWorkerProcessDiesAfterWorkerIsCollected [
 { #category : #tests }
 TKTWorkerTests >> testWorkerProcessIsWorkingUntilAllTasksAreDone [
 	| worker process waitFuture |
-	self timeLimit: 10 minutes.
 	worker := TKTWorker new.
 	worker start.
 	process := worker process.
