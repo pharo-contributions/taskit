@@ -7,18 +7,6 @@ Class {
 	#category : #'TaskItForkIt-Tests'
 }
 
-{ #category : #tests }
-TKTForkItPoolResponseTestCase class >> testParameters [
-	^ ParametrizedTestMatrix new
-		forSelector: #archetype
-			addOptions:
-			{TKTArchetype pharo80.
-			TKTArchetype pharo70.
-			TKTArchetype thisImage.
-			TKTArchetype pharoCurrent};
-		yourself
-]
-
 { #category : #running }
 TKTForkItPoolResponseTestCase >> runCaseManaged [
 	^ self runCase

@@ -10,7 +10,7 @@ Class {
 
 { #category : #'building suites' }
 TKTForkItPoolTestCase class >> testParameters [
-	^ ParametrizedTestMatrix new
+	^ super testParameters
 		forSelector: #serializer addOptions: {#ston . #xstoned};
 		yourself
 ]
@@ -30,6 +30,7 @@ TKTForkItPoolTestCase >> setUp [
 	super setUp.
 	pool := TKTArchetypeAwarePool createDefault.
 	pool defaultSerializerSelector: serializer.
+	
 		
 ]
 

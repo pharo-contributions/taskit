@@ -4,18 +4,6 @@ Class {
 	#category : #'TaskItForkIt-Tests'
 }
 
-{ #category : #tests }
-TKTForkItMemoryLeaks class >> testParameters [
-	^ ParametrizedTestMatrix new
-		forSelector: #archetype
-			addOptions:
-			{TKTArchetype pharo80.
-			TKTArchetype pharo70.
-			TKTArchetype thisImage.
-			TKTArchetype pharoCurrent};
-		yourself
-]
-
 { #category : #accessing }
 TKTForkItMemoryLeaks >> archetype: anArchetype [
 	archetype := anArchetype
