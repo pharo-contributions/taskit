@@ -1,6 +1,6 @@
 Class {
 	#name : #TKTForkItArchetypedTest,
-	#superclass : #ParametrizedTestCase,
+	#superclass : #TKTTestCase,
 	#instVars : [
 		'archetype'
 	],

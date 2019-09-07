@@ -3,8 +3,8 @@ It only defines a teardown for ensure that the current pool is properly clean af
 "
 Class {
 	#name : #TKTTestCase,
-	#superclass : #TestCase,
-	#category : 'TaskIt-Tests-Kernel'
+	#superclass : #ParametrizedTestCase,
+	#category : #'TaskIt-Tests-Kernel'
 }
 
 { #category : #running }
