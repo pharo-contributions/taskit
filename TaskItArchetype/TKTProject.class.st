@@ -29,7 +29,7 @@ TKTProject class >> forkit [
 	^ TKTProject new
 		name: #ForkIt;
 		kind: #BaselineOf;
-		repository: 'github://sbragagnolo/taskit:ForkIt';
+		repository: 'github://sbragagnolo/taskit';
 		yourself
 ]
 
