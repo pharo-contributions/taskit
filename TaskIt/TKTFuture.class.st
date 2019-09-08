@@ -227,11 +227,10 @@ TKTFuture >> collect: aBlockClosure [
 
 { #category : #deployment }
 TKTFuture >> deployFailure: aValue [
-
 	self installFutureResult: (TKTFutureFailure new value: aValue).
-	exceptionCallbacks do: [ :each | 
-		self scheduleCallbackTask: [ each value: aValue ] ].
-	valueSemaphore signal.
+	exceptionCallbacks
+		do: [ :each | self scheduleCallbackTask: [ each value: aValue ] ].
+	valueSemaphore signal
 ]
 
 { #category : #deployment }

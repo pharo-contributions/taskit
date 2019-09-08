@@ -253,7 +253,8 @@ TKTDeployed >> vmBinary [
 	ref := OSPlatform current isMacOS
 		ifTrue: [ self vmFolder / 'Pharo.app' / #Contents / #MacOS / #Pharo ]
 		ifFalse: [ self vmFolder / #pharo ].
-	self assert: ref isFile.
+	ref isFile
+		ifFalse: [ ^ self error: 'Archetype #vmBinary does not exists' ].
 	^ ref
 ]
 
