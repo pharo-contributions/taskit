@@ -38,10 +38,7 @@ TKTForkItPoolTestCase >> setUp [
 TKTForkItPoolTestCase >> tearDown [
 	super tearDown.
 	pool stop.
-	"(TKTSystem rm
-		option: '-rf';
-		argument: ('pharo-local' asFileReference / #forking) fullName;
-		future) synchronizeTimeout: 1 minute"
+	
 ]
 
 { #category : #running }

@@ -18,3 +18,7 @@ TKTForkItArchetypedTest class >> testParameters [
 TKTForkItArchetypedTest >> archetype: anArchetype [
 	archetype := anArchetype
 ]
+
+{ #category : #running }
+TKTForkItArchetypedTest >> tearDown [
+]
