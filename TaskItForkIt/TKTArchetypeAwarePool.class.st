@@ -177,15 +177,18 @@ TKTArchetypeAwarePool >> pool: aTKTCommonQueueWorkerPool [
 { #category : #accessing }
 TKTArchetypeAwarePool >> privateArchetypedControllerFor: anArchetype [
 	| archetypeWithForkit |
-	archetypeWithForkit := anArchetype + TKTProject forkit .
-
+	anArchetype = TKTArchetype pharoCurrent
+		ifFalse: [ archetypeWithForkit := anArchetype + TKTProject forkit ]
+		ifTrue: [ archetypeWithForkit := anArchetype ].
 	^ archetypedControllers
 		detect: [ :a | a archetype = archetypeWithForkit ]
 		ifNone: [ | new |
 			new := TKTArchetypedQueueController new.
 			archetypedControllers add: new.
 			new
-				archetype: archetypeWithForkit pool: self backends: self maxBackends;
+				archetype: archetypeWithForkit
+					pool: self
+					backends: self maxBackends;
 				yourself ]
 ]
 
