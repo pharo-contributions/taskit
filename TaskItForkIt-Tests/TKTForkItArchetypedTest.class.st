@@ -10,10 +10,7 @@ Class {
 { #category : #tests }
 TKTForkItArchetypedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		forSelector: #archetype
-			addOptions:
-			{TKTArchetype thisImage.
-			TKTArchetype pharoCurrent};
+		forSelector: #archetype addOptions: {TKTArchetype pharoCurrent};
 		yourself
 ]
 
