@@ -11,6 +11,23 @@ Class {
 	#category : #'TaskIt-QueueBackend'
 }
 
+{ #category : #'as yet unclassified' }
+TKTSlaveRunner class >> runDefault [
+
+	| slave |
+	slave := TKTSlaveRunner new.
+
+	slave
+		host: 'localhost';
+		port: 61613;
+		login: 'guest';
+	 	passcode: 'guest';
+		inputQueue: 'singleTask';
+		answerQueue: 'singleTask-response';
+		startBlocking.
+
+]
+
 { #category : #accessing }
 TKTSlaveRunner >> answerQueue: aString [ 
 	
