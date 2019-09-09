@@ -96,6 +96,11 @@ TKTTaskExecution >> setRunningState [
 	state := TKTRunningTaskState new
 ]
 
+{ #category : #accessing }
+TKTTaskExecution >> task [
+	^ task
+]
+
 { #category : #evaluating }
 TKTTaskExecution >> task: aTask [
 

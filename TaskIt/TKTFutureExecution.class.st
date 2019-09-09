@@ -31,6 +31,13 @@ TKTFutureExecution >> initialize [
 	
 ]
 
+{ #category : #executing }
+TKTFutureExecution >> returnValue: aValue [ 
+	
+	future deploySuccess: aValue.
+	self setFinishedState.
+]
+
 { #category : #accessing }
 TKTFutureExecution >> runner: aRunner [
 
