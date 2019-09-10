@@ -11,7 +11,8 @@ Class {
 TKTSlaveRunnerTest >> setUp [
 	
 	super setUp.
-	slave := self slaveForTest
+	slave := self slaveForTest.
+	slave start
 ]
 
 { #category : #running }
@@ -24,14 +25,36 @@ TKTSlaveRunnerTest >> tearDown [
 
 { #category : #tests }
 TKTSlaveRunnerTest >> testSendingATask [
-
-	| event |
-
+	| event responseEvent |
 	event := TKTExecuteTask new
 		uuid: '23';
 		valuable: [ 2 + 40 ];
 		yourself.
-		 
+
 	self sendEvent: event to: self roundRobinQueueName.
 
+	responseEvent := self
+		waitEventOn: self masterQueueName
+		during: [ self sendEvent: event to: self roundRobinQueueName ]
+		timeout: 10 seconds.
+		
+	self assert: responseEvent value equals: 42
+]
+
+{ #category : #tests }
+TKTSlaveRunnerTest >> testSendingAnErrorTask [
+	| event responseEvent |
+	event := TKTExecuteTask new
+		uuid: '23';
+		valuable: [ 1 / 0 ];
+		yourself.
+
+	self sendEvent: event to: self roundRobinQueueName.
+
+	responseEvent := self
+		waitEventOn: self masterQueueName
+		during: [ self sendEvent: event to: self roundRobinQueueName ]
+		timeout: 10 seconds.
+		
+	self assert: responseEvent value equals: 42
 ]

@@ -2,20 +2,28 @@ Class {
 	#name : #TKTErrorInTask,
 	#superclass : #TKTAbstractEvent,
 	#instVars : [
-		'exception'
+		'serializedException'
 	],
 	#category : #'TaskIt-QueueBackend-Messages'
 }
 
 { #category : #accessing }
+TKTErrorInTask >> exception [
+	
+	^ FLMaterializer materializeFromByteArray: serializedException
+
+
+]
+
+{ #category : #accessing }
 TKTErrorInTask >> exception: anException [
 
-	exception:= anException 
+	serializedException := ByteArray streamContents: [ :s | FLSerializer serialize: anException on: s ].
 ]
 
 { #category : #accessing }
 TKTErrorInTask >> processEvent: aQueueBackendRunner [
 
-	aQueueBackendRunner notifyFailure: uuid exception: exception.
+	aQueueBackendRunner notifyFailure: uuid exception: self exception.
 
 ]

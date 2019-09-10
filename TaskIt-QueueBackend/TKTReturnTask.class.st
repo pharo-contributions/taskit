@@ -15,6 +15,12 @@ TKTReturnTask >> processEvent: aQueueBackendRunner [
 ]
 
 { #category : #accessing }
+TKTReturnTask >> value [
+
+	^ value
+]
+
+{ #category : #accessing }
 TKTReturnTask >> value: aValue [
 
 	value := aValue
