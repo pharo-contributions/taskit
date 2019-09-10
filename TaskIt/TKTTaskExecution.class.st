@@ -67,6 +67,19 @@ TKTTaskExecution >> noteRunningOn: aRunner [
 	" Some times is needed to know the real runner. By default we do nothing :) "
 ]
 
+{ #category : #returning }
+TKTTaskExecution >> resultError: anException [
+	
+	self setFinishedState
+	
+]
+
+{ #category : #returning }
+TKTTaskExecution >> resultOk: aTKTFuture [ 
+	
+	self setFinishedState
+]
+
 { #category : #accessing }
 TKTTaskExecution >> runner: aRunner [
 

@@ -41,7 +41,7 @@ TKTQueueBackendRunner >> notifyTask: uuid returnValue: value [
 
 	task := tasks at:uuid ifAbsent: [ ^ self ].
 	task isFinished ifTrue: [ ^ self ].
-	task returnValue: value.
+	task resultOk: value.
 	
 	tasks removeKey: uuid 
 ]
@@ -62,11 +62,11 @@ TKTQueueBackendRunner >> scheduleTaskExecution: aTaskExecution [
 
 	| uuid frame event |
 	uuid := UUID new.
-	event := TKTNewTask new 
+	event := TKTExecuteTask new 
 		uuid: uuid;
 		blockCode: aTaskExecution task valuable.
 
-	(frame := connection newSendFrameTo: 'singleTask')
+	(frame := connection newSendFrameTo: 'roundRobin')
 		bytes: (ByteArray streamContents: [:s | FLSerializer serialize: event on: s]).
 		
 	connection write: frame.
@@ -78,7 +78,7 @@ TKTQueueBackendRunner >> scheduleTaskExecution: aTaskExecution [
 TKTQueueBackendRunner >> start [ 
 	connection open.
 	
-	subscription := connection newSubscriptionTo: 'singleTask-response'.
+	subscription := connection newSubscriptionTo: 'master'.
 
 	subscription 
 		clientIndividualAck;

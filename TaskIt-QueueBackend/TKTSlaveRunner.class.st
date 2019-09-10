@@ -3,10 +3,10 @@ Class {
 	#superclass : #Object,
 	#instVars : [
 		'connection',
-		'inputQueueName',
-		'answerQueueName',
 		'subscription',
-		'listeningProcess'
+		'listeningProcess',
+		'roundRobinQueueName',
+		'masterQueueName'
 	],
 	#category : #'TaskIt-QueueBackend'
 }
@@ -22,16 +22,10 @@ TKTSlaveRunner class >> runDefault [
 		port: 61613;
 		login: 'guest';
 	 	passcode: 'guest';
-		inputQueue: 'singleTask';
-		answerQueue: 'singleTask-response';
+		roundRobinQueue: 'roundRobin';
+		masterQueue: 'master';
 		startBlocking.
 
-]
-
-{ #category : #accessing }
-TKTSlaveRunner >> answerQueue: aString [ 
-	
-	answerQueueName := aString
 ]
 
 { #category : #processing }
@@ -60,15 +54,15 @@ TKTSlaveRunner >> initialize [
 ]
 
 { #category : #accessing }
-TKTSlaveRunner >> inputQueue: aString [ 
-	
-	inputQueueName := aString
-]
-
-{ #category : #accessing }
 TKTSlaveRunner >> login: aString [ 
 	
 	connection login: aString
+]
+
+{ #category : #accessing }
+TKTSlaveRunner >> masterQueue: aString [ 
+	
+	masterQueueName := aString
 ]
 
 { #category : #accessing }
@@ -94,12 +88,18 @@ TKTSlaveRunner >> processMessage [
 	]on: ConnectionTimedOut do: [  ]
 ]
 
+{ #category : #accessing }
+TKTSlaveRunner >> roundRobinQueue: aString [ 
+	
+	roundRobinQueueName := aString
+]
+
 { #category : #'start-stop' }
-TKTSlaveRunner >> responseEvent: anEvent [
+TKTSlaveRunner >> sendToMaster: anEvent [
 
 	| frame |
 
-	(frame := connection newSendFrameTo: answerQueueName)
+	(frame := connection newSendFrameTo: masterQueueName)
 		bytes: (ByteArray streamContents: [:s | FLSerializer serialize: anEvent on: s]).
 		
 	connection write: frame
@@ -137,7 +137,7 @@ TKTSlaveRunner >> stop [
 { #category : #subscribing }
 TKTSlaveRunner >> subscribeInput [
 	
-	subscription := connection newSubscriptionTo: inputQueueName.
+	subscription := connection newSubscriptionTo: roundRobinQueueName.
 
 	subscription 
 		clientIndividualAck;

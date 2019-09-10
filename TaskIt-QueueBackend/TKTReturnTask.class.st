@@ -1,8 +1,7 @@
 Class {
 	#name : #TKTReturnTask,
-	#superclass : #Object,
+	#superclass : #TKTAbstractEvent,
 	#instVars : [
-		'uuid',
 		'value'
 	],
 	#category : #'TaskIt-QueueBackend-Messages'
@@ -13,12 +12,6 @@ TKTReturnTask >> processEvent: aQueueBackendRunner [
 
 	aQueueBackendRunner notifyTask: uuid returnValue: value.
 
-]
-
-{ #category : #accessing }
-TKTReturnTask >> uuid: anUuid [
-
-	uuid := anUuid
 ]
 
 { #category : #accessing }

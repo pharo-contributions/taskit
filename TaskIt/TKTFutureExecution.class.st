@@ -31,11 +31,20 @@ TKTFutureExecution >> initialize [
 	
 ]
 
-{ #category : #executing }
-TKTFutureExecution >> returnValue: aValue [ 
+{ #category : #returning }
+TKTFutureExecution >> resultError: anException [
 	
+	super resultError: anException.
+	future deployFailure: anException.
+	
+]
+
+{ #category : #returning }
+TKTFutureExecution >> resultOk: aValue [ 
+
+	super resultOk: aValue.	
 	future deploySuccess: aValue.
-	self setFinishedState.
+
 ]
 
 { #category : #accessing }
