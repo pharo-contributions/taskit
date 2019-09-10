@@ -5,8 +5,7 @@ Class {
 		'connection',
 		'subscription',
 		'listeningProcess',
-		'roundRobinQueueName',
-		'masterQueueName'
+		'configuration'
 	],
 	#category : #'TaskIt-QueueBackend'
 }
@@ -18,12 +17,6 @@ TKTSlaveRunner class >> default [
 	slave := TKTSlaveRunner new.
 
 	^ slave
-		host: 'localhost';
-		port: 61613;
-		login: 'guest';
-	 	passcode: 'guest';
-		roundRobinQueue: 'roundRobin';
-		masterQueue: 'master';
 		yourself.
 
 ]
@@ -32,6 +25,12 @@ TKTSlaveRunner class >> default [
 TKTSlaveRunner class >> startBlocking [
 
 	self default startBlocking.
+]
+
+{ #category : #subscribing }
+TKTSlaveRunner >> configuration [ 
+	
+	^ configuration
 ]
 
 { #category : #processing }
@@ -47,40 +46,11 @@ TKTSlaveRunner >> doProcessMessage: msg [
 		do: [ connection write: msg nackFrame ]
 ]
 
-{ #category : #accessing }
-TKTSlaveRunner >> host: aString [ 
-	
-	connection host: aString
-]
-
 { #category : #initialization }
 TKTSlaveRunner >> initialize [ 
 	
-	connection := StampClient new
-]
-
-{ #category : #accessing }
-TKTSlaveRunner >> login: aString [ 
-	
-	connection login: aString
-]
-
-{ #category : #accessing }
-TKTSlaveRunner >> masterQueue: aString [ 
-	
-	masterQueueName := aString
-]
-
-{ #category : #accessing }
-TKTSlaveRunner >> passcode: aString [ 
-	
-	connection passcode: aString
-]
-
-{ #category : #accessing }
-TKTSlaveRunner >> port: anInteger [ 
-	
-	connection port: anInteger
+	connection := StampClient new.
+	configuration := TKTQueueConfiguration default
 ]
 
 { #category : #'start-stop' }
@@ -94,31 +64,25 @@ TKTSlaveRunner >> processMessage [
 	]on: ConnectionTimedOut do: [  ]
 ]
 
-{ #category : #accessing }
-TKTSlaveRunner >> roundRobinQueue: aString [ 
-	
-	roundRobinQueueName := aString
-]
-
 { #category : #'start-stop' }
 TKTSlaveRunner >> sendToMaster: anEvent [
-
-	| frame |
-
-	(frame := connection newSendFrameTo: masterQueueName)
-		bytes: (ByteArray streamContents: [:s | FLSerializer serialize: anEvent on: s]).
-		
+	| frame bytes |
+	bytes := ByteArray
+		streamContents: [ :s | FLSerializer serialize: anEvent on: s ].
+	(frame := connection newSendFrameTo: configuration masterQueueName)
+		bytes: bytes.
 	connection write: frame
-
 ]
 
 { #category : #'start-stop' }
 TKTSlaveRunner >> start [
 	
 	connection open.
+	configuration configureConnection: connection.
+	
 	self subscribeInput.
 	
-	listeningProcess := [ [self processMessage] repeat ] fork.
+	listeningProcess := [ [self processMessage] repeat ] newProcess.
 	listeningProcess resume.
 ]
 
@@ -143,7 +107,7 @@ TKTSlaveRunner >> stop [
 { #category : #subscribing }
 TKTSlaveRunner >> subscribeInput [
 	
-	subscription := connection newSubscriptionTo: roundRobinQueueName.
+	subscription := connection newSubscriptionTo: configuration roundRobinQueueName.
 
 	subscription 
 		clientIndividualAck;

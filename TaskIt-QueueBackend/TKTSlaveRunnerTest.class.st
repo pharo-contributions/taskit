@@ -31,8 +31,6 @@ TKTSlaveRunnerTest >> testSendingATask [
 		valuable: [ 2 + 40 ];
 		yourself.
 
-	self sendEvent: event to: self roundRobinQueueName.
-
 	responseEvent := self
 		waitEventOn: self masterQueueName
 		during: [ self sendEvent: event to: self roundRobinQueueName ]
@@ -46,15 +44,14 @@ TKTSlaveRunnerTest >> testSendingAnErrorTask [
 	| event responseEvent |
 	event := TKTExecuteTask new
 		uuid: '23';
-		valuable: [ 1 / 0 ];
+		valuable: (MessageSend receiver: 1 selector: #/ argument: 0);
 		yourself.
-
-	self sendEvent: event to: self roundRobinQueueName.
 
 	responseEvent := self
 		waitEventOn: self masterQueueName
 		during: [ self sendEvent: event to: self roundRobinQueueName ]
 		timeout: 10 seconds.
 		
-	self assert: responseEvent value equals: 42
+	self assert: responseEvent exception class equals: ZeroDivide
+
 ]

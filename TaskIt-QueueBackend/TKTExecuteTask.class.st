@@ -15,7 +15,7 @@ TKTExecuteTask >> handleException: exception onRunner: runner [
 		uuid: uuid;
 		exception: exception;
 		yourself.
-		
+	
 	runner sendToMaster: event.
 		
 	
@@ -24,13 +24,9 @@ TKTExecuteTask >> handleException: exception onRunner: runner [
 { #category : #accesing }
 TKTExecuteTask >> processEvent: runner [
 	| returnValue event |
-
 	[ returnValue := valuable value ]
-		on: Error
-		do: [ :e | 
-			self handleException: e onRunner: runner.
-			^ self ].
-
+		on: Exception
+		do: [ :e | ^ self handleException: e onRunner: runner ].
 	event := TKTReturnTask new.
 	event uuid: uuid.
 	event value: returnValue.

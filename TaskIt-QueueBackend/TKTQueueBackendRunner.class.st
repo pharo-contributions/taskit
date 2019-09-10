@@ -5,24 +5,37 @@ Class {
 		'connection',
 		'listeningProcess',
 		'subscription',
-		'tasks'
+		'tasks',
+		'configuration'
 	],
 	#category : #'TaskIt-QueueBackend'
 }
+
+{ #category : #accessing }
+TKTQueueBackendRunner class >> default [
+
+	^ self new
+
+]
+
+{ #category : #configuration }
+TKTQueueBackendRunner >> configuration [
+	^ configuration
+]
 
 { #category : #initialization }
 TKTQueueBackendRunner >> doProcessMessage: msg [ 
 
 	| event |
 
-	[
-		event := FLMaterializer materializeFromByteArray: msg body.
+"	[
+"		event := FLMaterializer materializeFromByteArray: msg body.
 		event processEvent: self.
 		connection write: msg ackFrame	
-	]	on: Error 
+"	]	on: Error 
 		do: [ :e | 
 			e debug.
-			connection write: msg nackFrame ]
+			connection write: msg nackFrame ]"
 ]
 
 { #category : #initialization }
@@ -31,7 +44,17 @@ TKTQueueBackendRunner >> initialize [
 	super initialize.
 	connection := StampClient new.
 	tasks := Dictionary new.
+	configuration := TKTQueueConfiguration default.
+]
 
+{ #category : #initialization }
+TKTQueueBackendRunner >> notifyFailure: uuid exception: exception [
+	| task |
+	task := tasks at: uuid ifAbsent: [ ^ self ].
+	task isFinished
+		ifTrue: [ ^ self ].
+	task resultError: exception.
+	tasks removeKey: uuid
 ]
 
 { #category : #initialization }
@@ -66,7 +89,7 @@ TKTQueueBackendRunner >> scheduleTaskExecution: aTaskExecution [
 		uuid: uuid;
 		valuable: aTaskExecution task valuable.
 
-	(frame := connection newSendFrameTo: 'roundRobin')
+	(frame := connection newSendFrameTo: configuration roundRobinQueueName)
 		bytes: (ByteArray streamContents: [:s | FLSerializer serialize: event on: s]).
 		
 	connection write: frame.
@@ -76,9 +99,11 @@ TKTQueueBackendRunner >> scheduleTaskExecution: aTaskExecution [
 
 { #category : #initialization }
 TKTQueueBackendRunner >> start [ 
+	
+	configuration configureConnection: connection.
 	connection open.
 	
-	subscription := connection newSubscriptionTo: 'master'.
+	subscription := connection newSubscriptionTo: configuration masterQueueName.
 
 	subscription 
 		clientIndividualAck;
@@ -86,7 +111,7 @@ TKTQueueBackendRunner >> start [
 	
 	connection write: subscription subscribeFrame.
 	
-	listeningProcess := [ [self processMessage] repeat ] fork.
+	listeningProcess := [ [self processMessage] repeat ] newProcess.
 	listeningProcess resume.
 ]
 

@@ -17,8 +17,9 @@ TKTErrorInTask >> exception [
 
 { #category : #accessing }
 TKTErrorInTask >> exception: anException [
+	serializedException := ByteArray
+		streamContents: [ :s | FLSerializer serialize: anException on: s ].
 
-	serializedException := ByteArray streamContents: [ :s | FLSerializer serialize: anException on: s ].
 ]
 
 { #category : #accessing }

@@ -21,6 +21,24 @@ TKTQueueAbstractTest >> emptyQueues [
 ]
 
 { #category : #'as yet unclassified' }
+TKTQueueAbstractTest >> masterForTest [
+
+ 	| newMaster |
+
+	newMaster := TKTQueueBackendRunner new.
+
+	newMaster configuration
+		host: 'localhost';
+		port: 61613;
+		login: 'guest';
+	 	passcode: 'guest';
+		roundRobinQueue: self roundRobinQueueName;
+		masterQueue: self masterQueueName.	
+		
+	^ newMaster
+]
+
+{ #category : #'as yet unclassified' }
 TKTQueueAbstractTest >> masterQueueName [
 
 	^ 'master-test'
@@ -30,6 +48,12 @@ TKTQueueAbstractTest >> masterQueueName [
 TKTQueueAbstractTest >> roundRobinQueueName [
 
 	^ 'roundRobin-test'
+]
+
+{ #category : #testing }
+TKTQueueAbstractTest >> runCaseManaged [ 
+
+	^ self runCase
 ]
 
 { #category : #testing }
@@ -58,15 +82,19 @@ TKTQueueAbstractTest >> setUp [
 { #category : #'as yet unclassified' }
 TKTQueueAbstractTest >> slaveForTest [
 
-	^ TKTSlaveRunner new
+ 	| newSlave |
+
+	newSlave := TKTSlaveRunner new.
+
+	newSlave configuration
 		host: 'localhost';
 		port: 61613;
 		login: 'guest';
 	 	passcode: 'guest';
 		roundRobinQueue: self roundRobinQueueName;
-		masterQueue: self masterQueueName;
-		yourself.
-	
+		masterQueue: self masterQueueName.	
+		
+	^ newSlave
 ]
 
 { #category : #running }
@@ -85,7 +113,7 @@ TKTQueueAbstractTest >> waitEventOn: aQueueName during: aBlock timeout: timeout 
 	connection timeout: timeout asSeconds.
 	
 	aBlock value.
-	
+		
 	msg := connection readMessage.
 	
 	^ FLMaterializer materializeFromByteArray: msg body.
