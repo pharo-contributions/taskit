@@ -12,20 +12,26 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
-TKTSlaveRunner class >> runDefault [
+TKTSlaveRunner class >> default [
 
 	| slave |
 	slave := TKTSlaveRunner new.
 
-	slave
+	^ slave
 		host: 'localhost';
 		port: 61613;
 		login: 'guest';
 	 	passcode: 'guest';
 		roundRobinQueue: 'roundRobin';
 		masterQueue: 'master';
-		startBlocking.
+		yourself.
 
+]
+
+{ #category : #'as yet unclassified' }
+TKTSlaveRunner class >> startBlocking [
+
+	self default startBlocking.
 ]
 
 { #category : #processing }

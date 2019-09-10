@@ -2,15 +2,10 @@ Class {
 	#name : #TKTExecuteTask,
 	#superclass : #TKTAbstractEvent,
 	#instVars : [
-		'blockCode'
+		'valuable'
 	],
 	#category : #'TaskIt-QueueBackend-Messages'
 }
-
-{ #category : #accessing }
-TKTExecuteTask >> blockCode: aBlockClosure [ 
-	blockCode := aBlockClosure
-]
 
 { #category : #accesing }
 TKTExecuteTask >> handleException: exception onRunner: runner [
@@ -30,7 +25,7 @@ TKTExecuteTask >> handleException: exception onRunner: runner [
 TKTExecuteTask >> processEvent: runner [
 	| returnValue event |
 
-	[ returnValue := blockCode value ]
+	[ returnValue := valuable value ]
 		on: Error
 		do: [ :e | 
 			self handleException: e onRunner: runner.
@@ -45,4 +40,9 @@ TKTExecuteTask >> processEvent: runner [
 { #category : #accesing }
 TKTExecuteTask >> uuid: anUuid [ 
 	uuid := anUuid
+]
+
+{ #category : #accessing }
+TKTExecuteTask >> valuable: aBlockClosure [ 
+	valuable := aBlockClosure
 ]

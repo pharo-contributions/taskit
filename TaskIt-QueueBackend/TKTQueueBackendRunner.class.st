@@ -64,7 +64,7 @@ TKTQueueBackendRunner >> scheduleTaskExecution: aTaskExecution [
 	uuid := UUID new.
 	event := TKTExecuteTask new 
 		uuid: uuid;
-		blockCode: aTaskExecution task valuable.
+		valuable: aTaskExecution task valuable.
 
 	(frame := connection newSendFrameTo: 'roundRobin')
 		bytes: (ByteArray streamContents: [:s | FLSerializer serialize: event on: s]).
