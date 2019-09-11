@@ -5,7 +5,8 @@ Class {
 		'connection',
 		'subscription',
 		'listeningProcess',
-		'configuration'
+		'configuration',
+		'subscriptionBroadcast'
 	],
 	#category : #'TaskIt-QueueBackend'
 }
@@ -81,6 +82,7 @@ TKTSlaveRunner >> start [
 	configuration configureConnection: connection.
 	
 	self subscribeInput.
+	self subscribeBroadcast.
 	
 	listeningProcess := [ [self processMessage] repeat ] newProcess.
 	listeningProcess resume.
@@ -102,6 +104,16 @@ TKTSlaveRunner >> stop [
 	listeningProcess := nil.
 	
 	connection close.
+]
+
+{ #category : #subscribing }
+TKTSlaveRunner >> subscribeBroadcast [
+	
+	subscriptionBroadcast := connection newSubscriptionTo: self configuration broadcastQueueName.
+	subscriptionBroadcast prefetchCount: 1.
+	
+	connection write: subscriptionBroadcast subscribeFrame
+
 ]
 
 { #category : #subscribing }

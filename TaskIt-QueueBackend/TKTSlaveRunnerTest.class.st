@@ -40,6 +40,24 @@ TKTSlaveRunnerTest >> testSendingATask [
 ]
 
 { #category : #tests }
+TKTSlaveRunnerTest >> testSendingATaskToBroadcast [
+
+	| event responseEvent |
+
+	event := TKTExecuteTask new
+		uuid: '23';
+		valuable: [ 2 + 40 ];
+		yourself.
+
+	responseEvent := self
+		waitEventOn: self masterQueueName
+		during: [ self sendEvent: event to: self broadcastQueueName ]
+		timeout: 10 seconds.
+		
+	self assert: responseEvent value equals: 42
+]
+
+{ #category : #tests }
 TKTSlaveRunnerTest >> testSendingAnErrorTask [
 	| event responseEvent |
 	event := TKTExecuteTask new

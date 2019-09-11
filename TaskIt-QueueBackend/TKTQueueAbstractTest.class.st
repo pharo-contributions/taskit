@@ -7,6 +7,31 @@ Class {
 	#category : #'TaskIt-QueueBackend-Tests'
 }
 
+{ #category : #'as yet unclassified' }
+TKTQueueAbstractTest >> broadcastQueueName [
+
+	^ '/exchange/broadcast-test'
+]
+
+{ #category : #running }
+TKTQueueAbstractTest >> createBroadcastExchange [
+
+	| exchangeName |
+	
+	exchangeName := (self broadcastQueueName splitOn: '/') at:3.
+
+	ZnEasy client
+		url: 'http://guest:guest@localhost:15672/api/exchanges/%2F/' , exchangeName;
+		delete.
+
+	ZnEasy client
+		url: 'http://guest:guest@localhost:15672/api/exchanges/%2F/' , exchangeName;
+		contents: '{"type":"fanout","durable":true}';
+		contentType: 'application/json';
+		put.
+
+]
+
 { #category : #running }
 TKTQueueAbstractTest >> emptyQueues [
 
@@ -33,6 +58,7 @@ TKTQueueAbstractTest >> masterForTest [
 		login: 'guest';
 	 	passcode: 'guest';
 		roundRobinQueue: self roundRobinQueueName;
+		broadcastQueue: self broadcastQueueName;
 		masterQueue: self masterQueueName.	
 		
 	^ newMaster
@@ -72,7 +98,8 @@ TKTQueueAbstractTest >> sendEvent: anEvent to: aQueueName [
 TKTQueueAbstractTest >> setUp [
 
 	super setUp.
-	
+
+	self createBroadcastExchange.	
 	self emptyQueues.
 	
 	connection := StampClient new.
@@ -92,6 +119,7 @@ TKTQueueAbstractTest >> slaveForTest [
 		login: 'guest';
 	 	passcode: 'guest';
 		roundRobinQueue: self roundRobinQueueName;
+		broadcastQueue: self broadcastQueueName;
 		masterQueue: self masterQueueName.	
 		
 	^ newSlave

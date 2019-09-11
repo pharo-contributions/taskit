@@ -7,7 +7,8 @@ Class {
 		'host',
 		'login',
 		'passcode',
-		'port'
+		'port',
+		'broadcastQueueName'
 	],
 	#category : #'TaskIt-QueueBackend'
 }
@@ -21,9 +22,22 @@ TKTQueueConfiguration class >> default [
 		login: 'guest';
 	 	passcode: 'guest';
 		roundRobinQueue: 'roundRobin';
+		broadcastQueue: '/exchange/amq.fanout';
 		masterQueue: 'master';
 		yourself.
 
+]
+
+{ #category : #accessing }
+TKTQueueConfiguration >> broadcastQueue: aString [ 
+	
+	broadcastQueueName := aString
+]
+
+{ #category : #accessing }
+TKTQueueConfiguration >> broadcastQueueName [ 
+	
+	^ broadcastQueueName
 ]
 
 { #category : #configuring }

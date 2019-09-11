@@ -42,9 +42,9 @@ TKTQueueFutureRunnerTest >> testExecutingAFuture [
 { #category : #tests }
 TKTQueueFutureRunnerTest >> testExecutingAnError [
 
-	| aFuture result |
+	| aFuture |
 	aFuture := [ 1 / 0 ] asTask future: master.
-	self should: [result := aFuture synchronizeTimeout: 5 seconds] raise: ZeroDivide.
+	self should: [aFuture synchronizeTimeout: 5 seconds] raise: ZeroDivide.
 	
 
 ]

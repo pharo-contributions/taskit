@@ -6,7 +6,8 @@ Class {
 		'listeningProcess',
 		'subscription',
 		'tasks',
-		'configuration'
+		'configuration',
+		'futures'
 	],
 	#category : #'TaskIt-QueueBackend'
 }
@@ -28,14 +29,14 @@ TKTQueueBackendRunner >> doProcessMessage: msg [
 
 	| event |
 
-"	[
-"		event := FLMaterializer materializeFromByteArray: msg body.
+	[
+		event := FLMaterializer materializeFromByteArray: msg body.
 		event processEvent: self.
 		connection write: msg ackFrame	
-"	]	on: Error 
+	]	on: Error 
 		do: [ :e | 
 			e debug.
-			connection write: msg nackFrame ]"
+			connection write: msg nackFrame ]
 ]
 
 { #category : #initialization }
@@ -43,30 +44,24 @@ TKTQueueBackendRunner >> initialize [
 
 	super initialize.
 	connection := StampClient new.
-	tasks := Dictionary new.
+	futures := WeakValueDictionary new.
+	tasks := WeakKeyDictionary new.
+	
 	configuration := TKTQueueConfiguration default.
 ]
 
 { #category : #initialization }
 TKTQueueBackendRunner >> notifyFailure: uuid exception: exception [
-	| task |
-	task := tasks at: uuid ifAbsent: [ ^ self ].
-	task isFinished
-		ifTrue: [ ^ self ].
-	task resultError: exception.
-	tasks removeKey: uuid
+
+	self task: uuid ifPresent: [ :t | t resultError: exception ]
+	
 ]
 
 { #category : #initialization }
 TKTQueueBackendRunner >> notifyTask: uuid returnValue: value [
-
-	| task |
-
-	task := tasks at:uuid ifAbsent: [ ^ self ].
-	task isFinished ifTrue: [ ^ self ].
-	task resultOk: value.
 	
-	tasks removeKey: uuid 
+	self task: uuid ifPresent: [ :t | t resultOk: value ]
+
 ]
 
 { #category : #initialization }
@@ -80,6 +75,13 @@ TKTQueueBackendRunner >> processMessage [
 	]on: ConnectionTimedOut, ZnIncomplete do: [  ]
 ]
 
+{ #category : #private }
+TKTQueueBackendRunner >> putTask: aTaskExecution at: uuid [
+
+	futures at: uuid put: aTaskExecution future.
+	tasks at: aTaskExecution future put: aTaskExecution
+]
+
 { #category : #initialization }
 TKTQueueBackendRunner >> scheduleTaskExecution: aTaskExecution [
 
@@ -89,21 +91,21 @@ TKTQueueBackendRunner >> scheduleTaskExecution: aTaskExecution [
 		uuid: uuid;
 		valuable: aTaskExecution task valuable.
 
-	(frame := connection newSendFrameTo: configuration roundRobinQueueName)
+	(frame := connection newSendFrameTo: self configuration roundRobinQueueName)
 		bytes: (ByteArray streamContents: [:s | FLSerializer serialize: event on: s]).
 		
 	connection write: frame.
 
-	tasks at: uuid put: aTaskExecution.
+	self putTask: aTaskExecution at: uuid
 ]
 
 { #category : #initialization }
 TKTQueueBackendRunner >> start [ 
 	
-	configuration configureConnection: connection.
+	self configuration configureConnection: connection.
 	connection open.
 	
-	subscription := connection newSubscriptionTo: configuration masterQueueName.
+	subscription := connection newSubscriptionTo: self configuration masterQueueName.
 
 	subscription 
 		clientIndividualAck;
@@ -121,4 +123,16 @@ TKTQueueBackendRunner >> stop [
 	[connection close] on: Error do:[].
 	listeningProcess ifNotNil: #suspend.
 	listeningProcess := nil.
+]
+
+{ #category : #private }
+TKTQueueBackendRunner >> task: uuid ifPresent: aBlock [
+
+	| task future |
+
+	future := futures at: uuid ifAbsent: [ ^ self ].	
+	task := tasks at: future ifAbsent: [ ^ self ].
+	task isFinished ifTrue: [ ^ self ].
+
+	^ aBlock value: task.
 ]
