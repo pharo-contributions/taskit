@@ -46,7 +46,8 @@ TKTQueueFutureRunnerTest >> testExecutingAStreamFuture [
 
 	| aStream result |
 	aStream := master futureStream: [ 2 + 40 ] asTask.
-	result := aStream waitForElements: 1 timeout: 5 seconds.
+	
+	result := aStream synchronizeTimeout: 5 seconds.
 	
 	self assert: result equals: {42} asOrderedCollection
 ]
@@ -77,7 +78,7 @@ TKTQueueFutureRunnerTest >> testWaitingTwoElements [
 	slave2 start.
 		
 	aStream := master futureStream: [ 2 + 40 ] asTask.
-	result := aStream waitForElements: 2 timeout: 10 seconds.
+	result := aStream waitForElements: 2 timeout: 3 seconds.
 	
 	self assert: result equals: {42. 42} asOrderedCollection
 ]
