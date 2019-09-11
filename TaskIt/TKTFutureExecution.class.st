@@ -27,8 +27,14 @@ TKTFutureExecution >> future [
 TKTFutureExecution >> initialize [
 
 	super initialize.
-	future := TKTFuture new.
+	future := self newFuture.
 	
+]
+
+{ #category : #initialization }
+TKTFutureExecution >> newFuture [
+
+	^ TKTFuture new
 ]
 
 { #category : #returning }

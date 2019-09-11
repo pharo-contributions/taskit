@@ -39,6 +39,14 @@ TKTQueueBackendRunner >> doProcessMessage: msg [
 			connection write: msg nackFrame ]
 ]
 
+{ #category : #'future-stream' }
+TKTQueueBackendRunner >> futureStream: aTask [ 
+	| execution |
+	execution := aTask asTask configureTaskExecution: TKTFutureStreamExecution new with: self.
+	self scheduleTaskExecution: execution.
+	^ execution future
+]
+
 { #category : #initialization }
 TKTQueueBackendRunner >> initialize [
 
@@ -85,13 +93,17 @@ TKTQueueBackendRunner >> putTask: aTaskExecution at: uuid [
 { #category : #initialization }
 TKTQueueBackendRunner >> scheduleTaskExecution: aTaskExecution [
 
-	| uuid frame event |
+	| uuid frame event queueName |
 	uuid := UUID new.
 	event := TKTExecuteTask new 
 		uuid: uuid;
 		valuable: aTaskExecution task valuable.
 
-	(frame := connection newSendFrameTo: self configuration roundRobinQueueName)
+	queueName := aTaskExecution isBroadcast 
+		ifFalse: [ self configuration roundRobinQueueName ]
+		ifTrue: [ self configuration broadcastQueueName ].
+
+	(frame := connection newSendFrameTo: queueName)
 		bytes: (ByteArray streamContents: [:s | FLSerializer serialize: event on: s]).
 		
 	connection write: frame.
