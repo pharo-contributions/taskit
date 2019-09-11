@@ -30,6 +30,7 @@ TKTExecuteTask >> processEvent: runner [
 	event := TKTReturnTask new.
 	event uuid: uuid.
 	event value: returnValue.
+	
 	runner sendToMaster: event
 ]
 

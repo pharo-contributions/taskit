@@ -27,7 +27,7 @@ TKTQueueFutureRunnerTest >> tearDown [
 	slave2 ifNotNil:#stop.	
 	master ifNotNil: #stop.
 	
-	super setUp.
+	super tearDown.
 	
 ]
 
@@ -75,9 +75,9 @@ TKTQueueFutureRunnerTest >> testWaitingTwoElements [
 	
 	slave2 := self slaveForTest.
 	slave2 start.
-	
+		
 	aStream := master futureStream: [ 2 + 40 ] asTask.
-	result := aStream waitForElements: 2 timeout: 2 seconds.
+	result := aStream waitForElements: 2 timeout: 10 seconds.
 	
 	self assert: result equals: {42. 42} asOrderedCollection
 ]

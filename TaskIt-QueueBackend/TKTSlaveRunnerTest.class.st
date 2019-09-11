@@ -19,7 +19,7 @@ TKTSlaveRunnerTest >> setUp [
 TKTSlaveRunnerTest >> tearDown [
 
 	slave ifNotNil:#stop.
-	super setUp.
+	super tearDown.
 	
 ]
 
@@ -51,7 +51,7 @@ TKTSlaveRunnerTest >> testSendingATaskToBroadcast [
 
 	responseEvent := self
 		waitEventOn: self masterQueueName
-		during: [ self sendEvent: event to: self broadcastQueueName ]
+		during: [ self sendEvent: event to: self broadcastQueueName. ]
 		timeout: 10 seconds.
 		
 	self assert: responseEvent value equals: 42

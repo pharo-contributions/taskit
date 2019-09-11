@@ -25,7 +25,7 @@ TKTFutureStream >> waitForElements: aSize timeout: aTimeout [
 	startTime := Time millisecondClockValue.  	
 	remainingTime := aTimeout asMilliSeconds.
 
-	[ remainingTime = 0 or: [ self isFinished and: [ result value size >= aSize ] ] ]
+	[ remainingTime <= 0 or: [ self isFinished and: [ result value size >= aSize ] ] ]
 		whileFalse: [ 
 			expired := valueSemaphore waitTimeoutMSecs: remainingTime.
 			expired ifTrue: [ TKTTimeoutException signal ] ].

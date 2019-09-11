@@ -144,7 +144,7 @@ TKTQueueBackendRunner >> task: uuid ifPresent: aBlock [
 
 	future := futures at: uuid ifAbsent: [ ^ self ].	
 	task := tasks at: future ifAbsent: [ ^ self ].
-	task isFinished ifTrue: [ ^ self ].
+	(task isBroadcast not and: [task isFinished]) ifTrue: [ ^ self ].
 
 	^ aBlock value: task.
 ]

@@ -43,6 +43,12 @@ TKTQueueAbstractTest >> emptyQueues [
 		url: 'http://guest:guest@localhost:15672/api/queues/%2F/' , self masterQueueName;
 		delete.
 
+	ZnEasy client
+		url: 'http://guest:guest@localhost:15672/api/queues/%2F/' , self masterQueueName;
+		contents: '{"durable":true}';
+		contentType: 'application/json';
+		put.
+
 ]
 
 { #category : #'as yet unclassified' }
@@ -129,21 +135,31 @@ TKTQueueAbstractTest >> slaveForTest [
 TKTQueueAbstractTest >> tearDown [
 
 	connection ifNotNil:#close.
-	super setUp.
+	
+	ZnEasy client
+		url: 'http://guest:guest@localhost:15672/api/queues/%2F/' , self roundRobinQueueName;
+		delete.
+
+	ZnEasy client
+		url: 'http://guest:guest@localhost:15672/api/queues/%2F/' , self masterQueueName;
+		delete.
+	
+	super tearDown.
 	
 ]
 
 { #category : #testing }
 TKTQueueAbstractTest >> waitEventOn: aQueueName during: aBlock timeout: timeout [ 
-
-	| msg |
-	connection subscribeTo: aQueueName.
-	connection timeout: timeout asSeconds.
 	
-	aBlock value.
+	|msg|
+
+	[aBlock value.
+
+	connection timeout: timeout asSeconds.
+	connection subscribeTo: aQueueName.
 		
 	msg := connection readMessage.
 	
-	^ FLMaterializer materializeFromByteArray: msg body.
+	^ FLMaterializer materializeFromByteArray: msg body.] ensure: [ connection close ]
 
 ]

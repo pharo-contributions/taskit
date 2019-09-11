@@ -72,6 +72,7 @@ TKTSlaveRunner >> sendToMaster: anEvent [
 		streamContents: [ :s | FLSerializer serialize: anEvent on: s ].
 	(frame := connection newSendFrameTo: configuration masterQueueName)
 		bytes: bytes.
+		
 	connection write: frame
 ]
 
@@ -110,7 +111,9 @@ TKTSlaveRunner >> stop [
 TKTSlaveRunner >> subscribeBroadcast [
 	
 	subscriptionBroadcast := connection newSubscriptionTo: self configuration broadcastQueueName.
-	subscriptionBroadcast prefetchCount: 1.
+	subscriptionBroadcast 
+		clientIndividualAck;
+		prefetchCount: 1.
 	
 	connection write: subscriptionBroadcast subscribeFrame
 
