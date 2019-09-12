@@ -97,6 +97,8 @@ BaselineOfTaskIt >> baseline: spec [
 	spec
 		for: #('pharo7.x' 'pharo8.x')
 			do: [ spec
+				baseline: 'ParametrizedTests'
+					with: [ spec repository: 'github://tesonep/ParametrizedTests' ];
 				baseline: #Pragmatic
 					with: [ spec repository: 'github://sbragagnolo/pragmatic/src' ];
 				package: #TaskIt;
