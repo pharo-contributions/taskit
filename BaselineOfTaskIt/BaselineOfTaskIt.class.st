@@ -129,7 +129,7 @@ BaselineOfTaskIt >> baseline: spec [
 		for: #'pharo6.1.x'
 			do: [ spec
 				package: #TaskIt;
-				package: #'TaskIt-Tests' with: [ spec requires: #('TaskIt' ParametrizedTests) ];
+				package: #'TaskIt-Tests' with: [ spec requires: #('TaskIt') ];
 				package: #TaskItRetry with: [ spec requires: #('TaskIt') ];
 				package: #'TaskItRetry-Tests'
 					with: [ spec requires: #('TaskItRetry') ];
