@@ -101,7 +101,7 @@ BaselineOfTaskIt >> baseline: spec [
 					with: [ spec repository: 'github://tesonep/ParametrizedTests' ];
 				baseline: #Pragmatic
 					with: [ spec repository: 'github://sbragagnolo/pragmatic/src' ];
-				package: #TaskIt  with: [ spec requires: #('TaskIt' ParametrizedTests) ];
+				package: #TaskIt  with: [ spec requires: #( ParametrizedTests) ];
 				package: #ActIt with: [ spec requires: #('TaskIt') ];
 				package: #'TaskIt-Tests' with: [ spec requires: #('TaskIt') ];
 				package: #TaskItRetry with: [ spec requires: #('TaskIt') ];
