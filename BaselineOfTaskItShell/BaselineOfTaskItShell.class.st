@@ -1,16 +1,12 @@
 Class {
 	#name : #BaselineOfTaskItShell,
 	#superclass : #BaselineOf,
-	#instVars : [
-		'repository'
-	],
 	#category : #BaselineOfTaskItShell
 }
 
 { #category : #'as yet unclassified' }
 BaselineOfTaskItShell >> baseline: spec [
 	<baseline>
-	repository := self packageRepositoryURL.
 	spec
 		for: #common
 		do: [ spec
