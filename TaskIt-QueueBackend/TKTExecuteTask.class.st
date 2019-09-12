@@ -15,7 +15,7 @@ TKTExecuteTask >> handleException: exception onRunner: runner [
 		uuid: uuid;
 		exception: exception;
 		yourself.
-	
+			
 	runner sendToMaster: event.
 		
 	

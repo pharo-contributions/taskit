@@ -1,7 +1,7 @@
 Class {
 	#name : #TKTFutureStreamExecution,
 	#superclass : #TKTFutureExecution,
-	#category : #'TaskIt-Futures'
+	#category : #'TaskIt-QueueBackend'
 }
 
 { #category : #testing }
