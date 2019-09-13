@@ -9,10 +9,10 @@ Class {
 
 { #category : #accessing }
 TKTErrorInTask >> exception [
-	
-	^ FLMaterializer materializeFromByteArray: serializedException
 
-
+	^ [ FLMaterializer materializeFromByteArray: serializedException ]
+		on: FLMaterializationError
+		do: [ :e | e ]
 ]
 
 { #category : #accessing }

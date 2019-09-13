@@ -17,10 +17,10 @@ Class {
 TKTQueueConfiguration class >> default [
 
 	^ self new
-		host: 'localhost';
+		host: '192.168.103.52';
 		port: 61613;
-		login: 'guest';
-	 	passcode: 'guest';
+		login: 'test';
+	 	passcode: 'test';
 		roundRobinQueue: 'roundRobin';
 		broadcastQueue: '/exchange/amq.fanout';
 		masterQueue: 'master';

@@ -24,6 +24,23 @@ TKTSlaveRunnerTest >> tearDown [
 ]
 
 { #category : #tests }
+TKTSlaveRunnerTest >> testSendingAnErrorTask [
+	| event responseEvent |
+	event := TKTExecuteTask new
+		uuid: '23';
+		valuable: (MessageSend receiver: 1 selector: #/ argument: 0);
+		yourself.
+
+	responseEvent := self
+		waitEventOn: self masterQueueName
+		during: [ self sendEvent: event to: self roundRobinQueueName ]
+		timeout: 10 seconds.
+		
+	self assert: responseEvent exception class equals: ZeroDivide
+
+]
+
+{ #category : #tests }
 TKTSlaveRunnerTest >> testSendingATask [
 	| event responseEvent |
 	event := TKTExecuteTask new
@@ -55,21 +72,4 @@ TKTSlaveRunnerTest >> testSendingATaskToBroadcast [
 		timeout: 10 seconds.
 		
 	self assert: responseEvent value equals: 42
-]
-
-{ #category : #tests }
-TKTSlaveRunnerTest >> testSendingAnErrorTask [
-	| event responseEvent |
-	event := TKTExecuteTask new
-		uuid: '23';
-		valuable: (MessageSend receiver: 1 selector: #/ argument: 0);
-		yourself.
-
-	responseEvent := self
-		waitEventOn: self masterQueueName
-		during: [ self sendEvent: event to: self roundRobinQueueName ]
-		timeout: 10 seconds.
-		
-	self assert: responseEvent exception class equals: ZeroDivide
-
 ]

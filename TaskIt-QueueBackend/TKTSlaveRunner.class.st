@@ -79,8 +79,8 @@ TKTSlaveRunner >> sendToMaster: anEvent [
 { #category : #'start-stop' }
 TKTSlaveRunner >> start [
 	
-	connection open.
 	configuration configureConnection: connection.
+	connection open.
 	
 	self subscribeInput.
 	self subscribeBroadcast.

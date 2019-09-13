@@ -21,11 +21,11 @@ TKTQueueAbstractTest >> createBroadcastExchange [
 	exchangeName := (self broadcastQueueName splitOn: '/') at:3.
 
 	ZnEasy client
-		url: 'http://guest:guest@localhost:15672/api/exchanges/%2F/' , exchangeName;
+		url: 'http://test:test@192.168.103.52:15672/api/exchanges/%2F/' , exchangeName;
 		delete.
 
 	ZnEasy client
-		url: 'http://guest:guest@localhost:15672/api/exchanges/%2F/' , exchangeName;
+		url: 'http://test:test@192.168.103.52:15672/api/exchanges/%2F/' , exchangeName;
 		contents: '{"type":"fanout","durable":true}';
 		contentType: 'application/json';
 		put.
@@ -36,15 +36,15 @@ TKTQueueAbstractTest >> createBroadcastExchange [
 TKTQueueAbstractTest >> emptyQueues [
 
 	ZnEasy client
-		url: 'http://guest:guest@localhost:15672/api/queues/%2F/' , self roundRobinQueueName;
+		url: 'http://test:test@192.168.103.52:15672/api/queues/%2F/' , self roundRobinQueueName;
 		delete.
 
 	ZnEasy client
-		url: 'http://guest:guest@localhost:15672/api/queues/%2F/' , self masterQueueName;
+		url: 'http://test:test@192.168.103.52:15672/api/queues/%2F/' , self masterQueueName;
 		delete.
 
 	ZnEasy client
-		url: 'http://guest:guest@localhost:15672/api/queues/%2F/' , self masterQueueName;
+		url: 'http://test:test@192.168.103.52:15672/api/queues/%2F/' , self masterQueueName;
 		contents: '{"durable":true}';
 		contentType: 'application/json';
 		put.
@@ -59,10 +59,10 @@ TKTQueueAbstractTest >> masterForTest [
 	newMaster := TKTQueueBackendRunner new.
 
 	newMaster configuration
-		host: 'localhost';
+		host: '192.168.103.52';
 		port: 61613;
-		login: 'guest';
-	 	passcode: 'guest';
+		login: 'test';
+	 	passcode: 'test';
 		roundRobinQueue: self roundRobinQueueName;
 		broadcastQueue: self broadcastQueueName;
 		masterQueue: self masterQueueName.	
@@ -109,6 +109,9 @@ TKTQueueAbstractTest >> setUp [
 	self emptyQueues.
 	
 	connection := StampClient new.
+	connection host: '192.168.103.52'.
+	connection login: 'test'.
+	connection passcode: 'test'.
 	connection open.
 ]
 
@@ -120,10 +123,10 @@ TKTQueueAbstractTest >> slaveForTest [
 	newSlave := TKTSlaveRunner new.
 
 	newSlave configuration
-		host: 'localhost';
+		host: '192.168.103.52';
 		port: 61613;
-		login: 'guest';
-	 	passcode: 'guest';
+		login: 'test';
+	 	passcode: 'test';
 		roundRobinQueue: self roundRobinQueueName;
 		broadcastQueue: self broadcastQueueName;
 		masterQueue: self masterQueueName.	
@@ -137,11 +140,11 @@ TKTQueueAbstractTest >> tearDown [
 	connection ifNotNil:#close.
 	
 	ZnEasy client
-		url: 'http://guest:guest@localhost:15672/api/queues/%2F/' , self roundRobinQueueName;
+		url: 'http://test:test@192.168.103.52:15672/api/queues/%2F/' , self roundRobinQueueName;
 		delete.
 
 	ZnEasy client
-		url: 'http://guest:guest@localhost:15672/api/queues/%2F/' , self masterQueueName;
+		url: 'http://test:test@192.168.103.52:15672/api/queues/%2F/' , self masterQueueName;
 		delete.
 	
 	super tearDown.
