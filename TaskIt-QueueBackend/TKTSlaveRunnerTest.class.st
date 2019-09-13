@@ -73,3 +73,15 @@ TKTSlaveRunnerTest >> testSendingATaskToBroadcast [
 		
 	self assert: responseEvent value equals: 42
 ]
+
+{ #category : #tests }
+TKTSlaveRunnerTest >> testSlaveGenerateHeartbeat [
+	| responseEvent |
+
+	responseEvent := self
+		waitEventOn: self fullHeartbeatQueueName
+		during: [  ]
+		timeout: 10 seconds.
+		
+	self assert: responseEvent pid equals: OSEnvironment current getPid
+]

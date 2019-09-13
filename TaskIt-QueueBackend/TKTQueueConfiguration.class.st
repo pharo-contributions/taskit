@@ -8,7 +8,8 @@ Class {
 		'login',
 		'passcode',
 		'port',
-		'broadcastQueueName'
+		'broadcastQueueName',
+		'heartbeatQueueName'
 	],
 	#category : #'TaskIt-QueueBackend'
 }
@@ -24,6 +25,7 @@ TKTQueueConfiguration class >> default [
 		roundRobinQueue: 'roundRobin';
 		broadcastQueue: '/exchange/amq.fanout';
 		masterQueue: 'master';
+		heartbeatQueue: 'heartbeat';
 		yourself.
 
 ]
@@ -48,6 +50,18 @@ TKTQueueConfiguration >> configureConnection: aStampClient [
 		login: login;
 		passcode: passcode;
 		port: port
+]
+
+{ #category : #accessing }
+TKTQueueConfiguration >> heartbeatQueue: aString [ 
+	
+	heartbeatQueueName := aString
+]
+
+{ #category : #accessing }
+TKTQueueConfiguration >> heartbeatQueueName [
+	
+	^ heartbeatQueueName , '-' , NetNameResolver localHostName
 ]
 
 { #category : #accessing }

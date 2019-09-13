@@ -44,11 +44,27 @@ TKTQueueAbstractTest >> emptyQueues [
 		delete.
 
 	ZnEasy client
+		url: 'http://test:test@192.168.103.52:15672/api/queues/%2F/' , self fullHeartbeatQueueName;
+		delete.
+
+	ZnEasy client
 		url: 'http://test:test@192.168.103.52:15672/api/queues/%2F/' , self masterQueueName;
 		contents: '{"durable":true}';
 		contentType: 'application/json';
 		put.
 
+]
+
+{ #category : #'as yet unclassified' }
+TKTQueueAbstractTest >> fullHeartbeatQueueName [
+
+	^ 'heartbeat-test' , '-' , NetNameResolver localHostName
+]
+
+{ #category : #'as yet unclassified' }
+TKTQueueAbstractTest >> heartbeatQueueName [
+
+	^ 'heartbeat-test'
 ]
 
 { #category : #'as yet unclassified' }
@@ -129,6 +145,7 @@ TKTQueueAbstractTest >> slaveForTest [
 	 	passcode: 'test';
 		roundRobinQueue: self roundRobinQueueName;
 		broadcastQueue: self broadcastQueueName;
+		heartbeatQueue: self heartbeatQueueName;
 		masterQueue: self masterQueueName.	
 		
 	^ newSlave

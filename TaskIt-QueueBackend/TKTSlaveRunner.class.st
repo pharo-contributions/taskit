@@ -60,7 +60,7 @@ TKTSlaveRunner >> doProcessMessage: msg [
 { #category : #'start-stop' }
 TKTSlaveRunner >> heartbeat [
 
-	self sendEvent: TKTHeartbeatEvent to: self configuration heartbeatQueueName
+	self sendEvent: TKTHeartbeatEvent new to: self configuration heartbeatQueueName
 ]
 
 { #category : #initialization }
@@ -122,6 +122,7 @@ TKTSlaveRunner >> startBlocking [
 TKTSlaveRunner >> startHeartbeat [
 	
 	heartbeatProcess := [ [self heartbeat. 20 seconds wait] repeat ] newProcess.
+	heartbeatProcess priority: 50.
 	heartbeatProcess resume.
 
 ]
