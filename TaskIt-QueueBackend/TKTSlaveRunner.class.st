@@ -6,7 +6,8 @@ Class {
 		'subscription',
 		'listeningProcess',
 		'configuration',
-		'subscriptionBroadcast'
+		'subscriptionBroadcast',
+		'heartbeatProcess'
 	],
 	#category : #'TaskIt-QueueBackend'
 }
@@ -34,6 +35,15 @@ TKTSlaveRunner >> configuration [
 	^ configuration
 ]
 
+{ #category : #'start-stop' }
+TKTSlaveRunner >> doConfigure [
+	configuration configureConnection: connection.
+	connection open.
+	self subscribeInput.
+	self subscribeBroadcast.
+	self startHeartbeat
+]
+
 { #category : #processing }
 TKTSlaveRunner >> doProcessMessage: msg [ 
 
@@ -45,6 +55,12 @@ TKTSlaveRunner >> doProcessMessage: msg [
 		connection write: msg ackFrame	
 	]	on: Error 
 		do: [ connection write: msg nackFrame ]
+]
+
+{ #category : #'start-stop' }
+TKTSlaveRunner >> heartbeat [
+
+	self sendEvent: TKTHeartbeatEvent to: self configuration heartbeatQueueName
 ]
 
 { #category : #initialization }
@@ -59,46 +75,55 @@ TKTSlaveRunner >> processMessage [
 	
 	| msg |
 	
-	[
-		msg := connection readMessage.
+	"Process a message, if the connection gives timeout it has to retry. As it is part of the protocol"
+	
+	[	msg := connection readMessage.
 		self doProcessMessage: msg.
 	]on: ConnectionTimedOut do: [  ]
 ]
 
 { #category : #'start-stop' }
-TKTSlaveRunner >> sendToMaster: anEvent [
+TKTSlaveRunner >> sendEvent: anEvent to: queueName [ 
+
 	| frame bytes |
+
 	bytes := ByteArray
 		streamContents: [ :s | FLSerializer serialize: anEvent on: s ].
-	(frame := connection newSendFrameTo: configuration masterQueueName)
+	(frame := connection newSendFrameTo: queueName)
 		bytes: bytes.
 		
 	connection write: frame
 ]
 
 { #category : #'start-stop' }
+TKTSlaveRunner >> sendToMaster: anEvent [
+
+	self sendEvent: anEvent to: self configuration masterQueueName
+]
+
+{ #category : #'start-stop' }
 TKTSlaveRunner >> start [
-	
-	configuration configureConnection: connection.
-	connection open.
-	
-	self subscribeInput.
-	self subscribeBroadcast.
-	
-	listeningProcess := [ [self processMessage] repeat ] newProcess.
-	listeningProcess resume.
+	self doConfigure.
+	listeningProcess := [ [ self processMessage ] repeat ] newProcess.
+	listeningProcess resume
 ]
 
 { #category : #'start-stop' }
 TKTSlaveRunner >> startBlocking [
+
+	self doConfigure.	
 	
-	configuration configureConnection: connection.
-	connection open.
+	[[self processMessage] repeat] on: Exception do: [ :e |
+		e debug.
+		Smalltalk snapshot: false andQuit: true ]
+]
+
+{ #category : #'start-stop' }
+TKTSlaveRunner >> startHeartbeat [
 	
-	self subscribeInput.
-	self subscribeBroadcast.
-	
-	[[self processMessage] repeat] on: Exception do: [ Smalltalk snapshot: false andQuit: true ]
+	heartbeatProcess := [ [self heartbeat. 20 seconds wait] repeat ] newProcess.
+	heartbeatProcess resume.
+
 ]
 
 { #category : #'start-stop' }
@@ -106,6 +131,9 @@ TKTSlaveRunner >> stop [
 	
 	listeningProcess ifNotNil: #suspend.
 	listeningProcess := nil.
+	
+	heartbeatProcess ifNotNil: #suspend.
+	heartbeatProcess := nil.
 	
 	connection close.
 ]
