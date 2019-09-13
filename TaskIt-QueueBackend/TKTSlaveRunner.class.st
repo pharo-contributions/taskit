@@ -29,6 +29,19 @@ TKTSlaveRunner class >> startBlocking [
 	self default startBlocking.
 ]
 
+{ #category : #'start-stop' }
+TKTSlaveRunner >> closeUnrelatedWindows [
+
+	StandardWindow allSubInstances do: #close.
+
+	(Process allSubInstances
+		select: [ :e | e isTerminated not and: [ e name = 'Calypso update' ] ])
+		do: #terminate.
+
+	ClyNavigationEnvironment reset.
+	ClySystemEnvironment reset
+]
+
 { #category : #subscribing }
 TKTSlaveRunner >> configuration [ 
 	
@@ -110,6 +123,8 @@ TKTSlaveRunner >> start [
 
 { #category : #'start-stop' }
 TKTSlaveRunner >> startBlocking [
+
+	self closeUnrelatedWindows.
 
 	self doConfigure.	
 	
