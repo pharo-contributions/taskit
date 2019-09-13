@@ -30,7 +30,11 @@ TKTQueueBackendRunner >> doProcessMessage: msg [
 	| event |
 
 	[
-		event := FLMaterializer materializeFromByteArray: msg body.
+		"In case of a materialization error in the message we debug the error, and accept the message. Because if not will keep forever"
+		[event := FLMaterializer materializeFromByteArray: msg body] 
+			on: FLMaterializationError do: [ :e | 
+				connection write: msg ackFrame. 
+				^self ].
 		event processEvent: self.
 		connection write: msg ackFrame	
 	]	on: Error 
@@ -52,8 +56,8 @@ TKTQueueBackendRunner >> initialize [
 
 	super initialize.
 	connection := StampClient new.
-	futures := WeakValueDictionary new.
-	tasks := WeakKeyDictionary new.
+	futures := Dictionary new.
+	tasks := Dictionary new.
 	
 	configuration := TKTQueueConfiguration default.
 ]
