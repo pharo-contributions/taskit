@@ -43,11 +43,15 @@ TKTSimpleQueueBasedWatchdog class >> startForInstances: number vmPath: aPath ima
 ]
 
 { #category : #stepping }
-TKTSimpleQueueBasedWatchdog >> checkHeartbeats [.
+TKTSimpleQueueBasedWatchdog >> checkHeartbeats [
 
-	stampConnection timeout: 1 "second".
-	[self processHeartbeat: stampConnection readMessage] 
-		on: ConnectionTimedOut do: ["Nothing we want to timeout"] .
+	[ stampConnection open.
+	stampConnection subscribeTo: configuration heartbeatQueueName.
+	stampConnection timeout: 1.	"second"
+	[ [self processHeartbeat: stampConnection readMessage] repeat ]
+		on: ConnectionTimedOut
+		do: [ "Nothing we want to timeout" ] ]
+		ensure: [ stampConnection close ]
 ]
 
 { #category : #accessing }
@@ -78,6 +82,8 @@ TKTSimpleQueueBasedWatchdog >> initialize [
 	instances := OrderedCollection new.
 	stampConnection := StampClient new.
 	configuration := TKTQueueConfiguration default.
+	
+	self stepDelay: 20 seconds.
 	
 	configuration configureConnection: stampConnection.
 ]
@@ -121,15 +127,10 @@ TKTSimpleQueueBasedWatchdog >> processHeartbeat: msg [
 { #category : #stepping }
 TKTSimpleQueueBasedWatchdog >> purgeTerminatedInstances [
 
-	instances := instances select: [ :e | e isRunning ]
-]
-
-{ #category : #stepping }
-TKTSimpleQueueBasedWatchdog >> setUp [
-
-	stampConnection open.
-	stampConnection subscribeTo: configuration heartbeatQueueName.
-	
+	instances := instances select: [ :e | e isRunning ].
+	instances 
+		select: [ :anInst | (Time now subtractTime: anInst lastHeartbeat) asDuration asMinutes > 2  ] 
+		thenDo: [ :anInst | anInst terminate ].
 ]
 
 { #category : #stepping }
@@ -157,7 +158,7 @@ TKTSimpleQueueBasedWatchdog >> startNewInstance [
 		
 	inst := TKTMonitoredInstance new.
 	inst process: process.
-	inst lastHeartbeat: Time new.
+	inst lastHeartbeat: Time now.
 		
 	instances add: inst.
 	
@@ -169,7 +170,7 @@ TKTSimpleQueueBasedWatchdog >> startNewInstance [
 TKTSimpleQueueBasedWatchdog >> stepService [
 
 	self validateInstances.
-	20 seconds wait.
+
 ]
 
 { #category : #stepping }

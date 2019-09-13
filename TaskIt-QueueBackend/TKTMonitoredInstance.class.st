@@ -27,7 +27,9 @@ TKTMonitoredInstance >> lastHeartbeat: anObject [
 { #category : #accessing }
 TKTMonitoredInstance >> pid [ 
 
-	^ (process instVarNamed: #processInfo) ifNil: [ nil ] ifNotNil: [ :x | x dwProcessId ]
+	^ (process instVarNamed: #processInfo) 
+		ifNil: [ nil ] 
+		ifNotNil: [ :x | x getHandle ifNotNil:[x dwProcessId] ]
 ]
 
 { #category : #accessing }
