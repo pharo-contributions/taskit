@@ -26,7 +26,8 @@ TKTHeartbeatEvent >> initialize [
 	super initialize.
 	ip := NetNameResolver localHostAddress.
 	hostName := 	NetNameResolver localHostAddress.
-	time := Time new.
+	time := Time now.
+	uuid := UUID new.
 	pid := OSEnvironment current getPid.
 	
 ]

@@ -42,14 +42,6 @@ TKTQueueFutureRunnerTest >> testExecutingAFuture [
 ]
 
 { #category : #tests }
-TKTQueueFutureRunnerTest >> testExecutingAnError [
-
-	| aFuture |
-	aFuture := [ 1 / 0 ] asTask future: master.
-	self should: [aFuture synchronizeTimeout: 5 seconds] raise: ZeroDivide.
-]
-
-{ #category : #tests }
 TKTQueueFutureRunnerTest >> testExecutingAStreamFuture [
 
 	| aStream result |
@@ -58,6 +50,14 @@ TKTQueueFutureRunnerTest >> testExecutingAStreamFuture [
 	result := aStream synchronizeTimeout: 5 seconds.
 	
 	self assert: result equals: {42} asOrderedCollection
+]
+
+{ #category : #tests }
+TKTQueueFutureRunnerTest >> testExecutingAnError [
+
+	| aFuture |
+	aFuture := [ 1 / 0 ] asTask future: master.
+	self should: [aFuture synchronizeTimeout: 5 seconds] raise: ZeroDivide.
 ]
 
 { #category : #tests }
