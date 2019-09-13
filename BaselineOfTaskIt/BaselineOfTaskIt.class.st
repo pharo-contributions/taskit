@@ -4,14 +4,6 @@ Class {
 	#category : #BaselineOfTaskIt
 }
 
-{ #category : #'development support' }
-BaselineOfTaskIt class >> DevelopmentSupport [
-
-"See the methods in the 'development support' category on the class-side of MetacelloBaseConfiguration. Decide what development support methods you would like to use and copy them the the class-side of your configuration."
-	<apiDocumentation>
-
-]
-
 { #category : #private }
 BaselineOfTaskIt class >> baseConfigurationClassIfAbsent: aBlock [
 
@@ -36,6 +28,14 @@ BaselineOfTaskIt class >> catalogDescription [
 { #category : #catalog }
 BaselineOfTaskIt class >> catalogKeywords [
 	^ {'multiprocessing'. 'futures'. 'tasks'. 'services'. }
+]
+
+{ #category : #'development support' }
+BaselineOfTaskIt class >> DevelopmentSupport [
+
+"See the methods in the 'development support' category on the class-side of MetacelloBaseConfiguration. Decide what development support methods you would like to use and copy them the the class-side of your configuration."
+	<apiDocumentation>
+
 ]
 
 { #category : #private }
@@ -99,6 +99,9 @@ BaselineOfTaskIt >> baseline: spec [
 			do: [ spec
 				baseline: #Pragmatic
 					with: [ spec repository: 'github://sbragagnolo/pragmatic/src' ];
+				baseline: #Stamp
+					with: [ spec repository: 'github://tesonep/stamp/repository' ];
+
 				package: #TaskIt;
 				package: #ActIt with: [ spec requires: #('TaskIt') ];
 				package: #'TaskIt-Tests' with: [ spec requires: #('TaskIt') ];
@@ -113,17 +116,26 @@ BaselineOfTaskIt >> baseline: spec [
 				package: #TaskItDebugger
 					with: [ spec requires: #('TaskItProcesses') ];
 				package: #'TaskItDebugger-Tests'
-					with: [ spec requires: #('TaskItDebugger') ].
+					with: [ spec requires: #('TaskItDebugger') ];
+				package: 'TaskIt-QueueBackend'
+					with: [ spec requires: #('TaskItProcesses' 'Stamp' '') ].									
+
 			spec
 				group: 'minimal' with: #('TaskIt' 'ActIt');
 				group: 'default'
 					with:
 					#('minimal' 'TaskItProcesses' 'TaskItRetry' 'TaskItDebugger' 'TaskIt-Tests' 'TaskItRetry-Tests' 'TaskItProcesses-Tests' 'TaskItDebugger-Tests' Pragmatic);
 				group: 'debug' with: #('minimal' 'TaskItDebugger');
+
+				group: 'queueWorker'
+					with: #('TaskIt-QueueBackend');
+				
 				group: 'tests'
 					with:
 					#('default' 'TaskIt-Tests' 'TaskItRetry-Tests' 'TaskItProcesses-Tests' 'TaskItDebugger-Tests');
 				group: 'development' with: #('default' 'debug' 'tests') ];
+			
+			
 		for: #'pharo6.1.x'
 			do: [ spec
 				package: #TaskIt;
