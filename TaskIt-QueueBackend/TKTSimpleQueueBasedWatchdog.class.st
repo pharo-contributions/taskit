@@ -44,13 +44,14 @@ TKTSimpleQueueBasedWatchdog class >> startForInstances: number vmPath: aPath ima
 
 { #category : #stepping }
 TKTSimpleQueueBasedWatchdog >> checkHeartbeats [
-
-	[ stampConnection open.
+	[ [ stampConnection open.
 	stampConnection subscribeTo: configuration heartbeatQueueName.
 	stampConnection timeout: 1.	"second"
-	[ [self processHeartbeat: stampConnection readMessage] repeat ]
+	[ [ self processHeartbeat: stampConnection readMessage ] repeat ]
 		on: ConnectionTimedOut
 		do: [ "Nothing we want to timeout" ] ]
+		on: Error
+		do: [ "We will retry" ] ]
 		ensure: [ stampConnection close ]
 ]
 
@@ -129,7 +130,7 @@ TKTSimpleQueueBasedWatchdog >> purgeTerminatedInstances [
 
 	instances := instances select: [ :e | e isRunning ].
 	instances 
-		select: [ :anInst | (Time now subtractTime: anInst lastHeartbeat) asDuration asMinutes > 2  ] 
+		select: [ :anInst | (Time now subtractTime: anInst lastHeartbeat) asDuration asMinutes > 5  ] 
 		thenDo: [ :anInst | anInst terminate ].
 ]
 
