@@ -92,10 +92,13 @@ TKTSlaveRunner >> start [
 { #category : #'start-stop' }
 TKTSlaveRunner >> startBlocking [
 	
+	configuration configureConnection: connection.
 	connection open.
-	self subscribeInput.
 	
-	[self processMessage] repeat
+	self subscribeInput.
+	self subscribeBroadcast.
+	
+	[[self processMessage] repeat] on: Exception do: [ Smalltalk snapshot: false andQuit: true ]
 ]
 
 { #category : #'start-stop' }
