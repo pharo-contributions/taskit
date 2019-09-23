@@ -101,7 +101,7 @@ BaselineOfTaskIt >> baseline: spec [
 			with: [ spec repository: 'github://tesonep/ParametrizedTests' ].
 		spec package: #TaskIt with: [ spec requires: #('ParametrizedTests') ] ].
 	
-	spec for: #(#'pharo8.x') do: [ 
+	spec for: #'pharo8.x' do: [ 
 		spec package: #TaskIt ].
 
 	spec for: #(#'pharo7.x' #'pharo8.x') do: [ 
