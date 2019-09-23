@@ -152,7 +152,7 @@ BaselineOfTaskIt >> baselineForCommon: spec [
 		group: 'minimal' with: #('TaskIt' 'ActIt');
 		group: 'default'
 			with:
-			#('minimal' 'TaskItProcesses' 'TaskItRetry' 'TaskItDebugger' 'TaskIt-Tests' 'TaskItRetry-Tests' 'TaskItProcesses-Tests' 'TaskItDebugger-Tests' Pragmatic);
+			#('minimal' 'TaskItProcesses' 'TaskItRetry' 'TaskItDebugger' 'TaskIt-Tests' 'TaskItRetry-Tests' 'TaskItProcesses-Tests' 'TaskItDebugger-Tests');
 		group: 'debug' with: #('minimal' 'TaskItDebugger');
 		group: 'tests'
 			with:
