@@ -95,9 +95,17 @@ BaselineOfTaskIt class >> loadDevelopment [
 BaselineOfTaskIt >> baseline: spec [
 	<baseline>
 	
-	spec for: #('pharo7.x' 'pharo8.x') do: [ 
+	spec for: #'pharo7.x' do: [ 
+		spec 
+			baseline: 'ParametrizedTests'
+			with: [ spec repository: 'github://tesonep/ParametrizedTests' ].
+		spec package: #TaskIt with: [ spec requires: #('ParametrizedTests') ] ].
+	
+	spec for: #(#'pharo8.x') do: [ 
+		spec package: #TaskIt ].
+
+	spec for: #(#'pharo7.x' #'pharo8.x') do: [ 
 		spec
-			package: #TaskIt;
 			package: #ActIt with: [ spec requires: #('TaskIt') ];
 			package: #'TaskIt-Tests' with: [ spec requires: #('TaskIt') ];
 			package: #TaskItRetry with: [ spec requires: #('TaskIt') ];
@@ -121,14 +129,7 @@ BaselineOfTaskIt >> baseline: spec [
 			group: 'tests'
 				with:
 				#('default' 'TaskIt-Tests' 'TaskItRetry-Tests' 'TaskItProcesses-Tests' 'TaskItDebugger-Tests');
-			group: 'development' with: #('default' 'debug' 'tests') ].
-	
-	spec for: #('pharo7.x') do: [ 
-		spec 
-			baseline: 'ParametrizedTests'
-			with: [ spec repository: 'github://tesonep/ParametrizedTests' ].
-		spec package: #TaskIt  with: [ spec requires: #( ParametrizedTests) ] ].
-	
+			group: 'development' with: #('default' 'debug' 'tests') ].	
 
 	spec for: #'pharo6.1.x' do: [ 
 		spec
