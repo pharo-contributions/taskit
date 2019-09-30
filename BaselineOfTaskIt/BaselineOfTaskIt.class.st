@@ -94,62 +94,85 @@ BaselineOfTaskIt class >> loadDevelopment [
 { #category : #baseline }
 BaselineOfTaskIt >> baseline: spec [
 	<baseline>
+	
+	spec for: #'pharo7.x' do: [ 
+		self baselineForPharo7: spec ].
+	
+	spec for: #'pharo8.x' do: [ 
+		self baselineForPharo8: spec ].
+
+	spec for: #'pharo6.1.x' do: [ 
+		spec
+			package: #TaskIt;
+			package: #'TaskIt-Tests' with: [ spec requires: #('TaskIt') ];
+			package: #TaskItRetry with: [ spec requires: #('TaskIt') ];
+			package: #'TaskItRetry-Tests'
+				with: [ spec requires: #('TaskItRetry') ];
+			package: #TaskItProcesses with: [ spec requires: #('TaskIt') ];
+			package: #'TaskItProcesses-Tests'
+				with: [ spec requires: #('TaskItProcesses') ];
+			package: #TaskItBrowser
+				with: [ spec requires: #('TaskItProcesses') ];
+			package: #TaskItDebugger
+				with: [ spec requires: #('TaskItProcesses') ];
+			package: #'TaskItDebugger-Tests'
+				with: [ spec requires: #('TaskItDebugger') ].
+		spec
+			group: 'minimal' with: #('TaskIt');
+			group: 'default'
+				with:
+				#('minimal' 'TaskItProcesses' 'TaskItRetry' 'TaskItDebugger' 'TaskIt-Tests' 'TaskItRetry-Tests' 'TaskItProcesses-Tests' 'TaskItDebugger-Tests');
+			group: 'debug' with: #('minimal' 'TaskItDebugger');
+			group: 'tests'
+				with:
+				#('default' 'TaskIt-Tests' 'TaskItRetry-Tests' 'TaskItProcesses-Tests' 'TaskItDebugger-Tests');
+			group: 'development' with: #('default' 'debug' 'tests') ]
+]
+
+{ #category : #baseline }
+BaselineOfTaskIt >> baselineForCommon: spec [
+
 	spec
-		for: #('pharo7.x' 'pharo8.x')
-			do: [ spec
-				baseline: 'ParametrizedTests'
-					with: [ spec repository: 'github://tesonep/ParametrizedTests' ];
-				baseline: #Pragmatic
-					with: [ spec repository: 'github://sbragagnolo/pragmatic/src' ];
-				package: #TaskIt  with: [ spec requires: #( ParametrizedTests) ];
-				package: #ActIt with: [ spec requires: #('TaskIt') ];
-				package: #'TaskIt-Tests' with: [ spec requires: #('TaskIt') ];
-				package: #TaskItRetry with: [ spec requires: #('TaskIt') ];
-				package: #'TaskItRetry-Tests'
-					with: [ spec requires: #('TaskItRetry') ];
-				package: #TaskItProcesses with: [ spec requires: #('TaskIt') ];
-				package: #'TaskItProcesses-Tests'
-					with: [ spec requires: #('TaskItProcesses') ];
-				package: #TaskItBrowser
-					with: [ spec requires: #('TaskItProcesses') ];
-				package: #TaskItDebugger
-					with: [ spec requires: #('TaskItProcesses') ];
-				package: #'TaskItDebugger-Tests'
-					with: [ spec requires: #('TaskItDebugger') ].
-			spec
-				group: 'minimal' with: #('TaskIt' 'ActIt');
-				group: 'default'
-					with:
-					#('minimal' 'TaskItProcesses' 'TaskItRetry' 'TaskItDebugger' 'TaskIt-Tests' 'TaskItRetry-Tests' 'TaskItProcesses-Tests' 'TaskItDebugger-Tests' Pragmatic);
-				group: 'debug' with: #('minimal' 'TaskItDebugger');
-				group: 'tests'
-					with:
-					#('default' 'TaskIt-Tests' 'TaskItRetry-Tests' 'TaskItProcesses-Tests' 'TaskItDebugger-Tests');
-				group: 'development' with: #('default' 'debug' 'tests') ];
-		for: #'pharo6.1.x'
-			do: [ spec
-				package: #TaskIt;
-				package: #'TaskIt-Tests' with: [ spec requires: #('TaskIt') ];
-				package: #TaskItRetry with: [ spec requires: #('TaskIt') ];
-				package: #'TaskItRetry-Tests'
-					with: [ spec requires: #('TaskItRetry') ];
-				package: #TaskItProcesses with: [ spec requires: #('TaskIt') ];
-				package: #'TaskItProcesses-Tests'
-					with: [ spec requires: #('TaskItProcesses') ];
-				package: #TaskItBrowser
-					with: [ spec requires: #('TaskItProcesses') ];
-				package: #TaskItDebugger
-					with: [ spec requires: #('TaskItProcesses') ];
-				package: #'TaskItDebugger-Tests'
-					with: [ spec requires: #('TaskItDebugger') ].
-			spec
-				group: 'minimal' with: #('TaskIt');
-				group: 'default'
-					with:
-					#('minimal' 'TaskItProcesses' 'TaskItRetry' 'TaskItDebugger' 'TaskIt-Tests' 'TaskItRetry-Tests' 'TaskItProcesses-Tests' 'TaskItDebugger-Tests');
-				group: 'debug' with: #('minimal' 'TaskItDebugger');
-				group: 'tests'
-					with:
-					#('default' 'TaskIt-Tests' 'TaskItRetry-Tests' 'TaskItProcesses-Tests' 'TaskItDebugger-Tests');
-				group: 'development' with: #('default' 'debug' 'tests') ]
+		package: #ActIt with: [ spec requires: #('TaskIt') ];
+		package: #'TaskIt-Tests' with: [ spec requires: #('TaskIt') ];
+		package: #TaskItRetry with: [ spec requires: #('TaskIt') ];
+		package: #'TaskItRetry-Tests'
+			with: [ spec requires: #('TaskItRetry') ];
+		package: #TaskItProcesses with: [ spec requires: #('TaskIt') ];
+		package: #'TaskItProcesses-Tests'
+			with: [ spec requires: #('TaskItProcesses') ];
+		package: #TaskItBrowser
+			with: [ spec requires: #('TaskItProcesses') ];
+		package: #TaskItDebugger
+			with: [ spec requires: #('TaskItProcesses') ];
+		package: #'TaskItDebugger-Tests'
+			with: [ spec requires: #('TaskItDebugger') ].
+
+	spec
+		group: 'minimal' with: #('TaskIt' 'ActIt');
+		group: 'default'
+			with:
+			#('minimal' 'TaskItProcesses' 'TaskItRetry' 'TaskItDebugger' 'TaskIt-Tests' 'TaskItRetry-Tests' 'TaskItProcesses-Tests' 'TaskItDebugger-Tests');
+		group: 'debug' with: #('minimal' 'TaskItDebugger');
+		group: 'tests'
+			with:
+			#('default' 'TaskIt-Tests' 'TaskItRetry-Tests' 'TaskItProcesses-Tests' 'TaskItDebugger-Tests');
+		group: 'development' with: #('default' 'debug' 'tests')
+]
+
+{ #category : #baseline }
+BaselineOfTaskIt >> baselineForPharo7: spec [
+
+	spec 
+		baseline: 'ParametrizedTests'
+		with: [ spec repository: 'github://tesonep/ParametrizedTests' ].
+	spec package: #TaskIt with: [ spec requires: #('ParametrizedTests') ].
+	self baselineForCommon: spec
+]
+
+{ #category : #baseline }
+BaselineOfTaskIt >> baselineForPharo8: spec [
+
+	spec package: #TaskIt.
+	self baselineForCommon: spec
 ]
