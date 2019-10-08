@@ -14,7 +14,7 @@ Class {
 	#classInstVars : [
 		'announcer'
 	],
-	#category : #TaskItProcesses
+	#category : 'TaskItProcesses'
 }
 
 { #category : #'instance creation' }
@@ -213,12 +213,9 @@ TKTProcess >> privateCancelExecutionFromSuspendedContext: aSuspendedContext [
 
 { #category : #private }
 TKTProcess >> privateCreatePharoProcess [
-
-	process := TKTConfiguration process
+	^ process := TKTConfiguration process
 		forContext: self createContext
-		priority: self spawnPriority.
-	process name: self name.
-	^ process
+		priority: self spawnPriority
 ]
 
 { #category : #private }
@@ -272,9 +269,7 @@ TKTProcess >> resume [
 
 { #category : #running }
 TKTProcess >> run [
-	self 
-		ifRunning: [ self error: 'Process is already running' ] 
-		ifNotRunning: [ self privateCreatePharoProcess resume ]
+	self ifRunning: [ self error: 'Process is already running' ] ifNotRunning: [ self privateCreatePharoProcess resume ]
 ]
 
 { #category : #private }
