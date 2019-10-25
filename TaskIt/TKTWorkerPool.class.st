@@ -35,7 +35,8 @@ Class {
 		'busyWorkers',
 		'freeWorkers',
 		'poolWorker',
-		'workers'
+		'workers',
+		'priority'
 	],
 	#category : #'TaskIt-Worker'
 }
@@ -83,9 +84,13 @@ TKTWorkerPool >> name: aString [
 
 { #category : #schedulling }
 TKTWorkerPool >> newWorker [	
-	^ workers add: (TKTWorker new
+	| newWorker |
+	newWorker := TKTWorker new.
+	newWorker
+		priority: self priority;
 		name: self name, ' Worker #', (self size + 1) asString;
-		start)
+		start.
+	^ workers add: newWorker
 ]
 
 { #category : #accessing }
@@ -106,6 +111,17 @@ TKTWorkerPool >> printOn: aStream [
 		nextPutAll: '; freeWorkers: ';
 		print: freeWorkers size;
 		nextPutAll: ')'
+]
+
+{ #category : #accessing }
+TKTWorkerPool >> priority [
+	^priority
+]
+
+{ #category : #accessing }
+TKTWorkerPool >> priority: anInteger [ 
+	priority := anInteger.
+	workers do: [ : each | each priority: anInteger ]
 ]
 
 { #category : #schedulling }

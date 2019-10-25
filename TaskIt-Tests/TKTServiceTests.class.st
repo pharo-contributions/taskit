@@ -20,7 +20,7 @@ TKTServiceTests >> testPrioritySetAfterStart [
 	|newPriority|
 	service := TKTParameterizableService new.
 	service name: 'test service'.
-	newPriority := 30.
+	newPriority := 32.
 	self deny: service priority equals: newPriority.
 	service start.
 	service priority: newPriority.
@@ -34,7 +34,7 @@ TKTServiceTests >> testPrioritySetBeforeStart [
 	|initialPriority|
 	service := TKTParameterizableService new.
 	service name: 'test service'.
-	initialPriority := 30.
+	initialPriority := 35.
 	service priority: initialPriority.
 	self assert: service priority equals: initialPriority.
 	service start.
