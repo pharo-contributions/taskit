@@ -86,11 +86,6 @@ TKTService >> doStop [
 { #category : #initialization }
 TKTService >> initialize [
 	super initialize.
-	worker := TKTWorker new.
-	worker taskQueue: AtomicSharedQueue new.
-	recursiveTask := [ 
-			self iterateService.
-			self scheduleRecursiveTask ] asTask.
 	self stepDelay: 500 milliSeconds.
 
 ]
@@ -177,6 +172,10 @@ TKTService >> setUp [
 TKTService >> start [
 	stopRequested := false.
 	stopCallbacks := Set new.
+	self worker taskQueue: AtomicSharedQueue new.
+	recursiveTask := [ 
+			self iterateService.
+			self scheduleRecursiveTask ] asTask.
 	TKTConfiguration serviceManager startService: self
 ]
 
@@ -214,5 +213,5 @@ TKTService >> tearDown [
 
 { #category : #accessing }
 TKTService >> worker [
-	^ worker
+	^ worker ifNil: [ worker :=  TKTWorker new]
 ]
