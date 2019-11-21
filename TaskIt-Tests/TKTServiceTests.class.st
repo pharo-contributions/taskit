@@ -7,12 +7,39 @@ Class {
 	#category : 'TaskIt-Tests-Services'
 }
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 TKTServiceTests >> tearDown [
 
 	super tearDown.
 	(service notNil and: [service isRunning]) ifTrue: [
 		(service stop) waitForCompletion: 1 second ]
+]
+
+{ #category : #tests }
+TKTServiceTests >> testPrioritySetAfterStart [
+	|newPriority|
+	service := TKTParameterizableService new.
+	service name: 'test service'.
+	newPriority := 32.
+	self deny: service priority equals: newPriority.
+	service start.
+	service priority: newPriority.
+	self assert: service priority equals: newPriority.
+	self assert: service process priority equals: newPriority.
+
+]
+
+{ #category : #tests }
+TKTServiceTests >> testPrioritySetBeforeStart [
+	|initialPriority|
+	service := TKTParameterizableService new.
+	service name: 'test service'.
+	initialPriority := 35.
+	service priority: initialPriority.
+	self assert: service priority equals: initialPriority.
+	service start.
+	self assert: service process priority equals: initialPriority.
+
 ]
 
 { #category : #tests }
@@ -26,7 +53,7 @@ TKTServiceTests >> testServiceIsKilledAfterStop [
 	self deny: service isRunning.
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #tests }
 TKTServiceTests >> testServiceShouldHaveAName [
 
 	self should: [TKTService new start] raise: Error

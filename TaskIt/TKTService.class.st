@@ -131,6 +131,21 @@ TKTService >> onStoppedDo: aCallback [
 	stopCallbacks add: aCallback
 ]
 
+{ #category : #accessing }
+TKTService >> priority [
+	^ self worker priority
+]
+
+{ #category : #accessing }
+TKTService >> priority: anInteger [ 
+	self worker priority: anInteger
+]
+
+{ #category : #accessing }
+TKTService >> process [
+	^worker process
+]
+
 { #category : #starting }
 TKTService >> restart [
 	self stop.
@@ -157,10 +172,10 @@ TKTService >> setUp [
 TKTService >> start [
 	stopRequested := false.
 	stopCallbacks := Set new.
-	worker := TKTWorker new.
-	worker taskQueue: AtomicSharedQueue new.
-	recursiveTask := [ self iterateService.
-	self scheduleRecursiveTask ] asTask.
+	self worker taskQueue: AtomicSharedQueue new.
+	recursiveTask := [ 
+			self iterateService.
+			self scheduleRecursiveTask ] asTask.
 	TKTConfiguration serviceManager startService: self
 ]
 
@@ -198,5 +213,5 @@ TKTService >> tearDown [
 
 { #category : #accessing }
 TKTService >> worker [
-	^ worker
+	^ worker ifNil: [ worker :=  TKTWorker new]
 ]

@@ -31,7 +31,8 @@ Class {
 	#instVars : [
 		'process',
 		'name',
-		'exceptionHandler'
+		'exceptionHandler',
+		'priority'
 	],
 	#category : #'TaskIt-Worker'
 }
@@ -121,6 +122,17 @@ TKTWorker >> name: aString [
 	process ifNotNil: [ process name: aString ]
 ]
 
+{ #category : #accessing }
+TKTWorker >> priority [
+	^ priority
+]
+
+{ #category : #accessing }
+TKTWorker >> priority: anInteger [
+	priority := anInteger.
+	self isRunning ifTrue: [self process priority: anInteger]
+]
+
 { #category : #starting }
 TKTWorker >> privatePrepareProcess: aWorkerProcess [
 	process := aWorkerProcess.
@@ -158,7 +170,9 @@ TKTWorker >> restart [
 { #category : #starting }
 TKTWorker >> start [
 	self privatePrepareProcess: TKTConfiguration poolWorkerProcess new.
-	self privateStart
+	self privateStart.
+	self priority ifNotNil: [self process priority: self priority].
+
 ]
 
 { #category : #starting }

@@ -60,6 +60,16 @@ TKTWorkerProcess >> name: aString [
 	name := aString
 ]
 
+{ #category : #accessing }
+TKTWorkerProcess >> priority [
+	^self process priority
+]
+
+{ #category : #accessing }
+TKTWorkerProcess >> priority: anInteger [ 
+	self process priority: anInteger .
+]
+
 { #category : #'start-stop' }
 TKTWorkerProcess >> privateNextTask [
 	^ taskQueue next
