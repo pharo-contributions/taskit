@@ -198,9 +198,9 @@ TKTService >> stepService [
 { #category : #starting }
 TKTService >> stop [
 	| futureStop |
-	stopRequested := true.
 	futureStop := TKTFuture new.
 	self onStoppedDo: [ :v | futureStop deploySuccess: self ].
+	stopRequested := true.
 	TKTConfiguration serviceManager removeService: self.
 	^ futureStop
 ]
