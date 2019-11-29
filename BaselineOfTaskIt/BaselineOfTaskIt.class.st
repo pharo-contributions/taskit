@@ -94,39 +94,9 @@ BaselineOfTaskIt class >> loadDevelopment [
 { #category : #baseline }
 BaselineOfTaskIt >> baseline: spec [
 	<baseline>
-	
-	spec for: #'pharo7.x' do: [ 
-		self baselineForPharo7: spec ].
-	
-	spec for: #'pharo8.x' do: [ 
-		self baselineForPharo8: spec ].
-
-	spec for: #'pharo6.1.x' do: [ 
-		spec
-			package: #TaskIt;
-			package: #'TaskIt-Tests' with: [ spec requires: #('TaskIt') ];
-			package: #TaskItRetry with: [ spec requires: #('TaskIt') ];
-			package: #'TaskItRetry-Tests'
-				with: [ spec requires: #('TaskItRetry') ];
-			package: #TaskItProcesses with: [ spec requires: #('TaskIt') ];
-			package: #'TaskItProcesses-Tests'
-				with: [ spec requires: #('TaskItProcesses') ];
-			package: #TaskItBrowser
-				with: [ spec requires: #('TaskItProcesses') ];
-			package: #TaskItDebugger
-				with: [ spec requires: #('TaskItProcesses') ];
-			package: #'TaskItDebugger-Tests'
-				with: [ spec requires: #('TaskItDebugger') ].
-		spec
-			group: 'minimal' with: #('TaskIt');
-			group: 'default'
-				with:
-				#('minimal' 'TaskItProcesses' 'TaskItRetry' 'TaskItDebugger' 'TaskIt-Tests' 'TaskItRetry-Tests' 'TaskItProcesses-Tests' 'TaskItDebugger-Tests');
-			group: 'debug' with: #('minimal' 'TaskItDebugger');
-			group: 'tests'
-				with:
-				#('default' 'TaskIt-Tests' 'TaskItRetry-Tests' 'TaskItProcesses-Tests' 'TaskItDebugger-Tests');
-			group: 'development' with: #('default' 'debug' 'tests') ]
+	spec for: #'pharo7.x' do: [ self baselineForPharo7: spec ].
+	spec for: #'pharo8.x' do: [ self baselineForPharo8: spec ].
+	spec for: #'pharo6.1.x' do: [ self baselineForPharo6: spec ]
 ]
 
 { #category : #baseline }
@@ -158,6 +128,37 @@ BaselineOfTaskIt >> baselineForCommon: spec [
 			with:
 			#('default' 'TaskIt-Tests' 'TaskItRetry-Tests' 'TaskItProcesses-Tests' 'TaskItDebugger-Tests');
 		group: 'development' with: #('default' 'debug' 'tests')
+]
+
+{ #category : #baseline }
+BaselineOfTaskIt >> baselineForPharo6: spec [
+	spec
+		package: #TaskIt;
+		package: #'TaskIt-Tests' with: [ spec requires: #( 'TaskIt' ) ];
+		package: #TaskItRetry with: [ spec requires: #( 'TaskIt' ) ];
+		package: #'TaskItRetry-Tests'
+		with: [ spec requires: #( 'TaskItRetry' ) ];
+		package: #TaskItProcesses with: [ spec requires: #( 'TaskIt' ) ];
+		package: #'TaskItProcesses-Tests'
+		with: [ spec requires: #( 'TaskItProcesses' ) ];
+		package: #TaskItBrowser
+		with: [ spec requires: #( 'TaskItProcesses' ) ];
+		package: #TaskItDebugger
+		with: [ spec requires: #( 'TaskItProcesses' ) ];
+		package: #'TaskItDebugger-Tests'
+		with: [ spec requires: #( 'TaskItDebugger' ) ].
+	spec
+		group: 'minimal' with: #( 'TaskIt' );
+		group: 'default'
+		with: #( 'minimal' 'TaskItProcesses' 'TaskItRetry' 'TaskItDebugger'
+			   'TaskIt-Tests' 'TaskItRetry-Tests' 'TaskItProcesses-Tests'
+			   'TaskItDebugger-Tests' );
+		group: 'debug' with: #( 'minimal' 'TaskItDebugger' );
+		group: 'tests'
+		with:
+			#( 'default' 'TaskIt-Tests' 'TaskItRetry-Tests' 'TaskItProcesses-Tests'
+			   'TaskItDebugger-Tests' );
+		group: 'development' with: #( 'default' 'debug' 'tests' )
 ]
 
 { #category : #baseline }
