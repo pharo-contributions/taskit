@@ -69,3 +69,24 @@ TKTSystem class >> unzip: aFileReference into: aDirectory [
 		argument: aFileReference fullName) future
 		synchronizeTimeout: 5 minutes
 ]
+
+{ #category : #'as yet unclassified' }
+TKTSystem class >> wget: anUrl [
+	^ #wget command
+		arguments: {anUrl printString};
+		yourself
+]
+
+{ #category : #'as yet unclassified' }
+TKTSystem class >> wget: anUrl to: aDestination [
+	| destination |
+	destination := aDestination isDirectory
+		ifTrue: [ aDestination / anUrl pathSegments last ]
+		ifFalse: [ aDestination ].
+	destination exists
+		ifTrue: [ ^ self
+				error: 'The chosen destination exists! Please, ensure a unique name' ].
+	^ (self wget: anUrl)
+		option: '-O' value: destination fullName;
+		yourself
+]
