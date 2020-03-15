@@ -8,6 +8,15 @@ Class {
 }
 
 { #category : #'as yet unclassified' }
+TKTSystem class >> bash: aScript [
+	^ #bash command
+		option: '-c';
+		argument: aScript;
+		redirectStdoutAsResult;
+		yourself
+]
+
+{ #category : #'as yet unclassified' }
 TKTSystem class >> chmod [
 	^ #chmod command
 		redirectStdoutAsResult;
