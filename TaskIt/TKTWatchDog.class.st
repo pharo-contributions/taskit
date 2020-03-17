@@ -111,7 +111,7 @@ TKTWatchDog >> watchDog: aParameterPool [
 	[ aParameterPool ensureIsWorking ]
 		on: UnhandledError 
 		do: [ :err | 
-			self logCr: err printString.
+			self traceCr: err printString.
 			self
 				log:
 					'Watch dog is not watching anymore the value: '

@@ -10,7 +10,7 @@ Class {
 		'processSuspended',
 		'processResumed'
 	],
-	#category : 'TaskItProcesses-Tests'
+	#category : #'TaskItProcesses-Tests'
 }
 
 { #category : #'as yet unclassified' }
@@ -22,7 +22,7 @@ TKTInfiniteProcessTest >> deny: anObject equals: anOtherObject [
 TKTInfiniteProcessTest >> iterateForEver [
 	[ true ]
 		whileTrue: [ 20 milliSeconds wait.
-			self logCr: 'it ' ]
+			self traceCr: 'it ' ]
 ]
 
 { #category : #setup }
