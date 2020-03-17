@@ -66,10 +66,10 @@ Class {
 	#instVars : [
 		'worker',
 		'stopRequested',
-		'stopCallback',
 		'stopCallbacks',
 		'stepDelay',
-		'recursiveTask'
+		'recursiveTask',
+		'currentDelay'
 	],
 	#category : #'TaskIt-Services'
 }
@@ -99,7 +99,8 @@ TKTService >> isRunning [
 { #category : #stepping }
 TKTService >> iterateService [
 	self stepService.
-	stepDelay wait
+	currentDelay := stepDelay asDelay.
+	currentDelay wait
 ]
 
 { #category : #private }
@@ -202,6 +203,7 @@ TKTService >> stop [
 	self onStoppedDo: [ :v | futureStop deploySuccess: self ].
 	stopRequested := true.
 	TKTConfiguration serviceManager removeService: self.
+	currentDelay ifNotNil: [:delay | delay delaySemaphore signal ].
 	^ futureStop
 ]
 
