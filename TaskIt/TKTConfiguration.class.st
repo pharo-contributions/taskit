@@ -81,9 +81,9 @@ TKTConfiguration class >> processProvider: aProcessProvider during: aBlock [
 	^ self optionAt: #processProvider value: aProcessProvider during: aBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #accessing }
 TKTConfiguration class >> profile [
-	^ #Hola
+	^ self soleInstance value
 ]
 
 { #category : #accessing }
@@ -153,7 +153,7 @@ TKTConfiguration class >> serviceManager: aManager during: aBlock [
 	^ self optionAt: #serviceManager value: aManager during: aBlock
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #settings }
 TKTConfiguration class >> settingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder group: #taskitExecution)
@@ -179,10 +179,10 @@ TKTConfiguration >> basicValue [
 
 { #category : #accessing }
 TKTConfiguration >> default [
-	| configuration |
-	^ value
-		ifNil: [ self class profileNamed:TKTProfile defaultProfile.
-			self assert: value isNotNil ]
+	^ value ifNil: [
+		self class profileNamed: TKTProfile defaultProfile.
+		self assert: value isNotNil.
+		value ]
 ]
 
 { #category : #accessing }
