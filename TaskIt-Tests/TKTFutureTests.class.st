@@ -1,13 +1,47 @@
 Class {
 	#name : #TKTFutureTests,
 	#superclass : #TKTTestCase,
-	#category : 'TaskIt-Tests-Futures'
+	#category : #'TaskIt-Tests-Futures'
 }
 
 { #category : #initialization }
 TKTFutureTests >> setUp [
 	super setUp.
 	TKTConfiguration runner reset
+]
+
+{ #category : #tests }
+TKTFutureTests >> testAllFuturesFailure [
+	| allFuture result semaphore |
+	allFuture := TKTFuture all: { 
+		[ 100 atRandom milliSeconds wait. 3 ] future.
+		[ 100 atRandom milliSeconds wait. 1 ] future.
+		[ Error signal: 'Did not go too well' ] future.
+		[ 100 atRandom milliSeconds wait. 2 ] future.
+	 }.
+	semaphore := Semaphore new.
+	allFuture onFailureDo: [ :error |
+		result := error.
+		semaphore signal ].
+	semaphore wait.
+	self assert: result messageText equals: 'Did not go too well'
+]
+
+{ #category : #tests }
+TKTFutureTests >> testAllFuturesSuccess [
+	| allFuture result semaphore |
+	allFuture := TKTFuture all: { 
+		[ 100 atRandom milliSeconds wait. 3 ] future.
+		[ 100 atRandom milliSeconds wait. 1 ] future.
+		[ 100 atRandom milliSeconds wait. 4 ] future.
+		[ 100 atRandom milliSeconds wait. 2 ] future.
+	 }.
+	semaphore := Semaphore new.
+	allFuture onSuccessDo: [ :values |
+		result := values.
+		semaphore signal ].
+	semaphore wait.
+	self assert: result equals: { 3 . 1 . 4 . 2 }
 ]
 
 { #category : #'tests-callbacks' }
