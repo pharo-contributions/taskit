@@ -176,6 +176,25 @@ TKTFuture class >> all: aCollection [
 	^ future
 ]
 
+{ #category : #'as yet unclassified' }
+TKTFuture class >> any: aCollection [
+	"Create any future from aCollection of futures. The any future resolves if any of
+	the futures in aCollection resolves. The value given to the success handler is the
+	value of the future that resolved. "
+	| results future |
+	results := OrderedCollection new: aCollection size.
+	future := self new.
+	aCollection withIndexDo: [ :each :index | 
+		each onSuccessDo: [ :value | 
+			"At the moment just ignore every running future if the any has been resolved"
+			future isFinished ifFalse: [  
+				future deploySuccess: value  ] ].
+		each onFailureDo: [ :fail | 
+			future isFinished ifFalse: [
+				future deployFailure: fail ] ] ].
+	^ future
+]
+
 { #category : #'instance-creation' }
 TKTFuture class >> doing: aBlock [
 

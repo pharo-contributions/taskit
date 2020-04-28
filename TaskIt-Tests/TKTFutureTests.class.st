@@ -44,6 +44,40 @@ TKTFutureTests >> testAllFuturesSuccess [
 	self assert: result equals: { 3 . 1 . 4 . 2 }
 ]
 
+{ #category : #tests }
+TKTFutureTests >> testAnyFuturesFailure [
+	| allFuture result semaphore |
+	allFuture := TKTFuture any: { 
+		[ 100 + 100 atRandom milliSeconds wait. 3 ] future.
+		[ 100 + 100 atRandom milliSeconds wait. 1 ] future.
+		[ Error signal: 'Did not go too well' ] future.
+		[ 100 + 100 atRandom milliSeconds wait. 2 ] future.
+	 }.
+	semaphore := Semaphore new.
+	allFuture onFailureDo: [ :error |
+		result := error.
+		semaphore signal ].
+	semaphore wait.
+	self assert: result messageText equals: 'Did not go too well'
+]
+
+{ #category : #tests }
+TKTFutureTests >> testAnyFuturesSuccess [
+	| allFuture result semaphore |
+	allFuture := TKTFuture any: { 
+		[ 100 atRandom milliSeconds wait. 3 ] future.
+		[ 100 atRandom milliSeconds wait. 1 ] future.
+		[ 100 atRandom milliSeconds wait. 4 ] future.
+		[ 100 atRandom milliSeconds wait. 2 ] future.
+	 }.
+	semaphore := Semaphore new.
+	allFuture onSuccessDo: [ :value |
+		result := value.
+		semaphore signal ].
+	semaphore wait.
+	self assert: ({ 3 . 1 . 4 . 2 } includes: result)
+]
+
 { #category : #'tests-callbacks' }
 TKTFutureTests >> testCannotDeployFailureTwiceIntoFuture [
 
