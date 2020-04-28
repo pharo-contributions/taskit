@@ -183,7 +183,7 @@ TKTFuture class >> any: aCollection [
 	value of the future that resolved. "
 	| future |
 	future := self new.
-	aCollection withIndexDo: [ :each :index | 
+	aCollection do: [ :each | 
 		each onSuccessDo: [ :value | 
 			"At the moment just ignore every running future if the any has been resolved"
 			future isFinished ifFalse: [  
