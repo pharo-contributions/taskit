@@ -181,8 +181,7 @@ TKTFuture class >> any: aCollection [
 	"Create any future from aCollection of futures. The any future resolves if any of
 	the futures in aCollection resolves. The value given to the success handler is the
 	value of the future that resolved. "
-	| results future |
-	results := OrderedCollection new: aCollection size.
+	| future |
 	future := self new.
 	aCollection withIndexDo: [ :each :index | 
 		each onSuccessDo: [ :value | 
