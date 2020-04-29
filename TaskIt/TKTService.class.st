@@ -69,7 +69,7 @@ Class {
 		'stopCallbacks',
 		'stepDelay',
 		'recursiveTask',
-		'currentDelay'
+		'iterationSemaphore'
 	],
 	#category : #'TaskIt-Services'
 }
@@ -99,8 +99,8 @@ TKTService >> isRunning [
 { #category : #stepping }
 TKTService >> iterateService [
 	self stepService.
-	currentDelay := stepDelay asDelay.
-	currentDelay wait
+	iterationSemaphore := Semaphore new.
+	iterationSemaphore wait: stepDelay
 ]
 
 { #category : #private }
@@ -170,6 +170,11 @@ TKTService >> setUp [
 ]
 
 { #category : #starting }
+TKTService >> signalIterationNow [
+	^ iterationSemaphore ifNotNil: [ :s | s signal ]
+]
+
+{ #category : #starting }
 TKTService >> start [
 	stopRequested := false.
 	stopCallbacks := Set new.
@@ -186,8 +191,8 @@ TKTService >> stepDelay [
 ]
 
 { #category : #starting }
-TKTService >> stepDelay: aTimeDelay [
-	stepDelay := aTimeDelay 
+TKTService >> stepDelay: aDuration [
+	stepDelay := aDuration
 ]
 
 { #category : #stepping }
@@ -203,7 +208,7 @@ TKTService >> stop [
 	self onStoppedDo: [ :v | futureStop deploySuccess: self ].
 	stopRequested := true.
 	TKTConfiguration serviceManager removeService: self.
-	currentDelay ifNotNil: [:delay | delay delaySemaphore signal ].
+	self signalIterationNow.
 	^ futureStop
 ]
 
