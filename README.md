@@ -4,10 +4,10 @@
 >Anything that can go wrong, will go wrong. -- Murphy's Law
 
 Master Build 
-[![Build Status](https://travis-ci.org/sbragagnolo/taskit.svg?branch=master)](https://travis-ci.org/sbragagnolo/taskit)
+[![Build Status](https://travis-ci.org/pharo-contributions/taskit.svg?branch=master)](https://travis-ci.org/pharo-contributions/taskit)
 
 Dev Build 
-[![Build Status](https://travis-ci.org/sbragagnolo/taskit.svg?branch=dev-1.1)](https://travis-ci.org/sbragagnolo/taskit)
+[![Build Status](https://travis-ci.org/pharo-contributions/taskit.svg?branch=dev-1.1)](https://travis-ci.org/pharo-contributions/taskit)
 
 Expressing and managing concurrent computations is indeed a concern of importance to develop applications that scale. A web application may want to use different processes for each of its incoming requests. Or maybe it wants to use a "thread pool" in some cases. In other case, our desktop application may want to send computations to a worker to not block the UI thread. 
 
@@ -29,7 +29,7 @@ Current stable version of taskit can be downloaded using metacello as follows:
 ```smalltalk
 Metacello new
   baseline: 'TaskIt';
-  repository: 'github://sbragagnolo/taskit';
+  repository: 'github://pharo-contributions/taskit';
   load.
 ```
 
@@ -38,7 +38,7 @@ If you want a specific release such as v1.0, you can load the associated tag as 
 ```smalltalk
 Metacello new
   baseline: 'TaskIt';
-  repository: 'github://sbragagnolo/taskit:v1.0';
+  repository: 'github://pharo-contributions/taskit:v1.0';
   load.
 ```
 
@@ -47,7 +47,7 @@ Otherwise, if you want the latest development version, take a look at the develo
 ```smalltalk
 Metacello new
   baseline: 'TaskIt';
-  repository: 'github://sbragagnolo/taskit:dev-1.1';
+  repository: 'github://pharo-contributions/taskit:dev-1.1';
   load.
 ```
 
@@ -59,7 +59,7 @@ Add the following in your metacello configuration or baseline specifying the des
 ```smalltalk
 spec
     baseline: 'TaskIt'
-    with: [ spec repository: 'github://sbragagnolo/taskit:v1.0' ]
+    with: [ spec repository: 'github://pharo-contributions/taskit:v1.0' ]
 ```
 
 #### For developers
@@ -735,12 +735,12 @@ Finally, to allow the user to use just one interface. There is a second tab that
    The TaskIt browser is based on announcements. This fact allows the interface to be dynamic, having allways fresh information, without needing a pulling process, as in the native process browser. 
    
 
-[image-menu]: https://github.com/sbragagnolo/taskit/blob/master/images/AccessMenu.png "MenuTaskit"
-[image-main]: https://github.com/sbragagnolo/taskit/blob/master/images/FirstScreen.png "Main tab"
-[image-process]: https://github.com/sbragagnolo/taskit/blob/master/images/ProcessMenu.png "Process menu"
-[image-receiver]: https://github.com/sbragagnolo/taskit/blob/master/images/ReceiverInspector.png "Receiver menu"
-[image-selector]: https://github.com/sbragagnolo/taskit/blob/master/images/SelectorInspection.png "Selector (method) menu"
-[image-system]: https://github.com/sbragagnolo/taskit/blob/master/images/SystemScreen.png "System process tab"
+[image-menu]: https://github.com/pharo-contributions/taskit/blob/master/images/AccessMenu.png "MenuTaskit"
+[image-main]: https://github.com/pharo-contributions/taskit/blob/master/images/FirstScreen.png "Main tab"
+[image-process]: https://github.com/pharo-contributions/taskit/blob/master/images/ProcessMenu.png "Process menu"
+[image-receiver]: https://github.com/pharo-contributions/taskit/blob/master/images/ReceiverInspector.png "Receiver menu"
+[image-selector]: https://github.com/pharo-contributions/taskit/blob/master/images/SelectorInspection.png "Selector (method) menu"
+[image-system]: https://github.com/pharo-contributions/taskit/blob/master/images/SystemScreen.png "System process tab"
 
 
 ## Debugger
@@ -750,7 +750,7 @@ TaskIt comes with a debugger extension for Pharo that can be installed by loadin
 ```smalltalk
 Metacello new
   baseline: 'TaskIt';
-  repository: 'github://sbragagnolo/taskit';
+  repository: 'github://pharo-contributions/taskit';
   load: 'debug'.
 ```
 
