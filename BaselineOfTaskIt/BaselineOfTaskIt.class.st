@@ -167,7 +167,7 @@ BaselineOfTaskIt >> baselineForPharo7: spec [
 
 	spec 
 		baseline: 'ParametrizedTests'
-		with: [ spec repository: 'github://tesonep/ParametrizedTests' ].
+		with: [ spec repository: 'github://tesonep/ParametrizedTests/src' ].
 	spec package: #TaskIt with: [ spec requires: #('ParametrizedTests') ].
 	self baselineForCommon: spec
 ]
