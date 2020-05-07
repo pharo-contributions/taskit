@@ -162,7 +162,7 @@ TKTFuture class >> all: aCollection [
 	"Create a all future from aCollection of futures. The all future resolves if all of
 	the futures in aCollection resolve. The values given to the success handler are the
 	values of the futures in aCollection in the same order they appear in aCollection. The
-	first future in aCollection that fails marks this future as failed"
+	first future in aCollection that fails marks this future as failed."
 	| results future |
 	results := OrderedCollection new: aCollection size.
 	future := self new.
