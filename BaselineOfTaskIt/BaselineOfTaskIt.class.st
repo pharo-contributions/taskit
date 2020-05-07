@@ -30,7 +30,7 @@ BaselineOfTaskIt class >> catalogContactInfo [
 
 { #category : #catalog }
 BaselineOfTaskIt class >> catalogDescription [
-	^ 'Task & Jobs oriented multiprocessing framework. Check for nicely showed documentation at https://github.com/sbragagnolo/taskit-2/ :)'
+	^ 'Task & Jobs oriented multiprocessing framework. Check for nicely showed documentation at https://github.com/pharo-contributions/taskit/ :)'
 ]
 
 { #category : #catalog }
