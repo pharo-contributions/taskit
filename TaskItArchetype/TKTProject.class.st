@@ -20,7 +20,7 @@ TKTProject class >> baselineTests [
 	^ TKTProject new
 		name: #BaselineTest;
 		kind: #BaselineOf;
-		repository: 'github://sbragagnolo/BaselineTest';
+		repository: 'github://pharo-contributions/BaselineTest';
 		yourself
 ]
 
