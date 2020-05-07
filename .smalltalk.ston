@@ -3,7 +3,8 @@ SmalltalkCISpec {
     SCIMetacelloLoadSpec {
       #baseline : 'ForkIt',
       #directory : '',
-      #platforms : [ #pharo ]
+      #platforms : [ #pharo ],
+      #onConflict: #useLoaded
     }
   ],
   #testing : {
