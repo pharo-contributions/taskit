@@ -11,7 +11,7 @@ BaselineOfTaskItShell >> baseline: spec [
 		for: #common
 		do: [ spec
 				baseline: #TaskIt
-					with: [ spec repository: 'github://sbragagnolo/taskit' ];
+					with: [ spec repository: 'github://pharo-contributions/taskit' ];
 				baseline: #OSSubprocess
 					with: [ spec
 						repository: 'github://marianopeck/OSSubprocess:master/repository' ];
