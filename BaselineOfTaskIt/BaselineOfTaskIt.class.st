@@ -102,9 +102,7 @@ BaselineOfTaskIt >> baseline: spec [
 
 { #category : #baseline }
 BaselineOfTaskIt >> baselineForCommon: spec [
-
 	spec
-		package: #ActIt with: [ spec requires: #('TaskIt') ];
 		package: #'TaskIt-Tests' with: [ spec requires: #('TaskIt') ];
 		package: #TaskItRetry with: [ spec requires: #('TaskIt') ];
 		package: #'TaskItRetry-Tests'
@@ -118,9 +116,8 @@ BaselineOfTaskIt >> baselineForCommon: spec [
 			with: [ spec requires: #('TaskItProcesses') ];
 		package: #'TaskItDebugger-Tests'
 			with: [ spec requires: #('TaskItDebugger') ].
-
 	spec
-		group: 'minimal' with: #('TaskIt' 'ActIt');
+		group: 'minimal' with: #('TaskIt');
 		group: 'default'
 			with:
 			#('minimal' 'TaskItProcesses' 'TaskItRetry' 'TaskItDebugger' 'TaskIt-Tests' 'TaskItRetry-Tests' 'TaskItProcesses-Tests' 'TaskItDebugger-Tests');
