@@ -8,7 +8,6 @@ environment:
   CI: true
   matrix:
     - SMALLTALK: Pharo-alpha
-    - SMALLTALK: Pharo-8.0
     - SMALLTALK: Pharo-7.0
     - SMALLTALK: Pharo-6.1
 
