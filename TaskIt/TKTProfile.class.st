@@ -26,37 +26,8 @@ Class {
 
 { #category : #'instance creation' }
 TKTProfile class >> defaultProfile [
-	^ #development
-]
 
-{ #category : #'instance creation' }
-TKTProfile class >> development [
-	<profile: #development>
-	^ TKTProfile
-		on:
-			{(#debugging -> true).
-			(#runner -> TKTCommonQueueWorkerPool createDefault).
-			(#poolWorkerProcess -> TKTDebuggWorkerProcess).
-			(#process -> TKTRawProcess).
-			(#watchDog -> TKTWatchDog onDuty).
-			(#errorHandler -> TKTDebuggerExceptionHandler).
-			(#processProvider -> TKTTaskItProcessProvider new).
-			(#serviceManager -> TKTServiceManager new)} asDictionary
-]
-
-{ #category : #'instance creation' }
-TKTProfile class >> lightweight [
-	<profile: #lightweight>
-	^ TKTProfile
-		on:
-			{(#debugging -> false).
-			(#runner -> TKTWorker createDefault ).
-			(#poolWorkerProcess -> TKTWorkerProcess).
-			(#process -> Process).
-			(#errorHandler -> TKTExceptionHandler).
-			(#watchDog -> TKTWatchDog onDuty).
-			(#processProvider -> TKTTaskItProcessProvider new).
-			(#serviceManager -> TKTServiceManager new)} asDictionary
+	^ #production
 ]
 
 { #category : #'instance creation' }
@@ -86,21 +57,6 @@ TKTProfile class >> production [
 TKTProfile class >> profiles [
 	^ (Pragma allNamed: #profile: from: self class to: ProtoObject) asOrderedCollection
 		collect: [ :c | c arguments first -> (MessageSend receiver: self selector: c method selector) ]
-]
-
-{ #category : #'instance creation' }
-TKTProfile class >> test [
-	<profile: #test>
-	^ TKTProfile
-		on:
-			{(#debugging -> false).
-			(#runner -> TKTCommonQueueWorkerPool createDefault).
-			(#poolWorkerProcess -> TKTWorkerProcess).
-			(#process -> Process).
-			(#errorHandler -> TKTExceptionHandler).
-			(#watchDog -> TKTWatchDog onDuty).
-			(#processProvider -> TKTTaskItProcessProvider new).
-			(#serviceManager -> TKTServiceManager new)} asDictionary
 ]
 
 { #category : #accessing }
