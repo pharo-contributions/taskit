@@ -14,7 +14,8 @@ TKTUIProcessTaskRunner >> isUIRunner [
 
 { #category : #schedulling }
 TKTUIProcessTaskRunner >> scheduleTaskExecution: aTaskExecution [
-	WorldState addDeferredUIMessage: [ self executeTask: aTaskExecution ]
+
+	UIManager default defer: [ self executeTask: aTaskExecution ]
 ]
 
 { #category : #polimorfsms }
