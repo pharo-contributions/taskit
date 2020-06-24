@@ -30,7 +30,7 @@ BaselineOfTaskIt class >> catalogContactInfo [
 
 { #category : #catalog }
 BaselineOfTaskIt class >> catalogDescription [
-	^ 'Task & Jobs oriented multiprocessing framework. Check for nicely showed documentation at https://github.com/sbragagnolo/taskit-2/ :)'
+	^ 'Task & Jobs oriented multiprocessing framework. Check for nicely showed documentation at https://github.com/pharo-contributions/taskit/ :)'
 ]
 
 { #category : #catalog }
@@ -102,6 +102,7 @@ BaselineOfTaskIt >> baseline: spec [
 
 { #category : #baseline }
 BaselineOfTaskIt >> baselineForCommon: spec [
+
 	spec
 		package: #'TaskIt-Tests' with: [ spec requires: #('TaskIt') ];
 		package: #TaskItRetry with: [ spec requires: #('TaskIt') ];
@@ -116,6 +117,7 @@ BaselineOfTaskIt >> baselineForCommon: spec [
 			with: [ spec requires: #('TaskItProcesses') ];
 		package: #'TaskItDebugger-Tests'
 			with: [ spec requires: #('TaskItDebugger') ].
+
 	spec
 		group: 'minimal' with: #('TaskIt');
 		group: 'default'
@@ -164,7 +166,7 @@ BaselineOfTaskIt >> baselineForPharo7: spec [
 
 	spec 
 		baseline: 'ParametrizedTests'
-		with: [ spec repository: 'github://tesonep/ParametrizedTests' ].
+		with: [ spec repository: 'github://tesonep/ParametrizedTests/src' ].
 	spec package: #TaskIt with: [ spec requires: #('ParametrizedTests') ].
 	self baselineForCommon: spec
 ]
