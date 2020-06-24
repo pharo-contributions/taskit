@@ -227,7 +227,7 @@ TKTFuture >> collect: aBlockClosure [
 
 { #category : #deployment }
 TKTFuture >> deployFailure: aValue [
-	self installFutureResult: (TKTFutureFailure new value: aValue).
+	self installResult: (TKTFutureFailure new value: aValue).
 	exceptionCallbacks
 		do: [ :each | self scheduleCallbackTask: [ each value: aValue ] ].
 	valueSemaphore signal
@@ -235,7 +235,7 @@ TKTFuture >> deployFailure: aValue [
 
 { #category : #deployment }
 TKTFuture >> deploySuccess: aValue [
-	self installFutureResult: (TKTFutureSuccess new value: aValue).
+	self installResult: (TKTFutureSuccess new value: aValue).
 	resultCallbacks
 		do: [ :each | self scheduleCallbackTask: [ each value: aValue ] ].
 	valueSemaphore signal
@@ -301,7 +301,7 @@ TKTFuture >> initialize [
 ]
 
 { #category : #private }
-TKTFuture >> installFutureResult: aResult [
+TKTFuture >> installResult: aResult [
 
 	result isFinished
 		ifTrue: [ self error: 'cannot deploy twice in same future' ].
