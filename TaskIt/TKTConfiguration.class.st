@@ -179,10 +179,11 @@ TKTConfiguration >> basicValue [
 
 { #category : #accessing }
 TKTConfiguration >> default [
-	| configuration |
-	^ value
-		ifNil: [ self class profileNamed:TKTProfile defaultProfile.
-			self assert: value isNotNil ]
+	
+	^ value ifNil: [ 
+			self class profile: TKTProfile defaultProfile.
+			value ifNil: [ 
+				self error: 'No default profile available.' ] ]
 ]
 
 { #category : #accessing }

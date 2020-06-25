@@ -27,7 +27,7 @@ Class {
 { #category : #'accessing profiles' }
 TKTProfile class >> defaultProfile [
 
-	^ (self allSubclasses sorted: [ :a | a priority ] descending) first
+	^ ((self allSubclasses sorted: [ :a | a priority ] descending) first) new
 ]
 
 { #category : #'instance creation' }
