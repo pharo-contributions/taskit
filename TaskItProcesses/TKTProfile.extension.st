@@ -13,10 +13,3 @@ TKTProfile class >> lightweight [
 	
 	^ TKTLightweigthProfile new
 ]
-
-{ #category : #'*TaskItProcesses' }
-TKTProfile class >> test [
-	<profile: #test>
-	
-	^ TKTTestProfile new
-]
