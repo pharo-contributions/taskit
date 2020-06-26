@@ -13,6 +13,12 @@ TKTTestProfile class >> priority [
 	^ -1
 ]
 
+{ #category : #accessing }
+TKTTestProfile class >> profileName [
+
+	^ #test
+]
+
 { #category : #private }
 TKTTestProfile class >> profileValues [
 
