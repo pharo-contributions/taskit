@@ -13,6 +13,12 @@ TKTDevelopmentProfile class >> priority [
 	^ 100
 ]
 
+{ #category : #accessing }
+TKTDevelopmentProfile class >> profileName [
+	
+	^ #development
+]
+
 { #category : #private }
 TKTDevelopmentProfile class >> profileValues [
 

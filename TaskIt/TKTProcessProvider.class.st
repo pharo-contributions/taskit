@@ -7,12 +7,12 @@ Class {
 	#category : #'TaskIt-Kernel'
 }
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 TKTProcessProvider class >> createProcessDoing: aValuable [
 	^ self error: 'Use TKTConfiguration processProvider createProcessDoing: aValuable '
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 TKTProcessProvider class >> createProcessDoing: aValuable named: aName [
 	^ self error: 'Use TKTConfiguration processProvider createProcessDoing: aValuable named: aName'
 ]
@@ -28,19 +28,19 @@ TKTProcessProvider class >> current: aProcessProvider [
 	^ self error: 'Use a configuration'
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 TKTProcessProvider >> createProcessDoing: aValuable [
 
 	self subclassResponsibility
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 TKTProcessProvider >> createProcessDoing: aValuable named: aName [
 
 	self subclassResponsibility
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 TKTProcessProvider >> isDebuggingCompatible [
 	^ false
 ]

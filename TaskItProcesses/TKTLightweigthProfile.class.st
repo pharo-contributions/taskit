@@ -13,6 +13,12 @@ TKTLightweigthProfile class >> priority [
 	^ -1
 ]
 
+{ #category : #accessing }
+TKTLightweigthProfile class >> profileName [
+	
+	^ #lightweigth
+]
+
 { #category : #private }
 TKTLightweigthProfile class >> profileValues [
 

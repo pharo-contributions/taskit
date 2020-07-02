@@ -1,22 +1,22 @@
 Class {
-	#name : #TKTParameterizedServiceTests,
+	#name : #TKTParameterizedServiceTest,
 	#superclass : #TKTTestCase,
 	#instVars : [
 		'service'
 	],
-	#category : 'TaskIt-Tests-Services'
+	#category : #'TaskIt-Tests-Services'
 }
 
-{ #category : #'as yet unclassified' }
-TKTParameterizedServiceTests >> tearDown [
+{ #category : #running }
+TKTParameterizedServiceTest >> tearDown [
 
-	super tearDown.
 	(service notNil and: [service isRunning]) ifTrue: [
-		(service stop) waitForCompletion: 1 second ]
+		(service stop) waitForCompletion: 1 second ].
+	super tearDown	
 ]
 
-{ #category : #'as yet unclassified' }
-TKTParameterizedServiceTests >> testServiceExecutesStartUpOnStart [
+{ #category : #tests }
+TKTParameterizedServiceTest >> testServiceExecutesStartUpOnStart [
 
 	| started |
 	started := false.
@@ -31,7 +31,7 @@ TKTParameterizedServiceTests >> testServiceExecutesStartUpOnStart [
 ]
 
 { #category : #tests }
-TKTParameterizedServiceTests >> testServiceExecutesTearDownOnStop [
+TKTParameterizedServiceTest >> testServiceExecutesTearDownOnStop [
 
 	| stopped |
 	stopped := false.
@@ -45,7 +45,7 @@ TKTParameterizedServiceTests >> testServiceExecutesTearDownOnStop [
 ]
 
 { #category : #tests }
-TKTParameterizedServiceTests >> testServiceRunsAfterStart [
+TKTParameterizedServiceTest >> testServiceRunsAfterStart [
 
 	| run |
 	run := false.
