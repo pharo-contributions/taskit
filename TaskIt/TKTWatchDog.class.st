@@ -23,6 +23,13 @@ TKTWatchDog class >> onDuty [
 			onDuty ]
 ]
 
+{ #category : #reseting }
+TKTWatchDog class >> reset [
+	
+	onDuty ifNotNil: [ onDuty stop ].
+	onDuty := nil.
+]
+
 { #category : #initialization }
 TKTWatchDog >> cleanUpImageToStart [
 	values removeAll
@@ -58,6 +65,11 @@ TKTWatchDog >> initialize [
 { #category : #initialization }
 TKTWatchDog >> name [
 	^ 'WatchDog (' , id asString , ')'
+]
+
+{ #category : #'as yet unclassified' }
+TKTWatchDog >> pharoProcess [
+	^ worker process process
 ]
 
 { #category : #initialization }
