@@ -194,13 +194,13 @@ TKTFuture class >> any: aCollection [
 	^ future
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 TKTFuture class >> doing: aBlock [
 
 	^ TKTConfiguration runner future: aBlock
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 TKTFuture class >> fromCollectionOfFutures: aCollectionOfFutures [
 
 	^ self
@@ -208,13 +208,13 @@ TKTFuture class >> fromCollectionOfFutures: aCollectionOfFutures [
 		with: [ :acum :each | acum add: each. acum ] 
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 TKTFuture class >> of: aValue [
 
 	^ self new deploySuccess: aValue
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 TKTFuture class >> reduceCollectionOfFutures: aCollectionOfFutures with: aBlock [
 
 	^ aCollectionOfFutures
@@ -264,7 +264,7 @@ TKTFuture >> collect: aBlockClosure [
 
 { #category : #deployment }
 TKTFuture >> deployFailure: aValue [
-	self installFutureResult: (TKTFutureFailure new value: aValue).
+	self installResult: (TKTFutureFailure new value: aValue).
 	exceptionCallbacks
 		do: [ :each | self scheduleCallbackTask: [ each value: aValue ] ].
 	valueSemaphore signal
@@ -272,7 +272,7 @@ TKTFuture >> deployFailure: aValue [
 
 { #category : #deployment }
 TKTFuture >> deploySuccess: aValue [
-	self installFutureResult: (TKTFutureSuccess new value: aValue).
+	self installResult: (TKTFutureSuccess new value: aValue).
 	resultCallbacks
 		do: [ :each | self scheduleCallbackTask: [ each value: aValue ] ].
 	valueSemaphore signal
@@ -338,7 +338,7 @@ TKTFuture >> initialize [
 ]
 
 { #category : #private }
-TKTFuture >> installFutureResult: aResult [
+TKTFuture >> installResult: aResult [
 
 	result isFinished
 		ifTrue: [ self error: 'cannot deploy twice in same future' ].
