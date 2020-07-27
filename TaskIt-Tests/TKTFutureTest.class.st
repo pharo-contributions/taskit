@@ -11,7 +11,7 @@ TKTFutureTest >> setUp [
 ]
 
 { #category : #tests }
-TKTFutureTests >> testAllFuturesFailure [
+TKTFutureTest >> testAllFuturesFailure [
 	| allFuture result semaphore successCalled |
 	allFuture := TKTFuture all: { 
 		[ 100 atRandom milliSeconds wait. 3 ] future.
@@ -33,7 +33,7 @@ TKTFutureTests >> testAllFuturesFailure [
 ]
 
 { #category : #tests }
-TKTFutureTests >> testAllFuturesSuccess [
+TKTFutureTest >> testAllFuturesSuccess [
 	| allFuture result semaphore |
 	allFuture := TKTFuture all: { 
 		[ 100 atRandom milliSeconds wait. 3 ] future.
@@ -50,7 +50,7 @@ TKTFutureTests >> testAllFuturesSuccess [
 ]
 
 { #category : #tests }
-TKTFutureTests >> testAnyFuturesFailure [
+TKTFutureTest >> testAnyFuturesFailure [
 	| allFuture result semaphore |
 	allFuture := TKTFuture any: { 
 		[ 100 + 100 atRandom milliSeconds wait. 3 ] future.
@@ -67,7 +67,7 @@ TKTFutureTests >> testAnyFuturesFailure [
 ]
 
 { #category : #tests }
-TKTFutureTests >> testAnyFuturesSuccess [
+TKTFutureTest >> testAnyFuturesSuccess [
 	| allFuture result semaphore |
 	allFuture := TKTFuture any: { 
 		[ 100 atRandom milliSeconds wait. 3 ] future.
