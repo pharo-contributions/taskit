@@ -273,6 +273,40 @@ TKTFuture >> firstCompleteOf: anotherFuture [
 	^ future
 ]
 
+{ #category : #callback }
+TKTFuture >> firstSuccessfulCompleteOf: anotherFuture [
+	| finished returnFuture oneFinished |
+	oneFinished := false.
+	finished := false.
+	returnFuture := TKTFuture new.
+	returnFuture runner: runner.
+	self
+		onSuccessDo: [ :v | 
+			finished
+				ifFalse: [ finished := true.
+					returnFuture deploySuccess: v ] ].
+	self
+		onFailureDo: [ :v | 
+			finished
+				ifFalse: [ oneFinished
+						ifTrue: [ finished := true.
+							returnFuture deployFailure: v freeze ]
+						ifFalse: [ oneFinished := true ] ] ].
+	anotherFuture
+		onSuccessDo: [ :v | 
+			finished
+				ifFalse: [ finished := true.
+					returnFuture deploySuccess: v ] ].
+	anotherFuture
+		onFailureDo: [ :v | 
+			finished
+				ifFalse: [ oneFinished
+						ifTrue: [ finished := true.
+							returnFuture deployFailure: v freeze ]
+						ifFalse: [ oneFinished := true ] ]  ].
+	^ returnFuture
+]
+
 { #category : #combinators }
 TKTFuture >> flatCollect: aBlockClosure [ 
 	
