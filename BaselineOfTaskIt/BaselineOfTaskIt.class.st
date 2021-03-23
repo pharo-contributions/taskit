@@ -190,7 +190,7 @@ BaselineOfTaskIt >> baselineForPharo9: spec [
 	self baselineForCommon: spec.
 
 	"Override group without the TaskItDebugger package (and tests)."
-	spec group: 'default' with: #(
+	spec group: 'default' overrides: #(
 		'core' 
 		'TaskItProcesses' 
 		'TaskItRetry' 
