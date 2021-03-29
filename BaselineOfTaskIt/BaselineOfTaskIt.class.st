@@ -187,5 +187,15 @@ BaselineOfTaskIt >> baselineForPharo8: spec [
 BaselineOfTaskIt >> baselineForPharo9: spec [
 
 	spec package: #TaskIt.
-	self baselineForCommon: spec
+	self baselineForCommon: spec.
+
+	"Override group without the TaskItDebugger package (and tests)."
+	spec group: 'default' overrides: #(
+		'core' 
+		'TaskItProcesses' 
+		'TaskItRetry' 
+		'TaskIt-Tests' 
+		'TaskItRetry-Tests' 
+		'TaskItProcesses-Tests').
+
 ]
