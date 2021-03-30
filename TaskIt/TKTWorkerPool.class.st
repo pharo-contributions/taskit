@@ -84,12 +84,12 @@ TKTWorkerPool >> name: aString [
 { #category : #schedulling }
 TKTWorkerPool >> newWorker [	
 	| newWorker |
-	newWorker := TKTWorker new.
-	newWorker
+	newWorker := TKTWorker new
 		priority: self priority;
 		name: self name, ' Worker #', (self size + 1) asString;
 		start.
-	^ workers add: newWorker
+	workers add: newWorker.
+	^ newWorker
 ]
 
 { #category : #accessing }
