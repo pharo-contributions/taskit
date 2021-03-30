@@ -135,8 +135,7 @@ TKTWorker >> priority: anInteger [
 
 { #category : #starting }
 TKTWorker >> privatePrepareProcess: aWorkerProcess [
-	process := aWorkerProcess.
-	process
+	process := aWorkerProcess
 		taskQueue: queue;
 		name: name;
 		yourself.
