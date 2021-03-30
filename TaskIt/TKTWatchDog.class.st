@@ -120,16 +120,13 @@ TKTWatchDog >> watch: aValue [
 
 { #category : #initialization }
 TKTWatchDog >> watchDog: aParameterPool [
+
 	[ aParameterPool ensureIsWorking ]
 		on: UnhandledError 
 		do: [ :err | 
 			self traceCr: err printString.
-			self
-				log:
-					'Watch dog is not watching anymore the value: '
-						,
-							(values remove: aParameterPool ifAbsent: [ aParameterPool ])
-								printString ]
+			self trace: 'Watch dog is not watching anymore the value: ',
+				(values remove: aParameterPool ifAbsent: [ aParameterPool ]) printString ]
 ]
 
 { #category : #initialization }
