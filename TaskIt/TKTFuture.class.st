@@ -218,7 +218,7 @@ TKTFuture class >> of: aValue [
 TKTFuture class >> reduceCollectionOfFutures: aCollectionOfFutures with: aBlock [
 
 	^ aCollectionOfFutures
-		inject: (TKTFuture of: OrderedCollection new)
+		inject: (self of: OrderedCollection new)
 		into: [ :facum :feach | facum flatCollect: [ :acum | 
 				feach collect: [ :each | aBlock value: acum value: each ] ] ]
 ]
@@ -239,7 +239,7 @@ TKTFuture >> addSuccessCallback: aBlockClosure [
 TKTFuture >> andThen: aBlockClosure [ 
 	
 	| future |
-	future := TKTFuture new.
+	future := self newWithSameRunner.
 	self onSuccessDo: [ :got | 
 		[ aBlockClosure value: got ]
 			on: Error do: [ :e | "Nothing?" ].
@@ -250,9 +250,9 @@ TKTFuture >> andThen: aBlockClosure [
 
 { #category : #combinators }
 TKTFuture >> collect: aBlockClosure [
+
 	| future |
-	future := TKTFuture new.
-	future runner: runner.
+	future := self newWithSameRunner.
 	self
 		onSuccessDo: [ :got | 
 			[ future deploySuccess: (aBlockClosure value: got) ]
@@ -289,8 +289,7 @@ TKTFuture >> firstCompleteOf: anotherFuture [
 	
 	| finished future |
 	finished := false.
-	future := TKTFuture new.
-	future runner: runner.
+	future := self newWithSameRunner.
 	self onSuccessDo: [ :v |
 		finished ifFalse: [
 			finished := true.
@@ -314,8 +313,7 @@ TKTFuture >> firstCompleteOf: anotherFuture [
 TKTFuture >> flatCollect: aBlockClosure [ 
 	
 	| future |
-	future := TKTFuture new.
-	future runner: runner.
+	future := self newWithSameRunner.
 	self onSuccessDo: [ :got | [(aBlockClosure value: got)
 		onSuccessDo: [ :got2 | future deploySuccess: got2 ];
 		onFailureDo: [ :error | future deployFailure: error freeze ]]
@@ -363,12 +361,19 @@ TKTFuture >> isSuccess [
 	^ result isSuccess
 ]
 
+{ #category : #private }
+TKTFuture >> newWithSameRunner [
+
+	^ self class new
+		  runner: runner;
+		  yourself
+]
+
 { #category : #combinators }
 TKTFuture >> on: anError do: aBlockClosure [ 
 	
 	| future |
-	future := TKTFuture new.
-	future runner: runner.
+	future := self newWithSameRunner.
 	self onSuccessDo: [ :got | future deploySuccess: got ].
 	self onFailureDo: [ :error | 
 		(anError handles: error)
@@ -406,8 +411,7 @@ TKTFuture >> printOn: aStream [
 TKTFuture >> recoverWith: aBlock [
 	
 	| future |
-	future := TKTFuture new.
-	future runner: runner.
+	future := self newWithSameRunner.
 	self onSuccessDo: [ :value | future deploySuccess: value ].
 	self onFailureDo: [ :error | | recoverFuture |
 		recoverFuture := aBlock value: error.
@@ -428,10 +432,12 @@ TKTFuture >> scheduleCallbackTask: aCallbackTask [
 ]
 
 { #category : #combinators }
-TKTFuture >> select: aBlockClosure [ 
-	
-	^ self collect: [ :r | (aBlockClosure value: r) ifTrue: [ r ] ifFalse: [ NotFound signalFor: aBlockClosure ] ].
-	
+TKTFuture >> select: aBlockClosure [
+
+	^ self collect: [ :r | 
+		  (aBlockClosure value: r)
+			  ifTrue: [ r ]
+			  ifFalse: [ NotFound signalFor: aBlockClosure ] ]
 ]
 
 { #category : #synchronization }
@@ -457,6 +463,8 @@ TKTFuture >> zip: secondFuture [
 
 { #category : #combinators }
 TKTFuture >> zip: secondFuture with: aBlock [
-	
-	^ self flatCollect: [ :result1 | secondFuture collect: [ :result2 | aBlock value: result1 value: result2 ] ]
+
+	^ self flatCollect: [ :result1 | 
+		  secondFuture collect: [ :result2 | 
+			  aBlock value: result1 value: result2 ] ]
 ]
