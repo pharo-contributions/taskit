@@ -79,7 +79,7 @@ TTaskScheduler >> schedule: aTask timeout: aTimeout [
 { #category : #schedulling }
 TTaskScheduler >> scheduleTaskExecution: aTaskExecution [
 
-	self requirement
+	self explicitRequirement
 ]
 
 { #category : #schedulling }
