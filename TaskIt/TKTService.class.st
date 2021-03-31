@@ -149,7 +149,8 @@ TKTService >> process [
 
 { #category : #starting }
 TKTService >> restart [
-	self stop waitForCompletion: stepDelay.
+	self stop.
+	stepDelay wait.
 	stopRequested := false.
 	stopCallbacks := Set new.
 	self start
