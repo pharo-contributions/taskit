@@ -79,7 +79,7 @@ TKTConfiguration class >> processProvider: aProcessProvider during: aBlock [
 
 { #category : #accessing }
 TKTConfiguration class >> profile [
-	^ #Hola
+	^ self soleInstance value
 ]
 
 { #category : #accessing }
@@ -185,7 +185,6 @@ TKTConfiguration >> basicValue [
 
 { #category : #accessing }
 TKTConfiguration >> default [
-	
 	^ value ifNil: [ 
 			self class profile: TKTProfile defaultProfile.
 			value ifNil: [ 
