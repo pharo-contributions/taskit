@@ -4,7 +4,7 @@ A profile for development.
 Class {
 	#name : #TKTDevelopmentProfile,
 	#superclass : #TKTProfile,
-	#category : #TaskItProcesses
+	#category : #TaskItDebugger
 }
 
 { #category : #private }
