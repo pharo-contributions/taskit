@@ -72,15 +72,15 @@ TKTWorker >> exceptionHandler: aHandler [
 	process ifNotNil: [ process exceptionHandler: aHandler ]
 ]
 
-{ #category : #initialization }
-TKTWorker >> finalize [
-	TKTConfiguration watchDog stopWatching: self.
-	self
-		schedule: [ | theProcess |
-			queue := nil.
-			theProcess := process.
-			theProcess ifNotNil: [ theProcess kill ].
-			process := nil ].
+{ #category : #finalization }
+TKTWorker >> executor [
+
+	"The finalization scheme runs in another object (the executor) that does not have 
+	all the state, if it has all the state a loop is generated and never GCed"
+
+	^ TKTWorkerExecutor new
+		processToKill: process;
+		yourself.
 ]
 
 { #category : #initialization }
@@ -135,8 +135,7 @@ TKTWorker >> priority: anInteger [
 
 { #category : #starting }
 TKTWorker >> privatePrepareProcess: aWorkerProcess [
-	process := aWorkerProcess.
-	process
+	process := aWorkerProcess
 		taskQueue: queue;
 		name: name;
 		yourself.

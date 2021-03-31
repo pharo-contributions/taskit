@@ -25,23 +25,20 @@ While this runner may seem a bit naive, it may also come in handy to control and
 Class {
 	#name : #TKTLocalProcessTaskRunner,
 	#superclass : #TKTRunner,
-	#instVars : [
-		'process'
-	],
 	#category : #'TaskIt-Kernel'
 }
 
-{ #category : #schedulling }
+{ #category : #scheduling }
 TKTLocalProcessTaskRunner >> isLocalThreadRunner [
 	^ true
 ]
 
-{ #category : #schedulling }
+{ #category : #scheduling }
 TKTLocalProcessTaskRunner >> scheduleTaskExecution: aTaskExecution [
 	self executeTask: aTaskExecution
 ]
 
-{ #category : #polimorfism }
+{ #category : #polymorphism }
 TKTLocalProcessTaskRunner >> start [
 
 ]

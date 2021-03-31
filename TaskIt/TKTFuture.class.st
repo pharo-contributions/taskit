@@ -157,13 +157,50 @@ Class {
 	#category : #'TaskIt-Futures'
 }
 
-{ #category : #'instance-creation' }
+{ #category : #'as yet unclassified' }
+TKTFuture class >> all: aCollection [
+	"Create a all future from aCollection of futures. The all future resolves if all of
+	the futures in aCollection resolve. The values given to the success handler are the
+	values of the futures in aCollection in the same order they appear in aCollection. The
+	first future in aCollection that fails marks this future as failed."
+	| results future |
+	results := OrderedCollection new: aCollection size.
+	future := self new.
+	aCollection withIndexDo: [ :each :index | 
+		each onSuccessDo: [ :value | 
+			results add: index -> value.
+			(results size = aCollection size) ifTrue: [
+				future deploySuccess: (results sorted collect: #value) asArray ] ].
+		each onFailureDo: [ :fail | 
+			future deployFailure: fail ] ].
+	^ future
+]
+
+{ #category : #'as yet unclassified' }
+TKTFuture class >> any: aCollection [
+	"Create any future from aCollection of futures. The any future resolves if any of
+	the futures in aCollection resolves. The value given to the success handler is the
+	value of the future that resolved. "
+	| future |
+	future := self new.
+	aCollection do: [ :each | 
+		each onSuccessDo: [ :value | 
+			"At the moment just ignore every running future if the any has been resolved"
+			future isFinished ifFalse: [  
+				future deploySuccess: value  ] ].
+		each onFailureDo: [ :fail | 
+			future isFinished ifFalse: [
+				future deployFailure: fail ] ] ].
+	^ future
+]
+
+{ #category : #'instance creation' }
 TKTFuture class >> doing: aBlock [
 
 	^ TKTConfiguration runner future: aBlock
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 TKTFuture class >> fromCollectionOfFutures: aCollectionOfFutures [
 
 	^ self
@@ -171,17 +208,17 @@ TKTFuture class >> fromCollectionOfFutures: aCollectionOfFutures [
 		with: [ :acum :each | acum add: each. acum ] 
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 TKTFuture class >> of: aValue [
 
 	^ self new deploySuccess: aValue
 ]
 
-{ #category : #'instance-creation' }
+{ #category : #'instance creation' }
 TKTFuture class >> reduceCollectionOfFutures: aCollectionOfFutures with: aBlock [
 
 	^ aCollectionOfFutures
-		inject: (TKTFuture of: OrderedCollection new)
+		inject: (self of: OrderedCollection new)
 		into: [ :facum :feach | facum flatCollect: [ :acum | 
 				feach collect: [ :each | aBlock value: acum value: each ] ] ]
 ]
@@ -202,7 +239,7 @@ TKTFuture >> addSuccessCallback: aBlockClosure [
 TKTFuture >> andThen: aBlockClosure [ 
 	
 	| future |
-	future := TKTFuture new.
+	future := self newWithSameRunner.
 	self onSuccessDo: [ :got | 
 		[ aBlockClosure value: got ]
 			on: Error do: [ :e | "Nothing?" ].
@@ -213,9 +250,9 @@ TKTFuture >> andThen: aBlockClosure [
 
 { #category : #combinators }
 TKTFuture >> collect: aBlockClosure [
+
 	| future |
-	future := TKTFuture new.
-	future runner: runner.
+	future := self newWithSameRunner.
 	self
 		onSuccessDo: [ :got | 
 			[ future deploySuccess: (aBlockClosure value: got) ]
@@ -227,7 +264,7 @@ TKTFuture >> collect: aBlockClosure [
 
 { #category : #deployment }
 TKTFuture >> deployFailure: aValue [
-	self installFutureResult: (TKTFutureFailure new value: aValue).
+	self installResult: (TKTFutureFailure new value: aValue).
 	exceptionCallbacks
 		do: [ :each | self scheduleCallbackTask: [ each value: aValue ] ].
 	valueSemaphore signal
@@ -235,7 +272,7 @@ TKTFuture >> deployFailure: aValue [
 
 { #category : #deployment }
 TKTFuture >> deploySuccess: aValue [
-	self installFutureResult: (TKTFutureSuccess new value: aValue).
+	self installResult: (TKTFutureSuccess new value: aValue).
 	resultCallbacks
 		do: [ :each | self scheduleCallbackTask: [ each value: aValue ] ].
 	valueSemaphore signal
@@ -252,8 +289,7 @@ TKTFuture >> firstCompleteOf: anotherFuture [
 	
 	| finished future |
 	finished := false.
-	future := TKTFuture new.
-	future runner: runner.
+	future := self newWithSameRunner.
 	self onSuccessDo: [ :v |
 		finished ifFalse: [
 			finished := true.
@@ -277,8 +313,7 @@ TKTFuture >> firstCompleteOf: anotherFuture [
 TKTFuture >> flatCollect: aBlockClosure [ 
 	
 	| future |
-	future := TKTFuture new.
-	future runner: runner.
+	future := self newWithSameRunner.
 	self onSuccessDo: [ :got | [(aBlockClosure value: got)
 		onSuccessDo: [ :got2 | future deploySuccess: got2 ];
 		onFailureDo: [ :error | future deployFailure: error freeze ]]
@@ -301,7 +336,7 @@ TKTFuture >> initialize [
 ]
 
 { #category : #private }
-TKTFuture >> installFutureResult: aResult [
+TKTFuture >> installResult: aResult [
 
 	result isFinished
 		ifTrue: [ self error: 'cannot deploy twice in same future' ].
@@ -326,12 +361,19 @@ TKTFuture >> isSuccess [
 	^ result isSuccess
 ]
 
+{ #category : #private }
+TKTFuture >> newWithSameRunner [
+
+	^ self class new
+		  runner: runner;
+		  yourself
+]
+
 { #category : #combinators }
 TKTFuture >> on: anError do: aBlockClosure [ 
 	
 	| future |
-	future := TKTFuture new.
-	future runner: runner.
+	future := self newWithSameRunner.
 	self onSuccessDo: [ :got | future deploySuccess: got ].
 	self onFailureDo: [ :error | 
 		(anError handles: error)
@@ -369,8 +411,7 @@ TKTFuture >> printOn: aStream [
 TKTFuture >> recoverWith: aBlock [
 	
 	| future |
-	future := TKTFuture new.
-	future runner: runner.
+	future := self newWithSameRunner.
 	self onSuccessDo: [ :value | future deploySuccess: value ].
 	self onFailureDo: [ :error | | recoverFuture |
 		recoverFuture := aBlock value: error.
@@ -391,10 +432,12 @@ TKTFuture >> scheduleCallbackTask: aCallbackTask [
 ]
 
 { #category : #combinators }
-TKTFuture >> select: aBlockClosure [ 
-	
-	^ self collect: [ :r | (aBlockClosure value: r) ifTrue: [ r ] ifFalse: [ NotFound signalFor: aBlockClosure ] ].
-	
+TKTFuture >> select: aBlockClosure [
+
+	^ self collect: [ :r | 
+		  (aBlockClosure value: r)
+			  ifTrue: [ r ]
+			  ifFalse: [ NotFound signalFor: aBlockClosure ] ]
 ]
 
 { #category : #synchronization }
@@ -420,6 +463,8 @@ TKTFuture >> zip: secondFuture [
 
 { #category : #combinators }
 TKTFuture >> zip: secondFuture with: aBlock [
-	
-	^ self flatCollect: [ :result1 | secondFuture collect: [ :result2 | aBlock value: result1 value: result2 ] ]
+
+	^ self flatCollect: [ :result1 | 
+		  secondFuture collect: [ :result2 | 
+			  aBlock value: result1 value: result2 ] ]
 ]

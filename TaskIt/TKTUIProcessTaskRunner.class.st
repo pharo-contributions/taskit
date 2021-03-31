@@ -1,23 +1,21 @@
 Class {
 	#name : #TKTUIProcessTaskRunner,
 	#superclass : #TKTRunner,
-	#instVars : [
-		'process'
-	],
 	#category : #'TaskIt-Kernel'
 }
 
-{ #category : #schedulling }
+{ #category : #scheduling }
 TKTUIProcessTaskRunner >> isUIRunner [
 	^ true 
 ]
 
-{ #category : #schedulling }
+{ #category : #scheduling }
 TKTUIProcessTaskRunner >> scheduleTaskExecution: aTaskExecution [
-	WorldState addDeferredUIMessage: [ self executeTask: aTaskExecution ]
+
+	UIManager default defer: [ self executeTask: aTaskExecution ]
 ]
 
-{ #category : #polimorfsms }
+{ #category : #polymorphism }
 TKTUIProcessTaskRunner >> start [
 
 ]

@@ -24,83 +24,67 @@ Class {
 	#category : #'TaskIt-Profiles'
 }
 
-{ #category : #'instance creation' }
+{ #category : #'accessing profiles' }
 TKTProfile class >> defaultProfile [
-	^ #development
+
+	^ self defaultProfileClass new
+]
+
+{ #category : #'accessing profiles' }
+TKTProfile class >> defaultProfileClass [
+
+	^ (self allSubclasses sorted: [ :a | a priority ] descending) first
+]
+
+{ #category : #'accessing profiles' }
+TKTProfile class >> defaultProfileName [
+
+	^ self defaultProfileClass profileName
 ]
 
 { #category : #'instance creation' }
-TKTProfile class >> development [
-	<profile: #development>
-	^ TKTProfile
-		on:
-			{(#debugging -> true).
-			(#runner -> TKTCommonQueueWorkerPool createDefault).
-			(#poolWorkerProcess -> TKTDebuggWorkerProcess).
-			(#process -> TKTRawProcess).
-			(#watchDog -> TKTWatchDog onDuty).
-			(#errorHandler -> TKTDebuggerExceptionHandler).
-			(#processProvider -> TKTTaskItProcessProvider new).
-			(#serviceManager -> TKTServiceManager new)} asDictionary
-]
+TKTProfile class >> new [
 
-{ #category : #'instance creation' }
-TKTProfile class >> lightweight [
-	<profile: #lightweight>
-	^ TKTProfile
-		on:
-			{(#debugging -> false).
-			(#runner -> TKTWorker createDefault ).
-			(#poolWorkerProcess -> TKTWorkerProcess).
-			(#process -> Process).
-			(#errorHandler -> TKTExceptionHandler).
-			(#watchDog -> TKTWatchDog onDuty).
-			(#processProvider -> TKTTaskItProcessProvider new).
-			(#serviceManager -> TKTServiceManager new)} asDictionary
+	^ self on: self profileValues
 ]
 
 { #category : #'instance creation' }
 TKTProfile class >> on: aDictionary [
-	^ self new
+	^ self basicNew
+		initialize;
 		values: aDictionary;
 		yourself
 ]
 
-{ #category : #'instance creation' }
-TKTProfile class >> production [
-	<profile: #production>
-	^ TKTProfile
-		on:
-			{
-			(#debugging -> false) .
-			(#runner -> TKTCommonQueueWorkerPool createDefault).
-			(#poolWorkerProcess -> TKTWorkerProcess).
-			(#process -> Process).
-			(#watchDog -> TKTWatchDog onDuty) .
-			(#errorHandler -> TKTExceptionHandler).
-			(#processProvider -> TKTPharoProcessProvider new).
-			(#serviceManager -> TKTServiceManager new)} asDictionary
+{ #category : #private }
+TKTProfile class >> priority [
+
+	^ self subclassResponsibility
 ]
 
-{ #category : #'instance creation' }
+{ #category : #'accessing profiles' }
+TKTProfile class >> production [
+	<profile: #production>
+
+	^ TKTProductionProfile new
+]
+
+{ #category : #accessing }
+TKTProfile class >> profileName [
+	
+	^ self subclassResponsibility
+]
+
+{ #category : #private }
+TKTProfile class >> profileValues [
+
+	^ self subclassResponsibility
+]
+
+{ #category : #accessing }
 TKTProfile class >> profiles [
 	^ (Pragma allNamed: #profile: from: self class to: ProtoObject) asOrderedCollection
 		collect: [ :c | c arguments first -> (MessageSend receiver: self selector: c method selector) ]
-]
-
-{ #category : #'instance creation' }
-TKTProfile class >> test [
-	<profile: #test>
-	^ TKTProfile
-		on:
-			{(#debugging -> false).
-			(#runner -> TKTCommonQueueWorkerPool createDefault).
-			(#poolWorkerProcess -> TKTWorkerProcess).
-			(#process -> Process).
-			(#errorHandler -> TKTExceptionHandler).
-			(#watchDog -> TKTWatchDog onDuty).
-			(#processProvider -> TKTTaskItProcessProvider new).
-			(#serviceManager -> TKTServiceManager new)} asDictionary
 ]
 
 { #category : #accessing }
