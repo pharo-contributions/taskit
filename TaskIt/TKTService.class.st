@@ -69,7 +69,7 @@ Class {
 		'stopCallbacks',
 		'stepDelay',
 		'recursiveTask',
-		'iterationSemaphore'
+		'currentDelay'
 	],
 	#category : #'TaskIt-Services'
 }
