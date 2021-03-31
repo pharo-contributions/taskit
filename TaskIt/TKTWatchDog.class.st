@@ -105,7 +105,7 @@ TKTWatchDog >> stepService [
 { #category : #initialization }
 TKTWatchDog >> stop [
 	started := false.
-	super stop
+	^ super stop
 ]
 
 { #category : #initialization }
