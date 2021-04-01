@@ -3,12 +3,6 @@
 
 >Anything that can go wrong, will go wrong. -- Murphy's Law
 
-Master Build 
-[![Build Status](https://travis-ci.org/pharo-contributions/taskit.svg?branch=master)](https://travis-ci.org/pharo-contributions/taskit)
-
-Dev Build 
-[![Build Status](https://travis-ci.org/pharo-contributions/taskit.svg?branch=dev-1.1)](https://travis-ci.org/pharo-contributions/taskit)
-
 Expressing and managing concurrent computations is indeed a concern of importance to develop applications that scale. A web application may want to use different processes for each of its incoming requests. Or maybe it wants to use a "thread pool" in some cases. In other case, our desktop application may want to send computations to a worker to not block the UI thread. 
 
 Processes in Pharo are implemented as green threads scheduled by the virtual machine, without depending on the machinery of the underlying operating system. This has several consequences on the usage of concurrency we can do:
@@ -22,18 +16,11 @@ TaskIt is a library that ease Process usage in Pharo. It provides abstractions t
 
 ## Introduction
 
-### Downloading
+Pharo 9 includes the `coreTests` group of `BaselineOfTaskIt`. Please, read the following instructions either to load another group, or to load in previous Pharo versions.
 
-Current stable version of taskit can be downloaded using metacello as follows:
+### Loading
 
-```smalltalk
-Metacello new
-  baseline: 'TaskIt';
-  repository: 'github://pharo-contributions/taskit';
-  load.
-```
-
-If you want a specific release such as v1.0, you can load the associated tag as follows
+If you want a specific release such as v1.0, you can load the associated tag as follows:
 
 ```smalltalk
 Metacello new
@@ -42,12 +29,12 @@ Metacello new
   load.
 ```
 
-Otherwise, if you want the latest development version, take a look at the development branchs and load the latest:
+Otherwise, if you want the latest development version, load master:
 
 ```smalltalk
 Metacello new
   baseline: 'TaskIt';
-  repository: 'github://pharo-contributions/taskit:dev-1.1';
+  repository: 'github://pharo-contributions/taskit';
   load.
 ```
 
