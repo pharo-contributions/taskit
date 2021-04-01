@@ -4,5 +4,5 @@ Extension { #name : #TKTProfile }
 TKTProfile class >> lightweight [
 	<profile: #lightweight>
 	
-	^ TKTLightweigthProfile new
+	^ TKTLightweightProfile new
 ]

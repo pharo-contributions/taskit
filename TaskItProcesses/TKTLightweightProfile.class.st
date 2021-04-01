@@ -2,25 +2,25 @@
 A lightweight for development.
 "
 Class {
-	#name : #TKTLightweigthProfile,
+	#name : #TKTLightweightProfile,
 	#superclass : #TKTProfile,
 	#category : #TaskItProcesses
 }
 
 { #category : #private }
-TKTLightweigthProfile class >> priority [
+TKTLightweightProfile class >> priority [
 
 	^ -1
 ]
 
 { #category : #accessing }
-TKTLightweigthProfile class >> profileName [
+TKTLightweightProfile class >> profileName [
 	
-	^ #lightweigth
+	^ #lightweight
 ]
 
 { #category : #private }
-TKTLightweigthProfile class >> profileValues [
+TKTLightweightProfile class >> profileValues [
 
 	^ {(#debugging -> false).
 		(#runner -> TKTWorker createDefault ).
