@@ -4,6 +4,7 @@ SmalltalkCISpec {
       #baseline : 'TaskIt',
       #directory : '',
       #platforms : [ #pharo ],
+      #ignoreImage : true,
       #onConflict: #useIncoming,
       #onUpgrade : #useIncoming,
       #onWarningLog : true
