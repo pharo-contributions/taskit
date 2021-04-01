@@ -4,6 +4,12 @@ Class {
 	#category : #'TaskIt-Tests-Kernel'
 }
 
+{ #category : #private }
+TKTMemoryLeakTest class >> isAbstract [
+
+	^ self name = #TKTMemoryLeakTest
+]
+
 { #category : #helpers }
 TKTMemoryLeakTest >> assertDontGrowNumberOf: aClass during: aBlock [
 

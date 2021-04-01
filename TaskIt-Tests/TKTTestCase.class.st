@@ -7,6 +7,12 @@ Class {
 	#category : #'TaskIt-Tests-Kernel'
 }
 
+{ #category : #private }
+TKTTestCase class >> isAbstract [
+
+	^ self name = #TKTTestCase
+]
+
 { #category : #running }
 TKTTestCase >> garbageCollectAndWait [
 	5
