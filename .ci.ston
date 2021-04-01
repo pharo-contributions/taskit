@@ -4,7 +4,10 @@ SmalltalkCISpec {
       #baseline : 'TaskIt',
       #directory : '',
       #platforms : [ #pharo ],
-      #onConflict: #useIncoming
+      #ignoreImage : true,
+      #onConflict: #useIncoming,
+      #onUpgrade : #useIncoming,
+      #onWarningLog : true
     }
   ],
   #testing : {
