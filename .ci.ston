@@ -4,7 +4,9 @@ SmalltalkCISpec {
       #baseline : 'TaskIt',
       #directory : '',
       #platforms : [ #pharo ],
-      #onConflict: #useIncoming
+      #onConflict: #useIncoming,
+      #onUpgrade : #useIncoming,
+      #onWarningLog : true
     }
   ],
   #testing : {
