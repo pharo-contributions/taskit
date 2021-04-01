@@ -16,18 +16,11 @@ TaskIt is a library that ease Process usage in Pharo. It provides abstractions t
 
 ## Introduction
 
-### Downloading
+Pharo 9 includes the `coreTests` group of `BaselineOfTaskIt`. Please, read the following instructions either to load another group, or to load in previous Pharo versions.
 
-Current stable version of taskit can be downloaded using metacello as follows:
+### Loading
 
-```smalltalk
-Metacello new
-  baseline: 'TaskIt';
-  repository: 'github://pharo-contributions/taskit';
-  load.
-```
-
-If you want a specific release such as v1.0, you can load the associated tag as follows
+If you want a specific release such as v1.0, you can load the associated tag as follows:
 
 ```smalltalk
 Metacello new
@@ -36,12 +29,12 @@ Metacello new
   load.
 ```
 
-Otherwise, if you want the latest development version, take a look at the development branchs and load the latest:
+Otherwise, if you want the latest development version, load master:
 
 ```smalltalk
 Metacello new
   baseline: 'TaskIt';
-  repository: 'github://pharo-contributions/taskit:dev-1.1';
+  repository: 'github://pharo-contributions/taskit';
   load.
 ```
 
