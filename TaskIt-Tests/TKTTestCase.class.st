@@ -15,17 +15,11 @@ TKTTestCase class >> isAbstract [
 
 { #category : #running }
 TKTTestCase >> garbageCollectAndWait [
-	5
-		timesRepeat: [ Smalltalk garbageCollect.
-			100 milliSeconds wait ].
-	1 second wait.
-	5
-		timesRepeat: [ Smalltalk garbageCollect.
-			100 milliSeconds wait ].
-	1 second wait.
-	5
-		timesRepeat: [ Smalltalk garbageCollect.
-			100 milliSeconds wait ]
+
+	3 timesRepeat: [ 
+		Smalltalk garbageCollect.
+		100 milliSeconds wait ].
+	1 second wait
 ]
 
 { #category : #running }
