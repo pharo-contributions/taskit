@@ -22,17 +22,20 @@ TKTNewProcessTaskRunnerTest >> testNewProcessTaskRunnerExceptionIsHandledByExcep
 { #category : #tests }
 TKTNewProcessTaskRunnerTest >> testNewProcessTaskRunnerRunsInNewProcessEveryTime [
 
-	| runner hashes futures hashesSet |
+	| runner hashes futures hashesSet count |
 	runner := TKTNewProcessTaskRunner new.
 	hashes := AtomicSharedQueue new.
-	
-	futures := (1 to: 10) collect: [ :i | (runner future: [ Processor activeProcess identityHash ]) onSuccessDo: [ :v | hashes nextPut: v ] ].
-	
+	count := 5.
+
+	futures := (1 to: count) collect: [ :i |
+		           (runner future: [ Processor activeProcess identityHash ]) 
+			           onSuccessDo: [ :v | hashes nextPut: v ] ].
+
 	futures do: [ :each | each waitForCompletion: 2 seconds ].
-	
+
 	hashesSet := Set new.
 	[ hashes isEmpty ] whileFalse: [ hashesSet add: hashes next ].
-	self assert: hashesSet size equals: 10.
+	self assert: hashesSet size equals: count
 ]
 
 { #category : #tests }
@@ -41,11 +44,13 @@ TKTNewProcessTaskRunnerTest >> testNewProcessTaskRunnerRunsNeverInLocalProcess [
 	| runner hashes futures |
 	runner := TKTNewProcessTaskRunner new.
 	hashes := AtomicSharedQueue new.
-	
-	futures := (1 to: 10) collect: [ :i | (runner future: [ Processor activeProcess identityHash ]) onSuccessDo: [ :v | hashes nextPut: v ] ].
-	
+
+	futures := (1 to: 10) collect: [ :i | 
+		           (runner future: [ Processor activeProcess identityHash ]) 
+			           onSuccessDo: [ :v | hashes nextPut: v ] ].
+
 	futures do: [ :each | each waitForCompletion: 2 seconds ].
-	
+
 	[ hashes isEmpty ] whileFalse: [ 
-		self assert: hashes next ~= Processor activeProcess identityHash ].
+		self assert: hashes next ~= Processor activeProcess identityHash ]
 ]
