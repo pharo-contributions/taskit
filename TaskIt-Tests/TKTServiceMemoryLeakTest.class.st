@@ -8,7 +8,7 @@ Class {
 TKTServiceMemoryLeakTest >> testServiceInstancesAreCollectedAfterStartingAndStoppingService [
 
 	self
-		trackInstancesOf: TKTParameterizableService
+		assertDontGrowNumberOf: TKTParameterizableService
 		during: [ TKTParameterizableService new name: 'test'; start; stop  ]
 ]
 
@@ -16,7 +16,7 @@ TKTServiceMemoryLeakTest >> testServiceInstancesAreCollectedAfterStartingAndStop
 TKTServiceMemoryLeakTest >> testWorkerInstancesAreCollectedAfterStartingAndStoppingService [
 
 	self
-		trackInstancesOf: TKTWorker
+		assertDontGrowNumberOf: TKTWorker
 		during: [ TKTParameterizableService new
 				name: 'test';
 				start;
@@ -27,7 +27,7 @@ TKTServiceMemoryLeakTest >> testWorkerInstancesAreCollectedAfterStartingAndStopp
 TKTServiceMemoryLeakTest >> testWorkerPoolInstancesAreCollectedAfterStartingAndStoppingService [
 
 	self
-		trackInstancesOf: TKTWorkerPool
+		assertDontGrowNumberOf: TKTWorkerPool
 		during: [ TKTParameterizableService new name: 'test'; start; stop  ]
 ]
 
@@ -35,6 +35,6 @@ TKTServiceMemoryLeakTest >> testWorkerPoolInstancesAreCollectedAfterStartingAndS
 TKTServiceMemoryLeakTest >> testWorkerProcessInstancesAreCollectedAfterStartingAndStoppingService [
 
 	self
-		trackInstancesOf: TKTWorkerProcess
+		assertDontGrowNumberOf: TKTWorkerProcess
 		during: [ TKTParameterizableService new name: 'test'; start; stop  ]
 ]

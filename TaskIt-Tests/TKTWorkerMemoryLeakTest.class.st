@@ -6,14 +6,14 @@ Class {
 
 { #category : #'tests-worker' }
 TKTWorkerMemoryLeakTest >> testWorkerInstancesAreCollectedAfterStartingAndStoppingWorker [
-	self trackInstancesOf: TKTWorker during: [ TKTWorker new start stop ]
+	self assertDontGrowNumberOf: TKTWorker during: [ TKTWorker new start stop ]
 ]
 
 { #category : #'tests-worker' }
 TKTWorkerMemoryLeakTest >> testWorkerInstancesAreCollectedAfterStartingAndStoppingWorkerPool [
 
 	self
-		trackInstancesOf: TKTWorker
+		assertDontGrowNumberOf: TKTWorker
 		during: [ TKTWorkerPool new start stop ]
 ]
 
@@ -21,7 +21,7 @@ TKTWorkerMemoryLeakTest >> testWorkerInstancesAreCollectedAfterStartingAndStoppi
 TKTWorkerMemoryLeakTest >> testWorkerPoolInstancesAreCollectedAfterStartingAndStoppingWorker [
 
 	self
-		trackInstancesOf: TKTWorkerPool
+		assertDontGrowNumberOf: TKTWorkerPool
 		during: [ TKTWorkerPool new start stop ]
 ]
 
@@ -29,7 +29,7 @@ TKTWorkerMemoryLeakTest >> testWorkerPoolInstancesAreCollectedAfterStartingAndSt
 TKTWorkerMemoryLeakTest >> testWorkerProcessInstancesAreCollectedAfterStartingAndStoppingWorker [
 
 	self
-		trackInstancesOf: TKTWorkerProcess
+		assertDontGrowNumberOf: TKTWorkerProcess
 		during: [ TKTWorker new start stop ]
 ]
 
@@ -37,6 +37,6 @@ TKTWorkerMemoryLeakTest >> testWorkerProcessInstancesAreCollectedAfterStartingAn
 TKTWorkerMemoryLeakTest >> testWorkerProcessInstancesAreCollectedAfterStartingAndStoppingWorkerPool [
 
 	self
-		trackInstancesOf: TKTWorkerProcess
+		assertDontGrowNumberOf: TKTWorkerProcess
 		during: [ TKTWorkerPool new start stop ]
 ]

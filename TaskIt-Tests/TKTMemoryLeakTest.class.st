@@ -5,17 +5,18 @@ Class {
 }
 
 { #category : #helpers }
-TKTMemoryLeakTest >> trackInstancesOf: aClass during: aBlock [
+TKTMemoryLeakTest >> assertDontGrowNumberOf: aClass during: aBlock [
 
-	| before |
-	
-	self garbageCollectAndWait .
-	
+	| before after |
+	self garbageCollectAndWait.
 	before := aClass allInstances size.
-	
+
 	aBlock value.
-	
-	self garbageCollectAndWait .
-	
-	self assert: before >= aClass allInstances size.
+
+	self garbageCollectAndWait.
+	after := aClass allInstances size.
+
+	self 
+		assert: after <= before
+		description: ('Number of instances of {1} has grown from {2} to {3}' format: { aClass. before. after })
 ]
