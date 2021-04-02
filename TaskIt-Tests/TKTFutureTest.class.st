@@ -11,7 +11,7 @@ TKTFutureTest >> setUp [
 ]
 
 { #category : #tests }
-TKTFutureTest >> testAllFuturesFailure [
+TKTFutureTest >> testAllFutureFailure [
 	| allFuture result semaphore successCalled |
 	allFuture := TKTFuture all: { 
 		[ 100 atRandom milliSeconds wait. 3 ] future.
@@ -33,7 +33,7 @@ TKTFutureTest >> testAllFuturesFailure [
 ]
 
 { #category : #tests }
-TKTFutureTest >> testAllFuturesSuccess [
+TKTFutureTest >> testAllFutureSuccess [
 	| allFuture result semaphore |
 	allFuture := TKTFuture all: { 
 		[ 100 atRandom milliSeconds wait. 3 ] future.
@@ -50,16 +50,16 @@ TKTFutureTest >> testAllFuturesSuccess [
 ]
 
 { #category : #tests }
-TKTFutureTest >> testAnyFuturesFailure [
-	| allFuture result semaphore |
-	allFuture := TKTFuture any: { 
-		[ 100 + 100 atRandom milliSeconds wait. 3 ] future.
-		[ 100 + 100 atRandom milliSeconds wait. 1 ] future.
+TKTFutureTest >> testAnyFutureAllFailure [
+	| anyFuture result semaphore |
+	anyFuture := TKTFuture any: { 
 		[ Error signal: 'Did not go too well' ] future.
-		[ 100 + 100 atRandom milliSeconds wait. 2 ] future.
+		[ Error signal: 'Did not go too well' ] future.
+		[ Error signal: 'Did not go too well' ] future.
+		[ Error signal: 'Did not go too well' ] future.
 	 }.
 	semaphore := Semaphore new.
-	allFuture onFailureDo: [ :error |
+	anyFuture onFailureDo: [ :error |
 		result := error.
 		semaphore signal ].
 	semaphore wait.
@@ -67,16 +67,38 @@ TKTFutureTest >> testAnyFuturesFailure [
 ]
 
 { #category : #tests }
+TKTFutureTest >> testAnyFutureSucceedsWithFailure [
+	| anyFuture result semaphore failureCalled |
+	failureCalled := false.
+	anyFuture := TKTFuture any: { 
+		[ (100 + 100 atRandom) milliSeconds wait. 3 ] future.
+		[ (100 + 100 atRandom) milliSeconds wait. 1 ] future.
+		[ Error signal: 'Did not go too well' ] future.
+		[ (100 + 100 atRandom) milliSeconds wait. 2 ] future.
+	 }.
+	semaphore := Semaphore new.
+	
+	anyFuture onSuccessDo: [ :value | 
+		result := value. 
+		semaphore signal ].
+	anyFuture onFailureDo: [ :error |
+		failureCalled := true. ].
+	semaphore wait.
+	self deny: failureCalled.
+	self assert: (#( 1 2 3) includes: result) 
+]
+
+{ #category : #tests }
 TKTFutureTest >> testAnyFuturesSuccess [
-	| allFuture result semaphore |
-	allFuture := TKTFuture any: { 
+	| anyFuture result semaphore |
+	anyFuture := TKTFuture any: { 
 		[ 100 atRandom milliSeconds wait. 3 ] future.
 		[ 100 atRandom milliSeconds wait. 1 ] future.
 		[ 100 atRandom milliSeconds wait. 4 ] future.
 		[ 100 atRandom milliSeconds wait. 2 ] future.
 	 }.
 	semaphore := Semaphore new.
-	allFuture onSuccessDo: [ :value |
+	anyFuture onSuccessDo: [ :value |
 		result := value.
 		semaphore signal ].
 	semaphore wait.

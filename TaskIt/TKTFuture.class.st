@@ -181,16 +181,22 @@ TKTFuture class >> any: aCollection [
 	"Create any future from aCollection of futures. The any future resolves if any of
 	the futures in aCollection resolves. The value given to the success handler is the
 	value of the future that resolved. "
-	| future |
+	| future pending |
 	future := self new.
+	pending := aCollection copy asOrderedCollection.
 	aCollection do: [ :each | 
 		each onSuccessDo: [ :value | 
 			"At the moment just ignore every running future if the any has been resolved"
 			future isFinished ifFalse: [  
+				"first success on the given futures makes the any future succeed"
 				future deploySuccess: value  ] ].
 		each onFailureDo: [ :fail | 
 			future isFinished ifFalse: [
-				future deployFailure: fail ] ] ].
+				pending remove: each.
+				"If there is no more pending future it means all failed including the last
+				which makes the any future fail"
+				pending ifEmpty: [  
+					future deployFailure: fail ] ] ] ].
 	^ future
 ]
 
