@@ -59,11 +59,12 @@ TKTFutureTest >> testAnyFutureAllFailure [
 		[ Error signal: 'Did not go too well' ] future.
 	 }.
 	semaphore := Semaphore new.
-	anyFuture onFailureDo: [ :error |
-		result := error.
+	anyFuture onFailureDo: [ :errors |
+		result := errors.
 		semaphore signal ].
 	semaphore wait.
-	self assert: result messageText equals: 'Did not go too well'
+	self assert: result size equals: 4.
+	self assert: result first messageText equals: 'Did not go too well'
 ]
 
 { #category : #tests }
