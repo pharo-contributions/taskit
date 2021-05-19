@@ -51,7 +51,7 @@ BaselineOfTaskIt >> baselineForCommon: spec [
 			'TaskItRetry-Tests' 
 			'TaskItProcesses-Tests' 
 			'TaskItDebugger-Tests');
-		group: 'debug' with: #('minimal' 'TaskItDebugger');
+		group: 'debug' with: #('core' 'TaskItDebugger');
 		group: 'tests' with: #(
 			'default' 
 			'TaskIt-Tests' 
