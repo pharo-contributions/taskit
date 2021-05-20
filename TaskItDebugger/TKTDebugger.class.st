@@ -17,6 +17,12 @@ TKTDebugger class >> availableAutomatically [
 ]
 
 { #category : #accessing }
+TKTDebugger class >> defaultDebuggerRank [
+
+	^ 10
+]
+
+{ #category : #accessing }
 TKTDebugger class >> defaultTitle [
 
 	^ 'TaskIt'
