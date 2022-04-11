@@ -185,6 +185,7 @@ TKTConfiguration >> basicValue [
 
 { #category : #accessing }
 TKTConfiguration >> default [
+	
 	^ value ifNil: [ 
 			self class profile: TKTProfile defaultProfile.
 			value ifNil: [ 
