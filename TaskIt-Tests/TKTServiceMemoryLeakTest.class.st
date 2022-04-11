@@ -4,44 +4,37 @@ Class {
 	#category : #'TaskIt-Tests-Services'
 }
 
-{ #category : #running }
-TKTServiceMemoryLeakTest >> startAndStopService [
-
-	| service |
-	service := TKTMockService new.
-	service start.
-	service stop waitForCompletion: 1 second.
-
-]
-
-{ #category : #tests }
+{ #category : #'tests - worker' }
 TKTServiceMemoryLeakTest >> testServiceInstancesAreCollectedAfterStartingAndStoppingService [
 
 	self
-		assertDontGrowNumberOf: TKTParameterizableService
-		during: [ self startAndStopService ]
+		trackInstancesOf: TKTParameterizableService
+		during: [ TKTParameterizableService new name: 'test'; start; stop  ]
 ]
 
-{ #category : #tests }
+{ #category : #'tests - worker' }
 TKTServiceMemoryLeakTest >> testWorkerInstancesAreCollectedAfterStartingAndStoppingService [
 
 	self
-		assertDontGrowNumberOf: TKTWorker
-		during: [ self startAndStopService ]
+		trackInstancesOf: TKTWorker
+		during: [ TKTParameterizableService new
+				name: 'test';
+				start;
+				stop ]
 ]
 
-{ #category : #tests }
+{ #category : #'tests - worker' }
 TKTServiceMemoryLeakTest >> testWorkerPoolInstancesAreCollectedAfterStartingAndStoppingService [
 
 	self
-		assertDontGrowNumberOf: TKTWorkerPool
-		during: [ self startAndStopService ]
+		trackInstancesOf: TKTWorkerPool
+		during: [ TKTParameterizableService new name: 'test'; start; stop  ]
 ]
 
-{ #category : #tests }
+{ #category : #'tests - worker' }
 TKTServiceMemoryLeakTest >> testWorkerProcessInstancesAreCollectedAfterStartingAndStoppingService [
 
 	self
-		assertDontGrowNumberOf: TKTWorkerProcess
-		during: [ self startAndStopService ]
+		trackInstancesOf: TKTWorkerProcess
+		during: [ TKTParameterizableService new name: 'test'; start; stop  ]
 ]

@@ -4,39 +4,39 @@ Class {
 	#category : #'TaskIt-Tests-Kernel'
 }
 
-{ #category : #'tests-worker' }
+{ #category : #'tests - worker' }
 TKTWorkerMemoryLeakTest >> testWorkerInstancesAreCollectedAfterStartingAndStoppingWorker [
-	self assertDontGrowNumberOf: TKTWorker during: [ TKTWorker new start stop ]
+	self trackInstancesOf: TKTWorker during: [ TKTWorker new start stop ]
 ]
 
-{ #category : #'tests-worker' }
+{ #category : #'tests - worker' }
 TKTWorkerMemoryLeakTest >> testWorkerInstancesAreCollectedAfterStartingAndStoppingWorkerPool [
 
 	self
-		assertDontGrowNumberOf: TKTWorker
+		trackInstancesOf: TKTWorker
 		during: [ TKTWorkerPool new start stop ]
 ]
 
-{ #category : #'tests-workerpool' }
+{ #category : #'tests - workerpool' }
 TKTWorkerMemoryLeakTest >> testWorkerPoolInstancesAreCollectedAfterStartingAndStoppingWorker [
 
 	self
-		assertDontGrowNumberOf: TKTWorkerPool
+		trackInstancesOf: TKTWorkerPool
 		during: [ TKTWorkerPool new start stop ]
 ]
 
-{ #category : #'tests-workerprocess' }
+{ #category : #'tests - workerprocess' }
 TKTWorkerMemoryLeakTest >> testWorkerProcessInstancesAreCollectedAfterStartingAndStoppingWorker [
 
 	self
-		assertDontGrowNumberOf: TKTWorkerProcess
+		trackInstancesOf: TKTWorkerProcess
 		during: [ TKTWorker new start stop ]
 ]
 
-{ #category : #'tests-workerprocess' }
+{ #category : #'tests - workerprocess' }
 TKTWorkerMemoryLeakTest >> testWorkerProcessInstancesAreCollectedAfterStartingAndStoppingWorkerPool [
 
 	self
-		assertDontGrowNumberOf: TKTWorkerProcess
+		trackInstancesOf: TKTWorkerProcess
 		during: [ TKTWorkerPool new start stop ]
 ]
