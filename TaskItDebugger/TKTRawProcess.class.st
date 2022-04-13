@@ -13,7 +13,7 @@ Class {
 	#instVars : [
 		'masterProcessHolder'
 	],
-	#category : 'TaskItDebugger'
+	#category : #TaskItDebugger
 }
 
 { #category : #configuration }
@@ -40,6 +40,20 @@ TKTRawProcess >> initialize [
 { #category : #testing }
 TKTRawProcess >> isTaskItRawProcess [
 	^ true
+]
+
+{ #category : #initialization }
+TKTRawProcess >> isTerminated [
+	"Duplicate super method with a tiny difference that avoids an error from looking for #endProcess in TKTRawProcess (see super)."
+
+	self flag: #todo. "Why this happened in Pharo 10 but not in Pharo 9? How to properly fix this?
+	See https://github.com/pharo-contributions/taskit/issues/114"
+
+	self isActiveProcess ifTrue: [ ^ false ].
+	
+	^suspendedContext isNil or: [
+		suspendedContext isDead or: [
+			(suspendedContext method == (Process >> #endProcess))]]
 ]
 
 { #category : #accessing }
