@@ -53,7 +53,11 @@ TKTRawProcess >> isTerminated [
 	
 	^suspendedContext isNil or: [
 		suspendedContext isDead or: [
-			(suspendedContext method == (Process >> #endProcess))]]
+			Process
+				compiledMethodAt: #endProcess
+				ifPresent: [ :m | suspendedContext method == m ]
+				ifAbsent: [ false ] ]]
+
 ]
 
 { #category : #accessing }
