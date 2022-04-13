@@ -1,6 +1,8 @@
 
 # TaskIt
 
+[![Tests](https://github.com/pharo-contributions/taskit/actions/workflows/tests.yml/badge.svg)](https://github.com/pharo-contributions/taskit/actions/workflows/tests.yml)
+
 >Anything that can go wrong, will go wrong. -- Murphy's Law
 
 Expressing and managing concurrent computations is indeed a concern of importance to develop applications that scale. A web application may want to use different processes for each of its incoming requests. Or maybe it wants to use a "thread pool" in some cases. In other case, our desktop application may want to send computations to a worker to not block the UI thread. 
