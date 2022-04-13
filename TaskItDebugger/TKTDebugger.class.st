@@ -3,18 +3,11 @@ I represent a debugger that can work with a virtual call stack composed of multi
 "
 Class {
 	#name : #TKTDebugger,
-	#superclass : #GTGenericStackDebugger,
-	#classVars : [
-		'IsEnabled'
-	],
-	#category : 'TaskItDebugger'
+	#superclass : #Object,
+	#traits : 'TDebugger',
+	#classTraits : 'TDebugger classTrait',
+	#category : #TaskItDebugger
 }
-
-{ #category : #testing }
-TKTDebugger class >> availableAutomatically [
-
-	^ super availableAutomatically and: [ self isEnabled ]
-]
 
 { #category : #accessing }
 TKTDebugger class >> defaultDebuggerRank [
@@ -31,13 +24,13 @@ TKTDebugger class >> defaultTitle [
 { #category : #accessing }
 TKTDebugger class >> disable [
 
-	IsEnabled := false
+	self availableAutomatically: false
 ]
 
 { #category : #accessing }
 TKTDebugger class >> enable [
 
-	IsEnabled := true
+	self availableAutomatically: true
 ]
 
 { #category : #examples }
@@ -51,21 +44,14 @@ TKTDebugger class >> exampleFailure [
 { #category : #testing }
 TKTDebugger class >> handlesContext: aContext [
 
-	self isEnabled ifFalse: [ ^ false ].
 	^ aContext callChainAnySatisfy: [ :ctxt | 
 		  ctxt receiver class = TKTProcess ]
-]
-
-{ #category : #initialization }
-TKTDebugger class >> initialize [
-
-	self enable
 ]
 
 { #category : #testing }
 TKTDebugger class >> isEnabled [
 
-	^ IsEnabled ifNil: [ IsEnabled := false ]
+	^ self availableAutomatically
 ]
 
 { #category : #accessing }

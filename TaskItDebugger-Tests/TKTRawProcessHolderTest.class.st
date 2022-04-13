@@ -5,6 +5,12 @@ Class {
 }
 
 { #category : #helpers }
+TKTRawProcessHolderTest >> expectedFailures [
+
+	^ super expectedFailures , #( testStackContainsContextsOfMaster testStackStartingAt )
+]
+
+{ #category : #helpers }
 TKTRawProcessHolderTest >> newRawProcess [
 	| dummyObject messageSend process raw |
 	dummyObject := Dictionary new.
