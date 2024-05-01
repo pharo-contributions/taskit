@@ -1,8 +1,9 @@
-Extension { #name : #Object }
+Extension { #name : 'Object' }
 
-{ #category : #'*TaskIt' }
+{ #category : '*TaskIt' }
 Object >> asWeakReference [
+
 	^ (WeakArray new: 1)
-		at: 1 put: self;
-		yourself
+		  at: 1 put: self;
+		  yourself
 ]

@@ -1,16 +1,18 @@
 Class {
-	#name : #TKTMemoryLeakTest,
-	#superclass : #TKTTestCase,
-	#category : #'TaskIt-Tests-Kernel'
+	#name : 'TKTMemoryLeakTest',
+	#superclass : 'TKTTestCase',
+	#category : 'TaskIt-Tests-Kernel',
+	#package : 'TaskIt-Tests',
+	#tag : 'Kernel'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 TKTMemoryLeakTest class >> isAbstract [
 
 	^ self name = #TKTMemoryLeakTest
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 TKTMemoryLeakTest >> trackInstancesOf: aClass during: aBlock [
 
 	| before |
@@ -18,5 +20,5 @@ TKTMemoryLeakTest >> trackInstancesOf: aClass during: aBlock [
 
 	aBlock value.
 
-	self assertWithGarbageCollect: [ before >= aClass allInstances size ].
+	self assertWithGarbageCollect: [ before >= aClass allInstances size ]
 ]

@@ -1,10 +1,12 @@
 Class {
-	#name : #TKTConfigurationTest,
-	#superclass : #TKTTestCase,
-	#category : #'TaskIt-Tests-Kernel'
+	#name : 'TKTConfigurationTest',
+	#superclass : 'TKTTestCase',
+	#category : 'TaskIt-Tests-Kernel',
+	#package : 'TaskIt-Tests',
+	#tag : 'Kernel'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTConfigurationTest >> testAllProfilesCanBeSet [
 	TKTProfile profiles do: [ :each |
 		| aProfile |
@@ -16,7 +18,7 @@ TKTConfigurationTest >> testAllProfilesCanBeSet [
 	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTConfigurationTest >> testDefaultValueIsAProfile [
 	TKTConfiguration resetSoleInstance.
 	self assert: (TKTConfiguration profile isKindOf: TKTProfile).
